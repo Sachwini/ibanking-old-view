@@ -26,3 +26,46 @@
   scrollbar-color: green;
   scroll-margin-top: 50px; */
 }
+
+.logo__text {
+  font-size: 24px;
+  font-family: "Times New Roman", Times, serif;
+  color: #f58228;
+  margin: 0;
+}
+
+.custom__col {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom__col input {
+  outline: none;
+  border-radius: 20px;
+  background-color: #fcfcfc;
+}
+
+.search__icon {
+  position: relative;
+  right: 45px;
+  padding: 5px;
+}
+.search__icon:active {
+  transition: all 0.2s;
+  background-color: #f5812883;
+  color: #f5812883;
+}
+/* 
+.custom__col input::placeholder {
+  text-align: center;
+} */
+
+.custom__col .form-control:focus {
+  outline: orange;
+  color: #495057;
+  background-color: #fff;
+  border-color: #f581289c;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(226, 142, 40, 0.493);
+}
