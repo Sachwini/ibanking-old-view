@@ -1,36 +1,74 @@
 import React from "react";
-import { Container, Navbar, Media, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Media,
+  Row,
+  Col,
+  Form,
+  FormControl,
+  Button,
+  InputGroup,
+} from "react-bootstrap";
+import { BsSearch } from "react-icons/bs";
 
 const Header = () => {
   return (
     <>
       <Navbar
         expand="lg"
-        variant="light"
-        bg="light"
-        className="justify-content-between"
+        className="justify-content-between px-0"
         sticky="top"
-        style={{ borderBottom: "2px solid gray" }}
+        style={{ borderBottom: "2px solid gray", backgroundColor: "white" }}
       >
-        <Container fluid>
-          <Row style={{ display: "flex", flexWrap: "nowrap", width: "100%" }}>
-            <Col sm={2} lg={1}>
-              search bar
-            </Col>
-            <Col sm={6}>
-              <Navbar.Brand href="#" className="justify-content-center">
-                <Media>
-                  <img
-                    width={40}
-                    height={40}
-                    className="mr-3"
-                    src="./uploads/laxmibank.jpg"
-                    alt="Generic placeholder"
+        <Container fluid className="p-0">
+          <Row
+            style={{
+              height: "100%",
+              display: "flex",
+              flexWrap: "nowrap",
+              width: "100%",
+            }}
+          >
+            <Col sm={4}>
+              <Form inline className="custom__col">
+                {/* <InputGroup>
+                  <InputGroup.Prepend className="search__iconCtrl">
+                    <InputGroup.Text id="home-search">
+                      <BsSearch />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    placeholder="What Are You Looking For?"
+                    aria-label="search"
+                    aria-describedby="home-search"
                   />
-                </Media>
+                  
+                </InputGroup> */}
+
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2 input__ctrl"
+                />
+                <BsSearch className="search__icon" size={25} />
+              </Form>
+            </Col>
+            <Col sm={4} className="custom__col">
+              <Navbar.Brand href="#" className="m-0">
+                <img
+                  width={45}
+                  height={45}
+                  className="mr-2"
+                  src="./uploads/laxmibank.png"
+                  alt="Generic placeholder"
+                />
+              </Navbar.Brand>
+              <Navbar.Brand>
+                <h1 className="logo__text">Laxmi Bank</h1>
               </Navbar.Brand>
             </Col>
-            <Col sm={4} className="justify-content-right">
+            <Col sm={4} className="custom__col px-0 justify-content-end">
               Amount display
             </Col>
           </Row>
