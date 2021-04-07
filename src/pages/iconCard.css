@@ -1,0 +1,9 @@
+.cardItem{
+    height: 11rem;
+    width: 11rem;
+}
+.cardText{
+    font-Size: 12px;
+    font-weight: bold;
+    margin-bottom: 30%; 
+}

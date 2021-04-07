@@ -1,5 +1,10 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import BillPaymentTransfer from "../pages/billPaymentTransfer";
+import ChangePassword from "../pages/changePassword";
+import ConfigureService from "../pages/configureService";
+import FundTransfer from "../pages/fundTransfer";
+import FundTransferLimitDetail from "../pages/fundTransferLimitDetail";
 
 const Content = () => {
   return (
@@ -12,6 +17,11 @@ const Content = () => {
         </Row>
         <Row>
           <Col sm={12}>
+            <FundTransfer/>
+            <FundTransferLimitDetail/>
+            <ChangePassword />
+            <BillPaymentTransfer />
+            <ConfigureService/>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed
               officia quia ratione explicabo. Explicabo esse natus, praesentium
