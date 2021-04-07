@@ -8,7 +8,7 @@ import FundTransferLimitDetail from "../pages/fundTransferLimitDetail";
 
 const Content = () => {
   return (
-    <div style={{ paddingLeft: "20px" }}>
+    <div className="contentBox__ctrl">
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -17,11 +17,11 @@ const Content = () => {
         </Row>
         <Row>
           <Col sm={12}>
-            <FundTransfer/>
-            <FundTransferLimitDetail/>
+            <FundTransfer />
+            <FundTransferLimitDetail />
             <ChangePassword />
             <BillPaymentTransfer />
-            <ConfigureService/>
+            <ConfigureService />
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed
               officia quia ratione explicabo. Explicabo esse natus, praesentium
