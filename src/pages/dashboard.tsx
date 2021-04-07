@@ -13,6 +13,7 @@ const Dashboard = () => {
       <div style={{ width: "91.66%" }}>
         <Header />
         <Content />
+        
       </div>
     </div>
   );
