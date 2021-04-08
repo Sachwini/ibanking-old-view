@@ -9,7 +9,7 @@ import DefaultLayout from "./Layout";
 
 function App() {
   const Dashboard = React.lazy(() => import("./pages/dashboard"));
-  const FundTransfer = React.lazy(() => import("./pages/fundTransfer"));
+  const FundTransfer = React.lazy(() => import("./pages/transfer"));
 
   return (
     <DefaultLayout>
