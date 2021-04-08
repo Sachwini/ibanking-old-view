@@ -27,13 +27,13 @@ function ChangePassword() {
                 </Form>
             </Card.Body>
             </Card>
-            <Card style={{ width: '30rem' }}><Card.Body>
+            <Card style={{ width: '36rem' }}><Card.Body>
                 <div className='font-weight-bold'>
                     <ul className="list-unstyled">
                         <li style={{padding:'14px'}}>Password Policy</li>
                     <li>
-                        <ul>
-                        <li>The overall length of passeord must be greater than 6 and less than 15</li>
+                        <ul style={{paddingLeft:'16px'}}> 
+                        <li>The overall length of password must be greater than 6 and less than 15</li>
                         <li>Atleast 1 Number of special characters in password</li>
                         <li>Atleast 1 Number of digits in password</li>
                         <li>Atleast 2 Number of lowercase letters in password</li>

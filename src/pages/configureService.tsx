@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-import { Card } from "react-bootstrap";
-import { RiLockPasswordLine,RiUserStarLine,RiStarSmileLine} from "react-icons/ri";
-=======
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import {
   RiLockPasswordLine,
   RiUserStarLine,
   RiStarSmileLine,
-  RiPieChartBoxFill,
 } from "react-icons/ri";
->>>>>>> 2fc8b75dc786c1e5e236281e8cfa4ab5e12cd657
 import { VscReport } from "react-icons/vsc";
 import { FiUserPlus } from "react-icons/fi";
 import { BsShieldLock } from "react-icons/bs";
@@ -22,14 +16,14 @@ import "./iconCard.css";
 function ConfigureService() {
   return (
     <div>
-      <Container fluid className="m-auto d-flex flex-wrap">
+      <Container fluid className="m-auto d-flex flex-wrap"> 
         <Card className="cardItem m-2 ">
           <Card.Body className="d-flex justify-content-center align-items-center">
             <RiLockPasswordLine size="40px" />
           </Card.Body>
           <Card.Text className="d-flex justify-content-center align-items-center">
             <span className="cardText">Change Password</span>
-          </Card.Text>
+          </Card.Text> 
         </Card>
 
         <Card className="cardItem m-2">

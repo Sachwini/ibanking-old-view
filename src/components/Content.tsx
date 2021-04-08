@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import UpcomingPayment from "../pages/activities/upcomingPayment";
 import BillPaymentTransfer from "../pages/billPaymentTransfer";
 import ChangePassword from "../pages/changePassword";
 import ConfigureService from "../pages/configureService";
@@ -21,7 +22,8 @@ const Content = () => {
             <FundTransferLimitDetail/>
             <ChangePassword />
             <BillPaymentTransfer />
-            <ConfigureService/>
+            <ConfigureService />
+            <UpcomingPayment/>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed
               officia quia ratione explicabo. Explicabo esse natus, praesentium

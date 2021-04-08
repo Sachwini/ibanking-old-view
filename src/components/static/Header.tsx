@@ -32,20 +32,6 @@ const Header = () => {
           >
             <Col sm={4}>
               <Form inline className="custom__col">
-                {/* <InputGroup>
-                  <InputGroup.Prepend className="search__iconCtrl">
-                    <InputGroup.Text id="home-search">
-                      <BsSearch />
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    placeholder="What Are You Looking For?"
-                    aria-label="search"
-                    aria-describedby="home-search"
-                  />
-                  
-                </InputGroup> */}
-
                 <FormControl
                   type="text"
                   placeholder="Search"
