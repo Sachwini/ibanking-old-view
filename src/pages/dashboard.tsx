@@ -10,9 +10,11 @@ const Dashboard = (props: RouteComponentProps) => {
     props.history.push(url);
   };
 
-  return <div>
-    <h1>Dashboard</h1>
-  </div>
+  return (
+    <div style={{ width: "93%" }}>
+      <Content />
+    </div>
+  );
 };
 
 export default Dashboard;
