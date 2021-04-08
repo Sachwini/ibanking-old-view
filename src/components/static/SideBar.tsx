@@ -1,42 +1,64 @@
-import React from "react";
-import { Button, Dropdown, Image } from "react-bootstrap";
+import "./sidebar.css";
+import {
+  PersonCircle,
+  HouseDoor,
+  Wallet2,
+  CashStack,
+  Gear,
+  BoxArrowRight,
+  Mailbox2,
+} from "react-bootstrap-icons";
 
-const SideBar = () => {
+interface Props {
+  goto: (url: string) => void;
+}
+
+const SideBar = (props: Props) => {
   return (
     <div className="sidebar__ctrl">
-      <div>
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="transparent"
-            id="dropdown-basic"
-            style={{
-              boxShadow: "none",
-            }}
-          >
-            <Image
-              width={50}
-              height={50}
-              src="../logo512.png"
-              roundedCircle
-              style={{ padding: "10px", border: "2px solid white" }}
-            />
-          </Dropdown.Toggle>
+      <a className="sidebar_action" onClick={() => props.goto("/")}>
+        <PersonCircle size={32} />
+      </a>
 
-          <Dropdown.Menu className="mytest">
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
       <div style={{ marginTop: "20px" }}>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
+        <ul className="main-menu-ul">
+          <li>
+            <a className="sidebar_action">
+              <HouseDoor size={25} />
+              <small>Home</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action">
+              <Wallet2 size={25} />
+              <small>Account</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action">
+              <CashStack size={25} />
+              <small>Payments</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action">
+              <Mailbox2 size={25} />
+              <small>Transfer</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action">
+              <Gear size={25} />
+              <small>Services</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action">
+              <BoxArrowRight size={25} />
+              <small>Logout</small>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );
