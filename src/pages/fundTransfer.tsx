@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
+import Account from "../pages/Account";
 
 function FundTransfer() {
     const [val, setVal] = useState<any>({});
@@ -50,7 +51,8 @@ function FundTransfer() {
                 </Button>
                 </Form>
                 </Card.Body>
-                </Card> 
+            </Card>
+            <Account/>
         </>
     )
 }

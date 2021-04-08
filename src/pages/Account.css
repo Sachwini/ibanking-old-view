@@ -1,0 +1,19 @@
+.headerText{
+font-weight: bold;
+font-size: 16px;
+color:#242222b9
+}
+.rowText{
+font-weight: bold;
+font-size: 19px;
+color:#242222b9
+}
+.default{
+    color: #000000;
+}
+.cardBackground{
+    background-color: whitesmoke;
+}
+.iconSpacing{
+    margin-left: 10px;
+}
