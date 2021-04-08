@@ -4,13 +4,19 @@ import Content from "../components/Content";
 import Header from "../components/static/Header";
 import SideBar from "../components/static/SideBar";
 import "../App.css";
-const Dashboard = () => {
+import { RouteComponentProps } from "react-router";
+
+const Dashboard = (props: RouteComponentProps) => {
+  const gotUrl = (url: string) => {
+    props.history.push(url)
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}>
-      <div style={{ width: "8.33%" }}>
-        <SideBar />
+      <div style={{ width: "7%" }}>
+        <SideBar goto={gotUrl} />
       </div>
-      <div style={{ width: "91.66%" }}>
+      <div style={{ width: "93%" }}>
         <Header />
         <Content />
         

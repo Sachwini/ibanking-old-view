@@ -1,0 +1,16 @@
+
+a.sidebar_action {
+    padding-left: 0.6em;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.main-menu-ul {
+    list-style-type: none;
+    margin-top: 1em;
+}
+
+.main-menu-ul li {
+    margin-top: 1em;
+}
