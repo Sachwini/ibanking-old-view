@@ -6,6 +6,7 @@
 
 .myPointer {
   cursor: pointer;
+  position: relative;
 }
 
 /* -----------------NavBar Customization START-------------------- */
@@ -41,18 +42,33 @@
   outline: none;
   border-radius: 20px;
   background-color: #fcfcfc;
+  size: 10px;
+}
+
+.input__ctrl {
+  position: relative;
+  width: 40px;
 }
 
 .search__icon {
-  position: relative;
-  right: 45px;
-  padding: 5px;
+  /* position: relative;
+  left: -45px;
+  padding: 5px; */
+  margin-left: -40px;
   cursor: pointer;
+  clear: both;
+  z-index: 100;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.search__icon:hover {
+  transition: all 0.2s;
+  background-color: #f58128;
+  color: #f1f1f1;
 }
 .search__icon:active {
-  transition: all 0.2s;
-  background-color: #f5812883;
-  color: #f5812883;
+  color: #495057;
 }
 
 .custom__col .form-control:focus {
@@ -66,10 +82,7 @@
 
 .badge__ctrl {
   border-radius: 50% !important;
-  position: relative;
-  top: -5px;
-  right: 10px;
-  font-size: 10px;
+  margin-left: 15px;
 }
 
 .userBalance__inHeader {
@@ -77,8 +90,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
-  padding-left: 2.5rem;
+  padding: 0 1rem;
+  padding-left: 2.1rem;
+  /* color: #be7b47; */
 }
 
 .userBalance__inHeader p {
@@ -101,9 +115,9 @@
   height: 100vh;
   width: 8.33%;
   position: fixed;
-  padding: 20px;
   background-color: #f58228;
   color: white;
+  z-index: 1200;
   /* width: 100%; */
   /* height: calc(100vh - 50px); */
   /* z-index: 1200; */
@@ -113,6 +127,10 @@
   scrollbar-width: 5px;
   scrollbar-color: green;
   scroll-margin-top: 50px; */
+}
+
+.mytest {
+  z-index: auto;
 }
 /* -----------------SideBar Customization END-------------------- */
 

@@ -24,7 +24,7 @@ const Header = () => {
     <>
       <Navbar
         expand="lg"
-        className="justify-content-between navbar__ctrl"
+        className="justify-content-between navbar__ctrl pr-0"
         sticky="top"
       >
         <Container fluid className="p-0">
@@ -40,7 +40,7 @@ const Header = () => {
               </Form>
             </Col>
 
-            <Col sm={4} className="custom__col">
+            <Col sm={4} className="custom__col pr-0 m-0">
               <Navbar.Brand href="#" className="m-0">
                 <img
                   width={45}
@@ -55,12 +55,14 @@ const Header = () => {
               </Navbar.Brand>
             </Col>
 
-            <Col sm={4} className="custom__col px-0 justify-content-end">
-              <IoFileTrayOutline size="30px" className="mr-4 myPointer" />
-
+            <Col sm={4} className="custom__col  justify-content-end p-0">
               <div>
-                <BsBell size="25px" className="myPointer" />
-                <Badge variant="info" className="badge__ctrl myPointer">
+                <IoFileTrayOutline size="30px" className="pr-2 myPointer" />
+              </div>
+
+              <div className="pl-2">
+                <BsBell size="25px" className="myPointer position-absolute" />
+                <Badge variant="info" className="myPointer badge__ctrl">
                   9
                 </Badge>
               </div>
