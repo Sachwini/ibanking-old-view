@@ -23,7 +23,7 @@ const SideBar = (props: Props) => {
       <div style={{ marginTop: "20px" }}>
         <ul className="main-menu-ul">
           <li>
-            <a className="sidebar_action">
+            <a className="sidebar_action" onClick={() => props.goto('/')}>
               <HouseDoor size={25} />
               <small>Home</small>
             </a>
@@ -41,7 +41,8 @@ const SideBar = (props: Props) => {
             </a>
           </li>
           <li>
-            <a className="sidebar_action">
+            <a className="sidebar_action"
+              onClick={() => props.goto('/fund-transfer')}>
               <Mailbox2 size={25} />
               <small>Transfer</small>
             </a>

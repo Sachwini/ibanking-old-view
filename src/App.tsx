@@ -5,17 +5,21 @@ import { Loader } from "./components/Loader";
 import { Route } from "react-router";
 import { FourZeroFour } from "./components/NotFound";
 import React from "react";
+import DefaultLayout from "./Layout";
 
 function App() {
   const Dashboard = React.lazy(() => import("./pages/dashboard"));
+  const FundTransfer = React.lazy(() => import("./pages/fundTransfer"));
 
   return (
-    <SwitchWithCatch>
-      <React.Suspense fallback={<Loader />}>
-        <Route exact path="/" component={Dashboard} />
-        <Route component={FourZeroFour} />
-      </React.Suspense>
-    </SwitchWithCatch>
+    <DefaultLayout>
+      <SwitchWithCatch>
+        <React.Suspense fallback={<Loader />}>
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/fund-transfer" component={FundTransfer} />
+        </React.Suspense>
+      </SwitchWithCatch>
+    </DefaultLayout>
   );
 }
 
