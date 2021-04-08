@@ -8,8 +8,8 @@ import { RouteComponentProps } from "react-router";
 
 const Dashboard = (props: RouteComponentProps) => {
   const gotUrl = (url: string) => {
-    props.history.push(url)
-  }
+    props.history.push(url);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}>
@@ -19,7 +19,6 @@ const Dashboard = (props: RouteComponentProps) => {
       <div style={{ width: "93%" }}>
         <Header />
         <Content />
-        
       </div>
     </div>
   );

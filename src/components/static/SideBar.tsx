@@ -1,4 +1,4 @@
-import './sidebar.css'
+import "./sidebar.css";
 import {
   PersonCircle,
   HouseDoor,
@@ -6,17 +6,17 @@ import {
   CashStack,
   Gear,
   BoxArrowRight,
-  Mailbox2
-} from 'react-bootstrap-icons'
+  Mailbox2,
+} from "react-bootstrap-icons";
 
 interface Props {
-  goto: (url: string) => void
+  goto: (url: string) => void;
 }
 
 const SideBar = (props: Props) => {
   return (
     <div className="sidebar__ctrl">
-      <a className="sidebar_action" onClick={() => props.goto('/')}>
+      <a className="sidebar_action" onClick={() => props.goto("/")}>
         <PersonCircle size={32} />
       </a>
 
