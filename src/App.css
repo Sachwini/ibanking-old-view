@@ -128,9 +128,9 @@
 
 /* -----------------ContentBox Customization START-------------------- */
 .contentBox__ctrl {
-  padding-top: 1rem;
+  padding-top: 1em;
   background: #f1f1f1;
-  padding-left: 1rem;
+  padding-left: 1em;
 }
 
 /* -----------------ContentBox Customization END-------------------- */

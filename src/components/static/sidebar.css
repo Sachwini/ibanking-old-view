@@ -1,16 +1,34 @@
-
-a.sidebar_action {
-    padding-left: 0.6em;
-    color: #fff;
-    cursor: pointer;
-
+a:hover {
+  text-decoration: none;
+}
+.sidebar__ctrl {
+  height: 100vh;
+  width: 7%;
+  position: fixed;
+  background-color: #f58228;
+  color: white;
+  padding-top: 1em;
+  padding: auto;
 }
 
 .main-menu-ul {
-    list-style-type: none;
-    margin-top: 1em;
+  list-style-type: none;
+  margin-top: 1em;
 }
 
 .main-menu-ul li {
-    margin-top: 1em;
+  margin-top: 1em;
+}
+
+a.sidebar_action {
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+a.sidebar_action:hover {
+  opacity: 0.8;
 }
