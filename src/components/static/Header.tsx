@@ -6,7 +6,6 @@ import {
   Col,
   Form,
   FormControl,
-  Button,
   Badge,
 } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
@@ -17,7 +16,7 @@ const Header = () => {
   const [eye, setEye] = useState<boolean>(false);
 
   const handleBalanceShow = () => {
-    setEye(true);
+    setEye(true); 
   };
 
   return (

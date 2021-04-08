@@ -1,6 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
 import UpcomingPayment from "../pages/activities/upcomingPayment";
 import Profile from "../pages/activities/profile";
+import FixedDeposit from "../pages/activities/fixedDeposit";
+import QuickPay from "../pages/activities/quickPay";
 import BillPaymentTransfer from "../pages/billPaymentTransfer";
 import ChangePassword from "../pages/changePassword";
 import ConfigureService from "../pages/configureService";
@@ -13,7 +15,7 @@ const Content = () => {
       <Container fluid>
         <Row>
           <Col sm={12}>
-            <h1> this is a dynamic content field </h1>
+            <h1> this is a dynamic content field </h1> 
           </Col>
         </Row>
         <Row>
@@ -24,7 +26,9 @@ const Content = () => {
             <BillPaymentTransfer />
             <ConfigureService />
             <UpcomingPayment />
-            <Profile/>
+            <Profile />
+            <FixedDeposit />
+            <QuickPay/>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed
               officia quia ratione explicabo. Explicabo esse natus, praesentium
