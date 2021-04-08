@@ -1,6 +1,6 @@
-import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import UpcomingPayment from "../pages/activities/upcomingPayment";
+import Profile from "../pages/activities/profile";
 import BillPaymentTransfer from "../pages/billPaymentTransfer";
 import ChangePassword from "../pages/changePassword";
 import ConfigureService from "../pages/configureService";
@@ -9,7 +9,7 @@ import FundTransferLimitDetail from "../pages/fundTransferLimitDetail";
 
 const Content = () => {
   return (
-    <div style={{ paddingLeft: "20px" }}>
+    <div className="contentBox__ctrl">
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -18,12 +18,13 @@ const Content = () => {
         </Row>
         <Row>
           <Col sm={12}>
-            <FundTransfer/>
-            <FundTransferLimitDetail/>
+            <FundTransfer />
+            <FundTransferLimitDetail />
             <ChangePassword />
             <BillPaymentTransfer />
             <ConfigureService />
-            <UpcomingPayment/>
+            <UpcomingPayment />
+            <Profile/>
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed
               officia quia ratione explicabo. Explicabo esse natus, praesentium

@@ -6,3 +6,12 @@
   margin-right: auto;
   margin-left: 40%;
 }
+.circle-icon {
+    background: #fffdfd;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+}
