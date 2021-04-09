@@ -6,7 +6,7 @@ import './billPaymentLog.css'
 function BillPaymentLog() {
     return (
       <>
-        <Card style={{ width: "36rem" }}>
+        <Card style={{ width: "36rem" }}> 
           <Card.Body>
                     <div>
                         <h5><GrDocumentPdf/><span className="pdf">DownLoad PDF</span></h5>
