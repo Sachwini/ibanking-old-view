@@ -1,10 +1,17 @@
+.page-title {
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
 .page-title h1 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #3C3F42;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3c3f42;
+  text-transform: capitalize;
 }
 
 .page-title h6 {
-    color: #A3A7AB;
-    font-size: 0.8rem;
+  color: #a3a7ab;
+  font-size: 0.8rem;
+  text-transform: capitalize;
 }

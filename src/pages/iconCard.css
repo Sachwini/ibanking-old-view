@@ -1,9 +1,10 @@
-.cardItem{
-    height: 11rem;
-    width: 11rem;
+.cardItem {
+  height: 9rem;
+  width: 9rem;
+  box-shadow: 0 5px 10px #dfdfdf;
 }
-.cardText{
-    font-Size: 12px;
-    font-weight: bold;
-    margin-bottom: 30%; 
+.cardText {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 30%;
 }

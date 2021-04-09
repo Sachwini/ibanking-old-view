@@ -1,8 +1,8 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header from "./components/static/Header";
-import SideBar from "./components/static/SideBar";
-import "./App.css";
+import Header from "./Header";
+import SideBar from "./SideBar";
+import "./Layout.css";
 
 const DefaultLayout: React.SFC<RouteComponentProps<{}>> = (props) => {
   const gotUrl = (url: string) => {

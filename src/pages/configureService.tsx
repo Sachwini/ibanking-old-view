@@ -11,19 +11,24 @@ import { GrDocumentTime } from "react-icons/gr";
 import { FcQuestions } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
 import { FcMoneyTransfer } from "react-icons/fc";
-import "./iconCard.css";
+import "./IconCard.css";
+import { PageTitle } from "components/page-title";
 
 function ConfigureService() {
   return (
-    <div>
-      <Container fluid className="m-auto d-flex flex-wrap"> 
+    <Container className="justify-content-center">
+      <PageTitle
+        title="Configur Services"
+        subTitle="Change Your Internet Banking Settings"
+      />
+      <div className="d-flex flex-wrap mt-1">
         <Card className="cardItem m-2 ">
           <Card.Body className="d-flex justify-content-center align-items-center">
             <RiLockPasswordLine size="40px" />
           </Card.Body>
           <Card.Text className="d-flex justify-content-center align-items-center">
             <span className="cardText">Change Password</span>
-          </Card.Text> 
+          </Card.Text>
         </Card>
 
         <Card className="cardItem m-2">
@@ -106,8 +111,8 @@ function ConfigureService() {
             <span className="cardText">Fixed Deposit</span>
           </Card.Text>
         </Card>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
 

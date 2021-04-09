@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import "./Header.css";
 import {
   Container,
   Navbar,
@@ -46,7 +47,7 @@ const Header = () => {
     <Navbar
       expand="lg"
       sticky="top"
-      className="justify-content-between navbar__ctrl pr-0"
+      className="justify-content-between pr-0 navbar__ctrl"
     >
       <Container fluid className="p-0">
         <Row className="custom__row">
