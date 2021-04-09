@@ -8,9 +8,8 @@ import { VscReport } from "react-icons/vsc";
 import { FiUserPlus } from "react-icons/fi";
 import { BsShieldLock } from "react-icons/bs";
 import { GrDocumentTime } from "react-icons/gr";
-import { FcQuestions } from "react-icons/fc";
+import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
-import { FcMoneyTransfer } from "react-icons/fc";
 import "./ConfigureService.css";
 import { PageTitle } from "components/page-title";
 

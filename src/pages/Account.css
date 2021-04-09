@@ -11,9 +11,11 @@ color:#242222b9
 .default{
     color: #000000;
 }
-.cardBackground{
-    background-color: whitesmoke;
-}
 .iconSpacing{
     margin-left: 10px;
+}
+.folderIcon{
+    padding:5px;
+    margin-left: 10px;
+    margin-top: 20px;
 }
