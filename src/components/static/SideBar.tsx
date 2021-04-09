@@ -29,7 +29,10 @@ const SideBar = (props: Props) => {
             </a>
           </li>
           <li>
-            <a className="sidebar_action">
+            <a
+              className="sidebar_action"
+              onClick={() => props.goto("/account")}
+            >
               <Wallet2 size={25} />
               <small>Account</small>
             </a>

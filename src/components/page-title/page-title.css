@@ -1,17 +1,33 @@
-.page-title {
+.page__title,
+.account__title {
   padding-left: 1rem;
   padding-bottom: 1rem;
 }
 
-.page-title h1 {
+.page__title h1,
+.account__title h1 {
   font-size: 1.1rem;
   font-weight: 600;
   color: #3c3f42;
   text-transform: capitalize;
 }
 
-.page-title h6 {
+.page__title h6,
+.account__title h6 {
   color: #a3a7ab;
   font-size: 0.8rem;
   text-transform: capitalize;
 }
+
+.account__title {
+  display: inline-flex;
+}
+
+.account__title h1 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* .AccountName {
+  text-transform: uppercase;
+} */
