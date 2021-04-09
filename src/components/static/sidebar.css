@@ -1,6 +1,13 @@
 a:hover {
   text-decoration: none;
 }
+/* 
+.sidebar__color {
+  background-color: #f58228;
+  color: white;
+  min-width: 110px !important;
+} */
+
 .sidebar__ctrl {
   height: 100vh;
   width: 7%;
@@ -9,11 +16,12 @@ a:hover {
   color: white;
   padding-top: 1em;
   padding: auto;
+  z-index: 1200;
 }
 
 .main-menu-ul {
   list-style-type: none;
-  margin-top: 1em;
+  margin-top: 2em;
 }
 
 .main-menu-ul li {
