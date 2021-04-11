@@ -10,6 +10,13 @@ import ConfigureService from "pages/configureService";
 function App() {
   const Dashboard = React.lazy(() => import("./pages/dashboard"));
   const FundTransfer = React.lazy(() => import("./pages/transfer"));
+  const ChangePassword = React.lazy(() => import("./pages/changePassword"));
+  const BillPaymentLog = React.lazy(
+    () => import("./pages/payment/paymentIndex")
+  );
+  const BillPaymentTransfer = React.lazy(
+    () => import("./pages/billPaymentTransfer")
+  );
 
   return (
     <DefaultLayout>
@@ -18,6 +25,12 @@ function App() {
           <Route exact path="/" component={Dashboard} />
           <Route path="/fund-transfer" component={FundTransfer} />
           <Route path="/service-config" component={ConfigureService} />
+          <Route path="/change-password" component={ChangePassword} />
+          <Route path="/bill-payment-log" component={BillPaymentLog} />
+          <Route
+            path="/bill-payment-transfer"
+            component={BillPaymentTransfer} 
+          />
         </React.Suspense>
       </SwitchWithCatch>
     </DefaultLayout>

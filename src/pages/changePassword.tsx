@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Button, Card, Form, Container } from "react-bootstrap";
 
 function ChangePassword() {
     return (
-        <>
+        <Container className="justify-content-center">
         <Card style={{ width: '30rem' }}><Card.Body>
            <Form>
                 <Form.Group controlId="formBasicPassword">
@@ -44,7 +44,7 @@ function ChangePassword() {
                     </div>
             </Card.Body>
             </Card>
-        </>
+        </Container>
     )
 }
 

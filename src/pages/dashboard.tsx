@@ -1,15 +1,16 @@
 import { RouteComponentProps } from "react-router";
 import { PageTitle } from "components/page-title/index";
 import Account from "../pages/Account"
-import BillPaymentLog from "../pages/billPaymentLog";
+import BillPaymentLog from "../pages/payment/billPaymentLog";
+import {Container} from "react-bootstrap"
 
 const Dashboard = (props: RouteComponentProps) => {
   return (
-    <div>
-      <PageTitle title="Dashboard" />
+    <Container fluid>
+      <PageTitle title="Dashboard" /> 
       <Account />
-      <BillPaymentLog/>
-    </div>
+      <BillPaymentLog /> 
+      </Container>
   );
 };
 
