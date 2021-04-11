@@ -8,10 +8,9 @@ import { VscReport } from "react-icons/vsc";
 import { FiUserPlus } from "react-icons/fi";
 import { BsShieldLock } from "react-icons/bs";
 import { GrDocumentTime } from "react-icons/gr";
-import { FcQuestions } from "react-icons/fc";
+import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
-import { FcMoneyTransfer } from "react-icons/fc";
-import "./iconCard.css";
+import "./ConfigureService.css";
 import { PageTitle } from "components/page-title";
 
 function ConfigureService() {
@@ -22,94 +21,94 @@ function ConfigureService() {
         subTitle="Change Your Internet Banking Settings"
       />
       <div className="d-flex flex-wrap mt-1">
-        <Card className="cardItem m-2 ">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <RiLockPasswordLine size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <RiLockPasswordLine size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Change Password</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Change Password</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <VscReport size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <VscReport size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Report</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Report</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <FiUserPlus size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <FiUserPlus size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">New Account Activate</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">New Account Activate</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <BsShieldLock size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <BsShieldLock size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Account Security</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Account Security</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <RiUserStarLine size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <RiUserStarLine size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Favorite Merchant</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Favorite Merchant</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <RiStarSmileLine size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <RiStarSmileLine size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Favorite Account</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Favorite Account</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <GrDocumentTime size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <GrDocumentTime size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Schedule Transfer</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Schedule Transfer</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <FcMoneyTransfer size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <FcMoneyTransfer size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Schedule BillPayment</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Schedule BillPayment</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <FcQuestions size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <FcQuestions size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Change Security Question</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Change Security Question</span>
-          </Card.Text>
         </Card>
 
-        <Card className="cardItem m-2">
-          <Card.Body className="d-flex justify-content-center align-items-center">
-            <FaPiggyBank size="40px" />
+        <Card className="card__ctrl">
+          <Card.Body className="cardBody__ctrl">
+            <Card.Title>
+              <FaPiggyBank size="40px" />
+            </Card.Title>
+            <Card.Text className="cardText">Fixed Deposit</Card.Text>
           </Card.Body>
-          <Card.Text className="d-flex justify-content-center align-items-center">
-            <span className="cardText">Fixed Deposit</span>
-          </Card.Text>
         </Card>
       </div>
     </Container>
