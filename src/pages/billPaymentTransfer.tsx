@@ -1,8 +1,13 @@
 import { Button, Card, Form, Table, Container } from "react-bootstrap";
 import { PageTitle } from "components/page-title";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { useState } from "react";
 
 
 function BillPaymentTransfer() {
+  const [options, setOptions] = useState<any>(["a", "b", "c", "d", "e"]);
+  const [merchant, setMerchant] = useState<any>(["m1", "m2", "m3", "m4", "m5"]);
+  const [payfor, setPayfor] = useState<any>(["c1", "c2", "p3", "a4", "b5"]);
     return (
       <>
         <Container className="justify-content-center">
@@ -11,46 +16,37 @@ function BillPaymentTransfer() {
             subTitle="Transfer funds to other account"
           />
           <div className="d-flex flex-wrap mt-1">
-            <Card className="m-2" style={{ width: "30rem",height:"25rem" }}>
+            <Card className="m-2" style={{ width: "30rem", height: "25rem" }}>
               <Card.Body>
                 <Form>
                   <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label className="font-weight-bold">
                       From Account
                     </Form.Label>
-                    <Form.Control as="select">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Control>
+                    <Typeahead
+                      options={options}
+                      placeholder="Choose from account..."
+                    />
                   </Form.Group>
 
                   <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label className="font-weight-bold">
                       Merchant Group
                     </Form.Label>
-                    <Form.Control as="select">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Control>
+                    <Typeahead
+                      options={merchant}
+                      placeholder="Choose merchant group..."
+                    />
                   </Form.Group>
 
                   <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label className="font-weight-bold">
                       Pay For
                     </Form.Label>
-                    <Form.Control as="select">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Control>
+                    <Typeahead
+                      options={payfor}
+                      placeholder="Choose pay for..."
+                    />
                   </Form.Group>
                   <Button
                     className="btn btn-warning"

@@ -6,6 +6,7 @@ import { Route } from "react-router";
 import React from "react";
 import DefaultLayout from "./components/static/Layout";
 import ConfigureService from "pages/configureService";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 function App() {
   const Dashboard = React.lazy(() => import("./pages/dashboard"));
@@ -29,7 +30,7 @@ function App() {
           <Route path="/bill-payment-log" component={BillPaymentLog} />
           <Route
             path="/bill-payment-transfer"
-            component={BillPaymentTransfer} 
+            component={BillPaymentTransfer}
           />
         </React.Suspense>
       </SwitchWithCatch>
