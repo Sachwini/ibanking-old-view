@@ -13,6 +13,18 @@ a:hover {
   z-index: 1200;
 }
 
+.sidebar__item {
+  margin-top: 3rem;
+}
+
+.sidebar__item:hover {
+  height: 100%;
+  /* overflow-y: scroll;
+  scrollbar-width: 5px;
+  scrollbar-base-color: lightcoral;
+  scrollbar-color: green; */
+}
+
 .main-menu-ul {
   list-style-type: none;
   margin-top: 2em;
