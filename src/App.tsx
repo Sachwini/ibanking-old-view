@@ -5,19 +5,18 @@ import { Loader } from "./components/Loader";
 import { Route } from "react-router";
 import React from "react";
 import DefaultLayout from "./components/static/Layout";
-import ConfigureService from "pages/configureService";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
 function App() {
-  const Dashboard = React.lazy(() => import("./pages/dashboard"));
-  const FundTransfer = React.lazy(() => import("./pages/transfer"));
-  const ChangePassword = React.lazy(() => import("./pages/changePassword"));
-  const BillPaymentLog = React.lazy(
-    () => import("./pages/payment/paymentIndex")
+  const Dashboard = React.lazy(() => import("./user/Dashboard"));
+  const FundTransfer = React.lazy(() => import("./user/transfer"));
+  const ConfigureService = React.lazy(
+    () => import("./user/user-setting/ConfigureService")
   );
-  const BillPaymentTransfer = React.lazy(
-    () => import("./pages/billPaymentTransfer")
-  );
+  const Account = React.lazy(() => import("./user/user-account/Account"));
+  const Payment = React.lazy(() => import("./user/payment/index"));
+  const Transfer = React.lazy(() => import("./user/payment/paymentIndex"));
+  const ChangePassword = React.lazy(() => import("./user/user-setting/ChangePassword"));
 
   return (
     <DefaultLayout>
@@ -26,12 +25,10 @@ function App() {
           <Route exact path="/" component={Dashboard} />
           <Route path="/fund-transfer" component={FundTransfer} />
           <Route path="/service-config" component={ConfigureService} />
-          <Route path="/change-password" component={ChangePassword} />
-          <Route path="/bill-payment-log" component={BillPaymentLog} />
-          <Route
-            path="/bill-payment-transfer"
-            component={BillPaymentTransfer}
-          />
+          <Route path="/account" component={Account} />
+          <Route path="/payment" component={Payment} />
+          <Route path="/changePassword" component={ChangePassword} />
+          <Route path="/paymentLog" component={Transfer} />
         </React.Suspense>
       </SwitchWithCatch>
     </DefaultLayout>

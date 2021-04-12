@@ -1,24 +1,22 @@
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import Account from "./Account";
+import { Typeahead } from "react-bootstrap-typeahead";
 
-function FundTransfer() {
+export const IBFTForm = () => {
   const [val, setVal] = useState<any>({});
-
+  const [options, setOptions] = useState<any>(["a", "b", "c", "d", "e"]);
+  
   return (
     <>
-      <Card style={{ width: "30rem" }}>
+      <Card>
         <Card.Body>
           <Form onChange={setVal}>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label className="font-weight-bold">From Account</Form.Label>
-              <Form.Control as="select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
+              <Typeahead
+                options={options}
+                placeholder="Choose from account..."
+              />
             </Form.Group>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
@@ -64,9 +62,6 @@ function FundTransfer() {
           </Form>
         </Card.Body>
       </Card>
-      <Account />
     </>
   );
-}
-
-export default FundTransfer;
+};

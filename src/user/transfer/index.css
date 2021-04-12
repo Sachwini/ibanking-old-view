@@ -1,0 +1,18 @@
+.custom__tab {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.tab__text {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+th {
+  color: #e6d604;
+  font-weight: 600;
+}

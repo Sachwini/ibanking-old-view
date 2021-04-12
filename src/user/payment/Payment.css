@@ -1,0 +1,10 @@
+.pdf{
+    margin-left: 10px;
+}
+.inputBoxesLayout{
+    display: flex;
+    margin-left: 20px;
+}
+.boxSpacing{
+    margin-left: 20px;
+}

@@ -19,16 +19,6 @@ import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
 const Header = () => {
   const [eye, setEye] = useState<boolean>(false);
 
-  // const [show, setShow] = useState(false);
-  // const [target, setTarget] = useState(null);
-  // const ref = useRef<any>(null);
-
-  // const handleClick = (event: any) => {
-  //   setShow(!show);
-  //   setTarget(event.target);
-  //   console.log(event.target);
-  // };
-
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">Popover title</Popover.Title>

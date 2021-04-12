@@ -6,7 +6,7 @@ import "./billPaymentLog.css";
 function BillPaymentLog() {
   return (
     <>
-      <Card>
+      <Card style={{width:"67rem"}}>
         <Card.Body>
           <div className="inputBoxesLayout"> 
             <div>

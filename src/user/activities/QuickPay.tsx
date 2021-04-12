@@ -2,7 +2,7 @@ import { Card, Container } from "react-bootstrap";
 import { GrDocumentTransfer } from "react-icons/gr";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { FcQuestions } from "react-icons/fc";
-import "./image.css";
+import "./Image.css";
 
 function QuickPay() {
   return (
