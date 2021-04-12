@@ -1,13 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import Account from "./Account";
 
-function FundTransfer() {
+export const IBFTForm = () => {
   const [val, setVal] = useState<any>({});
 
   return (
     <>
-      <Card style={{ width: "30rem" }}>
+      <Card>
         <Card.Body>
           <Form onChange={setVal}>
             <Form.Group controlId="exampleForm.ControlSelect1">
@@ -64,9 +63,6 @@ function FundTransfer() {
           </Form>
         </Card.Body>
       </Card>
-      <Account />
     </>
   );
-}
-
-export default FundTransfer;
+};

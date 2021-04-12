@@ -7,10 +7,13 @@ import React from "react";
 import DefaultLayout from "./components/static/Layout";
 
 function App() {
-  const Dashboard = React.lazy(() => import("./pages/Dashboard"));
-  const FundTransfer = React.lazy(() => import("./pages/transfer"));
-  const ConfigureService = React.lazy(() => import("./pages/ConfigureService"));
-  const Account = React.lazy(() => import("./pages/Account"));
+  const Dashboard = React.lazy(() => import("./user/Dashboard"));
+  const FundTransfer = React.lazy(() => import("./user/transfer"));
+  const ConfigureService = React.lazy(
+    () => import("./user/user-setting/ConfigureService")
+  );
+  const Account = React.lazy(() => import("./user/user-account/Account"));
+  const Payment = React.lazy(() => import("./user/payment/index"));
 
   return (
     <DefaultLayout>
@@ -20,6 +23,7 @@ function App() {
           <Route path="/fund-transfer" component={FundTransfer} />
           <Route path="/service-config" component={ConfigureService} />
           <Route path="/account" component={Account} />
+          <Route path="/payment" component={Payment} />
         </React.Suspense>
       </SwitchWithCatch>
     </DefaultLayout>
