@@ -6,6 +6,7 @@ import Profile from "./activities/Profile";
 import QuickPay from "./activities/QuickPay";
 import UpcomingPayment from "./activities/UpComingPayment";
 import FixedDeposit from "./activities/FixedDeposit";
+import LineChart from "./activities/LineChart";
 
 const Dashboard = (props: RouteComponentProps) => {
   return (
@@ -16,7 +17,11 @@ const Dashboard = (props: RouteComponentProps) => {
       <Profile />
       <QuickPay />
       <UpcomingPayment />
-    </Container>
+      <div style={{display:"flex",justifyContent:"center", width: "720px" }}>  
+        <LineChart />
+      </div>
+      
+    </Container> 
   );
 };
 
