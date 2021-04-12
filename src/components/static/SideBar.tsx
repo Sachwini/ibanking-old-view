@@ -20,7 +20,7 @@ const SideBar = (props: Props) => {
         <PersonCircle size={32} />
       </a>
 
-      <div style={{ marginTop: "20px" }}>
+      <div className="sidebar__item">
         <ul className="main-menu-ul">
           <li>
             <a className="sidebar_action" onClick={() => props.goto("/")}>

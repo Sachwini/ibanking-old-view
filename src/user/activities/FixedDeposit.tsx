@@ -1,14 +1,11 @@
-import React from "react";
 import { Card } from "react-bootstrap";
-import "./FixedDeposit.css";
+import "./activities.css";
 
 function FixedDeposit() {
   return (
-    <div>
-      <Card className="fixedDeposit">
-        <p className="text">Fixed Deposit</p>
-      </Card>
-    </div>
+    <Card className="fixedDeposit mb-3">
+      <p className="fixedDeposit__text">Fixed Deposit</p>
+    </Card>
   );
 }
 
