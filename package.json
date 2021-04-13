@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.32",
     "@types/react-bootstrap-typeahead": "^5.1.4",
     "@types/react-router": "^5.1.13",
     "@types/react-router-dom": "^5.1.7"
