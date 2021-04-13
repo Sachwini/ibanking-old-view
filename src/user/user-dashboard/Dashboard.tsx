@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "react-router";
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Profile from "../activities/Profile";
+import Profile from "../user-profile/Profile";
 import QuickPay from "../activities/QuickPay";
 import UpcomingPayment from "../activities/UpComingPayment";
 import FixedDeposit from "../activities/FixedDeposit";
@@ -13,17 +13,6 @@ const Dashboard = (props: RouteComponentProps) => {
     <Container fluid>
       <Row className="w-100">
         <Col md={12} lg={8}>
-          {/* <Row>
-            <Col md={12} lg={6}>
-              <p className="d-flex justify-content-end">
-                <FcSynchronize size="24px" />
-                <strong className="px-2">Switch Account</strong>
-              </p>
-            </Col>
-            <Col md={12} lg={6}>
-              <PageTitle title="Quick pay" />
-            </Col>
-          </Row> */}
           <Row>
             <Col md={12} lg={6}>
               <p className="d-flex justify-content-end">
@@ -39,7 +28,7 @@ const Dashboard = (props: RouteComponentProps) => {
           </Row>
         </Col>
 
-        <Col md={12} lg={4}>
+        <Col md={12} lg={4} className="w-100">
           <PageTitle title="Request" />
           <FixedDeposit />
           <Activities />

@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-import { Card } from "react-bootstrap";
-import { HiUserCircle } from "react-icons/hi";
-=======
 import { Card, Col, Row } from "react-bootstrap";
 import { AiOutlineUser } from "react-icons/ai";
-import "./activities.css";
->>>>>>> cc51317344606b4e34c8bb8a8f4bea4188166b6c
 
 function Profile() {
   return (
-    <Card style={{ backgroundColor: "#ee944fb6" }}>
+    <Card style={{ backgroundColor: "#ee944fb6", maxWidth: "500px" }}>
       <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
         <div style={{ width: "20%" }}>
           <AiOutlineUser className="circle-icon" size="3.3em" color="white" />

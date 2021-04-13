@@ -5,7 +5,7 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import "./index.css";
 
-function Transfer() { 
+function Transfer() {
   const [key, setKey] = useState<string | boolean | null>("bpl");
 
   const ActiveStyle = {
@@ -21,6 +21,7 @@ function Transfer() {
     "border-color": "transparent",
     color: "inherit",
   };
+
   return (
     <div>
       <div>

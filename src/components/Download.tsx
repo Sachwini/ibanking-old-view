@@ -1,8 +1,7 @@
-import React from "react";
 import { Card } from "react-bootstrap";
 import { GrDocumentPdf } from "react-icons/gr";
 import { ImFileExcel } from "react-icons/im";
-import "..pages/user-account/Account.css";
+import "../user/user-account/Account.css";
 
 const Download = () => {
   return (
@@ -19,7 +18,7 @@ const Download = () => {
             <p>
               <ImFileExcel />
               <span className="pdf">DownLoad Excel</span>
-            </p>{" "}
+            </p>
           </div>
         </div>
         <div>

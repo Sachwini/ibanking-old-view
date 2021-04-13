@@ -25,17 +25,13 @@ function UpcomingPayment() {
           <Card.Text className="text__ctrl">
             You have not set any upcoming payment recently
           </Card.Text>
-          <Card.Text className="card__text text__ctrl">
+          <Card.Text className="card__text text__ctrl pb-3">
             Select option to schedule
           </Card.Text>
 
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div>
-              <GrDocumentTime size="40px" />
-            </div>
-            <div>
-              <FcMoneyTransfer size="40px" />
-            </div>
+            <GrDocumentTime size="40px" />
+            <FcMoneyTransfer size="40px" />
           </div>
         </Card.Body>
       </Card>

@@ -1,33 +1,20 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./Header.css";
 import {
   Container,
   Navbar,
   Row,
   Col,
-  Form,
-  FormControl,
   Badge,
-  Popover,
-  Overlay,
   OverlayTrigger,
 } from "react-bootstrap";
-import { BsSearch } from "react-icons/bs";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
+import { notification, wallet } from "./support/HeaderDropDown";
+import HeaderSearch from "./support/HeaderSearch";
 
 const Header = () => {
   const [eye, setEye] = useState<boolean>(false);
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3">Popover title</Popover.Title>
-      <Popover.Content>
-        Popover content <strong>some strong content</strong> Normal content
-        again
-      </Popover.Content>
-    </Popover>
-  );
 
   const handleBalanceShow = () => {
     setEye(!eye);
@@ -42,14 +29,7 @@ const Header = () => {
       <Container fluid className="p-0">
         <Row className="custom__row">
           <Col sm={4} className="custom__col">
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2 input__ctrl"
-              />
-              <BsSearch className="search__icon" size={25} />
-            </Form>
+            <HeaderSearch />
           </Col>
 
           <Col sm={4} className="custom__col pr-0 m-0">
@@ -69,29 +49,10 @@ const Header = () => {
 
           <Col sm={4} className="custom__col  justify-content-end p-0">
             <div>
-              {/* <IoFileTrayOutline
-                size="30px"
-                className="pr-2 myPointer"
-                onMouseEnter={handleClick}
-              />
-              <Overlay
-                show={show}
-                target={target}
-                placement="bottom"
-                container={ref.current}
-                containerPadding={100}
-              >
-                <Popover id="popover-contained">
-                  <Popover.Title as="h3">Popover bottom</Popover.Title>
-                  <Popover.Content>
-                    <strong>Holy guacamole!</strong> Check this info.
-                  </Popover.Content>
-                </Popover>
-              </Overlay> */}
               <OverlayTrigger
                 trigger="click"
                 placement="bottom"
-                overlay={popover}
+                overlay={wallet}
                 rootClose
               >
                 <IoFileTrayOutline size="30px" className="pr-2 myPointer" />
@@ -99,27 +60,19 @@ const Header = () => {
             </div>
 
             <div className="pl-2">
-              {/* <span onMouseEnter={handleClick} style={{ marginBottom: "30px" }}>
-                <BsBell size="25px" className="myPointer position-absolute" />
-                <Badge variant="info" className="myPointer badge__ctrl">
-                  9
-                </Badge>
-              </span>
-
-              <Overlay
-                show={show}
-                target={target}
+              <OverlayTrigger
+                trigger="click"
                 placement="bottom"
-                container={ref.current}
-                containerPadding={10}
+                overlay={notification}
+                rootClose
               >
-                <Popover id="popover-contained">
-                  <Popover.Title as="h3">Popover bottom</Popover.Title>
-                  <Popover.Content>
-                    <strong>Holy guacamole!</strong> Check this info.
-                  </Popover.Content>
-                </Popover>
-              </Overlay> */}
+                <span style={{ marginBottom: "30px" }}>
+                  <BsBell size="25px" className="myPointer position-absolute" />
+                  <Badge variant="info" className="myPointer badge__ctrl">
+                    9
+                  </Badge>
+                </span>
+              </OverlayTrigger>
             </div>
 
             <div className="userBalance__inHeader">

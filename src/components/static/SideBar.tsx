@@ -16,7 +16,7 @@ interface Props {
 const SideBar = (props: Props) => {
   return (
     <div className="sidebar__ctrl">
-      <a className="sidebar_action" onClick={() => props.goto("/profile")}>
+      <a className="sidebar_action" onClick={() => props.goto("/user-profile")}>
         <PersonCircle size={32} />
       </a>
 
