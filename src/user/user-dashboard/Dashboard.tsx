@@ -28,7 +28,9 @@ const Dashboard = (props: RouteComponentProps) => {
             </Col>
           </Row>
           <Row>
-            <LineChart/> 
+            <Col sm={12} className="mt-3">
+              <LineChart />
+            </Col>
           </Row>
         </Col>
 
