@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "react-router";
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Profile from "../activities/Profile";
+import Profile from "../user-profile/Profile";
 import QuickPay from "../activities/QuickPay";
 import UpcomingPayment from "../activities/UpComingPayment";
 import FixedDeposit from "../activities/FixedDeposit";
@@ -28,11 +28,13 @@ const Dashboard = (props: RouteComponentProps) => {
             </Col>
           </Row>
           <Row>
-            <LineChart/> 
+            <Col>
+              <LineChart />
+            </Col>
           </Row>
         </Col>
 
-        <Col md={12} lg={4}>
+        <Col md={12} lg={4} className="w-100">
           <PageTitle title="Request" />
           <FixedDeposit />
           <Activities />

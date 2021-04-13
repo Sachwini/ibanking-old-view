@@ -85,13 +85,12 @@ const options = {
 
 function LineChart() {
   return (
-    <div>
-      <Card style={{ width: "47rem", height: "25rem" }}>
+    
+      <Card>
         <Card.Body>
           <Line data={data} options={options} />
         </Card.Body>
       </Card>
-    </div>
   );
 }
 

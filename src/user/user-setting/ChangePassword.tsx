@@ -9,7 +9,7 @@ function ChangePassword() {
         <IoChevronBackCircleOutline size="40px" />
         <PageTitle
           title="Change Password"
-          subTitle="Change your current password with a new one" 
+          subTitle="Change your current password with a new one"
         />
       </div>
       <div style={{ display: "flex" }}>
@@ -60,9 +60,9 @@ function ChangePassword() {
           <Col sm={12} md={6}>
             <Card style={{ width: "36rem", height: "15rem" }}>
               <Card.Body>
-                <div className="font-weight-bold">
+                <div>
                   <ul className="list-unstyled">
-                    <li style={{ padding: "14px" }}>Password Policy</li>
+                    <li className="font-weight-bold p-2">Password Policy</li>
                     <li>
                       <ul style={{ paddingLeft: "16px" }}>
                         <li>

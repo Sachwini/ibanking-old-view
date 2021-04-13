@@ -15,14 +15,21 @@ function App() {
   );
   const Account = React.lazy(() => import("./user/user-account/Account"));
   const Payment = React.lazy(() => import("./user/payment/index"));
+  const UserProfile = React.lazy(
+    () => import("./user/user-profile/ProfileIndex")
+  );
   const Transfer = React.lazy(() => import("./user/payment/paymentIndex"));
-  const ChangePassword = React.lazy(() => import("./user/user-setting/ChangePassword"));
+  const ChangePassword = React.lazy(
+    () => import("./user/user-setting/ChangePassword")
+  );
 
   return (
     <DefaultLayout>
       <SwitchWithCatch>
         <React.Suspense fallback={<Loader />}>
           <Route exact path="/" component={Dashboard} />
+          <Route path="/user-profile" component={UserProfile} />
+
           <Route path="/fund-transfer" component={FundTransfer} />
           <Route path="/service-config" component={ConfigureService} />
           <Route path="/account" component={Account} />

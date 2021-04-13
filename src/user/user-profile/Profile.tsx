@@ -1,9 +1,9 @@
-import { Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { AiOutlineUser } from "react-icons/ai";
 
-function Profile() {
+const Profile = () => {
   return (
-    <Card style={{ backgroundColor: "#ee944fb6" }}>
+    <Card style={{ backgroundColor: "#ee944fb6", maxWidth: "500px" }}>
       <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
         <div style={{ width: "20%" }}>
           <AiOutlineUser className="circle-icon" size="3.3em" color="white" />
@@ -21,6 +21,6 @@ function Profile() {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default Profile;

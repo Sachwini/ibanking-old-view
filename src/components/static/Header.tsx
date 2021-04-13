@@ -5,27 +5,16 @@ import {
   Navbar,
   Row,
   Col,
-  Form,
-  FormControl,
-  Popover,
+  Badge,
   OverlayTrigger,
 } from "react-bootstrap";
-import { BsSearch } from "react-icons/bs";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
+import { notification, wallet } from "./support/HeaderDropDown";
+import HeaderSearch from "./support/HeaderSearch";
 
 const Header = () => {
-  const [eye, setEye] = useState<boolean>(false);
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3">Popover title</Popover.Title>
-      <Popover.Content>
-        Popover content <strong>some strong content</strong> Normal content
-        again
-      </Popover.Content>
-    </Popover>
-  );
+  const [eye, setEye] = useState<boolean>(false); 
 
   const handleBalanceShow = () => {
     setEye(!eye);
@@ -40,14 +29,7 @@ const Header = () => {
       <Container fluid className="p-0">
         <Row className="custom__row">
           <Col sm={4} className="custom__col">
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2 input__ctrl"
-              />
-              <BsSearch className="search__icon" size={25} />
-            </Form>
+            <HeaderSearch />
           </Col>
 
           <Col sm={4} className="custom__col pr-0 m-0">
@@ -70,7 +52,7 @@ const Header = () => {
               <OverlayTrigger
                 trigger="click"
                 placement="bottom"
-                overlay={popover}
+                overlay={wallet}
                 rootClose
               >
                 <IoFileTrayOutline size="30px" className="pr-2 myPointer" />
@@ -78,6 +60,19 @@ const Header = () => {
             </div>
 
             <div className="pl-2">
+              <OverlayTrigger
+                trigger="click"
+                placement="bottom"
+                overlay={notification}
+                rootClose
+              >
+                <span style={{ marginBottom: "30px" }}>
+                  <BsBell size="25px" className="myPointer position-absolute" />
+                  <Badge variant="info" className="myPointer badge__ctrl">
+                    9
+                  </Badge>
+                </span>
+              </OverlayTrigger>
             </div>
 
             <div className="userBalance__inHeader">

@@ -6,12 +6,12 @@ import "./billPaymentLog.css";
 function BillPaymentLog() {
   return (
     <>
-      <Card style={{width:"67rem"}}>
+      <Card style={{ width: "67rem" }}>
         <Card.Body>
-          <div className="inputBoxesLayout"> 
+          <div className="inputBoxesLayout">
             <div>
               <p>
-                <GrDocumentPdf color="green" /> 
+                <GrDocumentPdf color="green" />
                 <span className="pdf">DownLoad PDF</span>
               </p>
             </div>
@@ -19,7 +19,7 @@ function BillPaymentLog() {
               <p>
                 <ImFileExcel color="green" />
                 <span className="pdf">DownLoad Excel</span>
-              </p>{" "}
+              </p>
             </div>
           </div>
           <div>
