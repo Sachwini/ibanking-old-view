@@ -87,7 +87,7 @@
   border: 3px solid whitesmoke;
 }
 
-.card__ctrl {
+.quickPay__card__ctrl {
   width: 7rem;
   height: 7rem;
   box-shadow: 0 5px 10px #dfdfdf;
@@ -96,7 +96,7 @@
   border-radius: 5px;
 }
 
-.cardBody__ctrl {
+.quickPay__cardBody__ctrl {
   display: flex;
   flex-direction: column;
   justify-content: center;

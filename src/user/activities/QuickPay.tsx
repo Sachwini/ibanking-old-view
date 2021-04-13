@@ -13,40 +13,40 @@ function QuickPay() {
       }}
       className="mt-1"
     >
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <GrDocumentTransfer size="30px" />
           </Card.Title>
           <Card.Text className="cardText">Quick Transfer</Card.Text>
         </Card.Body>
       </Card>
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <FcMoneyTransfer size="30px" />
           </Card.Title>
           <Card.Text className="cardText">Quick Pay</Card.Text>
         </Card.Body>
       </Card>
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <FcQuestions size="30px" />
           </Card.Title>
           <Card.Text className="cardText">E-SEWA</Card.Text>
         </Card.Body>
       </Card>
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <FcQuestions size="30px" />
           </Card.Title>
           <Card.Text className="cardText">NT-TopUp</Card.Text>
         </Card.Body>
       </Card>
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <FcQuestions size="30px" />
           </Card.Title>
@@ -54,8 +54,8 @@ function QuickPay() {
         </Card.Body>
       </Card>
 
-      <Card className="card__ctrl">
-        <Card.Body className="cardBody__ctrl">
+      <Card className="quickPay__card__ctrl">
+        <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
             <FcQuestions size="30px" />
           </Card.Title>
