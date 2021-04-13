@@ -1,7 +1,7 @@
-import { Card, Col, Row } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { AiOutlineUser } from "react-icons/ai";
 
-function Profile() {
+const Profile = () => {
   return (
     <Card style={{ backgroundColor: "#ee944fb6", maxWidth: "500px" }}>
       <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
@@ -21,6 +21,6 @@ function Profile() {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default Profile;

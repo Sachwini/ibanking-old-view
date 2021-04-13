@@ -7,6 +7,7 @@ import UpcomingPayment from "../activities/UpComingPayment";
 import FixedDeposit from "../activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "user/activities/Activities";
+import LineChart from "user/activities/LineChart";
 
 const Dashboard = (props: RouteComponentProps) => {
   return (
@@ -25,6 +26,9 @@ const Dashboard = (props: RouteComponentProps) => {
               <strong className="mb-3 pl-3">Quick Pay</strong>
               <QuickPay />
             </Col>
+          </Row>
+          <Row>
+            <LineChart/> 
           </Row>
         </Col>
 
