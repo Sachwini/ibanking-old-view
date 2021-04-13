@@ -27,7 +27,7 @@ function BillPaymentLog() {
               <div>
                 <label>From</label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   placeholder="YYYY-MM-DD"
                 />
@@ -36,9 +36,9 @@ function BillPaymentLog() {
                 <label>To</label>
                 <div>
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="YYYY-MM-DD" 
                   />
                 </div>
               </div>
