@@ -1,25 +1,26 @@
-import { Card } from "react-bootstrap";
-import { HiUserCircle } from "react-icons/hi";
+import { Card} from "react-bootstrap";
+import { AiOutlineUser } from "react-icons/ai";
+import "./activities.css";
 
 function Profile() {
   return (
-    <div>
-      <Card
-        style={{ width: "32rem", height: "14rem", backgroundColor: "orange" }}
-      >
-        <Card.Body>
-          <div style={{ display: "flex" }}>
-            <HiUserCircle className="circle-icon" />
-            <div style={{ paddingLeft: "23px" }}>
-              <h4>HAMRO TECHNOLOGY PVT. LTD</h4>
-              <h5>04911000579</h5>
-              <h5>ODA</h5>
-              <h4>NPR. 200,000.00</h4>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
+    <Card style={{ backgroundColor: "#ee944fb6" }}>
+      <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+        <div style={{ width: "20%" }}>
+          <AiOutlineUser className="circle-icon" size="3.3em" color="white" />
+        </div>
+        <div style={{ width: "80%" }}>
+          <Card.Title style={{ fontSize: "18px" }}>
+            HAMRO TECHNOLOGY PVT. LTD
+          </Card.Title>
+          <Card.Text>
+            <p className="m-0">04911000579</p>
+            <p>ODA</p>
+            <h6>NPR. 200,000.00</h6>
+          </Card.Text>
+        </div>
+      </Card.Body>
+    </Card>
   );
 }
 

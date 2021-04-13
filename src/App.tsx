@@ -8,7 +8,7 @@ import DefaultLayout from "./components/static/Layout";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
 function App() {
-  const Dashboard = React.lazy(() => import("./user/Dashboard"));
+  const Dashboard = React.lazy(() => import("./user/user-dashboard/Dashboard"));
   const FundTransfer = React.lazy(() => import("./user/transfer"));
   const ConfigureService = React.lazy(
     () => import("./user/user-setting/ConfigureService")

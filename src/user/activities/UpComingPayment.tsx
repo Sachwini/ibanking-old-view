@@ -1,34 +1,35 @@
 import { Card } from "react-bootstrap";
 import { GrDocumentTime } from "react-icons/gr";
 import { FcMoneyTransfer } from "react-icons/fc";
-import "./Image.css";
+import "./activities.css";
+import { PageTitle } from "components/page-title";
 
 function UpcomingPayment() {
   return (
-    <div>
-      <Card style={{ width: "26rem", height: "26rem" }}>
-        <Card.Body>
-          <img className="clock_logo" src="./uploads/clock.png" alt="" />
-          <div className="d-flex justify-content-center align-items-center">
-            <h6 style={{ marginTop: "30px" }}>No upcoming payments</h6>
+    <>
+      <div className="pl-1 mt-4 mb-2">
+        <strong className="activity__title">Upcoming Payment</strong>
+      </div>
+      <Card className="mb-4">
+        <Card.Body style={{ padding: "2rem" }}>
+          <div className="card__img">
+            <img
+              src="./uploads/clock.png"
+              alt="upcoming payment"
+              height="70px"
+              width="70px"
+            />
           </div>
-          <div className="d-flex justify-content-center align-items-center">
-            <h6 style={{ marginTop: "20px", color: "gray" }}>
-              You have not set any upcoming payment recently
-            </h6>
-          </div>
-          <div className="d-flex justify-content-center align-items-center">
-            <h6
-              style={{
-                marginTop: "35px",
-                color: "gray",
-                paddingBottom: "26px",
-              }}
-            >
-              Select option to schedule
-            </h6>
-          </div>
-          <div style={{ justifyContent: "space-around", display: "flex" }}>
+
+          <Card.Title className="card__title">No upcoming payments</Card.Title>
+          <Card.Text className="text__ctrl">
+            You have not set any upcoming payment recently
+          </Card.Text>
+          <Card.Text className="card__text text__ctrl">
+            Select option to schedule
+          </Card.Text>
+
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div>
               <GrDocumentTime size="40px" />
             </div>
@@ -38,7 +39,7 @@ function UpcomingPayment() {
           </div>
         </Card.Body>
       </Card>
-    </div>
+    </>
   );
 }
 
