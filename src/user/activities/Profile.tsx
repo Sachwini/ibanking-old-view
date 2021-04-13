@@ -1,6 +1,5 @@
 import { Card} from "react-bootstrap";
 import { AiOutlineUser } from "react-icons/ai";
-import "./activities.css";
 
 function Profile() {
   return (

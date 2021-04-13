@@ -19,10 +19,6 @@ a:hover {
 
 .sidebar__item:hover {
   height: 100%;
-  /* overflow-y: scroll;
-  scrollbar-width: 5px;
-  scrollbar-base-color: lightcoral;
-  scrollbar-color: green; */
 }
 
 .main-menu-ul {

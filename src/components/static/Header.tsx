@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./Header.css";
 import {
   Container,
@@ -7,14 +7,12 @@ import {
   Col,
   Form,
   FormControl,
-  Badge,
   Popover,
-  Overlay,
   OverlayTrigger,
 } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
-import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Header = () => {
   const [eye, setEye] = useState<boolean>(false);
@@ -69,25 +67,6 @@ const Header = () => {
 
           <Col sm={4} className="custom__col  justify-content-end p-0">
             <div>
-              {/* <IoFileTrayOutline
-                size="30px"
-                className="pr-2 myPointer"
-                onMouseEnter={handleClick}
-              />
-              <Overlay
-                show={show}
-                target={target}
-                placement="bottom"
-                container={ref.current}
-                containerPadding={100}
-              >
-                <Popover id="popover-contained">
-                  <Popover.Title as="h3">Popover bottom</Popover.Title>
-                  <Popover.Content>
-                    <strong>Holy guacamole!</strong> Check this info.
-                  </Popover.Content>
-                </Popover>
-              </Overlay> */}
               <OverlayTrigger
                 trigger="click"
                 placement="bottom"
@@ -99,27 +78,6 @@ const Header = () => {
             </div>
 
             <div className="pl-2">
-              {/* <span onMouseEnter={handleClick} style={{ marginBottom: "30px" }}>
-                <BsBell size="25px" className="myPointer position-absolute" />
-                <Badge variant="info" className="myPointer badge__ctrl">
-                  9
-                </Badge>
-              </span>
-
-              <Overlay
-                show={show}
-                target={target}
-                placement="bottom"
-                container={ref.current}
-                containerPadding={10}
-              >
-                <Popover id="popover-contained">
-                  <Popover.Title as="h3">Popover bottom</Popover.Title>
-                  <Popover.Content>
-                    <strong>Holy guacamole!</strong> Check this info.
-                  </Popover.Content>
-                </Popover>
-              </Overlay> */}
             </div>
 
             <div className="userBalance__inHeader">
