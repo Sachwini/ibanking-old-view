@@ -16,7 +16,7 @@ const DefaultLayout: React.SFC<RouteComponentProps<{}>> = (props) => {
       </div>
       <div style={{ width: "93%" }}>
         <Header />
-        <div className="main-content contentBox__ctrl">{props.children}</div>
+        <div className="contentBox__ctrl">{props.children}</div>
       </div>
     </div>
   );

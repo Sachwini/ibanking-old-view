@@ -29,7 +29,6 @@ function BillPaymentLog() {
                 <input
                   type="date"
                   className="form-control"
-                  placeholder="YYYY-MM-DD"
                 />
               </div>
               <div className="boxSpacing">
@@ -38,7 +37,6 @@ function BillPaymentLog() {
                   <input
                     type="date"
                     className="form-control"
-                    placeholder="YYYY-MM-DD" 
                   />
                 </div>
               </div>

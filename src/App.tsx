@@ -29,7 +29,6 @@ function App() {
         <React.Suspense fallback={<Loader />}>
           <Route exact path="/" component={Dashboard} />
           <Route path="/user-profile" component={UserProfile} />
-
           <Route path="/fund-transfer" component={FundTransfer} />
           <Route path="/service-config" component={ConfigureService} />
           <Route path="/account" component={Account} />
@@ -38,7 +37,7 @@ function App() {
           <Route path="/paymentLog" component={Transfer} />
         </React.Suspense>
       </SwitchWithCatch>
-    </DefaultLayout>
+    </DefaultLayout> 
   );
 }
 
