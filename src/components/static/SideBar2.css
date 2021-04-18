@@ -4,7 +4,6 @@ a:hover {
 
 .sidebar__ctrl {
   height: 100vh;
-  width: 7%;
   position: fixed;
   background-color: #f58228;
   color: white;
@@ -12,20 +11,9 @@ a:hover {
   z-index: 1200;
 }
 
-.header__part {
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 5px 0px #ec7d27;
-}
-
 .sidebar__item {
-  /* height: 100%; */
-  /* padding-bottom: 20px; */
   margin-top: 0.8em;
-  padding: 0;
+  padding: 0 0.8em;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -65,9 +53,9 @@ a.sidebar_action {
   color: #fff;
   cursor: pointer;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 a.sidebar_action:hover {

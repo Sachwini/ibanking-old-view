@@ -1,10 +1,16 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header from "./Header";
+import Header2 from "./Header2";
 import SideBar from "./SideBar";
-import "./Layout.css";
 
-const DefaultLayout: React.SFC<RouteComponentProps<{}>> = (props) => {
+const contentFieldStyle = {
+  paddingTop: "2em",
+  background: "#f1f1f1",
+  paddingLeft: "1em",
+  minHeight: "100vh",
+};
+
+const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const gotUrl = (url: string) => {
     props.history.push(url);
   };
@@ -15,8 +21,8 @@ const DefaultLayout: React.SFC<RouteComponentProps<{}>> = (props) => {
         <SideBar goto={gotUrl} />
       </div>
       <div style={{ width: "93%" }}>
-        <Header />
-        <div className="main-content contentBox__ctrl">{props.children}</div>
+        <Header2 />
+        <div style={contentFieldStyle}>{props.children}</div>
       </div>
     </div>
   );
