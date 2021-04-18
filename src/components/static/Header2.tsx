@@ -8,18 +8,22 @@ import {
   Badge,
   OverlayTrigger,
   Image,
+  Button,
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
 import { notification, wallet } from "./support/HeaderDropDown";
 import HeaderSearch from "./support/HeaderSearch";
 import { PersonCircle } from "react-bootstrap-icons";
-import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
+import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useStateValue } from "components/theme-setting/StateProvider";
 
 const Header2 = () => {
   const [eye, setEye] = useState<boolean>(false);
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(false);
+
+  const [{}, dispatch] = useStateValue();
 
   const handleBalanceShow = () => {
     setEye(!eye);
@@ -27,6 +31,10 @@ const Header2 = () => {
 
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
+    dispatch({
+      type: "MENU_CLICKED",
+      value: sideMenuShow,
+    });
   };
 
   return (
@@ -35,32 +43,15 @@ const Header2 = () => {
       sticky="top"
       className="justify-content-between pr-0 navbar__ctrl"
     >
-      <Container fluid className="p-0">
+      <Container fluid className="p-0 ml-3">
         <Row className="custom__row">
-          <Col sm={4}>
-            {sideMenuShow ? (
-              <AiOutlineMenuUnfold
-                size={40}
-                color="black"
-                onClick={handleSideMenuShow}
-              />
-            ) : (
-              <AiOutlineMenuFold
-                size={40}
-                color="black"
-                onClick={handleSideMenuShow}
-              />
-            )}
-            <Link
-              to="/"
-              style={{
-                // display: "flex",
-                // flexWrap: "wrap",
-                // justifyContent: "center",
-                // alignItems: "center",
-                textAlign: "center",
-              }}
-            >
+          <Col sm={4} className="custom__col justify-content-start">
+            <HiOutlineMenu
+              size={40}
+              onClick={handleSideMenuShow}
+              className="menu__icon"
+            />
+            <Link to="/">
               <Image
                 src="./uploads/mBankLogo.png"
                 alt="Generic placeholder"
@@ -68,9 +59,6 @@ const Header2 = () => {
                 height="40px"
                 // style={{ background: "#fff" }}
               />
-              <h1 style={{ fontSize: ".8em", margin: "0" }}>
-                Hamro Technology PVT LTD
-              </h1>
             </Link>
           </Col>
 
