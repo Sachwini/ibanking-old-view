@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "react-router";
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
 import Profile from "../user-profile/Profile";
@@ -9,7 +8,7 @@ import { FcSynchronize } from "react-icons/fc";
 import Activities from "user/activities/Activities";
 import LineChart from "user/activities/LineChart";
 
-const Dashboard = (props: RouteComponentProps) => {
+const Dashboard = () => {
   return (
     <Container fluid>
       <Row className="w-100">

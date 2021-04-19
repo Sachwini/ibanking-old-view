@@ -4,7 +4,7 @@ import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "./components/Loader";
 import { Route } from "react-router";
 import React from "react";
-import DefaultLayout from "./components/static/Layout";
+import DefaultLayout2 from "./components/static/Layout2";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
   );
 
   return (
-    <DefaultLayout>
+    <DefaultLayout2>
       <SwitchWithCatch>
         <React.Suspense fallback={<Loader />}>
           <Route exact path="/" component={Dashboard} />
@@ -37,7 +37,7 @@ function App() {
           <Route path="/paymentLog" component={Transfer} />
         </React.Suspense>
       </SwitchWithCatch>
-    </DefaultLayout> 
+    </DefaultLayout2>
   );
 }
 

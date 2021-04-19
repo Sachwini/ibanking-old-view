@@ -1,4 +1,5 @@
-import "./sidebar.css";
+import "./SideBar2.css";
+import { Link } from "react-router-dom";
 import {
   PersonCircle,
   HouseDoor,
@@ -8,29 +9,50 @@ import {
   BoxArrowRight,
   Mailbox2,
 } from "react-bootstrap-icons";
-import { useCallback, useState } from "react";
 
 interface Props {
+  width: string;
   goto: (url: string) => void;
 }
 
-const [showbar, setShowbar] = useState<boolean>(true);
+const myStyle = [
+  {
+    marginTop: "0.8em",
+    padding: "0 0.8em",
+    overflowY: "scroll",
+    overflowX: "hidden",
+  },
+];
 
-
-const SideBar = (props: Props) => {
+const SideBar2 = (props: Props) => {
   return (
-    <div className="sidebar__ctrl">
-      <div className="header__part">
-        <a
-          className="sidebar_action"
-          onClick={() => props.goto("/user-profile")}
-        >
-          <PersonCircle size={32} />
-        </a>
-      </div>
-
+    <div className="sidebar__ctrl" style={{ width: `${props.width}` }}>
       <div className="sidebar__item">
         <ul className="main-menu-ul">
+          <li>
+            <a className="sidebar_action" onClick={() => props.goto("/")}>
+              <HouseDoor size={25} />
+              <small>Home</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action" onClick={() => props.goto("/")}>
+              <HouseDoor size={25} />
+              <small>Home</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action" onClick={() => props.goto("/")}>
+              <HouseDoor size={25} />
+              <small>Home</small>
+            </a>
+          </li>
+          <li>
+            <a className="sidebar_action" onClick={() => props.goto("/")}>
+              <HouseDoor size={25} />
+              <small>Home</small>
+            </a>
+          </li>
           <li>
             <a className="sidebar_action" onClick={() => props.goto("/")}>
               <HouseDoor size={25} />
@@ -103,4 +125,4 @@ const SideBar = (props: Props) => {
   );
 };
 
-export default SideBar;
+export default SideBar2;

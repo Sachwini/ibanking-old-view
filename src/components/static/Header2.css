@@ -1,7 +1,7 @@
 .navbar__ctrl {
   padding-left: 0;
   padding-right: 0;
-  background: #fff;
+  background: #f58228;
   box-shadow: 0 5px 12px #d4d4d4;
   height: 80px;
 }
@@ -80,6 +80,7 @@
   align-items: center;
   padding: 0 1rem;
   padding-left: 2.1rem;
+  /* color: #be7b47; */
 }
 
 .userBalance__inHeader p {
