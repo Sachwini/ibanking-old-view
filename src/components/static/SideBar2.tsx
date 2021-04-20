@@ -55,31 +55,82 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
     }
   };
 
-  // if (width === "70px") {
-  //   return (
-  //     <div className="sidebar__ctrl" style={{ width: `${width}` }}>
-  //       <div className="sidebar__item" onClick={handleSideMenuShow}>
-  //         <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
-  //           {menuHead.map((item, index) => {
-  //             return (
-  //               <div
-  //                 style={{
-  //                   width: "100%",
-  //                   background: "inherit",
-  //                   cursor: "pointer",
-  //                   textAlign: "center",
-  //                 }}
-  //                 key={index}
-  //               >
-  //                 {item.menuIcon2}
-  //               </div>
-  //             );
-  //           })}
-  //         </Accordion>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (width === "70px") {
+    return (
+      <div className="sidebar__ctrl" style={{ width: `${width}` }}>
+        <div className="sidebar__item" onClick={handleSideMenuShow}>
+          <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <HouseDoor size={40} />
+            </div>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <RiRefundLine size={40} />
+            </div>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <MdPayment size={40} />
+            </div>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <GoRequestChanges size={40} />
+            </div>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <Gear size={40} />
+            </div>
+            <div
+              style={{
+                width: "100%",
+                background: "inherit",
+                cursor: "pointer",
+                textAlign: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <FiActivity size={40} />
+            </div>
+          </Accordion>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="sidebar__ctrl" style={{ width: `${width}` }}>

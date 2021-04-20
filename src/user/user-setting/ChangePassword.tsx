@@ -1,6 +1,5 @@
 import { Button, Card, Form, Container, Col, Row } from "react-bootstrap";
 import { PageTitle } from "components/page-title/index";
-import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 function ChangePassword() {
   return (
