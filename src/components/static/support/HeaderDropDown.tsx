@@ -11,7 +11,8 @@ const CardStyle = {
   paddingRight: "0.7rem",
 };
 const PopoverStyle = {
-  minWidth: "18rem",
+  minWidth: "12rem",
+  // width: "auto",
   minHeight: "8rem",
   marginTop: "1rem",
 };
@@ -39,6 +40,17 @@ export const wallet = (
     <Popover.Content>
       <Card style={CardStyle}>
         <Card.Text>nothing top show</Card.Text>
+      </Card>
+    </Popover.Content>
+  </Popover>
+);
+
+export const userProfile = (
+  <Popover id="popover-basic" style={PopoverStyle}>
+    <Popover.Content>
+      <Card style={CardStyle}>
+        <Card.Text>User Profile</Card.Text>
+        <Card.Text>User Details</Card.Text>
       </Card>
     </Popover.Content>
   </Popover>

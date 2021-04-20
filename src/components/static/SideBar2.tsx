@@ -7,6 +7,7 @@ import { useStateValue } from "components/theme-setting/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
+import { MdPayment } from "react-icons/md";
 
 interface Props {
   width: string;
@@ -153,14 +154,46 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
             <Accordion.Collapse eventKey="1">
               <div>
                 <p className="menu__items menu__itemsHover">Load Fund</p>
+                <p className="menu__items menu__itemsHover">Load Wallet</p>
+              </div>
+            </Accordion.Collapse>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              background: "inherit",
+              cursor: "pointer",
+              paddingTop: "1em",
+            }}
+          >
+            <Accordion.Toggle
+              eventKey="5"
+              as={"div"}
+              onClick={() => handleIcon(5)}
+              className={clickID === 5 ? "menu__Active" : "menu__inActive"}
+            >
+              <strong>
+                <MdPayment size={25} />
+                <span style={{ paddingLeft: "10px" }}>Payment</span>
+                {changeDropIcon && clickID === 5 ? (
+                  <ChevronUp style={{ float: "right", marginTop: "5px" }} />
+                ) : (
+                  <ChevronDown style={{ float: "right", marginTop: "5px" }} />
+                )}
+              </strong>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="5">
+              <div>
                 <p
                   className="menu__items menu__itemsHover"
-                  onClick={() => goto("/fund-mgmt/fund-transfer")}
+                  onClick={() => goto("/payment/fund-transfer")}
                 >
-                  Transfer
+                  Fund Transfer
                 </p>
-                <p className="menu__items menu__itemsHover">Load Wallet</p>
-                <p className="menu__items menu__itemsHover">Bulkk Payment</p>
+                <p className="menu__items menu__itemsHover">Bulk Recharge</p>
+                <p className="menu__items menu__itemsHover">Vendor Payment</p>
+                <p className="menu__items menu__itemsHover">Broker Payment</p>
               </div>
             </Accordion.Collapse>
           </div>

@@ -5,7 +5,7 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import "./index.css";
 
-function Transfer() {
+function PaymentIndex() {
   const [key, setKey] = useState<string | boolean | null>("bpl");
 
   const ActiveStyle = {
@@ -72,4 +72,4 @@ function Transfer() {
   );
 }
 
-export default Transfer;
+export default PaymentIndex;
