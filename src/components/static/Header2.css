@@ -31,9 +31,10 @@
 
 .custom__col input {
   outline: none;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   background-color: #fcfcfc;
   size: 10px;
+  width: 100%;
 }
 
 .menu__icon {
@@ -54,7 +55,7 @@
 
 .input__ctrl {
   position: relative;
-  width: 40px;
+  width: 100%;
 }
 
 .search__icon {
@@ -63,25 +64,26 @@
   clear: both;
   z-index: 100;
   padding: 5px;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 .search__icon:hover {
   transition: all 0.2s;
-  background-color: #f58128;
+  background-color: #5cb85c;
   color: #f1f1f1;
+  font-weight: bolder;
 }
 .search__icon:active {
   color: #495057;
 }
 
 .custom__col .form-control:focus {
-  outline: orange;
+  outline: 2px solid #5cb85c;
   color: #495057;
   background-color: #fff;
-  border-color: #f581289c;
+  border-color: #80a080;
   outline: 0;
-  box-shadow: 0 0 5px 2px #e2a03c67;
+  box-shadow: 0 0 5px 2px #4fe79394;
 }
 
 .badge__ctrl {
