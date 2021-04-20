@@ -7,6 +7,8 @@ import FixedDeposit from "../activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "user/activities/Activities";
 import LineChart from "user/activities/LineChart";
+import BusinessPayment from "user/payment/BusinessPayment"
+import FundTranfCharge from "user/transfer/FundTranfCharge";
 
 const Dashboard = () => {
   return (
@@ -35,11 +37,14 @@ const Dashboard = () => {
 
         <Col md={12} lg={4} className="w-100">
           <PageTitle title="Request" />
+
           <FixedDeposit />
           <Activities />
           <UpcomingPayment />
         </Col>
       </Row>
+      <BusinessPayment />
+      <FundTranfCharge/> 
     </Container>
   );
 };

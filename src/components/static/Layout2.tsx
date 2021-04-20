@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { useStateValue } from "components/theme-setting/StateProvider";
+import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import Header2 from "./Header2";
 import SideBar2 from "./SideBar2";
 
-const contentFieldStyle = {
-  width: "80%",
-  paddingTop: "2em",
-  background: "#f1f1f1",
-  paddingLeft: "1em",
-  minHeight: "100vh",
-};
-
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
+  const [{ menuButton }, dispatch] = useStateValue();
+
+  const contentFieldStyle = {
+    width: `${menuButton ? "90%" : "80%"}`,
+    paddingTop: "2em",
+    background: "#f1f1f1",
+    paddingLeft: "1em",
+    minHeight: "100vh",
+    paddingBottom: "1em",
+  };
+
   const gotUrl = (url: string) => {
     props.history.push(url);
   };
@@ -27,8 +30,8 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
           flexGrow: 1,
         }} 
       >
-        <div style={{ width: "20%" }}>
-          <SideBar2 goto={gotUrl} width="20%" />
+        <div style={{ width: `${menuButton ? "10%" : "20%"}` }}>
+          <SideBar2 goto={gotUrl} width={menuButton ? "10%" : "20%"} />
         </div>
         <div style={contentFieldStyle}>{props.children}</div>
       </div>

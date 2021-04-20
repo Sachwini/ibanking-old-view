@@ -1,7 +1,6 @@
 import "./SideBar2.css";
 import { Link } from "react-router-dom";
 import {
-  PersonCircle,
   HouseDoor,
   Wallet2,
   CashStack,
@@ -9,30 +8,63 @@ import {
   BoxArrowRight,
   Mailbox2,
 } from "react-bootstrap-icons";
+import { useStateValue } from "components/theme-setting/StateProvider";
 
 interface Props {
   width: string;
   goto: (url: string) => void;
 }
 
-const myStyle = [
-  {
-    marginTop: "0.8em",
-    padding: "0 0.8em",
-    overflowY: "scroll",
-    overflowX: "hidden",
+const myStyle = {
+  marginTop: "0.8em",
+  padding: "0 0.8em",
+  overflowY: "scroll",
+  overflowX: "hidden",
+
+  "&::-webkit-scrollbar": {
+    width: "10px",
+    height: " 100%",
+    borderRadius: "30px",
   },
-];
+
+  "&::-webkit-scrollbar-track ": {
+    height: " 100%",
+    borderRadius: "30px",
+    background: "transparent",
+  },
+
+  "&::-webkit-scrollbar-thumb ": {
+    borderRadius: "30px",
+    background: "linear-gradient(rgb(39, 181, 216), rgb(25, 40, 68))",
+  },
+};
+
+<style type="text/css">
+  {`
+    .btn-flat {
+      background-color: purple;
+      color: white;
+    }
+
+    .btn-xxl {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+    `}
+</style>;
 
 const SideBar2 = (props: Props) => {
+  const [{ menuButton }, dispatch] = useStateValue();
+
   return (
     <div className="sidebar__ctrl" style={{ width: `${props.width}` }}>
       <div className="sidebar__item">
+        {menuButton ? "its already set" : "not set yet"}
         <ul className="main-menu-ul">
           <li>
             <a className="sidebar_action" onClick={() => props.goto("/")}>
               <HouseDoor size={25} />
-              <small>Home</small>
+              <small>Home</small> 
             </a>
           </li>
           <li>

@@ -36,6 +36,22 @@
   size: 10px;
 }
 
+.menu__icon {
+  font-size: 40px !important;
+  font-weight: bolder;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.menu__icon:hover {
+  background: #f5f5f5;
+  color: #000;
+  transition: 0.6s all;
+}
+
 .input__ctrl {
   position: relative;
   width: 40px;

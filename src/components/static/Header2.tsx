@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useCallback, useState } from 'react'
 import "./Header2.css";
 import {
   Container,
@@ -8,31 +8,36 @@ import {
   Badge,
   OverlayTrigger,
   Image,
+  Button,
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
 import { notification, wallet } from "./support/HeaderDropDown";
 import HeaderSearch from "./support/HeaderSearch";
 import { PersonCircle } from "react-bootstrap-icons";
-import { CgMenu } from "react-icons/cg";
+import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useStateValue } from "components/theme-setting/StateProvider";
 
 const Header2 = (props: any) => { 
   const [eye, setEye] = useState<boolean>(false);
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
-  const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
-    sideMenuShow,
-  ]);
+  // const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
+  //   sideMenuShow,
+  // ]);
 
-  
+  const [{}, dispatch] = useStateValue();
 
-  const handleBalanceShow = () => { 
+  const handleBalanceShow = () => {
     setEye(!eye);
   };
 
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
+    dispatch({
+      type: "MENU_CLICKED",
+      value: sideMenuShow,
+    });
   };
 
   return (
@@ -41,21 +46,15 @@ const Header2 = (props: any) => {
       sticky="top"
       className="justify-content-between pr-0 navbar__ctrl"
     >
-      <Container fluid className="p-0">
+      <Container fluid className="p-0 ml-3">
         <Row className="custom__row">
-          <Col sm={4}>
-              <CgMenu size={40} color="black" onClick={toogleSidebar} />
-
-            <Link 
-              to="/"
-              style={{
-                // display: "flex",
-                // flexWrap: "wrap",
-                // justifyContent: "center",
-                // alignItems: "center",
-                textAlign: "center",
-              }}
-            >
+          <Col sm={4} className="custom__col justify-content-start">
+            <HiOutlineMenu
+              size={40}
+              onClick={handleSideMenuShow}
+              className="menu__icon"
+            />
+            <Link to="/">
               <Image
                 src="./uploads/mBankLogo.png"
                 alt="Generic placeholder"
@@ -63,9 +62,6 @@ const Header2 = (props: any) => {
                 height="40px"
                 // style={{ background: "#fff" }}
               />
-              <h1 style={{ fontSize: ".8em", margin: "0" }}>
-                Hamro Technology PVT LTD
-              </h1>
             </Link>
           </Col>
 
