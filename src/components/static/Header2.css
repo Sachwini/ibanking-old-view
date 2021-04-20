@@ -6,13 +6,6 @@
   height: 80px;
 }
 
-.logo__text {
-  font-size: 24px;
-  font-family: "Times New Roman", Times, serif;
-  color: #f58228;
-  margin: 0;
-}
-
 .custom__row {
   height: 100%;
   width: 100%;
@@ -40,16 +33,14 @@
 .menu__icon {
   font-size: 40px !important;
   font-weight: bolder;
-  color: #0d1953;
   cursor: pointer;
   padding: 5px;
-  border-radius: 50%;
   background: transparent;
 }
 
 .menu__icon:hover {
-  background: #f5f5f5;
-  color: #000;
+  background: #07166457;
+  color: #f1f1f1;
   transition: 0.6s all;
 }
 

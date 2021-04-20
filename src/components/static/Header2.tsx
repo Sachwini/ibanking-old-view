@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useState } from "react";
 import "./Header2.css";
 import {
   Container,
@@ -18,7 +18,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useStateValue } from "components/theme-setting/StateProvider";
 
-const Header2 = (props: any) => { 
+const Header2 = (props: any) => {
   const [eye, setEye] = useState<boolean>(false);
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   // const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
@@ -160,6 +160,6 @@ const Header2 = (props: any) => {
       </Container>
     </Navbar>
   );
-}; 
+};
 
 export default Header2;
