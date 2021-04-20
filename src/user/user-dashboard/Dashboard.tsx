@@ -9,6 +9,7 @@ import Activities from "user/activities/Activities";
 import LineChart from "user/activities/LineChart";
 import BusinessPayment from "user/payment/BusinessPayment"
 import FundTranfCharge from "user/transfer/FundTranfCharge";
+import BulkPayment from "user/payment/BulkPayment";
 
 const Dashboard = () => {
   return (
@@ -44,7 +45,8 @@ const Dashboard = () => {
         </Col>
       </Row>
       <BusinessPayment />
-      <FundTranfCharge/> 
+      <FundTranfCharge />
+      <BulkPayment/>
     </Container>
   );
 };

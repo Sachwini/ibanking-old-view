@@ -4,7 +4,7 @@ import Profile from "./Profile";
 
 const ProfileIndex = () => {
   return (
-    <Container>
+    <Container fluid>
       <Profile />
       <ChangePassword />
     </Container>

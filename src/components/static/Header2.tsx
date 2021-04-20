@@ -62,6 +62,7 @@ const Header2 = (props: any) => {
                 height="40px"
                 // style={{ background: "#fff" }}
               />
+              Hamro Technology
             </Link>
           </Col>
 
