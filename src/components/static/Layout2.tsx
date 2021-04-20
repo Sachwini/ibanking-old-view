@@ -8,7 +8,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ menuButton }, dispatch] = useStateValue();
 
   const contentFieldStyle = {
-    width: `${menuButton ? "90%" : "80%"}`,
+    width: `${menuButton ? "calc(100% - 70px)" : "calc(100% - 250px)"}`,
     paddingTop: "2em",
     background: "#f1f1f1",
     paddingLeft: "1em",
@@ -26,28 +26,20 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
       <div
         style={{
           width: "100%",
+          height: "100%",
           display: "flex",
           flexGrow: 1,
         }}
       >
-        <div style={{ width: `${menuButton ? "10%" : "20%"}` }}>
-          <SideBar2 goto={gotUrl} width={menuButton ? "10%" : "20%"} />
+        <div
+          style={{
+            width: `${menuButton ? "70px" : "250px"}`,
+          }}
+        >
+          <SideBar2 goto={gotUrl} width={menuButton ? "70px" : "250px"} />
         </div>
         <div style={contentFieldStyle}>{props.children}</div>
       </div>
-
-      {/* <Container fluid>
-      <Row>
-        <Col sm={12}>
-          <Header2 />
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={12}>
-          <Header2 />
-        </Col>
-      </Row>
-    </Container> */}
     </div>
   );
 };

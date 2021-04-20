@@ -12,10 +12,7 @@ const AccountView = () => {
           <Col sm={12} md={3} className="custom__col">
             <Row className="p-0 w-100">
               <Col sm={12} md={3}>
-                <GoFileSubmodule
-                  color="orange"
-                  size="40px"
-                />
+                <GoFileSubmodule color="orange" size="40px" />
               </Col>
               <Col sm={12} md={9}>
                 <p>ODA Account</p>
@@ -28,13 +25,13 @@ const AccountView = () => {
               <Col sm={12} md={6}>
                 <p>Usable Balance</p>
                 <p>
-                  <strong>NPR.</strong> 200,000.00
+                  <strong className="npr">NPR.</strong> 200,000.00
                 </p>
               </Col>
               <Col sm={12} md={6}>
                 <p>Acutal Balance</p>
                 <p>
-                  <strong>NPR.</strong> 200,000.00
+                  <strong className="npr">NPR.</strong> 200,000.00
                 </p>
               </Col>
             </Row>

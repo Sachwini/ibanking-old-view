@@ -59,6 +59,7 @@ const Header2 = () => {
                 height="40px"
                 // style={{ background: "#fff" }}
               />
+              Hamro Technology
             </Link>
           </Col>
 

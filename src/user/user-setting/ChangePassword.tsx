@@ -4,7 +4,7 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 function ChangePassword() {
   return (
-    <Container className="justify-content-center">
+    <Container fluid className="justify-content-center">
       <div className="d-flex flex-wrap mt-1">
         <IoChevronBackCircleOutline size="40px" />
         <PageTitle
@@ -58,7 +58,7 @@ function ChangePassword() {
             </Card>
           </Col>
           <Col sm={12} md={6}>
-            <Card style={{ width: "36rem", height: "15rem" }}>
+            <Card>
               <Card.Body>
                 <div>
                   <ul className="list-unstyled">

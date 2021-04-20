@@ -1,7 +1,7 @@
 .navbar__ctrl {
   padding-left: 0;
   padding-right: 0;
-  background: #f58228;
+  background: #f8f8f8;
   box-shadow: 0 5px 12px #d4d4d4;
   height: 80px;
 }
@@ -39,7 +39,7 @@
 .menu__icon {
   font-size: 40px !important;
   font-weight: bolder;
-  color: white;
+  color: #0d1953;
   cursor: pointer;
   padding: 5px;
   border-radius: 50%;
