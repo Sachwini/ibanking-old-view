@@ -20,6 +20,7 @@ function App() {
 
   /* ----------For Payment Import--------------------- */
   const FundTransfer = React.lazy(() => import("./user/transfer"));
+  const VendorPayment = React.lazy(() => import("user/payment/BulkPayment"));
 
   /* ----------For request Import--------------------- */
 
@@ -45,6 +46,11 @@ function App() {
 
           {/* ---------- For Payment Routing--------------------- */}
           <Route exact path="/payment/fund-transfer" component={FundTransfer} />
+          <Route
+            exact
+            path="/payment/vendor-payment"
+            component={VendorPayment}
+          />
 
           {/* ---------- For Request Routing--------------------- */}
 

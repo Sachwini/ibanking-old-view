@@ -2,7 +2,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 
-function BillPaymentTransfer() {
+function VendorPayment() {
   const [options, setOptions] = useState<any>(["a", "b", "c", "d", "e"]);
   const [merchant, setMerchant] = useState<any>(["m1", "m2", "m3", "m4", "m5"]);
   const [payfor, setPayfor] = useState<any>(["c1", "c2", "p3", "a4", "b5"]);
@@ -58,4 +58,4 @@ function BillPaymentTransfer() {
   );
 }
 
-export default BillPaymentTransfer;
+export default VendorPayment;

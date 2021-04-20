@@ -192,7 +192,12 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                   Fund Transfer
                 </p>
                 <p className="menu__items menu__itemsHover">Bulk Recharge</p>
-                <p className="menu__items menu__itemsHover">Vendor Payment</p>
+                <p
+                  className="menu__items menu__itemsHover"
+                  onClick={() => goto("/payment/vendor-payment")}
+                >
+                  Vendor Payment
+                </p>
                 <p className="menu__items menu__itemsHover">Broker Payment</p>
               </div>
             </Accordion.Collapse>
