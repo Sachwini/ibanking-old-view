@@ -25,6 +25,7 @@ function BulkPayment() {
             </>
           </Card.Title>
           <hr />
+
           <Button
             style={{
               display: "flex",
@@ -98,7 +99,7 @@ function BulkPayment() {
         </Card.Body>
       </Card>
     </>
-  );
+  ); 
 }
 
 export default BulkPayment;
