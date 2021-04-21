@@ -351,7 +351,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <HouseDoor size={35} />
+            <HouseDoor size={35} className={styles.iconHover} />
           </div>
           <div
             style={{
@@ -362,7 +362,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <RiRefundLine size={35} />
+            <RiRefundLine size={35} className={styles.iconHover} />
           </div>
           <div
             style={{
@@ -373,7 +373,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <MdPayment size={35} />
+            <MdPayment size={35} className={styles.iconHover} />
           </div>
           <div
             style={{
@@ -384,7 +384,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <GoRequestChanges size={35} />
+            <GoRequestChanges size={35} className={styles.iconHover} />
           </div>
           <div
             style={{
@@ -395,7 +395,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <Gear size={35} />
+            <Gear size={35} className={styles.iconHover} />
           </div>
           <div
             style={{
@@ -406,7 +406,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <FiActivity size={35} />
+            <FiActivity size={35} className={styles.iconHover} />
           </div>
         </Accordion>
       </div>
