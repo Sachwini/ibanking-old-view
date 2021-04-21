@@ -22,14 +22,14 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
   return (
     <div className="default__layout">
-      <Header2/>
+      <Header2 />
       <div
         style={{
           width: "100%",
           height: "100%",
           display: "flex",
           flexGrow: 1,
-        }} 
+        }}
       >
         <div
           style={{

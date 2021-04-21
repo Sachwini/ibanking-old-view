@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import "./SideBar2.css";
-import "index.css";
+import styles from "./SideBar2.module.css";
+// import "index.css";
 import { HouseDoor, Gear, ChevronUp, ChevronDown } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
 import { useStateValue } from "components/theme-setting/StateProvider";
@@ -57,8 +57,8 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
 
   if (width === "250px") {
     return (
-      <div className="sidebar__ctrl" style={{ width: `${width}` }}>
-        <div className="sidebar__item" onClick={handleSideMenuShow}>
+      <div className={styles.sidebar__ctrl} style={{ width: `${width}` }}>
+        <div className={styles.sidebar__item} onClick={handleSideMenuShow}>
           <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
             <div
               style={{
@@ -71,7 +71,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="0"
                 as={"div"}
                 onClick={() => handleIcon(0)}
-                className={clickID === 0 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 0 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <HouseDoor size={25} />
@@ -86,18 +88,22 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               <Accordion.Collapse eventKey="0">
                 <div>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/account/details")}
                   >
                     Acc Details
                   </p>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/account/user-profile")}
                   >
                     User Profile
                   </p>
-                  <p className="menu__items menu__itemsHover">Statement</p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Statement
+                  </p>
                 </div>
               </Accordion.Collapse>
             </div>
@@ -114,7 +120,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="1"
                 as={"div"}
                 onClick={() => handleIcon(1)}
-                className={clickID === 1 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 1 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <RiRefundLine size={25} />
@@ -128,8 +136,16 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="1">
                 <div>
-                  <p className="menu__items menu__itemsHover">Load Fund</p>
-                  <p className="menu__items menu__itemsHover">Load Wallet</p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Load Fund
+                  </p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Load Wallet
+                  </p>
                 </div>
               </Accordion.Collapse>
             </div>
@@ -146,7 +162,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="5"
                 as={"div"}
                 onClick={() => handleIcon(5)}
-                className={clickID === 5 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 5 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <MdPayment size={25} />
@@ -161,25 +179,33 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               <Accordion.Collapse eventKey="5">
                 <div>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/payment/fund-transfer")}
                   >
                     Fund Transfer
                   </p>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/payment/bulk-payment")}
                   >
                     Bulk Payment
                   </p>
-                  <p className="menu__items menu__itemsHover">Bulk Recharge</p>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Bulk Recharge
+                  </p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/payment/vendor-payment")}
                   >
                     Vendor Payment
                   </p>
-                  <p className="menu__items menu__itemsHover">Broker Payment</p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Broker Payment
+                  </p>
                 </div>
               </Accordion.Collapse>
             </div>
@@ -196,7 +222,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="2"
                 as={"div"}
                 onClick={() => handleIcon(2)}
-                className={clickID === 2 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 2 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <GoRequestChanges size={25} />
@@ -210,8 +238,14 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="2">
                 <div>
-                  <p className="menu__items menu__itemsHover">Cheque Request</p>
-                  <p className="menu__items menu__itemsHover">
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Cheque Request
+                  </p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
                     Service Request
                   </p>
                 </div>
@@ -230,7 +264,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="3"
                 as={"div"}
                 onClick={() => handleIcon(3)}
-                className={clickID === 3 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 3 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <Gear size={25} />
@@ -244,9 +280,13 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="3">
                 <div>
-                  <p className="menu__items menu__itemsHover">Confgure Theme</p>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                  >
+                    Confgure Theme
+                  </p>
+                  <p
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/setting/service-config")}
                   >
                     Service Configure
@@ -267,7 +307,9 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 eventKey="4"
                 as={"div"}
                 onClick={() => handleIcon(4)}
-                className={clickID === 4 ? "menu__Active" : "menu__inActive"}
+                className={
+                  clickID === 4 ? styles.menu__Active : styles.menu__inActive
+                }
               >
                 <strong>
                   <FiActivity size={25} />
@@ -282,7 +324,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               <Accordion.Collapse eventKey="4">
                 <div>
                   <p
-                    className="menu__items menu__itemsHover"
+                    className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/activity/log")}
                   >
                     History
@@ -297,8 +339,8 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
   }
 
   return (
-    <div className="sidebar__ctrl" style={{ width: `${width}` }}>
-      <div className="sidebar__item" onClick={handleSideMenuShow}>
+    <div className={styles.sidebar__ctrl} style={{ width: `${width}` }}>
+      <div className={styles.sidebar__item} onClick={handleSideMenuShow}>
         <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
           <div
             style={{
@@ -309,7 +351,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <HouseDoor size={40} />
+            <HouseDoor size={35} />
           </div>
           <div
             style={{
@@ -320,7 +362,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <RiRefundLine size={40} />
+            <RiRefundLine size={35} />
           </div>
           <div
             style={{
@@ -331,7 +373,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <MdPayment size={40} />
+            <MdPayment size={35} />
           </div>
           <div
             style={{
@@ -342,7 +384,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <GoRequestChanges size={40} />
+            <GoRequestChanges size={35} />
           </div>
           <div
             style={{
@@ -353,7 +395,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <Gear size={40} />
+            <Gear size={35} />
           </div>
           <div
             style={{
@@ -364,7 +406,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-            <FiActivity size={40} />
+            <FiActivity size={35} />
           </div>
         </Accordion>
       </div>

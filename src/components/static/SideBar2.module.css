@@ -3,20 +3,18 @@ a:hover {
 }
 
 .sidebar__ctrl {
-  height: 100vh;
+  min-height: 100vh;
   position: fixed;
   background: linear-gradient(180deg, #04166d, #3144a0, #5f6897);
   background: #0c1138;
-  /* background: #168d4c; */
   color: white;
   padding: auto;
   z-index: 1200;
 }
 
 .sidebar__item {
-  min-height: 100vh;
+  height: 100vh;
   margin-top: 0.8em;
-  /* padding: 0 0.8em; */
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -30,8 +28,6 @@ a:hover {
 .sidebar__item::-webkit-scrollbar-track {
   height: 100%;
   border-radius: 30px;
-  background: #000000;
-  background: #f2f2f2;
 }
 
 .sidebar__item::-webkit-scrollbar-thumb {

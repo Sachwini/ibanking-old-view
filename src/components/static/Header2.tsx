@@ -56,7 +56,7 @@ const Header2 = (props: any) => {
             />
             <Link to="/" style={{ textDecoration: "none", width: "100%" }}>
               <Image
-                src="./uploads/aaratiLogo.png"
+                src="/uploads/aaratiLogo.png"
                 alt="Generic placeholder"
                 width="100%"
                 height="45px"
