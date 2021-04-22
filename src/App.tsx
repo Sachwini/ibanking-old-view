@@ -33,6 +33,9 @@ function App() {
   const ConfigureService = React.lazy(
     () => import("user/user-setting/service-config/ConfigureService")
   );
+  const ThemeSetting = React.lazy(
+    () => import("user/user-setting/theme-setting/index")
+  );
 
   /* ----------For History Log Import--------------------- */
   const Activities = React.lazy(() => import("user/activities/Activities"));
@@ -61,7 +64,12 @@ function App() {
           {/* ---------- For Request Routing--------------------- */}
 
           {/* ---------- For Setting Routing--------------------- */}
-          <Route path="/setting/service-config" component={ConfigureService} />
+          <Route
+            exact
+            path="/setting/service-config"
+            component={ConfigureService}
+          />
+          <Route exact path="/setting/theme-setting" component={ThemeSetting} />
 
           {/* ---------- For history Logs Routing--------------------- */}
           <Route path="/activity/log" component={Activities} />

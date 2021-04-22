@@ -282,6 +282,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 <div>
                   <p
                     className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                    onClick={() => goto("/setting/theme-setting")}
                   >
                     Confgure Theme
                   </p>
