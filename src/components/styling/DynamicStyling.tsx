@@ -5,13 +5,17 @@ interface SideBarProps {
 }
 
 const userThemeColor = {
-  primaryColor: "",
-  secondaryColor: "",
+  primaryColor: "gray",
+  secondaryColor: "purple",
 };
 
 export const theme = {
-  primary: !userThemeColor.primaryColor && defaultTheme.primaryColor,
-  secondary: !userThemeColor.secondaryColor && defaultTheme.secondaryColor,
+  primary: userThemeColor.primaryColor
+    ? userThemeColor.primaryColor
+    : defaultTheme.primaryColor,
+  secondary: userThemeColor.secondaryColor
+    ? userThemeColor.secondaryColor
+    : defaultTheme.secondaryColor,
   textPrimaryColor: defaultTextColor.primaryTextColor,
   font: "Cursive",
   alert: "red",

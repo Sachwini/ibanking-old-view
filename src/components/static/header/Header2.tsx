@@ -36,7 +36,7 @@ const Header2 = (props: any) => {
     setSideMenuShow(!sideMenuShow);
     dispatch({
       type: "MENU_CLICKED", 
-      value: sideMenuShow,
+      value: !sideMenuShow,
     });
   };
 
