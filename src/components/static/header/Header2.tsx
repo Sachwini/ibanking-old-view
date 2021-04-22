@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState } from "react";
 import "./Header2.css";
+
 import {
   Container,
   Navbar,
@@ -18,7 +19,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useStateValue } from "components/state-provider/StateProvider";
 
-const Header2 = (props: any) => {
+const Header2 = (props: any) => { 
   const [eye, setEye] = useState<boolean>(false);
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   // const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
@@ -34,8 +35,8 @@ const Header2 = (props: any) => {
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
     dispatch({
-      type: "MENU_CLICKED",
-      value: sideMenuShow,
+      type: "MENU_CLICKED", 
+      value: !sideMenuShow,
     });
   };
 
@@ -59,7 +60,7 @@ const Header2 = (props: any) => {
                 src="/uploads/aaratiLogo.png"
                 alt="Generic placeholder"
                 width="100%"
-                height="45px"
+                height="45px" 
                 style={{ objectFit: "contain" }}
               />
             </Link>

@@ -3,7 +3,6 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { GoSync } from "react-icons/go";
 import { FaUpload } from "react-icons/fa";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { PageTitle } from "components/page-title";
 
 function BulkPayment() {
   const [bank, setBank] = useState<any>([
@@ -34,6 +33,7 @@ function BulkPayment() {
             <GoSync color="green" />
           </Card.Title>
           <hr />
+
           <Button
             style={{
               display: "flex",
