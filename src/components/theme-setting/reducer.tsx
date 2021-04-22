@@ -1,5 +1,5 @@
 export const initialState = {
-  menuButton: false,
+  menuButton: true,
   //   user: null,
 };
 

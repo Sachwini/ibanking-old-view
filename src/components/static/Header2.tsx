@@ -1,5 +1,6 @@
-import React, { createContext, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useState } from "react";
 import "./Header2.css";
+
 import {
   Container,
   Navbar,
@@ -34,7 +35,7 @@ const Header2 = (props: any) => {
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
     dispatch({
-      type: "MENU_CLICKED",
+      type: "MENU_CLICKED", 
       value: sideMenuShow,
     });
   };
@@ -56,10 +57,10 @@ const Header2 = (props: any) => {
             />
             <Link to="/" style={{ textDecoration: "none", width: "100%" }}>
               <Image
-                src="./uploads/aaratiLogo.png"
+                src="/uploads/aaratiLogo.png"
                 alt="Generic placeholder"
                 width="100%"
-                height="45px"
+                height="45px" 
                 style={{ objectFit: "contain" }}
               />
             </Link>
@@ -160,6 +161,6 @@ const Header2 = (props: any) => {
       </Container>
     </Navbar>
   );
-}; 
+};
 
 export default Header2;

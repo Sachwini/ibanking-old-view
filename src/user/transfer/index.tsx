@@ -1,6 +1,7 @@
 import { PageTitle } from "components/page-title/index";
 import { useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
+import FundTranfCharge from "./FundTranfCharge";
 import { IBFTForm } from "./IBFTForm";
 import { IBFTLimit } from "./IBFTLimit";
 import "./index.css";
@@ -59,6 +60,7 @@ const Transfer = () => {
                 </Col>
                 <Col sm={12} md={6}>
                   <IBFTLimit />
+                  <FundTranfCharge />
                 </Col>
               </Row>
             </Tab.Pane>

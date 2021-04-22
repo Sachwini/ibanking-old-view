@@ -1,12 +1,11 @@
 import { Button, Card, Form, Container, Col, Row } from "react-bootstrap";
 import { PageTitle } from "components/page-title/index";
-import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 function ChangePassword() {
   return (
-    <Container fluid className="justify-content-center">
+    <Container fluid className="justify-content-center pt-4">
       <div className="d-flex flex-wrap mt-1">
-        <IoChevronBackCircleOutline size="40px" />
+        {/* <IoChevronBackCircleOutline size="40px" /> */}
         <PageTitle
           title="Change Password"
           subTitle="Change your current password with a new one"

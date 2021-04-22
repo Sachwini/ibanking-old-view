@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { GoSync } from "react-icons/go";
-import { FaDownload } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
 import { Typeahead } from "react-bootstrap-typeahead";
 
 function BulkPayment() {
@@ -13,16 +13,24 @@ function BulkPayment() {
     "BankE",
   ]);
   return (
-    <>
+    <Container>
+      {/* <PageTitle
+        title="Bulk Payment"
+        subTitle="upload your excel file to pay"
+      /> */}
+
       <Card>
         <Card.Body>
           <Card.Title
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <>Bulk Payment</>
-            <>
-              <GoSync color="green" />
-            </>
+            <strong>
+              Bulk Payment <br />
+              <small className="text-mute text-capitalize">
+                upload your excel file to pay
+              </small>
+            </strong>
+            <GoSync color="green" />
           </Card.Title>
           <hr />
 
@@ -34,7 +42,7 @@ function BulkPayment() {
               border: "none",
             }}
           >
-            <FaDownload style={{ marginRight: "1em" }} /> Download
+            <FaUpload style={{ marginRight: "1em" }} /> Upload Excel File
           </Button>
           <div
             className="input-group"
@@ -98,8 +106,8 @@ function BulkPayment() {
           </Form>
         </Card.Body>
       </Card>
-    </>
-  ); 
+    </Container>
+  );
 }
 
 export default BulkPayment;
