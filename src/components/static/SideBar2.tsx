@@ -325,6 +325,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                       </div>
                     </Accordion.Collapse>
                   </div>
+                  
 
             <div
               style={{
