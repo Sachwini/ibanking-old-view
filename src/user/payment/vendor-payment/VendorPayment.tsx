@@ -2,7 +2,6 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 import { GoSync } from "react-icons/go";
-import "./index.css";
 import { PageTitle } from "components/page-title";
 
 function VendorPayment() {

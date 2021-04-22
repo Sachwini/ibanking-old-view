@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import ChangePassword from "user/user-setting/ChangePassword";
+import ChangePassword from "user/user-account/user-profile/manage/ChangePassword";
 import Profile from "./Profile";
 
 const ProfileIndex = () => {

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import styles from "./SideBar2.module.css";
-// import "index.css";
 import { HouseDoor, Gear, ChevronUp, ChevronDown } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
 import { MdPayment } from "react-icons/md";
+import { SidebarStyle } from "components/styling/DynamicStyling";
 
 interface Props {
-  width: string;
-  goto: (url: string) => void; 
+  width: any;
+  goto: (url: string) => void;
   // menuHead: [
   //   {
   //     id: string;
@@ -30,7 +30,7 @@ interface Props {
 
 let iconSize;
 
-const SideBar2: React.FC<Props> = ({ width, goto }) => { 
+const SideBar2: React.FC<Props> = ({ width, goto }) => {
   const [changeDropIcon, setChangeDropIcon] = useState<boolean>(true);
   const [clickID, setClickID] = useState<number>(0);
   const [{ menuButton }, dispatch] = useStateValue();
@@ -57,7 +57,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
 
   if (width === "250px") {
     return (
-      <div className={styles.sidebar__ctrl} style={{ width: `${width}` }}>
+      <SidebarStyle BgColor="black" customWidth="250px">
         <div className={styles.sidebar__item} onClick={handleSideMenuShow}>
           <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
             <div
@@ -282,6 +282,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                 <div>
                   <p
                     className={`${styles.menu__items} ${styles.menu__itemsHover}`}
+                    onClick={() => goto("/setting/theme-setting")}
                   >
                     Confgure Theme
                   </p>
@@ -289,43 +290,11 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                     className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/setting/service-config")}
                   >
-                    <Accordion.Toggle
-                      eventKey="3"
-                      as={"div"}
-                      onClick={() => handleIcon(3)}
-                      className={
-                        clickID === 3 ? "menu__Active" : "menu__inActive"
-                      }
-                    >
-                      <strong>
-                        <Gear size={25} />
-                        <span style={{ paddingLeft: "10px" }}>Setting</span>
-                        {changeDropIcon && clickID === 3 ? (
-                          <ChevronUp
-                            style={{ float: "right", marginTop: "5px" }}
-                          />
-                        ) : (
-                          <ChevronDown
-                            style={{ float: "right", marginTop: "5px" }}
-                          />
-                        )}
-                      </strong>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="3">
-                      <div>
-                        <p className="menu__items menu__itemsHover">
-                          Confgure Theme
-                        </p>
-                        <p
-                          className="menu__items menu__itemsHover"
-                          onClick={() => goto("/setting/service-config")}
-                        >
-                          Service Configure
-                        </p>
-                      </div>
-                    </Accordion.Collapse>
-                  </div>
-                  
+                    Service Configure
+                  </p>
+                </div>
+              </Accordion.Collapse>
+            </div>
 
             <div
               style={{
@@ -359,44 +328,14 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
                     className={`${styles.menu__items} ${styles.menu__itemsHover}`}
                     onClick={() => goto("/activity/log")}
                   >
-                    <Accordion.Toggle
-                      eventKey="4"
-                      as={"div"}
-                      onClick={() => handleIcon(4)}
-                      className={
-                        clickID === 4 ? "menu__Active" : "menu__inActive"
-                      }
-                    >
-                      <strong>
-                        <FiActivity size={25} />
-                        <span style={{ paddingLeft: "10px" }}>
-                          Activity Log
-                        </span>
-                        {changeDropIcon && clickID === 4 ? (
-                          <ChevronDown
-                            style={{ float: "right", marginTop: "5px" }}
-                          />
-                        ) : (
-                          <ChevronUp
-                            style={{ float: "right", marginTop: "5px" }}
-                          />
-                        )}
-                      </strong>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="4">
-                      <div>
-                        <p
-                          className="menu__items menu__itemsHover"
-                          onClick={() => goto("/activity/log")}
-                        >
-                          History
-                        </p>
-                      </div>
-                    </Accordion.Collapse>
-                  </div>
-                </Accordion>
-              </div>
+                    History
+                  </p>
+                </div>
+              </Accordion.Collapse>
             </div>
+          </Accordion>
+        </div>
+      </SidebarStyle>
     );
   }
 
@@ -468,11 +407,11 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
               marginBottom: "2rem",
             }}
           >
-                          <FiActivity size={35} className={styles.iconHover} />
-              </div>
-          </Accordion>
-              </div>
-            </div>
+            <FiActivity size={35} className={styles.iconHover} />
+          </div>
+        </Accordion>
+      </div>
+    </div>
   );
 };
 
