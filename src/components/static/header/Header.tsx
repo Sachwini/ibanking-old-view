@@ -10,11 +10,11 @@ import {
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
-import { notification, wallet } from "./support/HeaderDropDown";
-import HeaderSearch from "./support/HeaderSearch";
+import { notification, wallet } from "./comp/HeaderDropDown";
+import HeaderSearch from "./comp/HeaderSearch";
 
 const Header = () => {
-  const [eye, setEye] = useState<boolean>(false); 
+  const [eye, setEye] = useState<boolean>(false);
 
   const handleBalanceShow = () => {
     setEye(!eye);

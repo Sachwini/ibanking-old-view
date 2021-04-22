@@ -1,4 +1,4 @@
-import "./SideBar2.css";
+import "./SideBar2.module.css";
 import {
   HouseDoor,
   Wallet2,
@@ -7,7 +7,7 @@ import {
   BoxArrowRight,
   Mailbox2,
 } from "react-bootstrap-icons";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 
 interface Props {
   width: string;

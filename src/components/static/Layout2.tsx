@@ -1,8 +1,8 @@
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header2 from "./Header2";
-import SideBar2 from "./SideBar2";
+import Header2 from "./header/Header2";
+import SideBar2 from "./sidebar/SideBar2";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ menuButton }, dispatch] = useStateValue();
@@ -13,7 +13,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
     background: "#f1f1f1",
     paddingLeft: "1em",
     minHeight: "100vh",
-    paddingBottom: "1em",
+    // paddingBottom: "1em",
   };
 
   const gotUrl = (url: string) => {
@@ -38,7 +38,10 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
         >
           <SideBar2 goto={gotUrl} width={menuButton ? "70px" : "250px"} />
         </div>
-        <div style={contentFieldStyle}>{props.children}</div>
+        <div style={contentFieldStyle}>
+          {props.children}
+          {/* <Footer /> */}
+        </div>
       </div>
     </div>
   );

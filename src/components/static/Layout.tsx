@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header2 from "./Header2";
-import SideBar from "./SideBar";
+import Header from "./header/Header";
+import SideBar from "./sidebar/SideBar";
 
 const contentFieldStyle = {
   paddingTop: "2em",
@@ -21,7 +21,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
         <SideBar goto={gotUrl} />
       </div>
       <div style={{ width: "93%" }}>
-        <Header2 />
+        <Header />
         <div style={contentFieldStyle}>{props.children}</div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 import React, { ReactComponentElement, ReactNode, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { ChevronDown, ChevronUp } from "react-bootstrap-icons";

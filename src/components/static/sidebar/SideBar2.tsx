@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styles from "./SideBar2.module.css";
-// import "index.css";
 import { HouseDoor, Gear, ChevronUp, ChevronDown } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
 import { MdPayment } from "react-icons/md";
+import { SidebarStyle } from "components/styling/DynamicStyling";
 
 interface Props {
-  width: string;
+  width: any;
   goto: (url: string) => void;
   // menuHead: [
   //   {
@@ -57,7 +57,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
 
   if (width === "250px") {
     return (
-      <div className={styles.sidebar__ctrl} style={{ width: `${width}` }}>
+      <SidebarStyle BgColor="black" customWidth="250px">
         <div className={styles.sidebar__item} onClick={handleSideMenuShow}>
           <Accordion defaultActiveKey="0" style={{ background: "transparent" }}>
             <div
@@ -334,7 +334,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
             </div>
           </Accordion>
         </div>
-      </div>
+      </SidebarStyle>
     );
   }
 

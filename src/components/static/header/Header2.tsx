@@ -11,12 +11,12 @@ import {
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
-import { notification, userProfile, wallet } from "./support/HeaderDropDown";
-import HeaderSearch from "./support/HeaderSearch";
+import { notification, userProfile, wallet } from "./comp/HeaderDropDown";
+import HeaderSearch from "./comp/HeaderSearch";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 
 const Header2 = (props: any) => {
   const [eye, setEye] = useState<boolean>(false);
