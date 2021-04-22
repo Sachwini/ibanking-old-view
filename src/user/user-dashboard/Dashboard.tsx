@@ -1,13 +1,13 @@
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Profile from "../user-profile/Profile";
+import Profile from "../user-account/user-profile/Profile";
 import QuickPay from "../activities/QuickPay";
 import UpcomingPayment from "../activities/UpComingPayment";
 import FixedDeposit from "../activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "user/activities/Activities";
 import LineChart from "user/activities/LineChart";
-import BusinessPayment from "user/payment/BusinessPayment";
+import FundTranfCharge from "user/payment/fund-transfer/FundTranfCharge";
 
 const Dashboard = () => {
   return (
@@ -42,7 +42,6 @@ const Dashboard = () => {
           <UpcomingPayment />
         </Col>
       </Row>
-      <BusinessPayment />
     </Container>
   );
 };

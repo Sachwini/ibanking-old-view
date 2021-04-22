@@ -3,20 +3,19 @@ a:hover {
 }
 
 .sidebar__ctrl {
-  height: 100vh;
+  min-height: 100vh;
   position: fixed;
-  background: linear-gradient(180deg, #04166d, #3144a0, #5f6897);
-  background: #0c1138;
-  /* background: #168d4c; */
+  /* background: linear-gradient(160deg, #010a3a, #061f9e, #0f1b53); */
+  background: #01083d;
+  /* background: #003002; */
   color: white;
   padding: auto;
   z-index: 1200;
 }
 
 .sidebar__item {
-  min-height: 100vh;
+  height: 100vh;
   margin-top: 0.8em;
-  /* padding: 0 0.8em; */
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -30,8 +29,6 @@ a:hover {
 .sidebar__item::-webkit-scrollbar-track {
   height: 100%;
   border-radius: 30px;
-  background: #000000;
-  background: #f2f2f2;
 }
 
 .sidebar__item::-webkit-scrollbar-thumb {
@@ -45,29 +42,6 @@ a:hover {
   background: #08a14d 40%;
 }
 
-.main-menu-ul {
-  height: calc(100vh - 120px);
-  list-style-type: none;
-}
-
-.main-menu-ul li {
-  margin-top: 1.5em;
-}
-
-.main-menu-ul li:first-child {
-  margin-top: 0;
-}
-
-a.sidebar_action {
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-}
-
-a.sidebar_action:hover {
-  opacity: 0.8;
-}
-
 .menu__Active {
   width: 100%;
   height: 100%;
@@ -75,6 +49,7 @@ a.sidebar_action:hover {
   padding: 0.5rem;
   padding-left: 0.6rem;
   background-color: rgba(255, 255, 255, 0.384);
+  background: #069b3f;
   letter-spacing: 1.5px;
   text-transform: capitalize;
 }
@@ -91,6 +66,7 @@ a.sidebar_action:hover {
 
 .menu__inActive:hover {
   background: #f1f1f144;
+  background: #069b3f;
 }
 
 .menu__items {
@@ -106,6 +82,12 @@ a.sidebar_action:hover {
 
 .menu__itemsHover:hover {
   color: white;
+  color: #069b3f;
   font-weight: bolder;
   opacity: 1;
+}
+
+.iconHover:hover {
+  font-weight: bolder;
+  opacity: 0.8;
 }

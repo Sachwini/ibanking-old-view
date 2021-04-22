@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "index.css";
 import { HouseDoor, Gear, ChevronUp, ChevronDown } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";

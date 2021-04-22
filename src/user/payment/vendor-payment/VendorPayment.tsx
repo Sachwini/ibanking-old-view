@@ -1,10 +1,10 @@
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 import { GoSync } from "react-icons/go";
-import "./index.css";
+import { PageTitle } from "components/page-title";
 
-function BusinessPayment() {
+function VendorPayment() {
   const [bank, setBank] = useState<any>([
     "BankA",
     "BankB",
@@ -13,22 +13,24 @@ function BusinessPayment() {
     "BankE",
   ]);
   return (
-    <>
-      <Card>
+    <Container>
+      <PageTitle title="Vender Payment" />
+      <Card style={{ maxWidth: "50em" }}>
         <Card.Body>
           <Card.Title
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <>Business Payment</>
-            <>
-              <GoSync color="green" />
-            </>
+            <Card.Title style={{ display: "flex", justifyContent: "center" }}>
+              <button id="button2">To Mobile Number</button>
+              <button id="button1">To Account Number</button>
+            </Card.Title>
+            <GoSync color="green" />
           </Card.Title>
-          <hr />
+          {/* <hr />
           <Card.Title style={{ display: "flex", justifyContent: "center" }}>
             <button id="button2">To Mobile Number</button>
             <button id="button1">To Account Number</button>
-          </Card.Title>
+          </Card.Title> */}
           <Form>
             <Form.Group
               controlId="exampleForm.ControlSelect1"
@@ -93,8 +95,8 @@ function BusinessPayment() {
           </Form>
         </Card.Body>
       </Card>
-    </>
+    </Container>
   );
 }
 
-export default BusinessPayment;
+export default VendorPayment;

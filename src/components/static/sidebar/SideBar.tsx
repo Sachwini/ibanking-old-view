@@ -16,7 +16,6 @@ interface Props {
 
 const [showbar, setShowbar] = useState<boolean>(true);
 
-
 const SideBar = (props: Props) => {
   return (
     <div className="sidebar__ctrl">

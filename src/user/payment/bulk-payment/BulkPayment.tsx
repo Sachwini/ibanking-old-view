@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { GoSync } from "react-icons/go";
-import { FaDownload } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { PageTitle } from "components/page-title";
 
 function VendorPayment() {
   const [bank, setBank] = useState<any>([
@@ -15,17 +14,22 @@ function VendorPayment() {
   ]);
   return (
     <Container>
-      <PageTitle
-        title="Vendor Payment"
-        subTitle="You can pay to any vendor from here"
-      />
+      {/* <PageTitle
+        title="Bulk Payment"
+        subTitle="upload your excel file to pay"
+      /> */}
+
       <Card>
         <Card.Body>
           <Card.Title
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <>Bulk Payment</>
-
+            <strong>
+              Bulk Payment <br />
+              <small className="text-mute text-capitalize">
+                upload your excel file to pay
+              </small>
+            </strong>
             <GoSync color="green" />
           </Card.Title>
           <hr />
@@ -37,7 +41,7 @@ function VendorPayment() {
               border: "none",
             }}
           >
-            <FaDownload style={{ marginRight: "1em" }} /> Download
+            <FaUpload style={{ marginRight: "1em" }} /> Upload Excel File
           </Button>
           <div
             className="input-group"

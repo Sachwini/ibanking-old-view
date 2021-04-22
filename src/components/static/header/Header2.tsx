@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useState } from "react";
 import "./Header2.css";
 import {
   Container,
@@ -11,14 +11,14 @@ import {
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
-import { notification, userProfile, wallet } from "./support/HeaderDropDown";
-import HeaderSearch from "./support/HeaderSearch";
+import { notification, userProfile, wallet } from "./comp/HeaderDropDown";
+import HeaderSearch from "./comp/HeaderSearch";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useStateValue } from "components/theme-setting/StateProvider";
+import { useStateValue } from "components/state-provider/StateProvider";
 
-const Header2 = (props: any) => { 
+const Header2 = (props: any) => {
   const [eye, setEye] = useState<boolean>(false);
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   // const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
@@ -56,7 +56,7 @@ const Header2 = (props: any) => {
             />
             <Link to="/" style={{ textDecoration: "none", width: "100%" }}>
               <Image
-                src="./uploads/aaratiLogo.png"
+                src="/uploads/aaratiLogo.png"
                 alt="Generic placeholder"
                 width="100%"
                 height="45px"
@@ -160,6 +160,6 @@ const Header2 = (props: any) => {
       </Container>
     </Navbar>
   );
-}; 
+};
 
 export default Header2;

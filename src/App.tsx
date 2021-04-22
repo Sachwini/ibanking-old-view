@@ -13,20 +13,25 @@ function App() {
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(() => import("./user/user-account/Account"));
   const UserProfile = React.lazy(
-    () => import("./user/user-profile/ProfileIndex")
+    () => import("user/user-account/user-profile/ProfileIndex")
   );
 
   /* ----------For Fund Management Import--------------------- */
 
   /* ----------For Payment Import--------------------- */
-  const FundTransfer = React.lazy(() => import("./user/transfer"));
-  const VendorPayment = React.lazy(() => import("user/payment/BulkPayment"));
+  const Transfer = React.lazy(() => import("user/payment/fund-transfer"));
+  const BulkPayment = React.lazy(
+    () => import("user/payment/bulk-payment/BulkPayment")
+  );
+  const VendorPayment = React.lazy(
+    () => import("user/payment/vendor-payment/VendorPayment")
+  );
 
   /* ----------For request Import--------------------- */
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
-    () => import("./user/user-setting/ConfigureService")
+    () => import("user/user-setting/service-config/ConfigureService")
   );
 
   /* ----------For History Log Import--------------------- */
@@ -45,7 +50,8 @@ function App() {
           {/* ---------- For Fund Management Routing--------------------- */}
 
           {/* ---------- For Payment Routing--------------------- */}
-          <Route exact path="/payment/fund-transfer" component={FundTransfer} />
+          <Route exact path="/payment/fund-transfer" component={Transfer} />
+          <Route exact path="/payment/bulk-payment" component={BulkPayment} />
           <Route
             exact
             path="/payment/vendor-payment"
