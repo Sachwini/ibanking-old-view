@@ -16,22 +16,26 @@ const ThemeSetting = () => {
                 With supporting text below as a natural lead-in to additional
                 content.
               </Card.Text>
-              <Button variant="primary" style={{ float: "right" }}>
-                Go somewhere
-              </Button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button variant="primary">Edit</Button>
+              </div>
             </Card.Body>
           </Card>
         </Col>
         <Col sm={12} md={6}>
           <Card>
-            <Card.Header as="h5">Featured</Card.Header>
             <Card.Body>
+              <div>
+                <h3> Your Text Color</h3> <hr />
+              </div>
               <Card.Title>Special title treatment</Card.Title>
               <Card.Text>
                 With supporting text below as a natural lead-in to additional
                 content.
               </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button variant="primary">Edit</Button>
+              </div>
             </Card.Body>
           </Card>
         </Col>

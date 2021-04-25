@@ -4,7 +4,7 @@ import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "./components/Loader";
 import { Route } from "react-router";
 import React from "react";
-import DefaultLayout2 from "./components/static/Layout2";
+import DefaultLayout from "./components/static/Layout";
 
 function App() {
   /* ----------For Default Dashboard Import------------------- */
@@ -41,14 +41,14 @@ function App() {
   const Activities = React.lazy(() => import("user/activities/Activities"));
 
   return (
-    <DefaultLayout2>
+    <DefaultLayout>
       <SwitchWithCatch>
         <React.Suspense fallback={<Loader />}>
           <Route exact path="/" component={Dashboard} />
 
           {/* ---------- For Account Routing--------------------- */}
           <Route path="/account/user-profile" component={UserProfile} />
-          <Route path="/account/details" component={Account} />
+          <Route path="/account/account-details" component={Account} />
 
           {/* ---------- For Fund Management Routing--------------------- */}
 
@@ -66,16 +66,20 @@ function App() {
           {/* ---------- For Setting Routing--------------------- */}
           <Route
             exact
-            path="/setting/service-config"
+            path="/setting/configure-service"
             component={ConfigureService}
           />
-          <Route exact path="/setting/theme-setting" component={ThemeSetting} />
+          <Route
+            exact
+            path="/setting/configure-theme"
+            component={ThemeSetting}
+          />
 
           {/* ---------- For history Logs Routing--------------------- */}
-          <Route path="/activity/log" component={Activities} />
+          <Route path="/activity-log/logs" component={Activities} />
         </React.Suspense>
       </SwitchWithCatch>
-    </DefaultLayout2>
+    </DefaultLayout>
   );
 }
 

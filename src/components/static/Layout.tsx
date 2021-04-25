@@ -1,30 +1,44 @@
+import { useStateValue } from "components/state-provider/StateProvider";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header from "./header/Header";
+import Header2 from "./header/Header2";
 import SideBar from "./sidebar/SideBar";
-
-const contentFieldStyle = {
-  paddingTop: "2em",
-  background: "#f1f1f1",
-  paddingLeft: "1em",
-  minHeight: "100vh",
-};
+import {
+  LayoutBodyWrapper,
+  LayoutContainer,
+  LayoutSidebar,
+  LayoutContentField,
+} from "components/styling/layout/LayoutStyling";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
+  const [{ isMenuButtonClick }, dispatch] = useStateValue();
+
+  let sidbarWidth;
+  if (isMenuButtonClick) {
+    sidbarWidth = `70px`;
+  } else sidbarWidth = `250px`;
+
   const gotUrl = (url: string) => {
     props.history.push(url);
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}>
-      <div style={{ width: "7%" }}>
-        <SideBar goto={gotUrl} />
-      </div>
-      <div style={{ width: "93%" }}>
-        <Header />
-        <div style={contentFieldStyle}>{props.children}</div>
-      </div>
-    </div>
+    <LayoutContainer>
+      {/* Header Here  */}
+      <Header2 />
+
+      <LayoutBodyWrapper>
+        <LayoutSidebar width={sidbarWidth}>
+          {/* sidebar Here  */}
+          <SideBar goto={gotUrl} />
+        </LayoutSidebar>
+
+        <LayoutContentField width={sidbarWidth}>
+          {/* Main Content Here   */}
+          {props.children}
+        </LayoutContentField>
+      </LayoutBodyWrapper>
+    </LayoutContainer>
   );
 };
 
