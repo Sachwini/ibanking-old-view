@@ -1,104 +1,113 @@
-import "./sidebar.css";
+import React from "react";
+import { HouseDoor, Gear } from "react-bootstrap-icons";
+import { Accordion } from "react-bootstrap";
+import { useStateValue } from "components/state-provider/StateProvider";
+import { GoRequestChanges } from "react-icons/go";
+import { RiRefundLine } from "react-icons/ri";
+import { FiActivity } from "react-icons/fi";
+import { MdPayment } from "react-icons/md";
+import { theme } from "components/styling/ThemeControl";
+import { ThemeProvider } from "styled-components";
 import {
-  PersonCircle,
-  HouseDoor,
-  Wallet2,
-  CashStack,
-  Gear,
-  BoxArrowRight,
-  Mailbox2,
-} from "react-bootstrap-icons";
-import { useCallback, useState } from "react";
+  MiniMenuIconHandle,
+  SidebarContainer,
+  SideBarMenuControl,
+} from "components/styling/sidebar/SidebarStyling";
+import MenuHandle from "./comp/MenuHandle";
 
 interface Props {
   goto: (url: string) => void;
 }
 
-const [showbar, setShowbar] = useState<boolean>(true);
+const SideBar: React.FC<Props> = ({ goto }) => {
+  const [{ isMenuButtonClick }, dispatch] = useStateValue();
 
-const SideBar = (props: Props) => {
+  // calculate icon size dynamically with changing width
+  let iconsize = `${isMenuButtonClick ? 35 : 25}`;
+
+  // calculate icon size dynamically with changing width
+  let sidbarWidth;
+  if (isMenuButtonClick) {
+    sidbarWidth = `70px`;
+  } else sidbarWidth = `250px`;
+
+  // list for mini sidebar
+  const meniSidebarIcon = [
+    <HouseDoor size={iconsize} />,
+    <RiRefundLine size={iconsize} />,
+    <MdPayment size={iconsize} />,
+    <GoRequestChanges size={iconsize} />,
+    <Gear size={iconsize} />,
+    <FiActivity size={iconsize} />,
+  ];
+
+  const handleSideMenuShow = () => {
+    if (isMenuButtonClick) {
+      dispatch({
+        type: "MENU_CLICKED",
+        value: false,
+      });
+    }
+  };
+
+  if (!isMenuButtonClick) {
+    return (
+      <ThemeProvider theme={theme}>
+        <SidebarContainer customWidth={sidbarWidth}>
+          <SideBarMenuControl onClick={handleSideMenuShow}>
+            <Accordion defaultActiveKey="account">
+              <MenuHandle
+                goto={goto}
+                menuHeader="account"
+                menuHeaderIcon={<HouseDoor size={iconsize} />}
+              />
+
+              <MenuHandle
+                goto={goto}
+                menuHeader="Fund Management"
+                menuHeaderIcon={<RiRefundLine size={iconsize} />}
+              />
+
+              <MenuHandle
+                goto={goto}
+                menuHeader="Payment"
+                menuHeaderIcon={<MdPayment size={iconsize} />}
+              />
+
+              <MenuHandle
+                goto={goto}
+                menuHeader="Request"
+                menuHeaderIcon={<GoRequestChanges size={iconsize} />}
+              />
+
+              <MenuHandle
+                goto={goto}
+                menuHeader="Setting"
+                menuHeaderIcon={<Gear size={iconsize} />}
+              />
+
+              <MenuHandle
+                goto={goto}
+                menuHeader="Activity Log"
+                menuHeaderIcon={<FiActivity size={iconsize} />}
+              />
+            </Accordion>
+          </SideBarMenuControl>
+        </SidebarContainer>
+      </ThemeProvider>
+    );
+  }
+
   return (
-    <div className="sidebar__ctrl">
-      <div className="header__part">
-        <a
-          className="sidebar_action"
-          onClick={() => props.goto("/user-profile")}
-        >
-          <PersonCircle size={32} />
-        </a>
-      </div>
-
-      <div className="sidebar__item">
-        <ul className="main-menu-ul">
-          <li>
-            <a className="sidebar_action" onClick={() => props.goto("/")}>
-              <HouseDoor size={25} />
-              <small>Home</small>
-            </a>
-          </li>
-          <li>
-            <a className="sidebar_action" onClick={() => props.goto("/")}>
-              <HouseDoor size={25} />
-              <small>Home</small>
-            </a>
-          </li>
-          <li>
-            <a className="sidebar_action" onClick={() => props.goto("/")}>
-              <HouseDoor size={25} />
-              <small>Home</small>
-            </a>
-          </li>
-          <li>
-            <a className="sidebar_action" onClick={() => props.goto("/")}>
-              <HouseDoor size={25} />
-              <small>Home</small>
-            </a>
-          </li>
-          <li>
-            <a
-              className="sidebar_action"
-              onClick={() => props.goto("/account")}
-            >
-              <Wallet2 size={25} />
-              <small>Account</small>
-            </a>
-          </li>
-          <li>
-            <a
-              className="sidebar_action"
-              onClick={() => props.goto("/payment")}
-            >
-              <CashStack size={25} />
-              <small>Payments</small>
-            </a>
-          </li>
-          <li>
-            <a
-              className="sidebar_action"
-              onClick={() => props.goto("/fund-transfer")}
-            >
-              <Mailbox2 size={25} />
-              <small>Transfer</small>
-            </a>
-          </li>
-          <li>
-            <a
-              className="sidebar_action"
-              onClick={() => props.goto("/service-config")}
-            >
-              <Gear size={25} />
-              <small>Services</small>
-            </a>
-          </li>
-          <li>
-            <a className="sidebar_action">
-              <BoxArrowRight size={25} />
-              <small>Logout</small>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <SidebarContainer customWidth={sidbarWidth}>
+        <SideBarMenuControl onClick={handleSideMenuShow}>
+          {meniSidebarIcon.map((icon) => {
+            return <MiniMenuIconHandle>{icon}</MiniMenuIconHandle>;
+          })}
+        </SideBarMenuControl>
+      </SidebarContainer>
+    </ThemeProvider>
   );
 };
 

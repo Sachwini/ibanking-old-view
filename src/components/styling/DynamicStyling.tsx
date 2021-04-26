@@ -1,25 +1,12 @@
 import styled, { css } from "styled-components";
-import { defaultTheme, defaultTextColor } from "./DefaultTheme";
+
 interface SideBarProps {
   customWidth: string;
 }
 
-const userThemeColor = {
-  primaryColor: "gray",
-  secondaryColor: "purple",
-};
-
-export const theme = {
-  primary: userThemeColor.primaryColor
-    ? userThemeColor.primaryColor
-    : defaultTheme.primaryColor,
-  secondary: userThemeColor.secondaryColor
-    ? userThemeColor.secondaryColor
-    : defaultTheme.secondaryColor,
-  textPrimaryColor: defaultTextColor.primaryTextColor,
-  font: "Cursive",
-  alert: "red",
-};
+interface MenuListProps {
+  status: string;
+}
 
 export const SidebarStyle = styled.div<SideBarProps>`
   width: ${(props) => props.customWidth};
@@ -31,10 +18,17 @@ export const SidebarStyle = styled.div<SideBarProps>`
   z-index: 1200;
 `;
 
-export const SideBarText: any = styled.span`
+export const SideBarText = styled.span<MenuListProps>`
   color: ${(props) => props.theme.textPrimaryColor};
 
   &:hover {
     color: ${(props) => props.theme.secondary};
   }
+  ${({ status }) =>
+    status === "active" &&
+    css`
+      margin-left: -1.2em;
+      margin-right: 1em;
+      border-left: 3px solid red;
+    `}
 `;
