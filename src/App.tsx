@@ -7,6 +7,7 @@ import React from "react";
 import DefaultLayout2 from "./components/static/Layout2";
 
 function App() {
+  const Login = React.lazy(() => import("./components/Login"));
   /* ----------For Default Dashboard Import------------------- */
   const Dashboard = React.lazy(() => import("./user/user-dashboard/Dashboard"));
 
@@ -65,6 +66,10 @@ function App() {
 
           {/* ---------- For history Logs Routing--------------------- */}
           <Route path="/activity/log" component={Activities} />
+          <Route exact path='/login' render={(props: any) => {
+            document.title = "Login"
+            return <Login {...props}/>
+          }}/>
         </React.Suspense>
       </SwitchWithCatch>
     </DefaultLayout2>

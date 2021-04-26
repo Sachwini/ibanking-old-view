@@ -41,7 +41,7 @@ const SideBar2: React.FC<Props> = ({ width, goto }) => {
   const [{ menuButton }, dispatch] = useStateValue();
 
   if (width === "70px") {
-    iconSize = 40;
+    iconSize = 60;
   } else {
     iconSize = 25;
   }
