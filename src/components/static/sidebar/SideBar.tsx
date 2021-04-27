@@ -103,7 +103,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
       <SidebarContainer customWidth={sidbarWidth}>
         <SideBarMenuControl onClick={handleSideMenuShow}>
           {meniSidebarIcon.map((icon) => {
-            return <MiniMenuIconHandle>{icon}</MiniMenuIconHandle>;
+            return <MiniMenuIconHandle key={meniSidebarIcon.indexOf(icon)}>{icon}</MiniMenuIconHandle>;
           })}
         </SideBarMenuControl>
       </SidebarContainer>

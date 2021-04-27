@@ -7,7 +7,6 @@ import FixedDeposit from "../activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "user/activities/Activities";
 import LineChart from "user/activities/LineChart";
-import FundTranfCharge from "user/payment/fund-transfer/FundTranfCharge";
 
 const Dashboard = () => {
   return (

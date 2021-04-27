@@ -13,7 +13,6 @@ instance.interceptors.request.use(
     const token = getBearerToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("token",token);
     }
     return config;
   },
@@ -27,7 +26,6 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: any) {
-    console.log(error);
     if (401 === error.response.status) {
       goToLoginPage();
     } else {

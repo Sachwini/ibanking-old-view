@@ -1,8 +1,12 @@
+import { getBearerToken } from "services/AuthService";
+
+const token = getBearerToken()
+
 export const initialState = {
   isMenuButtonClick: true,
   menuHeaderId: "account",
   menuListId: "",
-  isLogin: false,
+  isLogin: token !== undefined,
 };
 
 const reducer = (state: any, action: any) => {

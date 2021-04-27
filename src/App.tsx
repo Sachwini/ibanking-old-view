@@ -7,10 +7,9 @@ import React from "react";
 import DefaultLayout from "./components/static/Layout";
 import { useStateValue } from "components/state-provider/StateProvider";
 import Login from "./components/Login";
-import { RouteComponentProps } from "react-router";
 
 function App() {
-  const [{ isLogin}, dispatch] = useStateValue();
+  const [{ isLogin}] = useStateValue();
   // const [{ token }, dispatch] = useStateValue();
 
   /* ----------For Default Dashboard Import------------------- */
@@ -18,9 +17,7 @@ function App() {
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(() => import("./user/user-account/Account"));
-  const UserProfile = React.lazy(
-    () => import("user/user-account/user-profile/ProfileIndex")
-  );
+  const UserProfile = React.lazy(() => import("pages/user-profile"));
 
   /* ----------For Fund Management Import--------------------- */
 
@@ -47,6 +44,7 @@ function App() {
   const Activities = React.lazy(() => import("user/activities/Activities"));
 
   
+  console.log('loggedIn: '+ isLogin)
   return (
     <>
       {isLogin ? (
@@ -73,18 +71,7 @@ function App() {
 
               {/* ---------- For Account Routing--------------------- */}
               {/* <Route path="/account/user-profile" component={UserProfile} /> */}
-              <Route
-                exact
-                path="/account/user-profile"
-                render={(props: any) => {
-                  document.title = "UserProfile";
-                  return (
-                    <>
-                      <UserProfile {...props} />
-                    </>
-                  );
-                }}
-              />
+              <Route exact path="/account/user-profile" component={UserProfile} />
 
               {/* <Route path="/account/account-details" component={Account} /> */}
               <Route

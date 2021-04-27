@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import { post } from "services/AjaxService";
-import { getBearerToken, setBearerToken } from "services/AuthService";
+import { getBearerToken, setBearerToken, setRefreshToken } from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -11,6 +11,7 @@ import {
   otp,
 } from "components/static/sidebar/comp/Constants";
 import { useStateValue } from "./state-provider/StateProvider";
+import axios from "axios";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -23,34 +24,38 @@ const Login = (props: RouteComponentProps<{}>) => {
     e.preventDefault();
     if (!identity || !password) return;
     setLoading(true);
-    console.log("test");
-    const res = await post<any>(
-      "/oauth/token?client_id=" +
-        client_id +
-        "&client_secret=" +
-        client_secret +
-        "&grant_type=" +
-        grant_type +
-        "&deviceUniqueIdentifier=" +
-        deviceUniqueIdentifier +
-        "&password=" +
-        password +
-        "&username=" +
-        identity,
-      // +
-      // "&otp=" + otp ,
-      {},
-      () => setLoading(false)
-    );
-    if (res) {
-      setBearerToken(res.data.token);
-      props.history.push("/dashboard");
-      dispatch({
-        type: "IS_LOGIN",
-        value: true,
-      });
+
+    try {
+      const url = "http://202.63.242.139:9091/oauth/token?client_id=" +
+      client_id +
+      "&client_secret=" +
+      client_secret +
+      "&grant_type=" +
+      grant_type +
+      "&deviceUniqueIdentifier=" +
+      deviceUniqueIdentifier +
+      "&password=" +
+      password +
+      "&username=" +
+      identity;
+
+      const res = await axios(url, {
+        method: 'POST'
+      })
+      if (res) {
+        setBearerToken(res.data.access_token);
+        setRefreshToken(res.data.refresh_token);
+        props.history.push("/dashboard");
+        dispatch({
+          type: "IS_LOGIN",
+          value: true,
+        });
+      }
+      else props.history.push("/");
     }
-    else props.history.push("/");
+    catch {
+      setLoading(false)
+    }
   };
 
   return (
