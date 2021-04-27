@@ -47,6 +47,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
                 status={
                   isLinkActive && menuListId === `${listItems}` ? "active" : ""
                 }
+                key={listItems}
               >
                 <span className="listText"> {listItems}</span>
               </MenuListItem>

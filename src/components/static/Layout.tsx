@@ -28,7 +28,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
       <LayoutBodyWrapper>
         <LayoutSidebar width={sidbarWidth}>
-          <SideBar goto={gotUrl} />
+          <SideBar key="00" goto={gotUrl} />
         </LayoutSidebar>
 
         <LayoutContentField width={sidbarWidth}>

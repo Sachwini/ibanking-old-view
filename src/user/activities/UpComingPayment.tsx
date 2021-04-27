@@ -2,7 +2,6 @@ import { Card } from "react-bootstrap";
 import { GrDocumentTime } from "react-icons/gr";
 import { FcMoneyTransfer } from "react-icons/fc";
 import "./activities.css";
-import { PageTitle } from "components/page-title";
 
 function UpcomingPayment() {
   return (

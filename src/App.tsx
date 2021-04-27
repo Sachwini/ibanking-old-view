@@ -7,16 +7,17 @@ import React from "react";
 import DefaultLayout from "./components/static/Layout";
 import { theme } from "components/styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
+import { useStateValue } from "components/state-provider/StateProvider";
+import Login from "./components/Login";
 
 function App() {
+  const [{ isLogin }] = useStateValue();
   /* ----------For Default Dashboard Import------------------- */
   const Dashboard = React.lazy(() => import("./user/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(() => import("./user/user-account/Account"));
-  const UserProfile = React.lazy(
-    () => import("user/user-account/user-profile/ProfileIndex")
-  );
+  const UserProfile = React.lazy(() => import("pages/user-profile"));
 
   /* ----------For Fund Management Import--------------------- */
 
@@ -42,12 +43,14 @@ function App() {
   /* ----------For History Log Import--------------------- */
   const Activities = React.lazy(() => import("user/activities/Activities"));
 
+  console.log("loggedIn: " + isLogin);
+
   return (
     <ThemeProvider theme={theme}>
       <DefaultLayout>
         <SwitchWithCatch>
           <React.Suspense fallback={<Loader />}>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/dashboard" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
             <Route path="/account/user-profile" component={UserProfile} />

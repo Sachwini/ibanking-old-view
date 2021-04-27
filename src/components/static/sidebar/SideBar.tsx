@@ -97,9 +97,9 @@ const SideBar: React.FC<Props> = ({ goto }) => {
   return (
     <SidebarContainer customWidth={sidbarWidth}>
       <SideBarMenuControl onClick={handleSideMenuShow}>
-        {meniSidebarIcon.map((icon) => {
+        {meniSidebarIcon.map((icon, index) => {
           return (
-            <MiniMenuIconHandle>
+            <MiniMenuIconHandle key={index}>
               <span className="iconColor">{icon} </span>
             </MiniMenuIconHandle>
           );

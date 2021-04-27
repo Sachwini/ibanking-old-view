@@ -42,7 +42,7 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                 }}
                 className={menuHeaderId === menu.title ? "active" : "inActive"}
               >
-                <div className="menu_HeaderWrapper">
+                <div className="menu_HeaderWrapper" key={menu.title}>
                   <div className="menu_HeaderText">
                     <span className="iconColor">{menuHeaderIcon}</span>
                     <span className="text">{menu.title}</span>
@@ -54,7 +54,7 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                   )}
                 </div>
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey={`${menu.title}`}>
+              <Accordion.Collapse eventKey={`${menu.title}`} key={menu.title}>
                 <ListItemHandle goto={goto} menuHeader={menuHeader} />
               </Accordion.Collapse>
             </>
