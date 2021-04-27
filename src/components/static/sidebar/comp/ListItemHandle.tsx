@@ -20,7 +20,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
   const handleMenuItemClick = (id: string) => {
     dispatch({
       type: "MENU_LIST_ID",
-      value: id,
+      listID: id,
     });
     setIsLinkActive(true);
   };
@@ -48,7 +48,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
                   isLinkActive && menuListId === `${listItems}` ? "active" : ""
                 }
               >
-                {listItems}
+                <span className="listText"> {listItems}</span>
               </MenuListItem>
             );
           });

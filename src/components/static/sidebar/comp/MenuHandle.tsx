@@ -14,16 +14,17 @@ interface Props {
 
 const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
   const [changeDropIcon, setChangeDropIcon] = useState<boolean>(true);
+  const [menuActiveID, setMenuActiveID] = useState<string>("account");
 
   // this is for Header Menu active or not
   const [{ menuHeaderId }, dispatch] = useStateValue();
 
-  const handleIcon = (id: string) => {
+  const handleMenuActive = (id: string) => {
     dispatch({
       type: "MENU_HEADER_ID",
-      value: id,
+      headerID: id,
     });
-    setChangeDropIcon(!changeDropIcon);
+    setMenuActiveID(id);
   };
 
   return (
@@ -35,18 +36,21 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
               <Accordion.Toggle
                 eventKey={`${menu.title}`}
                 as={"div"}
-                onClick={() => handleIcon(menu.title)}
+                onClick={() => {
+                  handleMenuActive(menu.title);
+                  setChangeDropIcon(!changeDropIcon);
+                }}
                 className={menuHeaderId === menu.title ? "active" : "inActive"}
               >
                 <div className="menu_HeaderWrapper">
                   <div className="menu_HeaderText">
-                    {menuHeaderIcon}
+                    <span className="iconColor">{menuHeaderIcon}</span>
                     <span className="text">{menu.title}</span>
                   </div>
                   {changeDropIcon && menuHeaderId === menu.title ? (
-                    <ChevronUp />
+                    <ChevronUp className="iconColor" />
                   ) : (
-                    <ChevronDown />
+                    <ChevronDown className="iconColor" />
                   )}
                 </div>
               </Accordion.Toggle>

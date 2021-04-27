@@ -24,17 +24,14 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
   return (
     <LayoutContainer>
-      {/* Header Here  */}
       <Header2 />
 
       <LayoutBodyWrapper>
         <LayoutSidebar width={sidbarWidth}>
-          {/* sidebar Here  */}
           <SideBar goto={gotUrl} />
         </LayoutSidebar>
 
         <LayoutContentField width={sidbarWidth}>
-          {/* Main Content Here   */}
           {props.children}
         </LayoutContentField>
       </LayoutBodyWrapper>

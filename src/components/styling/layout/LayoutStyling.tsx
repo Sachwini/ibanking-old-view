@@ -18,12 +18,14 @@ export const LayoutBodyWrapper = styled.div`
 
 export const LayoutSidebar = styled.div<LayoutProps>`
   width: ${(props) => props.width};
+  transition: width 0.6s ease-in-out;
 `;
 
 export const LayoutContentField = styled.div<LayoutProps>`
+  min-height: calc(100vh - 80px);
   width: calc(100% - ${({ width }) => width});
   padding-top: 2em;
-  background: #f1f1f1;
   padding-left: 1em;
-  min-height: 100vh;
+  padding-bottom: 1em;
+  background: #fff;
 `;

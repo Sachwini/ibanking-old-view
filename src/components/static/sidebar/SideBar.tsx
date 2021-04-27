@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { HouseDoor, Gear } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
 import { useStateValue } from "components/state-provider/StateProvider";
@@ -6,8 +6,6 @@ import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
 import { MdPayment } from "react-icons/md";
-import { theme } from "components/styling/ThemeControl";
-import { ThemeProvider } from "styled-components";
 import {
   MiniMenuIconHandle,
   SidebarContainer,
@@ -52,62 +50,62 @@ const SideBar: React.FC<Props> = ({ goto }) => {
 
   if (!isMenuButtonClick) {
     return (
-      <ThemeProvider theme={theme}>
-        <SidebarContainer customWidth={sidbarWidth}>
-          <SideBarMenuControl onClick={handleSideMenuShow}>
-            <Accordion defaultActiveKey="account">
-              <MenuHandle
-                goto={goto}
-                menuHeader="account"
-                menuHeaderIcon={<HouseDoor size={iconsize} />}
-              />
+      <SidebarContainer customWidth={sidbarWidth}>
+        <SideBarMenuControl onClick={handleSideMenuShow}>
+          <Accordion defaultActiveKey="account">
+            <MenuHandle
+              goto={goto}
+              menuHeader="account"
+              menuHeaderIcon={<HouseDoor size={iconsize} />}
+            />
 
-              <MenuHandle
-                goto={goto}
-                menuHeader="Fund Management"
-                menuHeaderIcon={<RiRefundLine size={iconsize} />}
-              />
+            <MenuHandle
+              goto={goto}
+              menuHeader="Fund Management"
+              menuHeaderIcon={<RiRefundLine size={iconsize} />}
+            />
 
-              <MenuHandle
-                goto={goto}
-                menuHeader="Payment"
-                menuHeaderIcon={<MdPayment size={iconsize} />}
-              />
+            <MenuHandle
+              goto={goto}
+              menuHeader="Payment"
+              menuHeaderIcon={<MdPayment size={iconsize} />}
+            />
 
-              <MenuHandle
-                goto={goto}
-                menuHeader="Request"
-                menuHeaderIcon={<GoRequestChanges size={iconsize} />}
-              />
+            <MenuHandle
+              goto={goto}
+              menuHeader="Request"
+              menuHeaderIcon={<GoRequestChanges size={iconsize} />}
+            />
 
-              <MenuHandle
-                goto={goto}
-                menuHeader="Setting"
-                menuHeaderIcon={<Gear size={iconsize} />}
-              />
+            <MenuHandle
+              goto={goto}
+              menuHeader="Setting"
+              menuHeaderIcon={<Gear size={iconsize} />}
+            />
 
-              <MenuHandle
-                goto={goto}
-                menuHeader="Activity Log"
-                menuHeaderIcon={<FiActivity size={iconsize} />}
-              />
-            </Accordion>
-          </SideBarMenuControl>
-        </SidebarContainer>
-      </ThemeProvider>
+            <MenuHandle
+              goto={goto}
+              menuHeader="Activity Log"
+              menuHeaderIcon={<FiActivity size={iconsize} />}
+            />
+          </Accordion>
+        </SideBarMenuControl>
+      </SidebarContainer>
     );
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <SidebarContainer customWidth={sidbarWidth}>
-        <SideBarMenuControl onClick={handleSideMenuShow}>
-          {meniSidebarIcon.map((icon) => {
-            return <MiniMenuIconHandle>{icon}</MiniMenuIconHandle>;
-          })}
-        </SideBarMenuControl>
-      </SidebarContainer>
-    </ThemeProvider>
+    <SidebarContainer customWidth={sidbarWidth}>
+      <SideBarMenuControl onClick={handleSideMenuShow}>
+        {meniSidebarIcon.map((icon) => {
+          return (
+            <MiniMenuIconHandle>
+              <span className="iconColor">{icon} </span>
+            </MiniMenuIconHandle>
+          );
+        })}
+      </SideBarMenuControl>
+    </SidebarContainer>
   );
 };
 

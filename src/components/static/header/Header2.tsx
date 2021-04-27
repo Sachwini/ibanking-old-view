@@ -1,165 +1,96 @@
-import React, { createContext, useCallback, useState } from "react";
-import "./Header2.css";
+import React, { useState } from "react";
 
-import {
-  Container,
-  Navbar,
-  Row,
-  Col,
-  Badge,
-  OverlayTrigger,
-  Image,
-} from "react-bootstrap";
-import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
-import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
+import { Badge, OverlayTrigger, Image } from "react-bootstrap";
+import { BsBell } from "react-icons/bs";
 import { notification, userProfile, wallet } from "./comp/HeaderDropDown";
 import HeaderSearch from "./comp/HeaderSearch";
 import { FiUser } from "react-icons/fi";
-import { HiOutlineMenu } from "react-icons/hi";
-import { Link } from "react-router-dom";
 import { useStateValue } from "components/state-provider/StateProvider";
+import {
+  HeaderNavbar,
+  HeaderContainer,
+  HeaderRow,
+  HeaderCol,
+  MenuIcon,
+  HeaderLink,
+  H_Notification,
+} from "components/styling/header/HeaderStyling";
+import { IconStyle } from "components/styling/comp/IconStyling";
 
-const Header2 = (props: any) => { 
-  const [eye, setEye] = useState<boolean>(false);
+const Header2 = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
-  // const toogleSidebar = useCallback(() => setSideMenuShow((value) => !value), [
-  //   sideMenuShow,
-  // ]);
-
   const [{}, dispatch] = useStateValue();
-
-  const handleBalanceShow = () => {
-    setEye(!eye);
-  };
 
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
     dispatch({
-      type: "MENU_CLICKED", 
+      type: "MENU_CLICKED",
       value: !sideMenuShow,
     });
   };
 
   return (
-    <Navbar
-      expand="xl"
-      sticky="top"
-      className="justify-content-between pr-0 navbar__ctrl"
-    >
-      <Container fluid className="p-0 ml-3">
-        <Row className="custom__row">
-          <Col sm={4} className="custom__col justify-content-start">
-            <HiOutlineMenu
-              size={40}
-              onClick={handleSideMenuShow}
-              className="menu__icon"
-              color="#1d2a6c"
-            />
-            <Link to="/" style={{ textDecoration: "none", width: "100%" }}>
-              <Image
-                src="/uploads/aaratiLogo.png"
-                alt="Generic placeholder"
-                width="100%"
-                height="45px" 
-                style={{ objectFit: "contain" }}
-              />
-            </Link>
-          </Col>
-
-          <Col sm={4} className="custom__col justify-content-end">
-            <HeaderSearch />
-          </Col>
-
-          <Col sm={4} className="custom__col  justify-content-end p-0">
-            <div>
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={wallet}
-                rootClose
-              >
-                <IoFileTrayOutline
-                  size="30px"
-                  className="pr-2 myPointer"
-                  color="#1d2a6c"
-                />
-              </OverlayTrigger>
-            </div>
-
-            <div className="pl-2">
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={notification}
-                rootClose
-              >
-                <span style={{ marginBottom: "30px" }}>
-                  <BsBell
-                    size="25px"
-                    className="myPointer position-absolute"
-                    color="#1d2a6c"
+    <HeaderNavbar expand="xl" sticky="top">
+      <HeaderContainer fluid>
+        <HeaderRow>
+          <HeaderCol sm={6}>
+            <HeaderRow>
+              <HeaderCol sm={3} md={2}>
+                <MenuIcon size={35} onClick={handleSideMenuShow} />
+              </HeaderCol>
+              <HeaderCol sm={8} md={10} className="pl-0">
+                <HeaderLink to="/">
+                  <Image
+                    src="/uploads/aaratiLogo.png"
+                    alt="Company Name"
+                    height="45px"
+                    style={{ maxWidth: "100%", objectFit: "contain" }}
                   />
-                  <Badge
-                    variant="info"
-                    className="myPointer badge__ctrl"
-                    color="#1d2a6c"
+                </HeaderLink>
+              </HeaderCol>
+            </HeaderRow>
+          </HeaderCol>
+
+          <HeaderCol sm={6} className="justify-content-end">
+            <HeaderRow>
+              <HeaderCol sm={8} md={9} className="mr-2">
+                <HeaderSearch />
+              </HeaderCol>
+              <HeaderCol sm={4} md={3} className="justify-content-end">
+                <div>
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="bottom"
+                    overlay={notification}
+                    rootClose
                   >
-                    9
-                  </Badge>
-                </span>
-              </OverlayTrigger>
-            </div>
+                    <H_Notification>
+                      <IconStyle hover>
+                        <BsBell size="25px" className="bell_ctrl" />
+                      </IconStyle>
+                      <Badge className="badge_ctrl">9</Badge>
+                    </H_Notification>
+                  </OverlayTrigger>
+                </div>
 
-            <div className="userBalance__inHeader">
-              <IoWalletOutline
-                size="30px"
-                className="myPointer"
-                color="#1d2a6c"
-              />
-              <div className="pl-2">
-                <p>Available Balance</p>
-                {eye ? (
-                  <p>
-                    <span className="header__currency">NPR</span> 2000000
-                  </p>
-                ) : (
-                  <p>
-                    <span className="header__currency">NPR</span> XX,XXX.XX
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div onClick={handleBalanceShow}>
-              {eye ? (
-                <BsEye size="20px" className="myPointer" color="#1d2a6c" />
-              ) : (
-                <BsEyeSlash size="20px" className="myPointer" />
-              )}
-            </div>
-
-            <div style={{ paddingLeft: "1.5em" }}>
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={userProfile}
-                rootClose
-              >
-                <FiUser
-                  size={32}
-                  color={"#1d2a6c"}
-                  className="pr-2 myPointer"
-                />
-              </OverlayTrigger>
-            </div>
-
-            {/* <Link to="/" style={{ paddingLeft: "1.5em" }}>
-              <FiUser size={32} color={"#1d2a6c"} />
-            </Link> */}
-          </Col>
-        </Row>
-      </Container>
-    </Navbar>
+                <div className="pl-4">
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="bottom"
+                    overlay={userProfile}
+                    rootClose
+                  >
+                    <IconStyle hover>
+                      <FiUser size={32} />
+                    </IconStyle>
+                  </OverlayTrigger>
+                </div>
+              </HeaderCol>
+            </HeaderRow>
+          </HeaderCol>
+        </HeaderRow>
+      </HeaderContainer>
+    </HeaderNavbar>
   );
 };
 

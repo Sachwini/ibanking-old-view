@@ -13,12 +13,12 @@ const reducer = (state: any, action: any) => {
 
     case "MENU_HEADER_ID":
       return {
-        menuHeaderId: action.value,
+        menuHeaderId: action.headerID,
       };
 
     case "MENU_LIST_ID":
       return {
-        menuListId: action.value,
+        menuListId: action.listID,
       };
 
     default:
