@@ -18,7 +18,6 @@ const menuData = [
   },
   {
     title: "Fund Management",
-
     subMenuTitle: ["Load Fund", "Load Wallet"],
   },
   {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import { post } from "services/AjaxService";
-import { setBearerToken } from "services/AuthService";
+import { getBearerToken, setBearerToken } from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -10,11 +10,14 @@ import {
   deviceUniqueIdentifier,
   otp,
 } from "components/static/sidebar/comp/Constants";
+import { useStateValue } from "./state-provider/StateProvider";
 
-const Login = (props: RouteComponentProps) => {
+const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
+
+  const [{ isLogin }, dispatch] = useStateValue();
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -41,8 +44,13 @@ const Login = (props: RouteComponentProps) => {
     );
     if (res) {
       setBearerToken(res.data.token);
-      props.history.push("/");
+      props.history.push("/dashboard");
+      dispatch({
+        type: "IS_LOGIN",
+        value: true,
+      });
     }
+    else props.history.push("/");
   };
 
   return (
@@ -53,7 +61,9 @@ const Login = (props: RouteComponentProps) => {
           <hr />
           <Form>
             <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">Identity</Form.Label>
+              <Form.Label className="font-weight-bold">
+                Identity VBMRDWEVFV9840069570
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="identity"
@@ -65,7 +75,9 @@ const Login = (props: RouteComponentProps) => {
             </Form.Group>
 
             <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">Password</Form.Label>
+              <Form.Label className="font-weight-bold">
+                Password 84275
+              </Form.Label>
               <Form.Control
                 type="password"
                 name="password"

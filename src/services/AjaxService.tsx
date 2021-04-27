@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getBearerToken, goToLoginPage } from "./AuthService";
 
-const baseEndPoint = "http://172.16.55.3:9091";
+const baseEndPoint = "http://202.63.242.139:9091/";
+  // "http://172.16.55.3:9091";
 // "http://172.16.55.29:8080";
 const instance = axios.create({
   baseURL: baseEndPoint,
@@ -9,9 +10,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config: any) {
-    const token =getBearerToken();
+    const token = getBearerToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("token",token);
     }
     return config;
   },
