@@ -14,5 +14,5 @@ export function setRefreshToken(token: string) {
 }
 
 export function goToLoginPage() {
-  window.location.href = `/`;
+  window.location.href = `/login`;
 }

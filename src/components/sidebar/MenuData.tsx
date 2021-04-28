@@ -1,16 +1,3 @@
-import { useStateValue } from "components/state-provider/StateProvider";
-import { HouseDoor, Gear } from "react-bootstrap-icons";
-import { FiActivity } from "react-icons/fi";
-import { GoRequestChanges } from "react-icons/go";
-import { MdPayment } from "react-icons/md";
-
-// Handle icon size according to the menu type
-// const [{ menuButton }, dispatch] = useStateValue();
-// let iconSize: number;
-// {
-//   menuButton ? (iconSize = 35) : (iconSize = 25);
-// }
-
 const menuData = [
   {
     title: "account",

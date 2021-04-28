@@ -35,16 +35,6 @@ export const notification = (
   </Popover>
 );
 
-export const wallet = (
-  <Popover id="popover-basic" style={PopoverStyle}>
-    <Popover.Content>
-      <Card style={CardStyle}>
-        <Card.Text>nothing top show</Card.Text>
-      </Card>
-    </Popover.Content>
-  </Popover>
-);
-
 export const userProfile = (
   <Popover id="popover-basic" style={PopoverStyle}>
     <Popover.Content>

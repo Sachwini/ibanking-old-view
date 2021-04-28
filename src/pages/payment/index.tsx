@@ -1,5 +1,5 @@
 import { PageTitle } from "components/page-title";
-import { IBFTLimit } from "user/payment/fund-transfer/IBFTLimit";
+import { IBFTLimit } from "pages/payment/fund-transfer/IBFTLimit";
 import { Col, Container, Row } from "react-bootstrap";
 import BillPaymentTransfer from "./BillPaymentTransfer";
 

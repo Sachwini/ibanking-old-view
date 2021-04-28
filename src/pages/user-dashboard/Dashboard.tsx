@@ -1,12 +1,13 @@
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
 import Profile from "pages/user-profile";
-import QuickPay from "../activities/QuickPay";
-import UpcomingPayment from "../activities/UpComingPayment";
-import FixedDeposit from "../activities/FixedDeposit";
+import QuickPay from "pages/activities/QuickPay";
+import UpcomingPayment from "pages/activities/UpComingPayment";
+import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
-import Activities from "user/activities/Activities";
-import LineChart from "user/activities/LineChart";
+import Activities from "pages/activities/Activities";
+import LineChart from "pages/activities/LineChart";
+import Data from "file/credentials.json";
 
 const Dashboard = () => {
   return (
@@ -30,6 +31,10 @@ const Dashboard = () => {
           <Row>
             <Col sm={12} className="mt-3">
               <LineChart />
+
+              {Data.map((secret) => {
+                return <h1>{secret.client_id}</h1>;
+              })}
             </Col>
           </Row>
         </Col>

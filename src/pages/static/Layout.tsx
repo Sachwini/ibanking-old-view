@@ -1,14 +1,14 @@
-import { useStateValue } from "components/state-provider/StateProvider";
+import { useStateValue } from "state-provider/StateProvider";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header2 from "./header/Header2";
-import SideBar from "./sidebar/SideBar";
+import Header2 from "components/header/Header2";
+import SideBar from "components/sidebar/SideBar";
 import {
   LayoutBodyWrapper,
   LayoutContainer,
   LayoutSidebar,
   LayoutContentField,
-} from "components/styling/layout/LayoutStyling";
+} from "styling/layout/LayoutStyling";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ isMenuButtonClick }, dispatch] = useStateValue();
@@ -28,7 +28,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
       <LayoutBodyWrapper>
         <LayoutSidebar width={sidbarWidth}>
-          <SideBar key="00" goto={gotUrl} />
+          <SideBar goto={gotUrl} />
         </LayoutSidebar>
 
         <LayoutContentField width={sidbarWidth}>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { getBearerToken, goToLoginPage } from "./AuthService";
 
 const baseEndPoint = "http://202.63.242.139:9091/";
-  // "http://172.16.55.3:9091";
+// "http://172.16.55.3:9091";
 // "http://172.16.55.29:8080";
 const instance = axios.create({
   baseURL: baseEndPoint,
@@ -36,7 +36,7 @@ instance.interceptors.response.use(
 
 function handleError(error: any, onError?: false | (() => void)) {
   const statusCode = error.response.status || 500;
-    // error.response != undefined ? error.response.status : 500 || 500;
+  // error.response != undefined ? error.response.status : 500 || 500;
 
   var errorTitle = "Task failed, please retry.";
   if (error.response.data && error.response.data.ExceptionMessage)
@@ -54,7 +54,7 @@ function handleError(error: any, onError?: false | (() => void)) {
     errorTitle = "Unauthorized, please login again.";
   }
 
-  alert(errorTitle); 
+  alert(errorTitle);
   if (onError) onError();
 }
 

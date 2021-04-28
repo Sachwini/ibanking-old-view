@@ -22,7 +22,9 @@ const userTextColor = {
 
 // setting our custome theme to for Customer login Dashboard according to the theme
 // color which can be default if customer doesn't provide their own Theme color
+
 export const theme = {
+  // ---------Default Theme color defining START Here--------
   primary: userThemeColor.primaryColor
     ? userThemeColor.primaryColor
     : defaultTheme.primaryColor,
@@ -31,7 +33,17 @@ export const theme = {
     ? userThemeColor.secondaryColor
     : defaultTheme.secondaryColor,
 
-  textPrimaryColor: defaultTextColor.primaryTextColor,
-  textSecondaryColor: defaultTextColor.secondaryTextColor,
+  // ---------Default Theme color defining END Here-----------
+
+  // ---------Default Text color defining START Here-----------
+  primaryTextColor: userTextColor.primaryTextColor
+    ? defaultTextColor.primaryTextColor
+    : defaultTheme.primaryColor,
+  secondaryTextColor: userTextColor.secondaryTextColor
+    ? defaultTextColor.secondaryTextColor
+    : defaultTheme.secondaryColor,
+
+  // ---------Default Text color defining END Here-----------
+
   alert: "red",
 };

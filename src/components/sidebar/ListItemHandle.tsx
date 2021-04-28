@@ -1,10 +1,7 @@
-import { useStateValue } from "components/state-provider/StateProvider";
-import {
-  MenuList,
-  MenuListItem,
-} from "components/styling/sidebar/SidebarStyling";
+import { useStateValue } from "state-provider/StateProvider";
+import { MenuList, MenuListItem } from "styling/sidebar/SidebarStyling";
 import React, { useState } from "react";
-import menuData from "../comp/MenuData";
+import menuData from "./MenuData";
 
 interface Props {
   goto: (url: string) => void;
@@ -26,7 +23,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
   };
 
   return (
-    <MenuList>
+    <MenuList key={menuHeader + 1}>
       {menuData.map((menu) => {
         if (menu.title === menuHeader) {
           return menu.subMenuTitle.map((listItems) => {

@@ -10,8 +10,8 @@ import {
 } from "react-bootstrap";
 import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
-import { notification, wallet } from "./comp/HeaderDropDown";
-import HeaderSearch from "./comp/HeaderSearch";
+import { notification } from "./HeaderDropDown";
+import HeaderSearch from "./HeaderSearch";
 
 const Header = () => {
   const [eye, setEye] = useState<boolean>(false);
@@ -48,17 +48,6 @@ const Header = () => {
           </Col>
 
           <Col sm={4} className="custom__col  justify-content-end p-0">
-            <div>
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={wallet}
-                rootClose
-              >
-                <IoFileTrayOutline size="30px" className="pr-2 myPointer" />
-              </OverlayTrigger>
-            </div>
-
             <div className="pl-2">
               <OverlayTrigger
                 trigger="click"

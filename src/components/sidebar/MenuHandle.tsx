@@ -1,9 +1,9 @@
-import { useStateValue } from "components/state-provider/StateProvider";
-import { MenuContainer } from "components/styling/sidebar/SidebarStyling";
+import { useStateValue } from "state-provider/StateProvider";
+import { MenuContainer } from "styling/sidebar/SidebarStyling";
 import React, { ReactFragment, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { ChevronDown, ChevronUp } from "react-bootstrap-icons";
-import menuData from "../comp/MenuData";
+import menuData from "./MenuData";
 import ListItemHandle from "./ListItemHandle";
 
 interface Props {
@@ -29,7 +29,7 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
 
   return (
     <MenuContainer>
-      {menuData.map((menu) => {
+      {menuData.map((menu, index) => {
         if (menu.title === menuHeader) {
           return (
             <>
@@ -41,8 +41,9 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                   setChangeDropIcon(!changeDropIcon);
                 }}
                 className={menuHeaderId === menu.title ? "active" : "inActive"}
+                key={menu.title}
               >
-                <div className="menu_HeaderWrapper" key={menu.title}>
+                <div className="menu_HeaderWrapper">
                   <div className="menu_HeaderText">
                     <span className="iconColor">{menuHeaderIcon}</span>
                     <span className="text">{menu.title}</span>
@@ -54,8 +55,12 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                   )}
                 </div>
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey={`${menu.title}`} key={menu.title}>
-                <ListItemHandle goto={goto} menuHeader={menuHeader} />
+              <Accordion.Collapse eventKey={`${menu.title}`} key={index}>
+                <ListItemHandle
+                  goto={goto}
+                  menuHeader={menu.title}
+                  key={index + 2}
+                />
               </Accordion.Collapse>
             </>
           );

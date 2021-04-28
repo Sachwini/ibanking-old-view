@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HouseDoor, Gear } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
-import { useStateValue } from "components/state-provider/StateProvider";
+import { useStateValue } from "state-provider/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
@@ -10,8 +10,8 @@ import {
   MiniMenuIconHandle,
   SidebarContainer,
   SideBarMenuControl,
-} from "components/styling/sidebar/SidebarStyling";
-import MenuHandle from "./comp/MenuHandle";
+} from "styling/sidebar/SidebarStyling";
+import MenuHandle from "./MenuHandle";
 
 interface Props {
   goto: (url: string) => void;

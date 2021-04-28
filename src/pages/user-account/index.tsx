@@ -1,6 +1,6 @@
 import { AccountName, PageTitle } from "components/page-title";
 import { Container } from "react-bootstrap";
-import AccountView from "user/user-account/AccountView";
+import AccountView from "./AccountView";
 
 function Account() {
   return (

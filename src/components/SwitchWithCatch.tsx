@@ -1,9 +1,10 @@
-import * as React from 'react'
+import * as React from "react";
 import { Switch, Route } from "react-router";
-import { FourZeroFour } from './NotFound';
+import { FourZeroFour } from "pages/static/NotFound";
 
 export const SwitchWithCatch: React.SFC<{}> = ({ children }) => (
-    <Switch>
+  <Switch>
     {children}
     <Route component={FourZeroFour} />
-</Switch>)
+  </Switch>
+);

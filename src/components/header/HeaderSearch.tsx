@@ -1,6 +1,6 @@
-import { IconStyle } from "components/styling/comp/IconStyling";
-import { HeaderSearchForm } from "components/styling/header/HeaderStyling";
-import { Form, FormControl } from "react-bootstrap";
+import { IconStyle } from "styling/comp/IconStyling";
+import { HeaderSearchForm } from "styling/header/HeaderStyling";
+import { FormControl } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 
 const HeaderSearch = () => {

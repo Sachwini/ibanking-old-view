@@ -1,7 +1,6 @@
 import { Card } from "react-bootstrap";
 import { GrDocumentPdf } from "react-icons/gr";
 import { ImFileExcel } from "react-icons/im";
-import "../user/user-account/Account.css";
 
 const Download = () => {
   return (

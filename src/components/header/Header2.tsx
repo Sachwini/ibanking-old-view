@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-
 import { Badge, OverlayTrigger, Image } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
-import { notification, userProfile, wallet } from "./comp/HeaderDropDown";
-import HeaderSearch from "./comp/HeaderSearch";
+import { notification, userProfile } from "./HeaderDropDown";
+import HeaderSearch from "./HeaderSearch";
 import { FiUser } from "react-icons/fi";
-import { useStateValue } from "components/state-provider/StateProvider";
+import { useStateValue } from "state-provider/StateProvider";
 import {
   HeaderNavbar,
   HeaderContainer,
@@ -14,8 +13,8 @@ import {
   MenuIcon,
   HeaderLink,
   H_Notification,
-} from "components/styling/header/HeaderStyling";
-import { IconStyle } from "components/styling/comp/IconStyling";
+} from "styling/header/HeaderStyling";
+import { IconStyle } from "styling/comp/IconStyling";
 
 const Header2 = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);

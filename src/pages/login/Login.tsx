@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import { post } from "services/AjaxService";
-import { getBearerToken, setBearerToken, setRefreshToken } from "services/AuthService";
+import { setBearerToken, setRefreshToken } from "services/AuthService";
 import {
   client_id,
   client_secret,
   grant_type,
   deviceUniqueIdentifier,
-  otp,
-} from "components/static/sidebar/comp/Constants";
-import { useStateValue } from "./state-provider/StateProvider";
+} from "services/Constants";
+import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
 
 const Login = (props: RouteComponentProps<{}>) => {
@@ -26,35 +24,34 @@ const Login = (props: RouteComponentProps<{}>) => {
     setLoading(true);
 
     try {
-      const url = "http://202.63.242.139:9091/oauth/token?client_id=" +
-      client_id +
-      "&client_secret=" +
-      client_secret +
-      "&grant_type=" +
-      grant_type +
-      "&deviceUniqueIdentifier=" +
-      deviceUniqueIdentifier +
-      "&password=" +
-      password +
-      "&username=" +
-      identity;
+      const url =
+        "http://202.63.242.139:9091/oauth/token?client_id=" +
+        client_id +
+        "&client_secret=" +
+        client_secret +
+        "&grant_type=" +
+        grant_type +
+        "&deviceUniqueIdentifier=" +
+        deviceUniqueIdentifier +
+        "&password=" +
+        password +
+        "&username=" +
+        identity;
 
       const res = await axios(url, {
-        method: 'POST'
-      })
+        method: "POST",
+      });
       if (res) {
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
-        props.history.push("/dashboard");
+        props.history.push("/");
         dispatch({
           type: "IS_LOGIN",
           value: true,
         });
-      }
-      else props.history.push("/");
-    }
-    catch {
-      setLoading(false)
+      } else props.history.push("/login");
+    } catch {
+      setLoading(false);
     }
   };
 
