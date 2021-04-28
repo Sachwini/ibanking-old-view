@@ -49,7 +49,7 @@ function App() {
       <DefaultLayout>
         <SwitchWithCatch>
           <React.Suspense fallback={<Loader />}>
-            <Route path="/" component={Dashboard} />
+            <Route exact path="/" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
             <Route exact path="/account/user-profile" component={UserProfile} />
