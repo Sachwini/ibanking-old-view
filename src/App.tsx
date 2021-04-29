@@ -12,8 +12,9 @@ import { useStateValue } from "state-provider/StateProvider";
 
 function App() {
   const [{ isLogin }] = useStateValue();
+
   /* ----------For Default Dashboard Import------------------- */
-  // const Login = React.lazy(() => import("./components/Login"));
+  const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
@@ -82,6 +83,7 @@ function App() {
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route exact path="/activity-log/logs" component={Activities} />
+            <Route exact path="/login" component={Login} />
           </React.Suspense>
         </SwitchWithCatch>
       </DefaultLayout>

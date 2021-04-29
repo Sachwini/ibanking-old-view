@@ -1,30 +1,18 @@
-import { Card, Container } from "react-bootstrap";
-import { AiOutlineUser } from "react-icons/ai";
+import { Card, Container, ListGroup } from "react-bootstrap";
 
-const Profile = () => (
-  <Card style={{ backgroundColor: "#ee944fb6", maxWidth: "500px" }}>
-    <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
-      <div style={{ width: "20%" }}>
-        <AiOutlineUser className="circle-icon" size="3.3em" color="white" />
-      </div>
-      <div style={{ width: "80%" }}>
-        <Card.Title style={{ fontSize: "18px" }}>
-          HAMRO TECHNOLOGY PVT. LTD
-        </Card.Title>
-        <Card.Text className="m-0">04911000579</Card.Text>
-        <Card.Text>ODA</Card.Text>
-        <Card.Text>NPR. 200,000.00</Card.Text>
-      </div>
-    </Card.Body>
-  </Card>
-);
-
-const ProfileIndex = () => {
+const Profile = () => {
   return (
     <Container fluid>
-      <Profile />
+      <div> welcome MR. Sachin </div>
+      <Card style={{ width: "18rem" }}>
+        <ListGroup variant="flush">
+          <ListGroup.Item>Cras justo odio</ListGroup.Item>
+          <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+          <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+        </ListGroup>
+      </Card>
     </Container>
   );
 };
 
-export default ProfileIndex;
+export default Profile;
