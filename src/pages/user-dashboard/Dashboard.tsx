@@ -1,13 +1,12 @@
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Profile from "pages/user-profile";
 import QuickPay from "pages/activities/QuickPay";
 import UpcomingPayment from "pages/activities/UpComingPayment";
 import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "pages/activities/Activities";
 import LineChart from "pages/activities/LineChart";
-import Data from "file/credentials.json";
+import ProfileCard from "pages/user-profile/ProfileCard";
 
 const Dashboard = () => {
   return (
@@ -21,7 +20,7 @@ const Dashboard = () => {
                 <FcSynchronize size="24px" />
                 <strong className="px-2">Switch Account</strong>
               </p>
-              <Profile />
+              <ProfileCard />
             </Col>
             <Col md={12} lg={6} className="p-0 my-sm-4 my-md-0 ">
               <strong className="mb-3 pl-3">Quick Pay</strong>
@@ -31,10 +30,6 @@ const Dashboard = () => {
           <Row>
             <Col sm={12} className="mt-3">
               <LineChart />
-
-              {Data.map((secret) => {
-                return <h1>{secret.client_id}</h1>;
-              })}
             </Col>
           </Row>
         </Col>

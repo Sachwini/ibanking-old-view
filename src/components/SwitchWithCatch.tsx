@@ -5,6 +5,8 @@ import { FourZeroFour } from "pages/static/NotFound";
 export const SwitchWithCatch: React.FC<{}> = ({ children }) => (
   <Switch>
     {children}
-    <Route path='*' component={FourZeroFour} />
+    <Route component={FourZeroFour} />
+    {/* Redirect to="/somewhere/else" />
+to: object */}
   </Switch>
 );
