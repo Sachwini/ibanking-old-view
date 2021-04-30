@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Badge, OverlayTrigger, Image } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
 import { notification, userProfile } from "./HeaderDropDown";
@@ -7,7 +7,7 @@ import { FiUser } from "react-icons/fi";
 import { useStateValue } from "state-provider/StateProvider";
 import {
   HeaderNavbar,
-  HeaderContainer,
+  HeaderContainer, 
   HeaderRow,
   HeaderCol,
   MenuIcon,
@@ -18,7 +18,8 @@ import { IconStyle } from "styling/comp/IconStyling";
 
 const Header2 = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
-  const [{}, dispatch] = useStateValue();
+  const [{ }, dispatch] = useStateValue();
+  const nodeRef = React.useRef(null);
 
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
@@ -38,7 +39,7 @@ const Header2 = (props: any) => {
                 <MenuIcon size={35} onClick={handleSideMenuShow} />
               </HeaderCol>
               <HeaderCol sm={8} md={10} className="pl-0">
-                <HeaderLink to="/">
+                <HeaderLink to="/dashboard">
                   <Image
                     src="/uploads/aaratiLogo.png"
                     alt="Company Name"
@@ -58,6 +59,7 @@ const Header2 = (props: any) => {
               <HeaderCol sm={4} md={3} className="justify-content-end">
                 <div>
                   <OverlayTrigger
+                    transition={false}
                     trigger="click"
                     placement="bottom"
                     overlay={notification}
@@ -74,9 +76,10 @@ const Header2 = (props: any) => {
 
                 <div className="pl-4">
                   <OverlayTrigger
+                    transition={false}
                     trigger="click"
                     placement="bottom"
-                    overlay={userProfile}
+                    overlay={userProfile} 
                     rootClose
                   >
                     <IconStyle hover>

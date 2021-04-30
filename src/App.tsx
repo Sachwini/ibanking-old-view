@@ -1,19 +1,20 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { SwitchWithCatch } from "./components/SwitchWithCatch";
+// import { Switch } from "./components/Switch";
 import { Loader } from "pages/static/Loader";
-import { Route } from "react-router";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import React from "react";
 import DefaultLayout from "pages/static/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
-import { useStateValue } from "state-provider/StateProvider";
-// import Login from "./components/Login";
+import { useStateValue } from "state-provider/StateProvider"; 
+import { FourZeroFour } from "pages/static/NotFound";
+import { SwitchWithCatch } from "components/SwitchWithCatch";
 
 function App() {
   const [{ isLogin }] = useStateValue();
   /* ----------For Default Dashboard Import------------------- */
-  // const Login = React.lazy(() => import("./components/Login"));
+  const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
@@ -48,45 +49,65 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <DefaultLayout>
-        <SwitchWithCatch>
-          <React.Suspense fallback={<Loader />}>
-            <Route exact path="/" component={Dashboard} />
+      <React.Suspense fallback={<Loader />}>
+          <Switch>
+            <DefaultLayout>
+              <SwitchWithCatch>
+                <Route exact path="/dashboard" component={Dashboard} />
 
-            {/* ---------- For Account Routing--------------------- */}
-            <Route exact path="/account/user-profile" component={UserProfile} />
-            <Route exact path="/account/account-details" component={Account} />
+                {/* ---------- For Account Routing--------------------- */}
+                <Route
+                  exact
+                  path="/account/user-profile"
+                  component={UserProfile}
+                />
+                <Route
+                  exact
+                  path="/account/account-details"
+                  component={Account}
+                />
 
-            {/* ---------- For Fund Management Routing--------------------- */}
+                {/* ---------- For Fund Management Routing--------------------- */}
 
-            {/* ---------- For Payment Routing--------------------- */}
-            <Route exact path="/payment/fund-transfer" component={Transfer} />
-            <Route exact path="/payment/bulk-payment" component={BulkPayment} />
-            <Route
-              exact
-              path="/payment/vendor-payment"
-              component={VendorPayment}
-            />
+                {/* ---------- For Payment Routing--------------------- */}
+                <Route
+                  exact
+                  path="/payment/fund-transfer"
+                  component={Transfer}
+                />
+                <Route
+                  exact
+                  path="/payment/bulk-payment"
+                  component={BulkPayment}
+                />
+                <Route
+                  exact
+                  path="/payment/vendor-payment"
+                  component={VendorPayment}
+                />
 
-            {/* ---------- For Request Routing--------------------- */}
+                {/* ---------- For Request Routing--------------------- */}
 
-            {/* ---------- For Setting Routing--------------------- */}
-            <Route
-              exact
-              path="/setting/configure-service"
-              component={ConfigureService}
-            />
-            <Route
-              exact
-              path="/setting/configure-theme"
-              component={ThemeSetting}
-            />
+                {/* ---------- For Setting Routing--------------------- */}
+                <Route
+                  exact
+                  path="/setting/configure-service"
+                  component={ConfigureService}
+                />
+                <Route
+                  exact
+                  path="/setting/configure-theme"
+                  component={ThemeSetting}
+                />
 
-            {/* ---------- For history Logs Routing--------------------- */}
-            <Route exact path="/activity-log/logs" component={Activities} />
-          </React.Suspense>
-        </SwitchWithCatch>
-      </DefaultLayout>
+                {/* ---------- For history Logs Routing--------------------- */}
+                <Route exact path="/activity-log/logs" component={Activities} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/" component={Login} />
+              </SwitchWithCatch>
+            </DefaultLayout>
+          </Switch>
+      </React.Suspense>
     </ThemeProvider>
   );
 }
