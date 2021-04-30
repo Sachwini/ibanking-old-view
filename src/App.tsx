@@ -4,7 +4,7 @@ import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "pages/static/Loader";
 import { Route } from "react-router";
 import React from "react";
-import DefaultLayout from "pages/static/Layout";
+import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
@@ -53,37 +53,28 @@ function App() {
             <Route exact path="/" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
-            <Route exact path="/account/user-profile" component={UserProfile} />
-            <Route exact path="/account/account-details" component={Account} />
+            <Route path="/account/user-profile" component={UserProfile} />
+            <Route path="/account/account-details" component={Account} />
 
             {/* ---------- For Fund Management Routing--------------------- */}
 
             {/* ---------- For Payment Routing--------------------- */}
-            <Route exact path="/payment/fund-transfer" component={Transfer} />
-            <Route exact path="/payment/bulk-payment" component={BulkPayment} />
-            <Route
-              exact
-              path="/payment/vendor-payment"
-              component={VendorPayment}
-            />
+            <Route path="/payment/fund-transfer" component={Transfer} />
+            <Route path="/payment/bulk-payment" component={BulkPayment} />
+            <Route path="/payment/vendor-payment" component={VendorPayment} />
 
             {/* ---------- For Request Routing--------------------- */}
 
             {/* ---------- For Setting Routing--------------------- */}
             <Route
-              exact
               path="/setting/configure-service"
               component={ConfigureService}
             />
-            <Route
-              exact
-              path="/setting/configure-theme"
-              component={ThemeSetting}
-            />
+            <Route path="/setting/configure-theme" component={ThemeSetting} />
 
             {/* ---------- For history Logs Routing--------------------- */}
-            <Route exact path="/activity-log/logs" component={Activities} />
-            <Route exact path="/login" component={Login} />
+            <Route path="/activity-log/logs" component={Activities} />
+            <Route path="/login" component={Login} />
           </React.Suspense>
         </SwitchWithCatch>
       </DefaultLayout>
