@@ -44,7 +44,14 @@ function App() {
   /* ----------For History Log Import--------------------- */
   const Activities = React.lazy(() => import("pages/activities/Activities"));
 
-  console.log("loggedIn: " + isLogin);
+  const isLoginPage = window.location.pathname.startsWith("/login");
+
+  if (isLoginPage)
+    return <SwitchWithCatch>
+      <React.Suspense fallback={<Loader />}>
+        <Route exact path="/login" component={Login} />
+      </React.Suspense>
+    </SwitchWithCatch>;
 
   return (
     <ThemeProvider theme={theme}>

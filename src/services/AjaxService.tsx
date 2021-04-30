@@ -14,6 +14,7 @@ instance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   function (err: any) {
@@ -26,7 +27,7 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: any) {
-    if (401 === error.response.status) {
+    if (error.response && error.response.status == 401) {
       goToLoginPage();
     } else {
       return Promise.reject(error);
@@ -35,11 +36,10 @@ instance.interceptors.response.use(
 );
 
 function handleError(error: any, onError?: false | (() => void)) {
-  const statusCode = error.response.status || 500;
-  // error.response != undefined ? error.response.status : 500 || 500;
+  const statusCode = error.response != undefined ? error.response.status : 500 || 500;
 
   var errorTitle = "Task failed, please retry.";
-  if (error.response.data && error.response.data.ExceptionMessage)
+  if (error.response && error.response.data && error.response.data.ExceptionMessage)
     errorTitle = `Failed. ${error.response.data.ExceptionMessage}`;
 
   if (statusCode === 404) {
