@@ -6,7 +6,5 @@ export const SwitchWithCatch: React.FC<{}> = ({ children }) => (
   <Switch>
     {children}
     <Route component={FourZeroFour} />
-    {/* Redirect to="/somewhere/else" />
-to: object */}
   </Switch>
 );
