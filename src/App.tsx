@@ -26,6 +26,7 @@ function App() {
   /* ----------For Payment Import--------------------- */
   const Transfer = React.lazy(() => import("pages/payment/fund-transfer"));
   const BulkPayment = React.lazy(() => import("pages/payment/bulk-payment"));
+  const QuickPay = React.lazy(() => import("pages/payment/quick-pay"));
   const VendorPayment = React.lazy(
     () => import("pages/payment/vendor-payment")
   );
@@ -62,6 +63,7 @@ function App() {
             <Route path="/payment/fund-transfer" component={Transfer} />
             <Route path="/payment/bulk-payment" component={BulkPayment} />
             <Route path="/payment/vendor-payment" component={VendorPayment} />
+            <Route path="/payment/quick-pay" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
 
