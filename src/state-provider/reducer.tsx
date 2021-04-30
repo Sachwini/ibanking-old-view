@@ -7,6 +7,7 @@ export const initialState = {
   menuHeaderId: "account",
   menuListId: "",
   isLogin: token !== undefined,
+  customerDetails: {},
 };
 
 const reducer = (state: any, action: any) => {
@@ -33,6 +34,11 @@ const reducer = (state: any, action: any) => {
     case "Has_TOKEN":
       return {
         token: action.value,
+      };
+
+    case "USER_DETAILS":
+      return {
+        customerDetails: action.customerDetail,
       };
 
     default:

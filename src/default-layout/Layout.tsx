@@ -14,15 +14,25 @@ import { get } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
-  const [{ isMenuButtonClick }, dispatch] = useStateValue();
-  const [userInfo, setUserInfo] = useState<userDetail>()
+  const [{ isMenuButtonClick, customerDetails }, dispatch] = useStateValue();
+  const [userInfo, setUserInfo] = useState<userDetail>();
 
   const init = async () => {
-    const res = await get<apiResponse<userDetail>>('api/customerdetails')
-    if (res) setUserInfo(userInfo);
-  }
+    const res = await get<apiResponse<userDetail>>("api/customerdetails");
+    if (res) {
+      setUserInfo(res.data.details);
+      dispatch({
+        type: "USER_DETAILS",
+        customerDetail: res.data.details,
+      });
+    }
+  };
 
-  useEffect(() => { init() }, [])
+  useEffect(() => {
+    init();
+  }, []);
+
+  console.log(customerDetails);
 
   let sidbarWidth;
   if (isMenuButtonClick) {

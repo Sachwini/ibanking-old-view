@@ -7,12 +7,8 @@ import React from "react";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
-import { useStateValue } from "state-provider/StateProvider";
-// import Login from "./components/Login";
 
 function App() {
-  const [{ isLogin }] = useStateValue();
-
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
@@ -47,11 +43,13 @@ function App() {
   const isLoginPage = window.location.pathname.startsWith("/login");
 
   if (isLoginPage)
-    return <SwitchWithCatch>
-      <React.Suspense fallback={<Loader />}>
-        <Route exact path="/login" component={Login} />
-      </React.Suspense>
-    </SwitchWithCatch>;
+    return (
+      <SwitchWithCatch>
+        <React.Suspense fallback={<Loader />}>
+          <Route exact path="/login" component={Login} />
+        </React.Suspense>
+      </SwitchWithCatch>
+    );
 
   return (
     <ThemeProvider theme={theme}>
