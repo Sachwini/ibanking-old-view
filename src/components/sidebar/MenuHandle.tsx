@@ -32,16 +32,16 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
       {menuData.map((menu, index) => {
         if (menu.title === menuHeader) {
           return (
-            <>
+            <div key={index}>
               <Accordion.Toggle
-                eventKey={`${menu.title}`}
+                eventKey={`${menu.title}`}  
                 as={"div"}
                 onClick={() => {
                   handleMenuActive(menu.title);
                   setChangeDropIcon(!changeDropIcon);
                 }}
                 className={menuHeaderId === menu.title ? "active" : "inActive"}
-                key={menu.title}
+                // key={menu.title}
               >
                 <div className="menu_HeaderWrapper">
                   <div className="menu_HeaderText">
@@ -55,18 +55,18 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                   )}
                 </div>
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey={`${menu.title}`} key={index}>
+              <Accordion.Collapse eventKey={`${menu.title}`}>
                 <ListItemHandle
                   goto={goto}
                   menuHeader={menu.title}
-                  key={index + 2}
+                  // key={index + 2}
                 />
               </Accordion.Collapse>
-            </>
+            </div>
           );
         }
       })}
-    </MenuContainer>
+    </MenuContainer> 
   );
 };
 

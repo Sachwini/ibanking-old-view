@@ -1,19 +1,40 @@
 import { PageTitle } from "components/page-title";
-import { useState } from "react";
+import { apiResponse } from "models/apiResponse";
+import { Loader } from "pages/static/Loader";
+import {  useEffect, useState } from "react";
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { get } from "services/AjaxService";
 import { useStateValue } from "state-provider/StateProvider";
+import { userDetail } from "./model";
 
 const Profile = () => {
-  // const [userData, setUserData] = useState<string{}>({});
   const [{ customerDetails }, dispatch] = useStateValue();
-  console.log("from profile",customerDetails)
+  const [userInfo, setUserInfo] = useState<userDetail>();
+  const [customerdetails, setCustomerdetails] = useState<string>("customerdetails");
+
+  const init = async () => {
+    const res = await get<apiResponse<userDetail>>(`api/${customerdetails}`);
+    if (res) {
+      setUserInfo(res.data.details);
+      dispatch({
+        type: "USER_DETAILS",
+        customerDetail: res.data.details, 
+      });
+    }
+  };
+
+  useEffect(() => {
+    init();
+  }, [customerdetails]);
+
+  console.log("from profile", customerDetails)
 
   return (
     <Container fluid>
       <PageTitle title={`welcome ${customerDetails?.fullName}`} />
       <Row>
-        <Col sm={12} md={6} className="mb-sm-3 mb-md-0">
-          <Card>
+        <Col sm={12} md={6} className="mb-sm-0 mb-md-0">
+          <Card className="mb-2">
             <Card.Body>
               <Card.Subtitle className="mb-2 text-muted fs-larger">
                 Personal Details
@@ -51,7 +72,7 @@ const Profile = () => {
           </Card>
         </Col>
         <Col sm={12} md={6}>
-          <Card>
+          <Card className="mb-2">
             <Card.Body>
               <Card.Subtitle className="mb-2 text-muted fs-larger">
                 Contact Details
@@ -71,6 +92,100 @@ const Profile = () => {
             </Card.Body>
           </Card>
         </Col>
+        <Col sm={12} md={6}>
+          <Card className="mb-2">
+            <Card.Body>
+              <Card.Subtitle className="mb-2 text-muted fs-larger">
+                Bank Details
+              </Card.Subtitle>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Bank</th>
+                    <td>{customerDetails?.bank}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Bank Branch</th>
+                    <td>{customerDetails?.bankBranch}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mobile Banking</th>
+                    <td>{customerDetails?.mobileBanking ? "yes" : "No"}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">SMS Service</th>
+                    <td>{customerDetails?.smsService ? "yes" : "No"}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Bank Branch Code</th>
+                    <td>{customerDetails?.bankBranchCode}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Bank Code</th>
+                    <td>{customerDetails?.bankCode}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </Card.Body>
+          </Card>
+        </Col>
+        {!customerDetails?.accountDetail ? (
+          <span>
+            <Loader />
+          </span>
+        ) : (
+          <Col sm={12} md={6}>
+            <Card className="mb-2">
+              <Card.Body>
+                <Card.Subtitle className="mb-2 text-muted fs-larger">
+                  Account Details
+                </Card.Subtitle>
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <th scope="row">Branch Code</th>
+                      <td>{customerDetails?.accountDetail[0]["branchCode"]}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Main Code</th>
+                      <td>{customerDetails?.accountDetail[0]["mainCode"]}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Mobile Banking</th>
+                      <td>
+                        {customerDetails?.accountDetail[0]["mobileBanking"]
+                          ? "yes"
+                          : "No"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">SMS Service</th>
+                      <td>
+                        {customerDetails?.accountDetail[0]["sms"]
+                          ? "yes"
+                          : "No"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Branch Name</th>
+                      <td>{customerDetails?.accountDetail[0]["branchName"]}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Id</th>
+                      <td>{customerDetails?.accountDetail[0]["id"]}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Account Number</th>
+                      <td>
+                        {customerDetails?.accountDetail[0]["accountNumber"]}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Card.Body>
+            </Card>
+          </Col>
+        )}
       </Row>
     </Container>
   );

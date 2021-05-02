@@ -26,7 +26,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
     <MenuList key={menuHeader + 1}>
       {menuData.map((menu) => {
         if (menu.title === menuHeader) {
-          return menu.subMenuTitle.map((listItems) => {
+          return menu.subMenuTitle.map((listItems,index) => {
             return (
               <MenuListItem
                 onClick={() => {
@@ -44,7 +44,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
                 status={
                   isLinkActive && menuListId === `${listItems}` ? "active" : ""
                 }
-                key={listItems}
+                key={index}
               >
                 <span className="listText"> {listItems}</span>
               </MenuListItem>

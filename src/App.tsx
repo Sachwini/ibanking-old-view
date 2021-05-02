@@ -103,7 +103,7 @@ function App() {
               {/* ---------- For history Logs Routing--------------------- */}
               <Route exact path="/activity-log/logs" component={Activities} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/" component={Login} />
+              {/* <Route exact path="/" component={Login} /> */}
             </SwitchWithCatch>
           </DefaultLayout>
         </Switch>
