@@ -35,7 +35,7 @@ instance.interceptors.response.use(
   }
 );
 
-function handleError(error: any, onError?: false | (() => void)) {
+export function handleError(error: any, onError?: false | (() => void)) {
   const statusCode =
     error.response !== undefined ? error.response.status : 500 || 500;
 

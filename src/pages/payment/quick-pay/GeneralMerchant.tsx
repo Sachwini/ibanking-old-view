@@ -1,43 +1,31 @@
 import { PageTitle } from "components/page-title";
-import { apiResponse } from "models/apiResponse";
-import React, { useEffect, useState } from "react";
 import { Container, Image } from "react-bootstrap";
-import { useParams, useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
-import { get } from "services/AjaxService";
-import { QpayService } from "./model";
+import {
+  Link,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
+import { baseUrl } from "services/Constants";
+import { QpayService, userServices } from "./model";
+import Test2 from "./Test2";
 
-const GeneralMerchant = () => {
-  let topicId = useParams();
+interface paramProps {
+  topicId: string;
+}
 
-  let { url } = useRouteMatch();
-  const [paymentService, setPaymentService] = useState<QpayService[]>();
-  const userdata = paymentService;
+const GeneralMerchant = (props: { data?: QpayService[] }) => {
+  const data = props.data;
+  let { topicId } = useParams<paramProps>();
+  let { path, url } = useRouteMatch();
 
-  // console.log(userdata);
+  let myservices: userServices[] = [];
 
-  useEffect(() => {
-    let isSubscribed = true;
-
-    const loadData = async () => {
-      const res = await get<apiResponse<QpayService[]>>(
-        "api/category?withService=true"
-      );
-      if (isSubscribed) {
-        setPaymentService(res.data.details);
-      }
-    };
-
-    loadData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, []);
-
-  return (
-    <Container>
+  const page = () => (
+    <>
       <PageTitle
-        title="Quick paymment"
+        title={`${topicId.split("-").join(" ").toUpperCase()}`}
         subTitle="Enjoy Quick Payment Facility"
       />
       <div
@@ -48,16 +36,17 @@ const GeneralMerchant = () => {
           flexWrap: "wrap",
         }}
       >
-        {paymentService?.map((data) => {
-          if (data.name == topicId) {
-            data.services.map((item) => {
+        {data?.map((item) => {
+          const sname = item.name.toLowerCase().split(" ").join("-");
+          if (sname == topicId) {
+            return item.services.map((sItems) => {
               return (
                 <Link
-                  to={`${url}/${item.service
+                  to={`${url}/${sItems.service
                     .toLowerCase()
                     .split(" ")
                     .join("-")}`}
-                  key={item.id}
+                  key={sItems.id}
                   style={{
                     padding: "8px",
                     margin: "8px",
@@ -68,12 +57,12 @@ const GeneralMerchant = () => {
                     textDecoration: "none",
                   }}
                 >
-                  {item.icon ? (
+                  {sItems.icon ? (
                     <Image
                       width="50px"
                       height="50px"
-                      src={`http://202.63.242.139:9091${item.icon}`}
-                      alt={item.service}
+                      src={`${baseUrl}/mbank/serviceIcon/${sItems.icon}`}
+                      alt={sItems.service}
                     />
                   ) : (
                     ""
@@ -85,7 +74,7 @@ const GeneralMerchant = () => {
                       fontSize: "13px",
                     }}
                   >
-                    {item.service}
+                    {sItems.service}
                   </p>
                 </Link>
               );
@@ -93,6 +82,17 @@ const GeneralMerchant = () => {
           }
         })}
       </div>
+    </>
+  );
+
+  console.log(path);
+
+  return (
+    <Container>
+      <Switch>
+        <Route exact path={`${path}`} component={page} />
+        <Route path={`${path}/:id`} render={() => <Test2 />} />
+      </Switch>
     </Container>
   );
 };
