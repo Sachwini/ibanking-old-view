@@ -53,7 +53,7 @@ const Login = (props: RouteComponentProps<{}>) => {
     } catch {
       setLoading(false);
     }
-  };
+  }; 
 
   return (
     <Container>

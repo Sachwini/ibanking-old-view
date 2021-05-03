@@ -22,7 +22,6 @@ const Profile = () => {
       });
     }
   };
-
   useEffect(() => {
     init();
   }, [customerdetails]);
@@ -39,7 +38,6 @@ const Profile = () => {
               <Card.Subtitle className="mb-2 text-muted fs-larger">
                 Personal Details
               </Card.Subtitle>
-              {/* <hr className="mt-0" /> */}
               <table className="table">
                 <tbody>
                   <tr>
