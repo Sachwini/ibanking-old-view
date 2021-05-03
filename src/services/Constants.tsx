@@ -6,5 +6,3 @@ export const password = "62999";
 export const username = "VBMRDWEVFV9840069570";
 export const deviceUniqueIdentifier = "3edf9180-0c67-4af7-8ace-1250d0334c737j";
 export const otp = "111111";
-
-export const baseUrl = "http://202.63.242.139:9091";

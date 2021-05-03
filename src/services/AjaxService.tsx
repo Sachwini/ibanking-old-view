@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getBearerToken, goToLoginPage } from "./AuthService";
+import { baseUrl } from "./BaseService";
 
-const baseEndPoint = "http://202.63.242.139:9091/";
-// "http://172.16.55.3:9091";
-// "http://172.16.55.29:8080";
+const baseEndPoint = baseUrl;
+
 const instance = axios.create({
   baseURL: baseEndPoint,
 });

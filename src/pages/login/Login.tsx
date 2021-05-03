@@ -10,7 +10,6 @@ import {
 } from "services/Constants";
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
-import { error } from "node:console";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -60,7 +59,7 @@ const Login = (props: RouteComponentProps<{}>) => {
     } catch {
       setLoading(false);
     }
-  };
+  }; 
 
   return (
     <Container>
