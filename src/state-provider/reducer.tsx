@@ -7,7 +7,7 @@ export const initialState = {
   menuHeaderId: "account",
   menuListId: "",
   isLogin: token !== undefined,
-  customerDetails: {} !==undefined,
+  customerDetails: {} !== undefined,
 };
 
 const reducer = (state: any, action: any) => {

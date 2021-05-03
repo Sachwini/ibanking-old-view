@@ -1,17 +1,46 @@
-import React from "react";
-import { Card, Container } from "react-bootstrap";
+import { apiResponse } from "models/apiResponse";
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { Route, Switch, useRouteMatch } from "react-router";
+import { get } from "services/AjaxService";
+import GeneralMerchant from "./GeneralMerchant";
+import { QpayService } from "./model";
+import Test from "./Test";
 
 const QuickPay = () => {
+  let { path, url } = useRouteMatch();
+  const [paymentService, setPaymentService] = useState<QpayService[]>();
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    const loadData = async () => {
+      const res = await get<apiResponse<QpayService[]>>(
+        "api/category?withService=true"
+      );
+      if (isSubscribed) {
+        setPaymentService(res.data.details);
+      }
+    };
+
+    loadData();
+    return () => {
+      isSubscribed = false;
+    };
+  }, []);
+
   return (
     <Container>
-      <Card>
-        <Card.Body>
-          <Card.Subtitle className="mb-2 text-muted fs-larger">
-            Personal Details
-            <hr className="mt-0" />
-          </Card.Subtitle>
-        </Card.Body>
-      </Card>
+      <Switch>
+        <Route
+          exact
+          path={path}
+          render={() => <Test data={paymentService} />}
+        />
+        <Route path={`${path}/:topicId`}>
+          <GeneralMerchant />
+        </Route>
+      </Switch>
     </Container>
   );
 };

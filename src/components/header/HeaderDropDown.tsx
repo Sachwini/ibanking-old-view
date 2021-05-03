@@ -12,8 +12,6 @@ const CardStyle = {
 };
 const PopoverStyle = {
   minWidth: "12rem",
-  // width: "auto",
-  minHeight: "8rem",
   marginTop: "1rem",
 };
 
@@ -37,11 +35,21 @@ export const notification = (
 
 export const userProfile = (
   <Popover id="popover-basic" style={PopoverStyle}>
-    <Popover.Content>
+    <Popover.Content style={{ padding: "0" }}>
       <Card style={CardStyle}>
         <Card.Text>User Profile</Card.Text>
         <Card.Text>User Details</Card.Text>
       </Card>
+      <div
+        style={{
+          textAlign: "center",
+          padding: "8px",
+          background: "#f5f5f5",
+          cursor: "pointer",
+        }}
+      >
+        LogOut
+      </div>
     </Popover.Content>
   </Popover>
 );

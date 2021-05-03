@@ -62,7 +62,7 @@ function App() {
               {/* ---------- For Account Routing--------------------- */}
               <Route
                 exact
-                path="/account/user-profile" 
+                path="/account/user-profile"
                 component={UserProfile}
               />
               <Route
@@ -85,6 +85,7 @@ function App() {
                 path="/payment/vendor-payment"
                 component={VendorPayment}
               />
+              <Route path="/payment/quick-payment" component={QuickPay} />
 
               {/* ---------- For Request Routing--------------------- */}
 

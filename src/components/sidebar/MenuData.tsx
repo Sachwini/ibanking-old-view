@@ -15,6 +15,7 @@ const menuData = [
       "bulk Recharge",
       "Vendor Payment",
       "Broker Payment",
+      "Quick Payment",
     ],
   },
   {

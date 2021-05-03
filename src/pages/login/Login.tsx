@@ -49,7 +49,13 @@ const Login = (props: RouteComponentProps<{}>) => {
           type: "IS_LOGIN",
           value: true,
         });
-      } else props.history.push("/login");
+      } else {
+        props.history.push("/login");
+        dispatch({
+          type: "IS_LOGIN",
+          value: false,
+        });
+      }
     } catch {
       setLoading(false);
     }

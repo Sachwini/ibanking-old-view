@@ -19,7 +19,7 @@ const Transfer = () => {
   const inActiveStyle = {
     ...ActiveStyle,
     background: "transparent",
-    "borderColor": "transparent",
+    borderColor: "transparent",
     color: "inherit",
   };
 

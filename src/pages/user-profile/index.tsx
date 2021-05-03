@@ -1,8 +1,8 @@
 import { PageTitle } from "components/page-title";
 import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
-import {  useEffect, useState } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { get } from "services/AjaxService";
 import { useStateValue } from "state-provider/StateProvider";
 import { userDetail } from "./model";
