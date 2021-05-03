@@ -6,7 +6,7 @@ export const initialState = {
   isMenuButtonClick: true,
   menuHeaderId: "account",
   menuListId: "",
-  isLogin: token !== undefined,
+  isLogin: false,
   customerDetails: {},
 };
 

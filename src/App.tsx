@@ -2,13 +2,15 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "pages/static/Loader";
-import { Route } from "react-router";
+import { Route } from "react-router-dom";
 import React from "react";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
+import { useStateValue } from "state-provider/StateProvider";
 
 function App() {
+  const [{ isLogin }, dispatch] = useStateValue();
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
@@ -68,7 +70,7 @@ function App() {
             <Route path="/payment/fund-transfer" component={Transfer} />
             <Route path="/payment/bulk-payment" component={BulkPayment} />
             <Route path="/payment/vendor-payment" component={VendorPayment} />
-            <Route path="/payment/quick-pay" component={QuickPay} />
+            <Route path="/payment/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
 
@@ -81,7 +83,6 @@ function App() {
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route path="/activity-log/logs" component={Activities} />
-            <Route path="/login" component={Login} />
           </React.Suspense>
         </SwitchWithCatch>
       </DefaultLayout>

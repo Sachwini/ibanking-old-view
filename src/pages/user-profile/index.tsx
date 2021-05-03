@@ -1,10 +1,7 @@
 import { PageTitle } from "components/page-title";
-import { useState } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 const Profile = () => {
-  // const [userData, setUserData] = useState<string{}>({});
-
   return (
     <Container fluid>
       <PageTitle title="welcome Nawaraj Jaishi" />

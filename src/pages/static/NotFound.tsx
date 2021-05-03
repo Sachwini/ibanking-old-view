@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 
-export const FourZeroFour = () => {
+const FourZeroFour = () => {
   return (
     <Container>
       <h2>Not Found</h2>
@@ -12,3 +12,5 @@ export const FourZeroFour = () => {
     </Container>
   );
 };
+
+export default FourZeroFour;

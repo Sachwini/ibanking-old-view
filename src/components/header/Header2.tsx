@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Badge, OverlayTrigger, Image } from "react-bootstrap";
+import { useHistory } from "react-router";
+import { Badge, OverlayTrigger, Image, Popover, Card } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
 import { notification, userProfile } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
@@ -15,10 +16,26 @@ import {
   H_Notification,
 } from "styling/header/HeaderStyling";
 import { IconStyle } from "styling/comp/IconStyling";
+import { WindowSidebar } from "react-bootstrap-icons";
+import {
+  localStorageAuthTokenKey,
+  localStorageRefreshTokenKey,
+} from "services/AuthService";
+
+const CardStyle = {
+  border: "none",
+  paddingLeft: "0.7rem",
+  paddingRight: "0.7rem",
+};
+const PopoverStyle = {
+  minWidth: "12rem",
+  marginTop: "1rem",
+};
 
 const Header2 = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   const [{}, dispatch] = useStateValue();
+  const history = useHistory();
 
   const handleSideMenuShow = () => {
     setSideMenuShow(!sideMenuShow);
@@ -27,6 +44,33 @@ const Header2 = (props: any) => {
       value: !sideMenuShow,
     });
   };
+
+  const UserProfile = (
+    <Popover id="popover-basic" style={PopoverStyle}>
+      <Popover.Content style={{ padding: "0" }}>
+        <Card style={CardStyle}>
+          <Card.Text>User Profile</Card.Text>
+          <Card.Text>User Details</Card.Text>
+        </Card>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "8px",
+            background: "#f5f5f5",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            localStorage.removeItem(localStorageAuthTokenKey);
+            localStorage.removeItem(localStorageRefreshTokenKey);
+            history.push("/login");
+            window.location.reload(true);
+          }}
+        >
+          LogOut
+        </div>
+      </Popover.Content>
+    </Popover>
+  );
 
   return (
     <HeaderNavbar expand="xl" sticky="top">
@@ -76,7 +120,7 @@ const Header2 = (props: any) => {
                   <OverlayTrigger
                     trigger="click"
                     placement="bottom"
-                    overlay={userProfile}
+                    overlay={UserProfile}
                     rootClose
                   >
                     <IconStyle hover>

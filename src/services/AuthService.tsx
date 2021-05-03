@@ -1,5 +1,5 @@
-const localStorageAuthTokenKey = "accessToken";
-const localStorageRefreshTokenKey = "refreshToken";
+export const localStorageAuthTokenKey = "accessToken";
+export const localStorageRefreshTokenKey = "refreshToken";
 
 export function getBearerToken() {
   return localStorage.getItem(localStorageAuthTokenKey);

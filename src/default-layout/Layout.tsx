@@ -32,8 +32,6 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
     init();
   }, []);
 
-  console.log(customerDetails);
-
   let sidbarWidth;
   if (isMenuButtonClick) {
     sidbarWidth = `70px`;

@@ -27,7 +27,7 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: any) {
-    if (error.response && error.response.status == 401) {
+    if (error.response && error.response.status === 401) {
       goToLoginPage();
     } else {
       return Promise.reject(error);
@@ -36,10 +36,15 @@ instance.interceptors.response.use(
 );
 
 function handleError(error: any, onError?: false | (() => void)) {
-  const statusCode = error.response != undefined ? error.response.status : 500 || 500;
+  const statusCode =
+    error.response !== undefined ? error.response.status : 500 || 500;
 
   var errorTitle = "Task failed, please retry.";
-  if (error.response && error.response.data && error.response.data.ExceptionMessage)
+  if (
+    error.response &&
+    error.response.data &&
+    error.response.data.ExceptionMessage
+  )
     errorTitle = `Failed. ${error.response.data.ExceptionMessage}`;
 
   if (statusCode === 404) {
