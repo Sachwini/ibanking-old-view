@@ -82,7 +82,7 @@ const Header2 = (props: any) => {
                 <MenuIcon size={35} onClick={handleSideMenuShow} />
               </HeaderCol>
               <HeaderCol sm={8} md={10} className="pl-0">
-                <HeaderLink to="/">
+                <HeaderLink to="/dashboard">
                   <Image
                     src="/uploads/aaratiLogo.png"
                     alt="Company Name"
@@ -102,6 +102,7 @@ const Header2 = (props: any) => {
               <HeaderCol sm={4} md={3} className="justify-content-end">
                 <div>
                   <OverlayTrigger
+                    transition={false}
                     trigger="click"
                     placement="bottom"
                     overlay={notification}
@@ -118,6 +119,7 @@ const Header2 = (props: any) => {
 
                 <div className="pl-4">
                   <OverlayTrigger
+                    transition={false}
                     trigger="click"
                     placement="bottom"
                     overlay={UserProfile}

@@ -1,9 +1,7 @@
-import { PageTitle } from "components/page-title";
 import { apiResponse } from "models/apiResponse";
 import { useEffect, useState } from "react";
-import { Container, Image } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Route, Switch, useRouteMatch } from "react-router";
-import { Link } from "react-router-dom";
 import { get } from "services/AjaxService";
 import GeneralMerchant from "./GeneralMerchant";
 import { QpayService } from "./model";
@@ -12,7 +10,6 @@ import Test from "./Test";
 const QuickPay = () => {
   let { path, url } = useRouteMatch();
   const [paymentService, setPaymentService] = useState<QpayService[]>();
-  const userdata = paymentService;
 
   useEffect(() => {
     let isSubscribed = true;
@@ -35,9 +32,11 @@ const QuickPay = () => {
   return (
     <Container>
       <Switch>
-        <Route exact path={path}>
-          <Test />
-        </Route>
+        <Route
+          exact
+          path={path}
+          render={() => <Test data={paymentService} />}
+        />
         <Route path={`${path}/:topicId`}>
           <GeneralMerchant />
         </Route>

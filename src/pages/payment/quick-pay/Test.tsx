@@ -6,8 +6,8 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { get } from "services/AjaxService";
 import { QpayService } from "./model";
 
-const Test = () => {
-  let { url } = useRouteMatch();
+const Test = (props: { data?: QpayService[] }) => {
+  let { path, url } = useRouteMatch();
   const [paymentService, setPaymentService] = useState<QpayService[]>();
   const userdata = paymentService;
 
