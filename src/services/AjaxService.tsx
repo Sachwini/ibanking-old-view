@@ -28,7 +28,8 @@ instance.interceptors.response.use(
   },
   function (error: any) {
     if (error.response && error.response.status === 401) {
-      goToLoginPage();
+      // goToLoginPage();
+      alert("unAuthorized client")
     } else {
       return Promise.reject(error);
     }

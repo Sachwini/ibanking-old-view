@@ -7,8 +7,10 @@ import React from "react";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
+import { useStateValue } from "state-provider/StateProvider";
 
 function App() {
+  const [{ isLogin }, dispatch] = useStateValue();
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
@@ -57,7 +59,7 @@ function App() {
         <Switch>
           <DefaultLayout>
             <SwitchWithCatch>
-              <Route exact path="/dashboard" component={Dashboard} />
+              {/* <Route exact path="/" component={Dashboard} /> */}
 
               {/* ---------- For Account Routing--------------------- */}
               <Route
@@ -97,13 +99,14 @@ function App() {
               />
               <Route
                 exact
-                path="/setting/configure-theme"
+                path="/setting/configure-theme" 
                 component={ThemeSetting}
               />
 
               {/* ---------- For history Logs Routing--------------------- */}
               <Route exact path="/activity-log/logs" component={Activities} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/" component={Dashboard} />
               {/* <Route exact path="/" component={Login} /> */}
             </SwitchWithCatch>
           </DefaultLayout>

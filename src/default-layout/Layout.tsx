@@ -8,9 +8,37 @@ import {
   LayoutSidebar,
   LayoutContentField, 
 } from "styling/layout/LayoutStyling";
+import { useState, useEffect } from "react";
+import { userDetail } from "pages/user-profile/model";
+import { apiResponse } from "models/apiResponse";
+import { get } from "services/AjaxService";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
-  const [{ isMenuButtonClick}, dispatch] = useStateValue();
+  const [{ isMenuButtonClick }, dispatch] = useStateValue();
+  const [userInfo, setUserInfo] = useState<userDetail>();
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    const loadData = async () => {
+      const res = await get<apiResponse<userDetail>>(
+        "api/customerdetails?additionalDetails=true"
+      );
+      if (isSubscribed) {
+        setUserInfo(res.data.details);
+        dispatch({
+          type: "USER_DETAILS",
+          customerDetail: res.data.details,
+        });
+      }
+    };
+
+    loadData();
+    return () => {
+      isSubscribed = false;
+    };
+  }, []);
+
 
   let sidbarWidth;
   if (isMenuButtonClick) {

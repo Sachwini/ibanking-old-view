@@ -3,7 +3,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { fundTransfer } from "./model";
 import axios from "axios";
 import { getBearerToken } from "services/AuthService";
-import {handleError} from "services/AjaxService"
+import {handleError, post} from "services/AjaxService"
 
 export const IBFTForm = () => {
   const [fromAccount, setFromAccount] = useState<string>("");
@@ -11,11 +11,13 @@ export const IBFTForm = () => {
   const [bankBranchId, setBankBranchId] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>();
 
   const handleSubmit = async (e: any) => {  
     e.preventDefault();
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin)
       return;
+    setLoading(true);
     const model: fundTransfer = {
       from_account_number: fromAccount,
       to_account_number: toAccount,
@@ -25,9 +27,8 @@ export const IBFTForm = () => {
     };
     console.log("fundTranfer data", model);
 
-    try {
-      const url =
-        "https://mbank.com.np/api/fundtransfer?from_account_number=" +
+    const res = await post<fundTransfer>(
+      "api/fundtransfer?from_account_number=" +
         fromAccount +
         "&to_account_number=" +
         toAccount +
@@ -36,20 +37,40 @@ export const IBFTForm = () => {
         "&amount=" +
         amount +
         "&mPin=" +
-        mpin;
-      
-      const token = getBearerToken();
+        mpin,
+      {},
+      () => setLoading(false)
+    );
+    if (res) {
+        console.log(res.data) 
+       }
 
-      const res = await axios(url, {
-        method: "POST",
-        headers:{'Authorization':`Bearer ${token}`}
-      });
-      if (res) {
-       console.log(res) 
-      }
-    } catch(error) {
-      handleError(error);
-    }
+
+    // try {
+    //   const url =
+    //     "http://202.63.242.139:9091/api/fundtransfer?from_account_number=" +
+    //     fromAccount +
+    //     "&to_account_number=" +
+    //     toAccount +
+    //     "&bank_branch_id=" +
+    //     bankBranchId +
+    //     "&amount=" +
+    //     amount +
+    //     "&mPin=" +
+    //     mpin;
+      
+    //   const token = getBearerToken();
+
+    //   const res = await axios(url, {
+    //     method: "POST",
+    //     headers:{'Authorization':`Bearer ${token}`}
+    //   });
+    //   if (res) {
+    //    console.log(res) 
+    //   }
+    // } catch(error) {
+    //   handleError(error);
+    // }
   }
   
   const handleReset = (e: any) => {
