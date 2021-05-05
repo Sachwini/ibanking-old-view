@@ -6,7 +6,7 @@ import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
 import Activities from "pages/activities/Activities";
 import LineChart from "pages/activities/LineChart";
-import ProfileCard from "pages/user-profile/ProfileCard";
+import ProfileCard from "pages/user-account/user-profile/ProfileCard";
 
 const Dashboard = () => {
   return (

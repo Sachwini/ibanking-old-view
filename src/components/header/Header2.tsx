@@ -16,7 +16,6 @@ import {
   H_Notification,
 } from "styling/header/HeaderStyling";
 import { IconStyle } from "styling/comp/IconStyling";
-import { WindowSidebar } from "react-bootstrap-icons";
 import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
@@ -82,7 +81,7 @@ const Header2 = (props: any) => {
                 <MenuIcon size={35} onClick={handleSideMenuShow} />
               </HeaderCol>
               <HeaderCol sm={8} md={10} className="pl-0">
-                <HeaderLink to="/dashboard">
+                <HeaderLink to="/">
                   <Image
                     src="/uploads/aaratiLogo.png"
                     alt="Company Name"

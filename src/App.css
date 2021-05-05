@@ -16,3 +16,10 @@ body {
 .mytest {
   z-index: auto;
 }
+
+.statement_datePicker {
+  margin-right: 10px;
+  text-align: center;
+  padding: 2px;
+  color: green;
+}

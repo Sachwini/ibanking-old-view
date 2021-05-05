@@ -9,25 +9,6 @@ import { userDetail } from "./model";
 
 const Profile = () => {
   const [{ customerDetails }, dispatch] = useStateValue();
-  const [userInfo, setUserInfo] = useState<userDetail>();
-  const [customerdetails, setCustomerdetails] = useState<string>(
-    "customerdetails"
-  );
-
-  const init = async () => {
-    const res = await get<apiResponse<userDetail>>(`api/${customerdetails}`);
-    if (res) {
-      setUserInfo(res.data.details);
-      dispatch({
-        type: "USER_DETAILS",
-        customerDetail: res.data.details,
-      });
-    }
-  };
-  useEffect(() => {
-    init();
-  }, [customerdetails]);
-
   console.log("from profile", customerDetails);
 
   return (
@@ -178,6 +159,12 @@ const Profile = () => {
                       <th scope="row">Account Number</th>
                       <td>
                         {customerDetails?.accountDetail[0]["accountNumber"]}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Available Balance</th>
+                      <td>
+                        {customerDetails?.accountDetail[0]["availableBalance"]}
                       </td>
                     </tr>
                   </tbody>

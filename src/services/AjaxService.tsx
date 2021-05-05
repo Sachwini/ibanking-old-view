@@ -28,7 +28,8 @@ instance.interceptors.response.use(
   },
   function (error: any) {
     if (error.response && error.response.status === 401) {
-      goToLoginPage();
+      // goToLoginPage();
+      alert("unAuthorized client");
     } else {
       return Promise.reject(error);
     }
@@ -37,7 +38,7 @@ instance.interceptors.response.use(
 
 export function handleError(error: any, onError?: false | (() => void)) {
   const statusCode =
-    error.response !== undefined ? error.response.status : 500 || 500;
+    error.response !== undefined ? error.response.status : 500 || 500; 
 
   var errorTitle = "Task failed, please retry.";
   if (
