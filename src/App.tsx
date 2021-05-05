@@ -11,14 +11,19 @@ import { useStateValue } from "state-provider/StateProvider";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
+
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
-  const Account = React.lazy(() => import("pages/user-account"));
-  const UserProfile = React.lazy(() => import("pages/user-profile"));
-
+  const Account = React.lazy(
+    () => import("pages/user-account/account-details")
+  );
+  const UserProfile = React.lazy(
+    () => import("pages/user-account/user-profile")
+  );
+  const Statement = React.lazy(() => import("pages/user-account/statement"));
   /* ----------For Fund Management Import--------------------- */
 
   /* ----------For Payment Import--------------------- */
@@ -63,6 +68,7 @@ function App() {
             {/* ---------- For Account Routing--------------------- */}
             <Route path="/account/user-profile" component={UserProfile} />
             <Route path="/account/account-details" component={Account} />
+            <Route path="/account/statement" component={Statement} />
 
             {/* ---------- For Fund Management Routing--------------------- */}
 

@@ -10,8 +10,8 @@ import {
 } from "styling/layout/LayoutStyling";
 import { useEffect, useState } from "react";
 import { apiResponse } from "models/apiResponse";
-import { userDetail } from "pages/user-profile/model";
 import { get } from "services/AjaxService";
+import { userDetail } from "pages/user-account/user-profile/model";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ isMenuButtonClick }, dispatch] = useStateValue();
@@ -21,7 +21,9 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
     let isSubscribed = true;
 
     const loadData = async () => {
-      const res = await get<apiResponse<userDetail>>("api/customerdetails");
+      const res = await get<apiResponse<userDetail>>(
+        "api/customerdetails?additionalDetails=true"
+      );
       if (isSubscribed) {
         setUserInfo(res.data.details);
         dispatch({

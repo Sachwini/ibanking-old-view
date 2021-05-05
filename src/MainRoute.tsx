@@ -9,8 +9,12 @@ const MainRoute = () => {
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
-  const Account = React.lazy(() => import("pages/user-account"));
-  const UserProfile = React.lazy(() => import("pages/user-profile"));
+  const Account = React.lazy(
+    () => import("pages/user-account/account-details")
+  );
+  const UserProfile = React.lazy(
+    () => import("pages/user-account/user-profile")
+  );
 
   /* ----------For Fund Management Import--------------------- */
 
