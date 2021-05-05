@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { fundTransfer } from "./model";
-import axios from "axios";
 import { getBearerToken } from "services/AuthService";
-import {handleError, post} from "services/AjaxService"
+import { handleError, post } from "services/AjaxService";
 
 export const IBFTForm = () => {
   const [fromAccount, setFromAccount] = useState<string>("");
@@ -13,10 +12,9 @@ export const IBFTForm = () => {
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
 
-  const handleSubmit = async (e: any) => {  
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin)
-      return;
+    if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) return;
     setLoading(true);
     const model: fundTransfer = {
       from_account_number: fromAccount,
@@ -42,37 +40,10 @@ export const IBFTForm = () => {
       () => setLoading(false)
     );
     if (res) {
-        console.log(res.data) 
-       }
+      console.log(res.data);
+    }
+  };
 
-
-    // try {
-    //   const url =
-    //     "http://202.63.242.139:9091/api/fundtransfer?from_account_number=" +
-    //     fromAccount +
-    //     "&to_account_number=" +
-    //     toAccount +
-    //     "&bank_branch_id=" +
-    //     bankBranchId +
-    //     "&amount=" +
-    //     amount +
-    //     "&mPin=" +
-    //     mpin;
-      
-    //   const token = getBearerToken();
-
-    //   const res = await axios(url, {
-    //     method: "POST",
-    //     headers:{'Authorization':`Bearer ${token}`}
-    //   });
-    //   if (res) {
-    //    console.log(res) 
-    //   }
-    // } catch(error) {
-    //   handleError(error);
-    // }
-  }
-  
   const handleReset = (e: any) => {
     e.preventDefault();
     setFromAccount("");
@@ -80,7 +51,7 @@ export const IBFTForm = () => {
     setBankBranchId("");
     setAmount("");
     setMpin("");
-  }
+  };
 
   return (
     <>
@@ -124,18 +95,30 @@ export const IBFTForm = () => {
                 placeholder="Bank branch id"
                 name="bankBranchId"
                 value={bankBranchId}
-                onChange={(e)=>setBankBranchId(e.target.value)}
+                onChange={(e) => setBankBranchId(e.target.value)}
               />
             </Form.Group>
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">Amount</Form.Label>
-              <Form.Control type="text" placeholder="Amount" name="amount" value={amount} onChange={(e)=>setAmount(e.target.value)} />
+              <Form.Control
+                type="text"
+                placeholder="Amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">mPin</Form.Label>
-              <Form.Control type="text" placeholder="mPin" name="mpin" value={mpin} onChange={(e)=>setMpin(e.target.value)} />
+              <Form.Control
+                type="text"
+                placeholder="mPin"
+                name="mpin"
+                value={mpin}
+                onChange={(e) => setMpin(e.target.value)}
+              />
             </Form.Group>
 
             <Button

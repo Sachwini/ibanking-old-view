@@ -8,10 +8,10 @@ import {
   LayoutSidebar,
   LayoutContentField, 
 } from "styling/layout/LayoutStyling";
-import { useState, useEffect } from "react";
-import { userDetail } from "pages/user-profile/model";
+import { useEffect, useState } from "react";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
+import { userDetail } from "pages/user-account/user-profile/model";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ isMenuButtonClick }, dispatch] = useStateValue();

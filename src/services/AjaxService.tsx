@@ -29,7 +29,7 @@ instance.interceptors.response.use(
   function (error: any) {
     if (error.response && error.response.status === 401) {
       // goToLoginPage();
-      alert("unAuthorized client")
+      alert("unAuthorized client");
     } else {
       return Promise.reject(error);
     }
@@ -37,7 +37,8 @@ instance.interceptors.response.use(
 );
 
 export function handleError(error: any, onError?: false | (() => void)) {
-  const statusCode = error.response !== undefined ? error.response.status : 500 || 500;
+  const statusCode =
+    error.response !== undefined ? error.response.status : 500 || 500; 
 
   var errorTitle = "Task failed, please retry.";
   if (
@@ -55,8 +56,8 @@ export function handleError(error: any, onError?: false | (() => void)) {
     errorTitle = "Invalid request";
   }
 
-  if (statusCode === 401) { 
-    errorTitle = "Unauthorized, please login again."; 
+  if (statusCode === 401) {
+    errorTitle = "Unauthorized, please login again.";
   }
 
   alert(errorTitle);

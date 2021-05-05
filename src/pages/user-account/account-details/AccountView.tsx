@@ -31,7 +31,7 @@ const AccountView = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col sm={12} md={5} className="custom__col">
+              <Col sm={12} md={6} className="custom__col">
                 <Row className="w-100">
                   <Col sm={12} md={6}>
                     <p>Available Balance</p>
@@ -49,17 +49,9 @@ const AccountView = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col sm={12} md={4} className="justify-content-end px-0">
-                <Row className="w-100 justify-content-end">
-                  <Col sm={12} md={6} className="p-0 align-text-center">
-                    <CgNotes size="23px" />
-                    <strong className="iconSpacing ">Statment</strong>
-                  </Col>
-                  <Col sm={12} md={6} className="p-0">
-                    <IoInformationCircleOutline size="26px" />
-                    <strong className="iconSpacing">Detail</strong>
-                  </Col>
-                </Row>
+              <Col sm={12} md={3} className="justify-content-end px-0">
+                <CgNotes size="23px" />
+                <strong className="iconSpacing ">Statment</strong>
               </Col>
             </Row>
           </Card.Body>

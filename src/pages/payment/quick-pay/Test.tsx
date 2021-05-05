@@ -1,35 +1,14 @@
 import { PageTitle } from "components/page-title";
-import { apiResponse } from "models/apiResponse";
-import React, { useEffect, useState } from "react";
 import { Container, Image } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
-import { get } from "services/AjaxService";
+import { baseUrl } from "services/Constants";
 import { QpayService } from "./model";
 
 const Test = (props: { data?: QpayService[] }) => {
+  const data = props.data;
   let { path, url } = useRouteMatch();
-  const [paymentService, setPaymentService] = useState<QpayService[]>();
-  const userdata = paymentService;
 
-  // console.log(userdata);
-
-  useEffect(() => {
-    let isSubscribed = true;
-
-    const loadData = async () => {
-      const res = await get<apiResponse<QpayService[]>>(
-        "api/category?withService=true"
-      );
-      if (isSubscribed) {
-        setPaymentService(res.data.details);
-      }
-    };
-
-    loadData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, []);
+  console.log("test : ", path);
 
   return (
     <Container>
@@ -45,11 +24,11 @@ const Test = (props: { data?: QpayService[] }) => {
           flexWrap: "wrap",
         }}
       >
-        {paymentService?.map((data) => {
+        {data?.map((item) => {
           return (
             <Link
-              to={`${url}/${data.name.toLowerCase().split(" ").join("-")}`}
-              key={data.id}
+              to={`${url}/${item.name.toLowerCase().split(" ").join("-")}`}
+              key={item.id}
               style={{
                 padding: "8px",
                 margin: "8px",
@@ -60,18 +39,18 @@ const Test = (props: { data?: QpayService[] }) => {
                 textDecoration: "none",
               }}
             >
-              {data.imageUrl ? (
+              {item.imageUrl ? (
                 <Image
                   width="50px"
                   height="50px"
-                  src={`http://202.63.242.139:9091${data.imageUrl}`}
-                  alt={data.name}
+                  src={`${baseUrl}${item.imageUrl}`}
+                  alt={item.name}
                 />
               ) : (
                 ""
               )}
               <p style={{ textAlign: "center", margin: "0", fontSize: "13px" }}>
-                {data.name}
+                {item.name}
               </p>
             </Link>
           );

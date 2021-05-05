@@ -9,7 +9,7 @@ export interface QpayService {
   children?: ReactNode;
 }
 
-interface userServices {
+export interface userServices {
   id: number;
   url: string;
   uniqueIdentifier: string;

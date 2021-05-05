@@ -8,7 +8,7 @@ import { QpayService } from "./model";
 import Test from "./Test";
 
 const QuickPay = () => {
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
   const [paymentService, setPaymentService] = useState<QpayService[]>();
 
   useEffect(() => {
@@ -37,9 +37,10 @@ const QuickPay = () => {
           path={path}
           render={() => <Test data={paymentService} />}
         />
-        <Route path={`${path}/:topicId`}>
-          <GeneralMerchant />
-        </Route>
+        <Route
+          path={`${path}/:topicId`}
+          render={() => <GeneralMerchant data={paymentService} />}
+        />
       </Switch>
     </Container>
   );

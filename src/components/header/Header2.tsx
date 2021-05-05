@@ -16,7 +16,6 @@ import {
   H_Notification,
 } from "styling/header/HeaderStyling";
 import { IconStyle } from "styling/comp/IconStyling";
-import { WindowSidebar } from "react-bootstrap-icons";
 import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
