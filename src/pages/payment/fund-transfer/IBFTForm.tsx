@@ -1,16 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { fundTransfer } from "./model";
-import { getBearerToken } from "services/AuthService";
-import { handleError, post } from "services/AjaxService";
+import { post } from "services/AjaxService";
+import { getBankBranches } from "services/BankServices";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { GetAccountNumber } from "helper/CustomerData";
+
+interface selectItem {
+  label: string;
+  value: string;
+}
 
 export const IBFTForm = () => {
-  const [fromAccount, setFromAccount] = useState<string>("");
+  const accountNumber = GetAccountNumber(); 
+  const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
+  const [branch, setBranch] = useState<selectItem[]>([]);
+
+
+  useEffect(() => {
+    let isSubscribed = true;
+      const init = async () => {
+        const branch = await getBankBranches();
+        if (isSubscribed) {
+          const branchData: selectItem[] = [];
+          if (branch) {
+            branch.forEach((x: any) =>
+              branchData.push({ label: x.name, value: x.id.toString() })
+            );
+            setBranch(branchData);
+          }
+        };
+    }
+    init();
+    return () => {
+      isSubscribed = false;
+    };
+  }, []);
+
+  const handleBranchID = (e: any) => {
+    try {
+      if (e[0].value !== undefined) {
+        setBankBranchId(e[0].value);
+      } else {
+        setBankBranchId("");
+        setBranch([]); 
+      }
+    } catch {
+      
+    }
+  };
+
+  const handleReset = (e: any) => {
+    e.preventDefault();
+    setFromAccount("");
+    setToAccount("");
+    setBankBranchId("");
+    setAmount("");
+    setMpin("");
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,16 +94,10 @@ export const IBFTForm = () => {
     if (res) {
       console.log(res.data);
     }
+    handleReset(e);
   };
 
-  const handleReset = (e: any) => {
-    e.preventDefault();
-    setFromAccount("");
-    setToAccount("");
-    setBankBranchId("");
-    setAmount("");
-    setMpin("");
-  };
+  
 
   return (
     <>
@@ -63,7 +109,8 @@ export const IBFTForm = () => {
               <Form.Control
                 type="text"
                 placeholder="from account"
-                name="fromAccount"
+                name="fromAccount" 
+                disabled
                 value={fromAccount}
                 onChange={(e) => setFromAccount(e.target.value)}
               />
@@ -79,23 +126,20 @@ export const IBFTForm = () => {
                 value={toAccount}
                 onChange={(e) => setToAccount(e.target.value)}
               />
-              <Form.Text className="text-muted">
-                <div className="text-warning">
-                  Please Insure the account number is correct before transaction
-                </div>
+              <Form.Text className="text-warning">
+                Please Insure the account number is correct before transaction
               </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Bank Branch Id
+                Select Destination Bank Branch
               </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Bank branch id"
-                name="bankBranchId"
-                value={bankBranchId}
-                onChange={(e) => setBankBranchId(e.target.value)}
+              <Typeahead
+                options={branch}
+                id="my-typeahead-id"
+                placeholder="Choose destination branch..."
+                onChange={handleBranchID}
               />
             </Form.Group>
 

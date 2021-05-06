@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getBearerToken, goToLoginPage } from "./AuthService";
 import { baseUrl } from "./BaseService";
+import { client_id } from "./Constants";
 
 const baseEndPoint = baseUrl;
 
@@ -13,6 +14,7 @@ instance.interceptors.request.use(
     const token = getBearerToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.headers.client = client_id;
     }
 
     return config;
