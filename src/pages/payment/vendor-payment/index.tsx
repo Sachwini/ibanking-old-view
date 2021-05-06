@@ -5,13 +5,7 @@ import { GoSync } from "react-icons/go";
 import { PageTitle } from "components/page-title";
 
 function VendorPayment() {
-  const [bank, setBank] = useState<any>([
-    "BankA",
-    "BankB",
-    "BankC",
-    "BankD",
-    "BankE",
-  ]);
+  const [bank] = useState<any>(["BankA", "BankB", "BankC", "BankD", "BankE"]);
   return (
     <Container>
       <PageTitle title="Vender Payment" />

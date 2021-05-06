@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { PageTitle } from "components/page-title";
-import { Card, Container, ListGroup } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
 import { StatementDataType } from "./model";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { GetAccountNumber } from "helper/CustomerData";
+import StatementView from "./StatementView";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -16,12 +16,17 @@ const Statement = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [statementData, setStatementData] = useState<StatementDataType>();
 
+  //Use state for Pagination
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Getting Required Data From Helper
+  const AccNumber = GetAccountNumber();
+  const formatedStartDate = formatDate(startDate);
+  const formatedEndDate = formatDate(endDate);
+
   useEffect(() => {
     let isSubscribed = true;
-    // Getting Required Data From Helper
-    const AccNumber = GetAccountNumber();
-    const formatedStartDate = formatDate(startDate);
-    const formatedEndDate = formatDate(endDate);
+    setLoading(true);
 
     const loadData = async () => {
       const res = await get<apiResponse<StatementDataType>>(
@@ -29,6 +34,7 @@ const Statement = () => {
       );
       if (isSubscribed) {
         setStatementData(res.data.details);
+        setLoading(false);
       }
     };
 
@@ -36,17 +42,17 @@ const Statement = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [startDate, endDate]);
+  }, [formatedStartDate, formatedEndDate, AccNumber]);
 
   // // console.log("end date", formatedEndDate);
   // console.log("statementData : ", statementData);
 
   return (
     <Container>
-      <PageTitle
+      {/* <PageTitle
         title="Check Your account Statement"
         subTitle="default selected date duration is 3 Months time"
-      />
+      /> */}
       <div>
         <div
           style={{
@@ -54,6 +60,7 @@ const Statement = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             padding: "10px",
+            marginBottom: "10px",
           }}
         >
           <p style={{ paddingRight: "2em", margin: "0" }}>
@@ -100,36 +107,9 @@ const Statement = () => {
             />
           </div>
         </div>
-        <Card>
-          <Card.Header style={{ display: "flex" }}>
-            <span className="flex-grow-1">
-              Account Number: {statementData?.accountNumber}
-            </span>
-
-            <span className="pr-4">
-              Opening Balance: Rs: {statementData?.openingBalance}
-            </span>
-            <span>Closing Balance: Rs: {statementData?.closingBalance}</span>
-          </Card.Header>
-          <ListGroup variant="flush">
-            {statementData?.accountStatementDtos.map((data, index) => {
-              return (
-                <ListGroup.Item
-                  className="d-flex justify-content-between"
-                  key={index}
-                >
-                  <p>{data.transactionDate}</p>
-                  <p>{data.remarks}</p>
-                  <p>
-                    {data.credit !== null
-                      ? `Credited By: Rs ${data.credit}`
-                      : `Debited By: Rs.${data.debit}`}
-                  </p>
-                </ListGroup.Item>
-              );
-            })}
-          </ListGroup>
-        </Card>
+        <div>
+          <StatementView statementData={statementData} loading={loading} />
+        </div>
       </div>
     </Container>
   );

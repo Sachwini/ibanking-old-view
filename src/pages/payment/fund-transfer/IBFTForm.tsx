@@ -12,7 +12,7 @@ interface selectItem {
 }
 
 export const IBFTForm = () => {
-  const accountNumber = GetAccountNumber(); 
+  const accountNumber = GetAccountNumber();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
@@ -21,21 +21,20 @@ export const IBFTForm = () => {
   const [loading, setLoading] = useState<boolean>();
   const [branch, setBranch] = useState<selectItem[]>([]);
 
-
   useEffect(() => {
     let isSubscribed = true;
-      const init = async () => {
-        const branch = await getBankBranches();
-        if (isSubscribed) {
-          const branchData: selectItem[] = [];
-          if (branch) {
-            branch.forEach((x: any) =>
-              branchData.push({ label: x.name, value: x.id.toString() })
-            );
-            setBranch(branchData);
-          }
-        };
-    }
+    const init = async () => {
+      const branch = await getBankBranches();
+      if (isSubscribed) {
+        const branchData: selectItem[] = [];
+        if (branch) {
+          branch.forEach((x: any) =>
+            branchData.push({ label: x.name, value: x.id.toString() })
+          );
+          setBranch(branchData);
+        }
+      }
+    };
     init();
     return () => {
       isSubscribed = false;
@@ -48,11 +47,9 @@ export const IBFTForm = () => {
         setBankBranchId(e[0].value);
       } else {
         setBankBranchId("");
-        setBranch([]); 
+        setBranch([]);
       }
-    } catch {
-      
-    }
+    } catch {}
   };
 
   const handleReset = (e: any) => {
@@ -66,6 +63,8 @@ export const IBFTForm = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    console.log("form data : ", e);
+
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) return;
     setLoading(true);
     const model: fundTransfer = {
@@ -75,7 +74,7 @@ export const IBFTForm = () => {
       amount: amount,
       mPin: mpin,
     };
-    console.log("fundTranfer data", model);
+    // console.log("fundTranfer data", model);
 
     const res = await post<fundTransfer>(
       "api/fundtransfer?from_account_number=" +
@@ -97,95 +96,91 @@ export const IBFTForm = () => {
     handleReset(e);
   };
 
-  
-
   return (
-    <>
-      <Card>
-        <Card.Body>
-          <Form>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label className="font-weight-bold">From Account</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="from account"
-                name="fromAccount" 
-                disabled
-                value={fromAccount}
-                onChange={(e) => setFromAccount(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Destination Account
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="destination account"
-                name="toAccount"
-                value={toAccount}
-                onChange={(e) => setToAccount(e.target.value)}
-              />
-              <Form.Text className="text-warning">
-                Please Insure the account number is correct before transaction
-              </Form.Text>
-            </Form.Group>
+    <Card>
+      <Card.Body>
+        <Form>
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label className="font-weight-bold">From Account</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="from account"
+              name="fromAccount"
+              disabled
+              value={fromAccount}
+              onChange={(e) => setFromAccount(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGridAddress1">
+            <Form.Label className="font-weight-bold">
+              Destination Account
+            </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="destination account"
+              name="toAccount"
+              value={toAccount}
+              onChange={(e) => setToAccount(e.target.value)}
+            />
+            <Form.Text className="text-warning">
+              Please Insure the account number is correct before transaction
+            </Form.Text>
+          </Form.Group>
 
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Select Destination Bank Branch
-              </Form.Label>
-              <Typeahead
-                options={branch}
-                id="my-typeahead-id"
-                placeholder="Choose destination branch..."
-                onChange={handleBranchID}
-              />
-            </Form.Group>
+          <Form.Group controlId="formGridAddress1">
+            <Form.Label className="font-weight-bold">
+              Select Destination Bank Branch
+            </Form.Label>
+            <Typeahead
+              options={branch}
+              id="my-typeahead-id"
+              placeholder="Choose destination branch..."
+              onChange={handleBranchID}
+            />
+          </Form.Group>
 
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">Amount</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Amount"
-                name="amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </Form.Group>
+          <Form.Group controlId="formGridAddress1">
+            <Form.Label className="font-weight-bold">Amount</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Amount"
+              name="amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </Form.Group>
 
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">mPin</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="mPin"
-                name="mpin"
-                value={mpin}
-                onChange={(e) => setMpin(e.target.value)}
-              />
-            </Form.Group>
+          <Form.Group controlId="formGridAddress1">
+            <Form.Label className="font-weight-bold">mPin</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="mPin"
+              name="mpin"
+              value={mpin}
+              onChange={(e) => setMpin(e.target.value)}
+            />
+          </Form.Group>
 
-            <Button
-              className="btn btn-warning"
-              variant="primary"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
+          <Button
+            className="btn btn-warning"
+            variant="primary"
+            type="submit"
+            // onClick={handleSubmit}
+          >
+            Submit
+          </Button>
 
-            <Button
-              className="btn btn-light"
-              style={{ marginLeft: "20px" }}
-              variant="secondary"
-              type="submit"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </>
+          <Button
+            className="btn btn-light"
+            style={{ marginLeft: "20px" }}
+            variant="secondary"
+            type="submit"
+            onClick={handleReset}
+          >
+            Reset
+          </Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };

@@ -1,13 +1,12 @@
 import { Card, Col, Row } from "react-bootstrap";
 import { GoFileSubmodule } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
-import { IoInformationCircleOutline } from "react-icons/io5";
 import "./Account.css";
 import { useStateValue } from "state-provider/StateProvider";
 import { Loader } from "pages/static/Loader";
 
 const AccountView = () => {
-  const [{ customerDetails }, dispatch] = useStateValue();
+  const [{ customerDetails }] = useStateValue();
   return (
     <>
       {!customerDetails?.accountDetail ? (
