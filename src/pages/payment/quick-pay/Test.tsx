@@ -1,7 +1,7 @@
 import { PageTitle } from "components/page-title";
 import { Container, Image } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
-import { baseUrl } from "services/BaseService";
+import { baseUrl } from "services/BaseUrl";
 import { QpayService } from "./model";
 
 const Test = (props: { data?: QpayService[] }) => {

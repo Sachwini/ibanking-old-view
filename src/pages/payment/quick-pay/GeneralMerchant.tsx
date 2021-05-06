@@ -7,7 +7,7 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { baseUrl } from "services/BaseService";
+import { baseUrl } from "services/BaseUrl";
 import { QpayService, userServices } from "./model";
 import Test2 from "./Test2";
 

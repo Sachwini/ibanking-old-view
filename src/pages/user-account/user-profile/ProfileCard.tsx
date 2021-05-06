@@ -4,11 +4,11 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useStateValue } from "state-provider/StateProvider";
 
 const ProfileCard = () => {
-  const [{ customerDetails }, dispatch] = useStateValue();
+  const [{ customerDetails }] = useStateValue();
   console.log("fromCard", customerDetails);
   return (
     <div>
-      <Card style={{ backgroundColor: "#ee944fb6", minWidth: "340px" }}> 
+      <Card style={{ backgroundColor: "#ee944fb6", minWidth: "340px" }}>
         <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
           <div style={{ width: "20%" }}>
             <AiOutlineUser className="circle-icon" size="3.3em" color="white" />

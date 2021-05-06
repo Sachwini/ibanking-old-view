@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getBearerToken, goToLoginPage } from "./AuthService";
+import { getBearerToken } from "./AuthService";
 import { client_id } from "./Constants";
 
 const baseEndPoint = "http://202.63.242.139:9091";
@@ -39,7 +39,7 @@ instance.interceptors.response.use(
 
 export function handleError(error: any, onError?: false | (() => void)) {
   const statusCode =
-    error.response !== undefined ? error.response.status : 500 || 500; 
+    error.response !== undefined ? error.response.status : 500 || 500;
 
   var errorTitle = "Task failed, please retry.";
   if (

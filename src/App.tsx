@@ -2,7 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "pages/static/Loader";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";

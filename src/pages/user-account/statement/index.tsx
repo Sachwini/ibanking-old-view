@@ -16,13 +16,12 @@ const Statement = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [statementData, setStatementData] = useState<StatementDataType>();
 
-  // Getting Required Data From Helper
-  const AccNumber = GetAccountNumber();
-  const formatedStartDate = formatDate(startDate);
-  const formatedEndDate = formatDate(endDate);
-
   useEffect(() => {
     let isSubscribed = true;
+    // Getting Required Data From Helper
+    const AccNumber = GetAccountNumber();
+    const formatedStartDate = formatDate(startDate);
+    const formatedEndDate = formatDate(endDate);
 
     const loadData = async () => {
       const res = await get<apiResponse<StatementDataType>>(
@@ -39,9 +38,8 @@ const Statement = () => {
     };
   }, [startDate, endDate]);
 
-  // console.log("start date : ", formatedStartDate);
-  // console.log("end date", formatedEndDate);
-  console.log("statementData : ", statementData);
+  // // console.log("end date", formatedEndDate);
+  // console.log("statementData : ", statementData);
 
   return (
     <Container>
