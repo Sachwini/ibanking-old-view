@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import { useState} from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import { setBearerToken, setRefreshToken } from "services/AuthService";
+import {
+  setBearerToken,
+  setRefreshToken,
+  setIdentity1,
+  setPassword1,
+} from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -15,28 +20,29 @@ const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
-
-  const [{ isLogin }, dispatch] = useStateValue();
+  
+  const [{},dispatch] = useStateValue();
+  let otpRequired = false;
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     if (!identity || !password) return;
     setLoading(true);
-
+    
     try {
-      const url =
-        "http://202.63.242.139:9091/oauth/token?client_id=" +
-        client_id +
-        "&client_secret=" +
-        client_secret +
-        "&grant_type=" +
-        grant_type +
-        "&deviceUniqueIdentifier=" +
-        deviceUniqueIdentifier +
-        "&password=" +
-        password +
-        "&username=" +
-        identity;
+      const  url =
+          "http://202.63.242.139:9091/oauth/token?client_id=" +
+          client_id +
+          "&client_secret=" +
+          client_secret +
+          "&grant_type=" +
+          grant_type +
+          "&deviceUniqueIdentifier=" +
+          deviceUniqueIdentifier +
+          "&password=" +
+          password +
+          "&username=" +
+          identity; 
 
       const res = await axios(url, {
         method: "POST",
@@ -45,10 +51,12 @@ const Login = (props: RouteComponentProps<{}>) => {
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
         props.history.push("/");
-        dispatch({
-          type: "IS_LOGIN",
-          value: true,
-        });
+        dispatch(
+          {
+            type: "IS_LOGIN",
+            value: true,
+          },
+        );
       } else {
         props.history.push("/login");
         dispatch({
@@ -56,10 +64,22 @@ const Login = (props: RouteComponentProps<{}>) => {
           value: false,
         });
       }
-    } catch {
+    } catch(error) {
       setLoading(false);
+      if (error.response) {
+        console.log("Message", error.response.data)
+        const otpRequiredMsg =
+          "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
+        if (error.response.data.error_description === otpRequiredMsg) {
+          otpRequired = true;
+          alert("OTP requires")
+          setIdentity1(identity);
+          setPassword1(password);
+          props.history.push("/otp") 
+        }
+      }
     }
-  }; 
+  };
 
   return (
     <Container>
@@ -84,7 +104,7 @@ const Login = (props: RouteComponentProps<{}>) => {
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Password 62999
+                Password 44220
               </Form.Label>
               <Form.Control
                 type="password"
@@ -93,6 +113,8 @@ const Login = (props: RouteComponentProps<{}>) => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
               />
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
             </Form.Group>
 
             <Button

@@ -4,4 +4,5 @@ export interface fundTransfer {
     bank_branch_id: string
     amount: string
     mPin: string
+    message: string
 }

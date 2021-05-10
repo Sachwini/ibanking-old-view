@@ -1,5 +1,5 @@
 import { useStateValue } from "state-provider/StateProvider";
-import { RouteComponentProps, withRouter } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router"; 
 import Header2 from "components/header/Header2";
 import SideBar from "components/sidebar/SideBar";
 import {

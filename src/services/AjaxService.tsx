@@ -1,8 +1,11 @@
 import axios from "axios";
 import { getBearerToken } from "./AuthService";
 import { client_id } from "./Constants";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { baseUrl } from "./BaseUrl";
 
-const baseEndPoint = "http://202.63.242.139:9091";
+const baseEndPoint = baseUrl;
 
 const instance = axios.create({
   baseURL: baseEndPoint,
@@ -30,7 +33,7 @@ instance.interceptors.response.use(
   function (error: any) {
     if (error.response && error.response.status === 401) {
       // goToLoginPage();
-      alert("unAuthorized client");
+      toast.error("unAuthorized client");
     } else {
       return Promise.reject(error);
     }
@@ -61,7 +64,8 @@ export function handleError(error: any, onError?: false | (() => void)) {
     errorTitle = "Unauthorized, please login again.";
   }
 
-  alert(errorTitle);
+  // alert(errorTitle);
+  toast(errorTitle);
   if (onError) onError();
 }
 

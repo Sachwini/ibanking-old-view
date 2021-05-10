@@ -8,6 +8,7 @@ import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
+import Otp from "pages/login/Otp";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
@@ -54,6 +55,7 @@ function App() {
       <SwitchWithCatch>
         <React.Suspense fallback={<Loader />}>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/otp" component={Otp} />
         </React.Suspense>
       </SwitchWithCatch>
     );
