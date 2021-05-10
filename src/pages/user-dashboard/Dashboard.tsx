@@ -7,8 +7,14 @@ import { FcSynchronize } from "react-icons/fc";
 import Activities from "pages/activities/Activities";
 import LineChart from "pages/activities/LineChart";
 import ProfileCard from "pages/user-account/user-profile/ProfileCard";
+import {
+  localStrorageIdentityKey,
+  localStroragePasswordKey,
+} from "services/AuthService";
 
 const Dashboard = () => {
+  localStorage.removeItem(localStrorageIdentityKey);
+  localStorage.removeItem(localStroragePasswordKey);
   return (
     <Container fluid>
       <PageTitle title="Dashboard" />

@@ -5,6 +5,8 @@ import { post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface selectItem {
   label: string;
@@ -57,8 +59,6 @@ export const FundTransfer = () => {
 
   const handleReset = (e: any) => {
     e.preventDefault();
-    // setFromAccount("");
-    // setBranch([]);
     setToAccount("");
     setBankBranchId("");
     setAmount("");
@@ -67,9 +67,10 @@ export const FundTransfer = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // console.log("form data : ", e);
-
-    if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) return;
+    if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) {
+      toast.error("Incomplete field");
+      return;
+    }
     setLoading(true);
     const model: fundTransfer = {
       from_account_number: fromAccount,
@@ -79,7 +80,7 @@ export const FundTransfer = () => {
       mPin: mpin,
       message: "",
     };
-    // console.log("fundTranfer data", model);
+    console.log("fundTranfer data", model);
 
     const res = await post<fundTransfer>(
       "api/fundtransfer?from_account_number=" +
@@ -96,98 +97,95 @@ export const FundTransfer = () => {
       () => setLoading(false)
     );
     if (res) {
-      // console.log(res.data);
-      console.log(res.data.message);
-      setIsRes(!isRes);
+      toast.success(res.data.message);
+      console.log(res.data);
     }
     handleReset(e);
   };
 
   return (
-    <Card>
-      <Card.Body>
-        <Form>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label className="font-weight-bold">From Account</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="from account"
-              name="fromAccount"
-              disabled
-              value={fromAccount}
-              onChange={(e) => setFromAccount(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formGridAddress1">
-            <Form.Label className="font-weight-bold">
-              Destination Account
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="destination account"
-              name="toAccount"
-              value={toAccount}
-              onChange={(e) => setToAccount(e.target.value)}
-            />
-            <Form.Text className="text-warning">
-              Please Insure the account number is correct before transaction
-            </Form.Text>
-          </Form.Group>
-
-          <Form.Group controlId="formGridAddress1">
-            <Form.Label className="font-weight-bold">
-              Select Destination Bank Branch
-            </Form.Label>
-            <Typeahead
-              options={branch}
-              id="my-typeahead-id"
-              placeholder="Choose destination branch..."
-              onChange={handleBranchID}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formGridAddress1">
-            <Form.Label className="font-weight-bold">Amount</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formGridAddress1">
-            <Form.Label className="font-weight-bold">mPin</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="mPin"
-              name="mpin"
-              value={mpin}
-              onChange={(e) => setMpin(e.target.value)}
-            />
-          </Form.Group>
-
-          <Button
-            className="btn btn-warning"
-            variant="primary"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-
-          <Button
-            className="btn btn-light"
-            style={{ marginLeft: "20px" }}
-            variant="secondary"
-            type="submit"
-            onClick={handleReset}
-          >
-            Reset
-          </Button>
-        </Form>
-      </Card.Body>
-    </Card>
+    <>
+      <Card>
+        <Card.Body>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label className="font-weight-bold">From Account</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="from account"
+                name="fromAccount"
+                disabled
+                value={fromAccount}
+                onChange={(e) => setFromAccount(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">
+                Destination Account
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="destination account"
+                name="toAccount"
+                value={toAccount}
+                onChange={(e) => setToAccount(e.target.value)}
+              />
+              <Form.Text className="text-warning">
+                Please Insure the account number is correct before transaction
+              </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">
+                Select Destination Bank Branch
+              </Form.Label>
+              <Typeahead
+                options={branch}
+                id="my-typeahead-id"
+                placeholder="Choose destination branch..."
+                onChange={handleBranchID}
+              />
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">Amount</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">mPin</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="mPin"
+                name="mpin"
+                value={mpin}
+                onChange={(e) => setMpin(e.target.value)}
+              />
+            </Form.Group>
+            <Button
+              className="btn btn-warning"
+              variant="primary"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Submit
+              <ToastContainer autoClose={5000} position="top-center" />
+            </Button>
+            <Button
+              className="btn btn-light"
+              style={{ marginLeft: "20px" }}
+              variant="secondary"
+              type="submit"
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </>
   );
 };

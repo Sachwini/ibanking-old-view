@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import { setBearerToken, setRefreshToken } from "services/AuthService";
+import {
+  setBearerToken,
+  setRefreshToken,
+  setIdentity1,
+  setPassword1,
+} from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -15,9 +20,9 @@ const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
-  const [data, setData] = useState<{}>({});
 
-  const [{ isLogin }, dispatch] = useStateValue();
+  const [{}, dispatch] = useStateValue();
+  let otpRequired = false;
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -45,7 +50,6 @@ const Login = (props: RouteComponentProps<{}>) => {
       if (res) {
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
-        setData(res.data);
         console.log("message :", res.data);
         props.history.push("/");
         dispatch({
@@ -62,11 +66,20 @@ const Login = (props: RouteComponentProps<{}>) => {
       }
     } catch (error) {
       setLoading(false);
-      console.log("messsage:", error.message);
+      if (error.response) {
+        console.log("Message", error.response.data);
+        const otpRequiredMsg =
+          "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
+        if (error.response.data.error_description === otpRequiredMsg) {
+          otpRequired = true;
+          alert("OTP requires");
+          setIdentity1(identity);
+          setPassword1(password);
+          props.history.push("/otp");
+        }
+      }
     }
   };
-
-  console.log("data : ", data);
 
   return (
     <Container>
@@ -91,7 +104,7 @@ const Login = (props: RouteComponentProps<{}>) => {
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Password 62999
+                Password 44220
               </Form.Label>
               <Form.Control
                 type="password"
@@ -101,6 +114,7 @@ const Login = (props: RouteComponentProps<{}>) => {
                 placeholder="Enter your password"
               />
             </Form.Group>
+            <Form.Group controlId="formGridAddress1"></Form.Group>
 
             <Button
               className="btn btn-warning"

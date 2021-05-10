@@ -91,18 +91,6 @@ export const BankTransfer = () => {
     setMpin("");
   };
 
-  // if (transferAmount && selectedBankID) {
-  //   const getCharges = async () => {
-  //     const charge = await post<apiResponse<number>>(
-  //       `api/ips/scheme/charge?amount=${transferAmount}&destinationBankId=${selectedBankID}`,
-  //       {}
-  //     );
-  //     if (charge) {
-  //       setTransctionCharge(charge.data.details);
-  //     }
-  //   };
-  // }
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -113,7 +101,6 @@ export const BankTransfer = () => {
     );
     if (charge) {
       setTransctionCharge(charge.data.details);
-
       const bankTransfer = await post<apiResponse<any>>("api/ips/transfer", {
         account_number: fromAccount,
         amount: transferAmount,
@@ -132,26 +119,6 @@ export const BankTransfer = () => {
         console.log("tansfer response : ", bankTransfer.data);
       }
     }
-
-    // if (transctionCharge) {
-    //   const bankTransfer = await post<apiResponse<any>>("api/ips/transfer", {
-    //     account_number: fromAccount,
-    //     amount: transferAmount,
-    //     charge: `${transctionCharge}`,
-    //     destination_bank_id: selectedBankID,
-    //     destination_bank_name: DESTBankName,
-    //     destination_branch_id: "175",
-    //     destination_branch_name: "kalanki branch",
-    //     destination_name: DESTAccHolderName,
-    //     destination_account_number: toAccount,
-    //     // scheme_id: "1",
-    //     remarks: remarks,
-    //     skipValidation: "true",
-    //   });
-    //   if (bankTransfer) {
-    //     console.log(bankTransfer.data);
-    //   }
-    // }
   };
 
   // console test

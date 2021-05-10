@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { Badge, OverlayTrigger, Image, Popover, Card } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
-import { notification, userProfile } from "./HeaderDropDown";
+import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
 import { FiUser } from "react-icons/fi";
 import { useStateValue } from "state-provider/StateProvider";
