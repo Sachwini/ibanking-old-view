@@ -11,7 +11,7 @@ interface selectItem {
   value: string;
 }
 
-export const IBFTForm = () => {
+export const FundTransfer = () => {
   const accountNumber = GetAccountNumber();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
@@ -21,8 +21,11 @@ export const IBFTForm = () => {
   const [loading, setLoading] = useState<boolean>();
   const [branch, setBranch] = useState<selectItem[]>([]);
 
+  const [isRes, setIsRes] = useState<boolean>(false);
+
   useEffect(() => {
     let isSubscribed = true;
+
     const init = async () => {
       const branch = await getBankBranches();
       if (isSubscribed) {
@@ -54,7 +57,8 @@ export const IBFTForm = () => {
 
   const handleReset = (e: any) => {
     e.preventDefault();
-    setFromAccount("");
+    // setFromAccount("");
+    // setBranch([]);
     setToAccount("");
     setBankBranchId("");
     setAmount("");
@@ -63,7 +67,7 @@ export const IBFTForm = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("form data : ", e);
+    // console.log("form data : ", e);
 
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) return;
     setLoading(true);
@@ -73,6 +77,7 @@ export const IBFTForm = () => {
       bank_branch_id: bankBranchId,
       amount: amount,
       mPin: mpin,
+      message: "",
     };
     // console.log("fundTranfer data", model);
 
@@ -91,7 +96,9 @@ export const IBFTForm = () => {
       () => setLoading(false)
     );
     if (res) {
-      console.log(res.data);
+      // console.log(res.data);
+      console.log(res.data.message);
+      setIsRes(!isRes);
     }
     handleReset(e);
   };
@@ -165,7 +172,7 @@ export const IBFTForm = () => {
             className="btn btn-warning"
             variant="primary"
             type="submit"
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
           >
             Submit
           </Button>

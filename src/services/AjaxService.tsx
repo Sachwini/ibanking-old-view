@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getBearerToken } from "./AuthService";
+import { baseUrl } from "./BaseUrl";
 import { client_id } from "./Constants";
 
-const baseEndPoint = "http://202.63.242.139:9091";
+const baseEndPoint = baseUrl;
 
 const instance = axios.create({
   baseURL: baseEndPoint,
@@ -38,6 +39,7 @@ instance.interceptors.response.use(
 );
 
 export function handleError(error: any, onError?: false | (() => void)) {
+  // console.log(error);
   const statusCode =
     error.response !== undefined ? error.response.status : 500 || 500;
 
@@ -82,6 +84,6 @@ export async function post<TResponse>(
     return res && res;
   } catch (error) {
     handleError(error, onError);
-    console.log(error);
+    // console.log(error);
   }
 }

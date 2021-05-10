@@ -1,7 +1,7 @@
 import { Card, Table } from "react-bootstrap";
 import "./index.css";
 
-export const IBFTLimit = () => {
+export const FundTransferLimit = () => {
   return (
     <Card>
       <Card.Body>

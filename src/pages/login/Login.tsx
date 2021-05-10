@@ -15,6 +15,7 @@ const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
+  const [data, setData] = useState<{}>({});
 
   const [{ isLogin }, dispatch] = useStateValue();
 
@@ -44,22 +45,28 @@ const Login = (props: RouteComponentProps<{}>) => {
       if (res) {
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
+        setData(res.data);
+        console.log("message :", res.data);
         props.history.push("/");
         dispatch({
           type: "IS_LOGIN",
           value: true,
         });
       } else {
+        console.log("messsage:");
         props.history.push("/login");
         dispatch({
           type: "IS_LOGIN",
           value: false,
         });
       }
-    } catch {
+    } catch (error) {
       setLoading(false);
+      console.log("messsage:", error.message);
     }
-  }; 
+  };
+
+  console.log("data : ", data);
 
   return (
     <Container>
