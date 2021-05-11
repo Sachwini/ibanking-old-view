@@ -23,8 +23,6 @@ export const FundTransfer = () => {
   const [loading, setLoading] = useState<boolean>();
   const [branch, setBranch] = useState<selectItem[]>([]);
 
-  const [isRes, setIsRes] = useState<boolean>(false);
-
   useEffect(() => {
     let isSubscribed = true;
 
