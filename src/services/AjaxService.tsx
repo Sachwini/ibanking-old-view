@@ -82,11 +82,13 @@ export async function post<TResponse>(
   body: {},
   onError?: false | (() => void)
 ) {
-  try {
-    const res = await instance.post<TResponse>(url, body);
-    return res && res;
-  } catch (error) {
-    handleError(error, onError);
-    // console.log(error);
-  }
+  const res = await instance.post<TResponse>(url, body);
+  return res && res;
+  // try {
+  //   const res = await instance.post<TResponse>(url, body);
+  //   return res && res;
+  // } catch (error) {
+  //   handleError(error, onError);
+  //   console.log(error.response.data);
+  // }
 }
