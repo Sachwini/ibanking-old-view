@@ -90,12 +90,12 @@ const BrokerPayment = () => {
             </Form.Group>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Select Destination Bank Branch
+                Select Broker
               </Form.Label>
               <Typeahead
                 options={broker}
                 id="my-typeahead-id"
-                placeholder="Choose destination branch..."
+                placeholder="Choose your broker..."
                 onChange={handleBrokerCode}
               />
             </Form.Group>
