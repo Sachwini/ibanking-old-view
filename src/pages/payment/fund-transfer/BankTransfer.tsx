@@ -7,6 +7,17 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
 import { BankList } from "models/BankListType";
 import { apiResponse } from "models/apiResponse";
+import { error } from "node:console";
+
+interface bankBranchType {
+  id: null | string;
+  branchId: string;
+  bankId: string;
+  refBranchId: null | string;
+  branchName: string;
+  enabled: null | string;
+  lastModifiedOn: null | string;
+}
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -16,7 +27,8 @@ export const BankTransfer = () => {
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [DESTAccHolderName, setDESTAccHolderName] = useState<string>("");
-  const [DESTBranch, setDESTBranch] = useState<string[]>([]);
+  const [DESTBranchList, setDESTBranchList] = useState<bankBranchType[]>([]);
+  const [DESTBranchName, setDESTBranchName] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
   const [transferAmount, setTransferAmount] = useState<string>("");
   const [transctionCharge, setTransctionCharge] = useState<number>(0);
@@ -36,7 +48,47 @@ export const BankTransfer = () => {
   const selectedObj = bankList.find(
     ({ bankName }) => bankName === DESTBankName
   );
-  const selectedBankID = selectedObj?.bankId;
+  let selectedBankID = selectedObj?.bankId;
+  // get bank Crrosponding bank branch
+  let onlyBranchName: string[] = [];
+  DESTBranchList?.map((list) => {
+    return onlyBranchName.push(list.branchName);
+  });
+
+  // getting selected Bank Branch Name's corrosponding id:
+  const selectedBranchObj = DESTBranchList.find(
+    ({ branchName }) => branchName === DESTBranchName
+  );
+  const selectedBankBranchID = selectedBranchObj?.branchId;
+  console.log("selected branch id :", selectedBankBranchID);
+
+  // storing value into the form data
+
+  const formDetaTest = (charge: number) => {
+    const formData = new FormData();
+
+    formData.append("account_number", fromAccount);
+    formData.append("amount", transferAmount);
+    formData.append("charge", `${charge.toString()}`);
+    formData.append(
+      "destination_bank_id",
+      selectedBankID ? selectedBankID : ""
+    );
+    formData.append("destination_bank_name", DESTBankName);
+    formData.append(
+      "destination_branch_id",
+      selectedBankBranchID ? selectedBankBranchID : ""
+    );
+    formData.append("destination_branch_name", DESTBranchName);
+    formData.append("destination_name", DESTAccHolderName);
+    formData.append("destination_account_number", toAccount);
+    formData.append("remarks", remarks);
+    formData.append("mPin", mpin);
+    formData.append("skipValidation", "true");
+    console.log("formData : ", formData);
+
+    return formData;
+  };
 
   useEffect(() => {
     let isSubscribed = true;
@@ -50,14 +102,15 @@ export const BankTransfer = () => {
     };
 
     const loadBankBranch = async () => {
-      const res = await get<apiResponse<any>>(
+      const res = await get<apiResponse<bankBranchType[]>>(
         `/api/ips/bank/branch?bank_id=${selectedBankID}`
       );
       if (isSubscribed) {
-        if (res.data.details !== null) {
-          setDESTBranch(res.data.details);
-        }
-        setDESTBranch(["No Branch found"]);
+        setDESTBranchList(res.data.details);
+        //   if (res.data.details !== null) {
+        //     setDESTBranch(res.data.details);
+        //   }
+        //   setDESTBranch(["No Branch found"]);
       }
     };
 
@@ -67,21 +120,6 @@ export const BankTransfer = () => {
       isSubscribed = false;
     };
   }, [DESTBankName]);
-
-  const handleAmount = async (e: any) => {
-    setTransferAmount(e.target.value);
-  };
-
-  const handleBranchID = (e: any) => {
-    try {
-      if (e[0].value !== undefined) {
-        setBankBranchId(e[0].value);
-      } else {
-        setBankBranchId("");
-        setDESTBranch([]);
-      }
-    } catch {}
-  };
 
   const handleReset = (e: any) => {
     e.preventDefault();
@@ -101,39 +139,35 @@ export const BankTransfer = () => {
     );
     if (charge) {
       setTransctionCharge(charge.data.details);
-      const bankTransfer = await post<apiResponse<any>>("api/ips/transfer", {
-        account_number: fromAccount,
-        amount: transferAmount,
-        charge: `${charge.data.details.toString()}`,
-        destination_bank_id: selectedBankID,
-        destination_bank_name: DESTBankName,
-        destination_branch_id: "175",
-        destination_branch_name: "kalanki branch",
-        destination_name: DESTAccHolderName,
-        destination_account_number: toAccount,
-        scheme_id: "1",
-        remarks: remarks,
-        skipValidation: "true",
-      });
-      if (bankTransfer) {
-        console.log("tansfer response : ", bankTransfer.data);
+      try {
+        const data = formDetaTest(charge.data.details);
+        const bankTransfer = await post<apiResponse<any>>(
+          "api/ips/transfer",
+          data
+        );
+        if (bankTransfer?.statusText) {
+          console.log("tansfer response : ", bankTransfer.data);
+        }
+      } catch (error: any) {
+        if (error.response) {
+          console.log(error.response.data);
+        }
       }
     }
   };
 
   // console test
-  console.log(selectedBankID);
-  console.log("Destination Branch: ", DESTBranch);
+  console.log("selected bank id : ", selectedBankID);
   console.log("Transction Charge: ", transctionCharge);
 
   return (
     <Card>
       <Card.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group controlId="bankTransfer">
             <Form.Label className="font-weight-bold">From Account</Form.Label>
             <Form.Control
-              type="number"
+              type="text"
               placeholder="from account"
               name="fromAccount"
               disabled
@@ -153,7 +187,7 @@ export const BankTransfer = () => {
           <Form.Group controlId="bankTransfer">
             <Form.Label className="font-weight-bold">Account Number</Form.Label>
             <Form.Control
-              type="number"
+              type="text"
               placeholder="destination bank account number..."
               name="toAccount"
               value={toAccount}
@@ -183,22 +217,22 @@ export const BankTransfer = () => {
               Select Destination Bank Branch
             </Form.Label>
             <Typeahead
-              options={DESTBranch}
+              options={onlyBranchName}
               id="1234"
               placeholder="Choose destination branch..."
-              onChange={handleBranchID}
+              onChange={(e) => setDESTBranchName(e[0])}
             />
           </Form.Group>
 
           <Form.Group controlId="bankTransfer">
             <Form.Label className="font-weight-bold">Amount</Form.Label>
             <Form.Control
-              type="number"
+              type="text"
               placeholder="Amount"
               name="amount"
               value={transferAmount}
               required
-              onChange={handleAmount}
+              onChange={(e) => setTransferAmount(e.target.value)}
             />
           </Form.Group>
 
@@ -214,7 +248,7 @@ export const BankTransfer = () => {
             />
           </Form.Group>
 
-          {/* <Form.Group controlId="bankTransfer">
+          <Form.Group controlId="bankTransfer">
             <Form.Label className="font-weight-bold">mPin</Form.Label>
             <Form.Control
               type="text"
@@ -223,13 +257,13 @@ export const BankTransfer = () => {
               value={mpin}
               onChange={(e) => setMpin(e.target.value)}
             />
-          </Form.Group> */}
+          </Form.Group>
 
           <Button
             className="btn btn-warning"
             variant="primary"
             type="submit"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             Submit
           </Button>
