@@ -10,10 +10,17 @@ import axios from "axios";
 import { setBearerToken, setRefreshToken,getIdentity1,getPassword1 } from "services/AuthService";
 import { RouteComponentProps } from "react-router";
 import { useStateValue } from "state-provider/StateProvider";
+import OtpInput from "react-otp-input";
+import "./Otp.css"
 
 function Otp(props: RouteComponentProps<{}>) {
   const [OTP, setOTP] = useState("");
-  const [{}, dispatch] = useStateValue();
+  const [otp1, setOtp1] = useState<any>("");
+  const [{ }, dispatch] = useStateValue();
+  
+  const handleOtpChange = (otp: any) => {
+    setOtp1(otp) 
+  }
   
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -30,9 +37,9 @@ function Otp(props: RouteComponentProps<{}>) {
         "&password=" +
         getPassword1() +
         "&username=" +
-        getIdentity1() + 
+        getIdentity1() +
         "&otp=" +
-        OTP;
+        otp1;
 
       const res = await axios(url, {
         method: "POST",
@@ -60,39 +67,22 @@ function Otp(props: RouteComponentProps<{}>) {
   };
 
   return (
-    <Container>
-      <Card>
-        <Card.Body>
-          <Card.Title>OTP verification</Card.Title>
-          <hr />
-          <Form>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Enter the otp
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="OTP"
-                value={OTP}
-                onChange={(e) => setOTP(e.target.value)}
-                placeholder="OTP"
-              />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
-
-            <Button
-              className="btn btn-warning"
-              variant="primary"
-              type="submit"
-              block
-              onClick={handleLogin}
-            >
-              Submit
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+    <div className="body1">
+      <div className="container">
+        <h1>ENTER OTP</h1>
+        <div className="userInput">
+          <OtpInput
+            className="inputStyle"
+            value={otp1}
+            onChange={handleOtpChange}
+            numInputs={6}
+          />
+        </div>
+        <button className="button1" onClick={handleLogin}>
+          Submit
+        </button>
+      </div>
+     </div>
   );
 }
 

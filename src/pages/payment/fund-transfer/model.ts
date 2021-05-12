@@ -6,3 +6,14 @@ export interface fundTransfer {
   mPin: string;
   message: string;
 }
+
+export interface brokerPayment {
+  accountNumber:string,
+	amount:string,
+	charge:string,
+	brokerCode:string,
+	clientName:string,
+	clientId:string,
+	mobileNumber:string,
+	remarks:string,
+}

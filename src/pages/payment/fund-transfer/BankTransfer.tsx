@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import { fundTransfer } from "./model";
 import { get, post } from "services/AjaxService";
-import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
 import { BankList } from "models/BankListType";
 import { apiResponse } from "models/apiResponse";
-import { error } from "node:console";
 
 interface bankBranchType {
   id: null | string;
@@ -106,11 +103,11 @@ export const BankTransfer = () => {
         `/api/ips/bank/branch?bank_id=${selectedBankID}`
       );
       if (isSubscribed) {
-        setDESTBranchList(res.data.details);
-        //   if (res.data.details !== null) {
-        //     setDESTBranch(res.data.details);
-        //   }
-        //   setDESTBranch(["No Branch found"]);
+        // setDESTBranchList(res.data.details);
+          if (res.data.details !== null) {
+            setDESTBranchList(res.data.details);
+          }
+          // setDESTBranchList(["No Branch found"]); 
       }
     };
 

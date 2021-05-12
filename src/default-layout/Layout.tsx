@@ -28,7 +28,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
         setUserInfo(res.data.details);
         dispatch({
           type: "USER_DETAILS",
-          customerDetail: res.data.details,
+          customerDetail: res.data.details, 
         });
       }
     };

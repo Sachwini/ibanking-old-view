@@ -170,7 +170,6 @@ export const FundTransfer = () => {
               onClick={handleSubmit}
             >
               Submit
-              <ToastContainer autoClose={5000} position="top-center" />
             </Button>
             <Button
               className="btn btn-light"
@@ -181,6 +180,7 @@ export const FundTransfer = () => {
             >
               Reset
             </Button>
+              <ToastContainer autoClose={5000} position="top-center" />
           </Form>
         </Card.Body>
       </Card>
