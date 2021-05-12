@@ -45,3 +45,8 @@ export const getBankBranches = async () => {
   return res && res.data.details
 };
 
+export const getBankList = async () => {
+  const res = await get<any>("/api/ips/bank");
+  return res && res.data.details
+} 
+

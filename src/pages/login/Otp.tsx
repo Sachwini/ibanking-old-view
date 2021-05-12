@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
 import {
   client_id,
   client_secret,
@@ -14,7 +13,6 @@ import OtpInput from "react-otp-input";
 import "./Otp.css"
 
 function Otp(props: RouteComponentProps<{}>) {
-  const [OTP, setOTP] = useState("");
   const [otp1, setOtp1] = useState<any>("");
   const [{ }, dispatch] = useStateValue();
   

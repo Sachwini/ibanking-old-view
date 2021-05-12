@@ -2,7 +2,6 @@ import axios from "axios";
 import { getBearerToken } from "./AuthService";
 import { client_id } from "./Constants";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "./BaseUrl";
 
 const baseEndPoint = baseUrl;

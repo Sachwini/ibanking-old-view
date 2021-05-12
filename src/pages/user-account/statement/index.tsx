@@ -49,10 +49,6 @@ const Statement = () => {
 
   return (
     <Container>
-      {/* <PageTitle
-        title="Check Your account Statement"
-        subTitle="default selected date duration is 3 Months time"
-      /> */}
       <div>
         <div
           style={{

@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "pages/static/Loader";
 import { Route } from "react-router-dom";

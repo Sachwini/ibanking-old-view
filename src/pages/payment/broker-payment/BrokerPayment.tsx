@@ -65,6 +65,7 @@ const BrokerPayment = () => {
       isSubscribed = false;
     };
   }, [brokerCode, amount, charge]);
+
   const handleBrokerCode = (e: any) => {
     try {
       if (e[0].value !== undefined) {
@@ -108,7 +109,7 @@ const BrokerPayment = () => {
     try {
       const res = await post<any>("/api/broker/payment?mPin=" + mpin, model);
       if (res) {
-        toast.success(res.data.message);
+        toast.success(res.data.details);
         console.log(res.data);
       }
     } catch(error) {
