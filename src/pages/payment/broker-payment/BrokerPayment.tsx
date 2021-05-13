@@ -33,12 +33,12 @@ const BrokerPayment = () => {
   const [mpin, setMpin] = useState<string>("");
 
   const getServiceCharges = async () => {
-    if (amount !== "" && brokerCode !== "") { 
+    if (amount !== "" && brokerCode !== "") {
       const res = await get<serviceChargeItem>(
         "/api/broker/charge?amount=" + amount + "&code=" + brokerCode
       );
-      console.log("Amount",amount, "BrokerCode",brokerCode);
-      return res && setCharge(res.data.details); 
+      console.log("Amount", amount, "BrokerCode", brokerCode);
+      return res && setCharge(res.data.details);
     }
     return;
   };
@@ -60,7 +60,7 @@ const BrokerPayment = () => {
     };
     init();
     getServiceCharges();
-    console.log("useEffect called")
+    console.log("useEffect called");
     return () => {
       isSubscribed = false;
     };
@@ -84,18 +84,25 @@ const BrokerPayment = () => {
     setClientId("");
     setBroker([]);
     setBrokerCode("");
-    setCharge(0)
+    setCharge(0);
     setMobileNumber("");
     setRemark("");
     setMpin("");
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!fromAccount || !amount || !clientName || !clientId || !mobileNumber || !brokerCode) {
-    toast.error("Incomplete field");
-    return;
-  }
+    if (
+      !fromAccount ||
+      !amount ||
+      !clientName ||
+      !clientId ||
+      !mobileNumber ||
+      !brokerCode
+    ) {
+      toast.error("Incomplete field");
+      return;
+    }
     const model: brokerPayment = {
       accountNumber: fromAccount,
       amount: amount,
@@ -110,14 +117,15 @@ const BrokerPayment = () => {
       const res = await post<any>("/api/broker/payment?mPin=" + mpin, model);
       if (res) {
         toast.success(res.data.details);
+        handleReset(e);
         console.log(res.data);
       }
-    } catch(error) {
+    } catch (error) {
       if (error.response) {
         toast.error(error.response.data.message);
       }
     }
-  }
+  };
 
   return (
     <Container>
@@ -154,7 +162,9 @@ const BrokerPayment = () => {
                 onChange={handleBrokerCode}
               />
               <Form.Text className="text-warning">
-                {brokerCode ? `Broker Id: ${brokerCode}`:"Selected None (Please Select One ...)"}
+                {brokerCode
+                  ? `Broker Id: ${brokerCode}`
+                  : "Selected None (Please Select One ...)"}
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formGridAddress1">
@@ -233,11 +243,11 @@ const BrokerPayment = () => {
               style={{ marginLeft: "20px" }}
               variant="secondary"
               type="submit"
-                onClick={handleReset}
+              onClick={handleReset}
             >
               Reset
             </Button>
-              <ToastContainer autoClose={5000} position="top-center" />
+            <ToastContainer autoClose={5000} position="top-center" />
           </Form>
         </Card.Body>
       </Card>

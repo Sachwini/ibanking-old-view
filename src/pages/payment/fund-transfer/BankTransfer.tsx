@@ -4,7 +4,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { post } from "services/AjaxService";
 import { getBankList } from "services/BankServices";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface selectItem {
@@ -116,17 +116,17 @@ export const BankTransfer = () => {
     formData.append("mPin", mpin);
     formData.append("skipValidation", "true");
 
-    console.log("formData", formData.getAll); 
-
     try {
       const res = await post<any>("/api/ips/transfer", formData);
       if (res) {
         toast.success(res.data.details);
+        handleReset(e);
         console.log(res.data);
       }
     } catch (error) {
       if (error.response) {
         toast.error(error.response.data.message);
+        console.log(error.response.data.message);
       }
     }
   };
@@ -245,7 +245,6 @@ export const BankTransfer = () => {
             >
               Reset
             </Button>
-            <ToastContainer autoClose={5000} position="top-center" />
           </Form>
         </Card.Body>
       </Card>

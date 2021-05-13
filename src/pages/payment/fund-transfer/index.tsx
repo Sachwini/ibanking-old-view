@@ -5,6 +5,7 @@ import FundTranfCharge from "./FundTranfCharge";
 import { FundTransfer } from "./FundTransfer";
 import { BankTransfer } from "./BankTransfer";
 import { FundTransferLimit } from "./FundTransferLimit";
+import { ToastContainer } from "react-toastify";
 import "./index.css";
 
 const Transfer = () => {
@@ -70,6 +71,7 @@ const Transfer = () => {
           </Tab.Content>
         </Tab.Container>
       </Container>
+      <ToastContainer autoClose={5000} position="top-center" />
     </div>
   );
 };

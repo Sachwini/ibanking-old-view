@@ -5,7 +5,7 @@ import { post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface selectItem {
@@ -180,7 +180,6 @@ export const FundTransfer = () => {
             >
               Reset
             </Button>
-              <ToastContainer autoClose={5000} position="top-center" />
           </Form>
         </Card.Body>
       </Card>
