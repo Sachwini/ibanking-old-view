@@ -1,7 +1,4 @@
-import { apiResponse } from "models/apiResponse";
 import { bankBranchType, BankList } from "models/BankListType";
-import { useEffect } from "react";
-import { get } from "services/AjaxService";
 
 export const getOnlyBankNameList = (banklist: BankList[]) => {
   let onlyBankNameList: string[] = [];
@@ -41,14 +38,8 @@ export const getBankId = (bankList: BankList[], DESTBankName: string) => {
 // };
 
 export const getOnlyBranchNameList = (branchList: bankBranchType[]) => {
-  // let branchList = GetBranch(selectedBankID);
-
-  // get bank Crrosponding bank branch
   let onlyBranchNameList: string[] = [];
   branchList?.map((list) => onlyBranchNameList.push(list.branchName));
-
-  // test data
-  // onlyBranchNameList = ["kalanki Branch", "Balaju Branch"];
 
   return onlyBranchNameList;
 };

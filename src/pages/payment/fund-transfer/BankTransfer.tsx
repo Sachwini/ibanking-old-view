@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -12,7 +12,12 @@ import {
   getOnlyBranchNameList,
 } from "helper/BankTransferHelper";
 import { Loader } from "pages/static/Loader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import BankTransferModal from "./BankTransferModal";
+
+export interface OTPType {
+  otpRequired: boolean;
+}
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -28,9 +33,13 @@ export const BankTransfer = () => {
   const [transctionCharge, setTransctionCharge] = useState<number>(0);
   const [remarks, setRemarks] = useState<string>("");
   const [handleBranchResponse, setHandleBranchResponse] = useState<string>("");
+  const [isOTPRequired, SetIsOTPRequired] = useState<boolean>(false);
+  const [otp, setOTP] = useState<string>("");
 
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [modalShow, setModalShow] = useState<boolean>(false);
 
   // required field Decleration
   let onlyBankNameList: string[] = [];
@@ -100,6 +109,27 @@ export const BankTransfer = () => {
     setHandleBranchResponse("");
   };
 
+  const fundTransferAPI = async (charge: number) => {
+    try {
+      const data = formDetaTest(charge);
+
+      //Transfer API fetching start from here
+      const bankTransfer = await post<apiResponse<any>>(
+        "api/ips/transfer",
+        data
+      );
+      if (bankTransfer) {
+        toast.success(bankTransfer.data.details);
+        console.log("tansfer response : ", bankTransfer.data);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data);
+        toast.error(error.response.data.details);
+      }
+    }
+  };
+
   // storing value into the form data
   const formDetaTest = (charge: number) => {
     const formData = new FormData();
@@ -123,12 +153,16 @@ export const BankTransfer = () => {
     formData.append("mPin", mpin);
     formData.append("skipValidation", "true");
 
+    if (isOTPRequired) {
+      formData.append("otp", otp);
+    }
     return formData;
   };
 
   const handleSubmit = async (e: any) => {
     setLoading(true);
     e.preventDefault();
+
     // get transction charge
     const charge = await post<apiResponse<number>>(
       `api/ips/scheme/charge?amount=${transferAmount}&destinationBankId=${selectedBankID}`,
@@ -136,26 +170,25 @@ export const BankTransfer = () => {
     );
     if (charge) {
       setTransctionCharge(charge.data.details);
-      try {
-        const data = formDetaTest(charge.data.details);
-
-        //Transfer API fetching start from here
-        const bankTransfer = await post<apiResponse<any>>(
-          "api/ips/transfer",
-          data
-        );
-        if (bankTransfer) {
-          toast.success(bankTransfer.data.details);
-          console.log("tansfer response : ", bankTransfer.data);
-        }
-      } catch (error: any) {
-        if (error.response) {
-          console.log(error.response.data);
-          toast.error(error.response.data.details);
-        }
-      }
-      setLoading(false);
     }
+
+    // calling OTP API to check OTP is Required or not
+    const otp = await get<apiResponse<OTPType>>(
+      `api/otp/request?serviceInfoType=CONNECT_IPS&amount=${transferAmount}`
+    );
+    if (otp.data.detail.otpRequired) {
+      SetIsOTPRequired(otp.data.detail.otpRequired);
+      setModalShow(true);
+    } else {
+      fundTransferAPI(charge.data.details);
+    }
+    setLoading(false);
+  };
+
+  const modalFormSubmitHandle = (e: React.FormEvent) => {
+    e.preventDefault();
+    fundTransferAPI(transctionCharge);
+    console.log("you reached here bro");
   };
 
   const handleReset = (e: any) => {
@@ -167,6 +200,12 @@ export const BankTransfer = () => {
 
   return (
     <>
+      <BankTransferModal
+        modalShow={modalShow}
+        handleModalShow={(event: boolean) => setModalShow(event)}
+        userOTP={(otp: string) => setOTP(otp)}
+        modalFormSubmitHandle={(e) => modalFormSubmitHandle(e)}
+      />
       {loading ? (
         <Loader />
       ) : (
@@ -300,7 +339,6 @@ export const BankTransfer = () => {
           </Card.Body>
         </Card>
       )}
-      <ToastContainer />
     </>
   );
 };

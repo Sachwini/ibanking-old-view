@@ -6,6 +6,7 @@ import { FundTransfer } from "./FundTransfer";
 import { BankTransfer } from "./BankTransfer";
 import { FundTransferLimit } from "./FundTransferLimit";
 import "./index.css";
+import { ToastContainer } from "react-toastify";
 
 const Transfer = () => {
   const [key, setKey] = useState<string | boolean | null>("fund");
@@ -70,6 +71,7 @@ const Transfer = () => {
           </Tab.Content>
         </Tab.Container>
       </Container>
+      <ToastContainer />
     </div>
   );
 };
