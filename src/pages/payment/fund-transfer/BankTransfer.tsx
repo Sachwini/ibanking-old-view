@@ -3,7 +3,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
-import { bankBranchType, BankList } from "models/BankListType";
+import { bankBranchType, BankList } from "./model";
 import { apiResponse } from "models/apiResponse";
 import {
   getBankId,
@@ -38,7 +38,6 @@ export const BankTransfer = () => {
 
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
   const [modalShow, setModalShow] = useState<boolean>(false);
 
   // required field Decleration
@@ -110,9 +109,9 @@ export const BankTransfer = () => {
   };
 
   const fundTransferAPI = async (charge: number) => {
+    setLoading(true);
+    const data = formDetaTest(charge);
     try {
-      const data = formDetaTest(charge);
-
       //Transfer API fetching start from here
       const bankTransfer = await post<apiResponse<any>>(
         "api/ips/transfer",
@@ -128,6 +127,7 @@ export const BankTransfer = () => {
         toast.error(error.response.data.details);
       }
     }
+    setLoading(false);
   };
 
   // storing value into the form data
@@ -188,7 +188,6 @@ export const BankTransfer = () => {
   const modalFormSubmitHandle = (e: React.FormEvent) => {
     e.preventDefault();
     fundTransferAPI(transctionCharge);
-    console.log("you reached here bro");
   };
 
   const handleReset = (e: any) => {
@@ -225,7 +224,7 @@ export const BankTransfer = () => {
                   onChange={(e) => setFromAccount(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group controlId="bankTransfer">
+              <Form.Group controlId="bankTransfer" aria-required>
                 <Form.Label className="font-weight-bold">
                   Select Bank
                 </Form.Label>

@@ -70,10 +70,12 @@ export function handleError(error: any, onError?: false | (() => void)) {
 }
 
 export async function get<TResponse>(url: string) {
-  return instance.get<TResponse>(url).catch((error: any) => {
-    handleError(error);
-    throw error;
-  });
+  return instance.get<TResponse>(url)
+    // .catch((error: any) => {
+    // handleError(error);
+    // throw error;
+    // }
+    // );
 }
 
 export async function post<TResponse>(

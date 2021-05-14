@@ -5,8 +5,8 @@ import FundTranfCharge from "./FundTranfCharge";
 import { FundTransfer } from "./FundTransfer";
 import { BankTransfer } from "./BankTransfer";
 import { FundTransferLimit } from "./FundTransferLimit";
-import "./index.css";
 import { ToastContainer } from "react-toastify";
+import "./index.css";
 
 const Transfer = () => {
   const [key, setKey] = useState<string | boolean | null>("fund");
@@ -63,7 +63,6 @@ const Transfer = () => {
             <Tab.Pane eventKey="bank">
               <Row>
                 <Col sm={12} md={6}>
-                  <p>Bank Transfer</p>
                   <BankTransfer />
                 </Col>
               </Row>

@@ -2,6 +2,11 @@ export const localStorageAuthTokenKey = "accessToken";
 export const localStorageRefreshTokenKey = "refreshToken";
 export const localStrorageIdentityKey = "identity";
 export const localStroragePasswordKey = "password";
+export const localStorageDeviceUID = "DeviceUID";
+
+export function getDeviceUID() {
+  return localStorage.getItem(localStorageDeviceUID);
+}
 
 export function getBearerToken() {
   return localStorage.getItem(localStorageAuthTokenKey);
@@ -17,6 +22,10 @@ export function setRefreshToken(token: string) {
 
 export function getIdentity1() {
   return localStorage.getItem(localStrorageIdentityKey);
+}
+
+export function setDeviceUID(DeviceUID: string) {
+  localStorage.setItem(localStorageDeviceUID, DeviceUID);
 }
 
 export function setIdentity1(identity: string) {

@@ -11,7 +11,7 @@ import {
   client_id,
   client_secret,
   grant_type,
-  deviceUniqueIdentifier,
+  DeviceUniqueIdentifier,
 } from "services/Constants";
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
@@ -28,6 +28,8 @@ const Login = (props: RouteComponentProps<{}>) => {
     e.preventDefault();
     if (!identity || !password) return;
     setLoading(true);
+
+    const deviceUniqueIdentifier = DeviceUniqueIdentifier();
 
     try {
       const url =

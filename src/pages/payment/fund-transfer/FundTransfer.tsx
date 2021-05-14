@@ -5,7 +5,7 @@ import { post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface selectItem {
@@ -22,8 +22,6 @@ export const FundTransfer = () => {
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
   const [branch, setBranch] = useState<selectItem[]>([]);
-
-  const [isRes, setIsRes] = useState<boolean>(false);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -93,6 +91,7 @@ export const FundTransfer = () => {
         amount +
         "&mPin=" +
         mpin,
+
       {},
       () => setLoading(false)
     );

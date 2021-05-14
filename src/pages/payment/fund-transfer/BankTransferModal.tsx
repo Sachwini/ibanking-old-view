@@ -35,8 +35,8 @@ const BankTransferModal = (props: Props) => {
             <Form.Control
               type="text"
               placeholder="otp..."
+              required
               onChange={(e) => userOTP(e.target.value)}
-              className=""
             />
             <Form.Text className="text-muted">provide your otp</Form.Text>
           </Form.Group>

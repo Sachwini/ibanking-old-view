@@ -1,5 +1,5 @@
 import { useStateValue } from "state-provider/StateProvider";
-import { RouteComponentProps, withRouter } from "react-router"; 
+import { RouteComponentProps, withRouter } from "react-router";
 import Header2 from "components/header/Header2";
 import SideBar from "components/sidebar/SideBar";
 import {
@@ -21,15 +21,19 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
     let isSubscribed = true;
 
     const loadData = async () => {
-      const res = await get<apiResponse<userDetail>>(
-        "api/customerdetails?additionalDetails=true"
-      );
-      if (isSubscribed) {
-        setUserInfo(res.data.details);
-        dispatch({
-          type: "USER_DETAILS",
-          customerDetail: res.data.details,
-        });
+      try {
+        const res = await get<apiResponse<userDetail>>(
+          "api/customerdetails?additionalDetails=true"
+        );
+        if (isSubscribed) {
+          setUserInfo(res.data.details);
+          dispatch({
+            type: "USER_DETAILS",
+            customerDetail: res.data.details,
+          });
+        }
+      } catch {
+        window.location.href = `/login`;
       }
     };
 
@@ -38,7 +42,6 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
       isSubscribed = false;
     };
   }, []);
-
 
   let sidbarWidth;
   if (isMenuButtonClick) {

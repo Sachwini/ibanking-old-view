@@ -1,6 +1,20 @@
 import { v4 as uuidv4 } from "uuid";
+import { getDeviceUID, setDeviceUID } from "./AuthService";
 
 export const client_id = "VBMRDWEVFV";
 export const client_secret = "199204";
 export const grant_type = "password";
-export const deviceUniqueIdentifier = uuidv4();
+
+// Handling Device Unique Identifier
+export const DeviceUniqueIdentifier = () => {
+  let deviceUniqueIdentifier: string = "";
+
+  const isDeviceID = getDeviceUID();
+  if (isDeviceID === null) {
+    setDeviceUID(uuidv4());
+  } else {
+    deviceUniqueIdentifier = isDeviceID;
+  }
+
+  return deviceUniqueIdentifier;
+};
