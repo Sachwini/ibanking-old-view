@@ -92,7 +92,7 @@ const Login = (props: RouteComponentProps<{}>) => {
           <Form>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Identity VBMRDWEVFV9840069570
+                Identity VBMRDWEVFV9840069570 VBMRDWEVFV9843750574
               </Form.Label>
               <Form.Control
                 type="text"
@@ -106,7 +106,7 @@ const Login = (props: RouteComponentProps<{}>) => {
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Password 44220
+                Password 22069 10368
               </Form.Label>
               <Form.Control
                 type="password"

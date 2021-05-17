@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { fundTransfer } from "./model";
-import { post } from "services/AjaxService";
+import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MpinModal from "../../../components/react-modal/MpinModal";
+import DetailModal from "../../../components/react-modal/DetailModal";
+import OtpModal from "../../../components/react-modal/OtpModal";
+import { apiResponse } from "models/apiResponse";
 
 interface selectItem {
   label: string;
@@ -22,6 +26,41 @@ export const FundTransfer = () => {
   const [mpin, setMpin] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
   const [branch, setBranch] = useState<selectItem[]>([]);
+  const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
+  const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
+  const [destinationAccountHolderName, setDestinationAccountHolderName] = useState<string>("");
+  const [validAccount, setValidAccount] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>("");
+  const [otpRequired, setOtpRequired] = useState<boolean>(false);
+
+  //For account Validation
+  const accountValidation = async () => {
+    try {
+      if (toAccount !== "" && destinationAccountHolderName !== "" && bankBranchId !== "") {
+        const res = get<any>(
+          "api/account/validation?destinationAccountNumber=" +
+           toAccount  +
+          "&destinationAccountName=" +
+           destinationAccountHolderName  +
+          "&destinationBranchId=" +
+           bankBranchId 
+        );
+        return res && setValidAccount(true);
+      }
+    } catch {
+      setValidAccount(false); 
+    }
+  }
+
+  //for request Otp
+  const requestOtp = async () => {
+    const res =
+      get <
+      apiResponse<any>>(
+        "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
+          amount 
+      );
+  }
 
   useEffect(() => {
     let isSubscribed = true;
@@ -41,9 +80,10 @@ export const FundTransfer = () => {
     init();
     return () => {
       isSubscribed = false;
-    };
+    }; 
   }, []);
 
+  //for setting the value for bankId
   const handleBranchID = (e: any) => {
     try {
       if (e[0].value !== undefined) {
@@ -60,16 +100,20 @@ export const FundTransfer = () => {
     setToAccount("");
     setBankBranchId("");
     setAmount("");
-    setMpin("");
   };
 
-  const handleSubmit = async (e: any) => {
+  const openDetailModel = (e: any) => {
     e.preventDefault();
+    setDetailModalShow(true);
+  }
+
+  const handleSubmit = async (e: any) => {
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) {
       toast.error("Incomplete field");
       return;
     }
     setLoading(true);
+    
     const model: fundTransfer = {
       from_account_number: fromAccount,
       to_account_number: toAccount,
@@ -80,8 +124,9 @@ export const FundTransfer = () => {
     };
     console.log("fundTranfer data", model);
 
-    const res = await post<fundTransfer>(
-      "api/fundtransfer?from_account_number=" +
+    let url = "";
+    if (parseFloat(amount) > 5000) {
+      url = "api/fundtransfer?from_account_number=" +
         fromAccount +
         "&to_account_number=" +
         toAccount +
@@ -90,16 +135,58 @@ export const FundTransfer = () => {
         "&amount=" +
         amount +
         "&mPin=" +
-        mpin,
-
-      {},
-      () => setLoading(false)
-    );
-    if (res) {
-      toast.success(res.data.message);
-      console.log(res.data);
+        mpin + "&otp=" + otp
     }
-    handleReset(e);
+    else {
+      url = "api/fundtransfer?from_account_number=" +
+        fromAccount +
+        "&to_account_number=" +
+        toAccount +
+        "&bank_branch_id=" +
+        bankBranchId +
+        "&amount=" +
+        amount +
+        "&mPin=" +
+        mpin
+    }
+    try {
+      const res = await post<fundTransfer>(
+        url,
+        {},
+        () => setLoading(false)
+      );
+      if (res) {
+        toast.success(res.data.message);
+        console.log(res.data);
+      }
+      handleReset(e);
+    } catch (error){
+      toast.error(error.response); 
+    }
+  }
+
+  const handleOtpRequired = () => {
+    if (parseFloat(amount) <= 5000) {
+      handleSubmit(e);
+    }
+    else {
+      setOtpRequired(true);
+      requestOtp();
+    }
+  };
+
+  const changeOtpStatus = async () => {
+    try {
+      const res = post<any>(
+        "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
+        {}
+      );
+      if (res) {
+        handleSubmit(e);
+      }
+    } catch(error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -143,32 +230,44 @@ export const FundTransfer = () => {
                 placeholder="Choose destination branch..."
                 onChange={handleBranchID}
               />
+              <Form.Text className="text-warning">
+                {bankBranchId
+                  ? `bankBranchId: ${bankBranchId}`
+                  : "Selected None (Please Select One ...)"}
+              </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">
+                Destination AccountHolder Name
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your Destination AccountHolder Name"
+                name="destinationAccountHolderName"
+                value={destinationAccountHolderName}
+                onChange={(e) =>
+                  setDestinationAccountHolderName(e.target.value)
+                }
+              />
             </Form.Group>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">Amount</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 placeholder="Amount"
                 name="amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </Form.Group>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">mPin</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="mPin"
-                name="mpin"
-                value={mpin}
-                onChange={(e) => setMpin(e.target.value)}
-              />
-            </Form.Group>
             <Button
               className="btn btn-warning"
               variant="primary"
               type="submit"
-              onClick={handleSubmit}
+              onClick={(e) => {
+                openDetailModel(e);
+                accountValidation();
+              }}
             >
               Submit
             </Button>
@@ -184,6 +283,44 @@ export const FundTransfer = () => {
           </Form>
         </Card.Body>
       </Card>
+      {detailModalShow ? (
+        <DetailModal
+          modalShow={detailModalShow}
+          handleModalShow={(event: boolean) => setDetailModalShow(event)}
+          modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
+          fromAccount={fromAccount}
+          toAccount={toAccount}
+          branch={branch[0].label}
+          amount={amount}
+          validAccount={validAccount}
+        />
+      ) : (
+        ""
+      )}
+      {mpinModalShow ? (
+        <MpinModal
+          modalShow={mpinModalShow}
+          handleModalShow={(event: boolean) => setMpinModalShow(event)}
+          mpin={(mpin: string) => setMpin(mpin)}
+          modalFormSubmitHandle={handleOtpRequired}
+        />
+      ) : (
+        ""
+      )}
+      {otpRequired ? (
+        <OtpModal
+          modalShow={otpRequired}
+          handleModalShow={(event: boolean) => setOtpRequired(event)}
+          userOTP={(otp: string) => setOtp(otp)}
+          modalFormSubmitHandle={changeOtpStatus}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
+function e(e: any) {
+  throw new Error("Function not implemented.");
+}
+
