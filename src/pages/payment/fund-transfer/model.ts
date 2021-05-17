@@ -17,6 +17,7 @@ export interface bankBranchType {
   enabled: string | null;
   lastModifiedOn: string | null;
 }
+
 // -------------------Bank Transfer Moduls END Here------------------------------
 
 // -------------------Fund Transfer Moduls START Here------------------------------
