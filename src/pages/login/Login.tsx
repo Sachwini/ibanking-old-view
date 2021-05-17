@@ -72,7 +72,12 @@ const Login = (props: RouteComponentProps<{}>) => {
         console.log("Message", error.response.data);
         const otpRequiredMsg =
           "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
-        if (error.response.data.error_description === otpRequiredMsg) {
+        const otpRequiredMsg1 =
+          "unauthorized device. We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code.";
+        if (
+          error.response.data.error_description === otpRequiredMsg ||
+          otpRequiredMsg1
+        ) {
           otpRequired = true;
           alert("OTP requires");
           setIdentity1(identity);
