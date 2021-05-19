@@ -4,8 +4,6 @@ import { RouteComponentProps } from "react-router";
 import {
   setBearerToken,
   setRefreshToken,
-  setIdentity1,
-  setPassword1,
 } from "services/AuthService";
 import {
   client_id,
@@ -15,14 +13,16 @@ import {
 } from "services/Constants";
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
+import OtpModal from "components/modals/fundTransfer/OtpModal";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
+  const [otpRequired, setOtpRequired] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>("");
 
   const [{}, dispatch] = useStateValue();
-  let otpRequired = false;
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -30,9 +30,9 @@ const Login = (props: RouteComponentProps<{}>) => {
     setLoading(true);
 
     const deviceUniqueIdentifier = DeviceUniqueIdentifier();
-
-    try {
-      const url =
+    let url = ""
+    if (otpRequired) {
+      url =
         "http://202.63.242.139:9091/oauth/token?client_id=" +
         client_id +
         "&client_secret=" +
@@ -44,8 +44,24 @@ const Login = (props: RouteComponentProps<{}>) => {
         "&password=" +
         password +
         "&username=" +
-        identity;
-
+        identity +
+        "&otp=" +
+        otp;
+    }
+    else url =
+      "http://202.63.242.139:9091/oauth/token?client_id=" +
+      client_id +
+      "&client_secret=" +
+      client_secret +
+      "&grant_type=" +
+      grant_type +
+      "&deviceUniqueIdentifier=" +
+      deviceUniqueIdentifier +
+      "&password=" +
+      password +
+      "&username=" +
+      identity;
+    try {
       const res = await axios(url, {
         method: "POST",
       });
@@ -78,11 +94,8 @@ const Login = (props: RouteComponentProps<{}>) => {
           error.response.data.error_description === otpRequiredMsg ||
           otpRequiredMsg1
         ) {
-          otpRequired = true;
-          alert("OTP requires");
-          setIdentity1(identity);
-          setPassword1(password);
-          props.history.push("/otp");
+          setOtpRequired(true);
+          alert(error.response.data.error_description);
         }
       }
     }
@@ -135,6 +148,16 @@ const Login = (props: RouteComponentProps<{}>) => {
           </Form>
         </Card.Body>
       </Card>
+      {otpRequired ? (
+        <OtpModal
+          modalShow={otpRequired}
+          handleModalShow={(event: boolean) => setOtpRequired(event)}
+          userOTP={(otp: string) => setOtp(otp)}
+          modalFormSubmitHandle={handleLogin}
+        />
+      ) : (
+        ""
+      )}
     </Container>
   );
 };

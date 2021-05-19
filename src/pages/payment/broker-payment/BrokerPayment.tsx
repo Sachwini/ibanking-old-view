@@ -168,9 +168,10 @@ const BrokerPayment = () => {
   };
 
   const handleOtpRequired = () => {
-    if (parseFloat(amount) <= 500) {
+    if (parseFloat(amount) <= 5000) {
+      setOtpRequired(false);
       handleSubmit(e);
-    } else {
+    } else if(parseFloat(amount) > 5000){
       setOtpRequired(true);
       requestOtp();
     }

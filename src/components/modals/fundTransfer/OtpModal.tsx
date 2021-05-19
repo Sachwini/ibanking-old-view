@@ -21,7 +21,7 @@ const OtpModal = (props:Props) => {
         style={{ zIndex: 1400 }}
       >
         <Modal.Header closeButton>
-          <Modal.Title as="h6">Submit Your OPT</Modal.Title>
+          <Modal.Title as="h6">Submit Your OTP</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form

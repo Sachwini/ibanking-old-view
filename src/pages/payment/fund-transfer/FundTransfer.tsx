@@ -178,9 +178,10 @@ export const FundTransfer = () => {
 
   const handleOtpRequired = () => {
     if (parseFloat(amount) <= 5000) {
+      setOtpRequired(false);
       handleSubmit(e);
     }
-    else {
+    else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
       requestOtp();
     }
