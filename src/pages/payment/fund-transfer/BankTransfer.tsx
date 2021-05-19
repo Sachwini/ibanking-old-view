@@ -107,7 +107,7 @@ export const BankTransfer = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [DESTBankName]);
+  }, [DESTBankID]);
 
   // Get Selected Bank id While on user Bank Select
   const handleBankSelect = (e: string[]) => {

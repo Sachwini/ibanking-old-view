@@ -22,12 +22,12 @@ const OTPModal = (props: Props) => {
     useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90);
 
-  React.useEffect(() => {
-    setInterval(() => {
-      setCounter(counter - 1);
-    }, 1000);
-    return () => clearInterval(1000);
-  }, [counter]);
+  // React.useEffect(() => {
+  //   setInterval(() => {
+  //     setCounter(counter - 1);
+  //   }, 1000);
+  //   return () => clearInterval(1000);
+  // }, [counter]);
 
   const showOTPRequest = () => {
     setTimeout(() => {
@@ -114,7 +114,8 @@ const OTPModal = (props: Props) => {
               </span>
             </div>
           ) : (
-            <span>Request Again For OTP Enabling in {counter} seconds </span>
+            ""
+            // <span>Request Again For OTP Enabling in {counter} seconds </span>
           )}
 
           <Button variant="primary" type="submit" style={{ float: "right" }}>

@@ -10,6 +10,7 @@ import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
 import Otp from "pages/login/Otp";
+import { GlobalStyle } from "styling/GlobalStyling";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
@@ -66,6 +67,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <DefaultLayout>
         <SwitchWithCatch>
           <React.Suspense fallback={<Loader />}>
