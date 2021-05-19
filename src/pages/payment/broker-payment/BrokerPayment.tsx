@@ -7,11 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { getBrokerList } from "services/BrokerServices";
 import { get, post } from "services/AjaxService";
 import { brokerPayment } from "../fund-transfer/model";
-import MpinModal from "components/fund-transfer-modals/fundTransfer/MpinModal";
-import OtpModal from "components/fund-transfer-modals/fundTransfer/OtpModal";
-
 import BrokerDetailModal from "components/broker-payment-Modal/BrokerDetailModal";
-import SuccessModal from "components/fund-transfer-modals/fundTransfer/SuccessModal";
+import MpinModal from "components/modals/fundTransfer/MpinModal";
+import OtpModal from "components/modals/fundTransfer/OtpModal";
+import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 interface selectItem {
   label: string;
   value: string;

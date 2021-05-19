@@ -7,11 +7,11 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MpinModal from "../../../components/fund-transfer-modals/fundTransfer/MpinModal";
-import DetailModal from "../../../components/fund-transfer-modals/fundTransfer/DetailModal";
-import OtpModal from "../../../components/fund-transfer-modals/fundTransfer/OtpModal";
 import { apiResponse } from "models/apiResponse";
-import SuccessModal from "components/fund-transfer-modals/fundTransfer/SuccessModal";
+import DetailModal from "components/modals/fundTransfer/DetailModal";
+import MpinModal from "components/modals/fundTransfer/MpinModal";
+import OtpModal from "components/modals/fundTransfer/OtpModal";
+import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 
 interface selectItem {
   label: string;

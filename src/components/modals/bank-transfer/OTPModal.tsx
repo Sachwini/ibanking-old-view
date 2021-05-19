@@ -5,27 +5,39 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 export interface Props {
   userOTP: (otp: string) => void;
   OTPModalShow: boolean;
-  OTPRequiredMessage: string;
+  OTPResponse: {
+    status: string;
+    message: string;
+  };
   OTPFormHandle: (e: React.FormEvent) => void;
   resendOTPHandle: () => void;
 }
 
 const OTPModal = (props: Props) => {
-  const {
-    userOTP,
-    OTPModalShow,
-    OTPRequiredMessage,
-    OTPFormHandle,
-    resendOTPHandle,
-  } = props;
+  const { userOTP, OTPModalShow, OTPResponse, OTPFormHandle, resendOTPHandle } =
+    props;
 
   const [OTPInputShow, setOTPInputShow] = useState<boolean>(true);
   const [showRequestOTPAgain, setShowRequestOTPAgain] =
     useState<boolean>(false);
+  const [counter, setCounter] = useState<number>(90);
 
-  setTimeout(() => {
-    setShowRequestOTPAgain(true);
-  }, 90000);
+  React.useEffect(() => {
+    setInterval(() => {
+      setCounter(counter - 1);
+    }, 1000);
+    return () => clearInterval(1000);
+  }, [counter]);
+
+  const showOTPRequest = () => {
+    setTimeout(() => {
+      setShowRequestOTPAgain(!showRequestOTPAgain);
+    }, 90000);
+  };
+
+  if (OTPResponse.message === "failed") {
+    showOTPRequest();
+  }
 
   return (
     <Modal
@@ -37,7 +49,7 @@ const OTPModal = (props: Props) => {
       style={{ zIndex: 1400, padding: "1em" }}
     >
       <Modal.Header className="justify-content-center">
-        <Modal.Title as="h5">Submit Your OPT</Modal.Title>
+        <Modal.Title as="h5">Submit Your OTP</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ padding: "2em 3em" }}>
         <Form
@@ -67,7 +79,21 @@ const OTPModal = (props: Props) => {
                 {OTPInputShow ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </span>
             </InputGroup>
-            <Form.Text className="text-muted">{OTPRequiredMessage}</Form.Text>
+            {OTPResponse.status === "failed" ? (
+              <Form.Text
+                style={{
+                  color: "red",
+                  paddingTop: "10px",
+                  textAlign: "center",
+                }}
+              >
+                {OTPResponse.message}
+              </Form.Text>
+            ) : (
+              <Form.Text className="pt-3 text-muted text-center">
+                {OTPResponse.message}
+              </Form.Text>
+            )}
           </Form.Group>
 
           {showRequestOTPAgain ? (
@@ -88,7 +114,7 @@ const OTPModal = (props: Props) => {
               </span>
             </div>
           ) : (
-            ""
+            <span>Request Again For OTP Enabling in {counter} seconds </span>
           )}
 
           <Button variant="primary" type="submit" style={{ float: "right" }}>

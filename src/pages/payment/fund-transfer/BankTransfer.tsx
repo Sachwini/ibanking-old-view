@@ -6,11 +6,11 @@ import { GetAccountNumber } from "helper/CustomerData";
 import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
 import { toast } from "react-toastify";
-import ConfirmDetailModal from "components/fund-transfer-modals/bank-transfer/ConfirmDetailModal";
-import MpinModal from "components/fund-transfer-modals/bank-transfer/MpinModal";
-import OTPModal from "components/fund-transfer-modals/bank-transfer/OTPModal";
+import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
+import MpinModal from "components/modals/bank-transfer/MpinModal";
+import OTPModal from "components/modals/bank-transfer/OTPModal";
 import { bankBranchType, BankList } from "./model";
-import SuccessModal from "components/fund-transfer-modals/bank-transfer/SuccessModal";
+import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -46,7 +46,7 @@ export const BankTransfer = () => {
   const [OTP, setOTP] = useState<string>("");
   const [OTPModalShow, setOTPModalShow] = useState<boolean>(false);
   const [isOTPRequired, SetIsOTPRequired] = useState<boolean>(false);
-  const [OTPRequiredMessage, setOTPRequiredMessage] = useState<string>("");
+  const [OTPResponse, setOTPResponse] = useState({ status: "", message: "" });
 
   // For SuccessMessage Modal View
   const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
@@ -171,8 +171,12 @@ export const BankTransfer = () => {
           isValid.data.detail.matchPercentage === 100
         ) {
           // Calling Conformation Modal Dialogue
-          // confirmModelSubmitHandle();
           setConfirmModalShow(true);
+        } else {
+          setLoading(false);
+          toast.error(isValid.data.detail.message, {
+            autoClose: 12000,
+          });
         }
       } catch (error: any) {
         if (error.response) {
@@ -180,15 +184,14 @@ export const BankTransfer = () => {
           toast.error(error.response.data.detail.message, {
             autoClose: 12000,
           });
-          return;
         }
+        return;
       }
     }
-
     setLoading(false);
   };
 
-  // Conformation Modal Dialouge Handle
+  //-------------Conformation Modal Dialouge Handle---------------------//
   const confirmModelSubmitHandle = () => {
     setConfirmModalShow(!confirmModalShow);
     console.log("i'm clicked");
@@ -208,7 +211,7 @@ export const BankTransfer = () => {
     isOtpRequired();
   };
 
-  // Handle OTPFormHandle Modal
+  ////-------------OTPFormHandle Modal---------------------//
   const OTPFormHandle = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -244,7 +247,7 @@ export const BankTransfer = () => {
     );
     if (res && res.data.detail.otpRequired === true) {
       SetIsOTPRequired(true);
-      setOTPRequiredMessage(res.data.message);
+      setOTPResponse({ status: "success", message: res.data.message });
 
       // To Enabling OTP required at Transction
       setOTPModalShow(true);
@@ -256,19 +259,41 @@ export const BankTransfer = () => {
 
   // Enabling OTP Required at Transction Time True
   const enableOTPTransction = async () => {
-    const res = await post<apiResponse<any>>(
-      `api/changeBankTransferOtpStatus?status=true&otp=${OTP}`,
-      {}
-    );
-    if (res) {
-      toast.success(res.data.message);
+    try {
+      const res = await post<apiResponse<any>>(
+        `api/changeBankTransferOtpStatus?status=true&otp=${OTP}`,
+        {}
+      );
+      if (res) {
+        toast.success(res.data.message);
 
-      // && res.data.status.toLowerCase() === "success") ||
-      // res.data.message.toLowerCase() ===
-      //   "OTP For Bank Transfer Enabled Successfully"
+        // && res.data.status.toLowerCase() === "success") ||
+        // res.data.message.toLowerCase() ===
+        //   "OTP For Bank Transfer Enabled Successfully"
 
-      // Calling Fund Transfer API
-      fundTransferAPI();
+        // Calling Fund Transfer API
+        fundTransferAPI();
+      }
+    } catch (error: any) {
+      if (
+        error.response.data.status === "FAILURE" &&
+        error.response.data.status.message ===
+          "OTP Expired Please Request a New One"
+      ) {
+        resendOTPHandle();
+        setOTPResponse({
+          status: "failed",
+          message:
+            "OTP Expire!!! New OTP is send to your Phone. Please Enter New One...",
+        });
+        setOTPModalShow(true);
+      } else if (error.response.data.status === "FAILURE") {
+        setOTPResponse({
+          status: "failed",
+          message: error.response.data.message,
+        });
+        setOTPModalShow(true);
+      }
     }
   };
 
@@ -293,12 +318,11 @@ export const BankTransfer = () => {
       }
     } catch (error: any) {
       if (error.response) {
-        // setFundTransferResponse({
-        //   status: "failed",
-        //   message: error.response.data.details,
-        // });
-        // setSuccessModalShow(true);
-        console.log("error occured");
+        setFundTransferResponse({
+          status: "failed",
+          message: error.response.data.details,
+        });
+        setSuccessModalShow(true);
         toast.error(error.response.data.details);
       }
       // if (
@@ -374,7 +398,7 @@ export const BankTransfer = () => {
       <OTPModal
         userOTP={(otp) => setOTP(otp)}
         OTPModalShow={OTPModalShow}
-        OTPRequiredMessage={OTPRequiredMessage}
+        OTPResponse={OTPResponse}
         OTPFormHandle={(e) => OTPFormHandle(e)}
         resendOTPHandle={() => resendOTPHandle()}
       />
