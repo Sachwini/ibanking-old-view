@@ -1,30 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import { setBearerToken, setRefreshToken } from "services/AuthService";
+import {
+  setBearerToken,
+  setRefreshToken,
+} from "services/AuthService";
 import {
   client_id,
   client_secret,
   grant_type,
-  deviceUniqueIdentifier,
+  DeviceUniqueIdentifier,
 } from "services/Constants";
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
+import OtpModal from "components/modals/fundTransfer/OtpModal";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>();
+  const [otpRequired, setOtpRequired] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>("");
 
-  const [{ isLogin }, dispatch] = useStateValue();
+  const [{}, dispatch] = useStateValue();
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     if (!identity || !password) return;
     setLoading(true);
 
-    try {
-      const url =
+    const deviceUniqueIdentifier = DeviceUniqueIdentifier();
+    let url = ""
+    if (otpRequired) {
+      url =
         "http://202.63.242.139:9091/oauth/token?client_id=" +
         client_id +
         "&client_secret=" +
@@ -36,30 +44,62 @@ const Login = (props: RouteComponentProps<{}>) => {
         "&password=" +
         password +
         "&username=" +
-        identity;
-
+        identity +
+        "&otp=" +
+        otp;
+    }
+    else url =
+      "http://202.63.242.139:9091/oauth/token?client_id=" +
+      client_id +
+      "&client_secret=" +
+      client_secret +
+      "&grant_type=" +
+      grant_type +
+      "&deviceUniqueIdentifier=" +
+      deviceUniqueIdentifier +
+      "&password=" +
+      password +
+      "&username=" +
+      identity;
+    try {
       const res = await axios(url, {
         method: "POST",
       });
       if (res) {
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
+        console.log("message :", res.data);
         props.history.push("/");
         dispatch({
           type: "IS_LOGIN",
           value: true,
         });
       } else {
+        console.log("messsage:");
         props.history.push("/login");
         dispatch({
           type: "IS_LOGIN",
           value: false,
         });
       }
-    } catch {
+    } catch (error) {
       setLoading(false);
+      if (error.response) {
+        console.log("Message", error.response.data);
+        const otpRequiredMsg =
+          "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
+        const otpRequiredMsg1 =
+          "unauthorized device. We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code.";
+        if (
+          error.response.data.error_description === otpRequiredMsg ||
+          otpRequiredMsg1
+        ) {
+          setOtpRequired(true);
+          alert(error.response.data.error_description);
+        }
+      }
     }
-  }; 
+  };
 
   return (
     <Container>
@@ -70,7 +110,7 @@ const Login = (props: RouteComponentProps<{}>) => {
           <Form>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Identity VBMRDWEVFV9840069570
+                Identity VBMRDWEVFV9840069570 VBMRDWEVFV9843750574
               </Form.Label>
               <Form.Control
                 type="text"
@@ -84,7 +124,7 @@ const Login = (props: RouteComponentProps<{}>) => {
 
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
-                Password 62999
+                Password 22069 10368
               </Form.Label>
               <Form.Control
                 type="password"
@@ -94,6 +134,7 @@ const Login = (props: RouteComponentProps<{}>) => {
                 placeholder="Enter your password"
               />
             </Form.Group>
+            <Form.Group controlId="formGridAddress1"></Form.Group>
 
             <Button
               className="btn btn-warning"
@@ -107,6 +148,16 @@ const Login = (props: RouteComponentProps<{}>) => {
           </Form>
         </Card.Body>
       </Card>
+      {otpRequired ? (
+        <OtpModal
+          modalShow={otpRequired}
+          handleModalShow={(event: boolean) => setOtpRequired(event)}
+          userOTP={(otp: string) => setOtp(otp)}
+          modalFormSubmitHandle={handleLogin}
+        />
+      ) : (
+        ""
+      )}
     </Container>
   );
 };

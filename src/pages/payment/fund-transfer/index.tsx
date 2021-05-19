@@ -2,8 +2,10 @@ import { PageTitle } from "components/page-title/index";
 import { useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import FundTranfCharge from "./FundTranfCharge";
-import { IBFTForm } from "./IBFTForm";
-import { IBFTLimit } from "./IBFTLimit";
+import { FundTransfer } from "./FundTransfer";
+import { BankTransfer } from "./BankTransfer";
+import { FundTransferLimit } from "./FundTransferLimit";
+import { ToastContainer } from "react-toastify";
 import "./index.css";
 
 const Transfer = () => {
@@ -38,17 +40,10 @@ const Transfer = () => {
             </Nav.Link>
 
             <Nav.Link
-              eventKey="ibft"
-              style={key === "ibft" ? ActiveStyle : inActiveStyle}
+              eventKey="bank"
+              style={key === "bank" ? ActiveStyle : inActiveStyle}
             >
-              <span className="tab__text">IBFT TRANSFER</span>
-            </Nav.Link>
-
-            <Nav.Link
-              eventKey="ips"
-              style={key === "ips" ? ActiveStyle : inActiveStyle}
-            >
-              <span className="tab__text">connect ips transfer</span>
+              <span className="tab__text">Bank Transfer</span>
             </Nav.Link>
           </div>
 
@@ -56,35 +51,26 @@ const Transfer = () => {
             <Tab.Pane eventKey="fund">
               <Row>
                 <Col sm={12} md={6}>
-                  <IBFTForm />
+                  <FundTransfer />
                 </Col>
                 <Col sm={12} md={6}>
-                  <IBFTLimit />
+                  <FundTransferLimit />
                   <FundTranfCharge />
                 </Col>
               </Row>
             </Tab.Pane>
 
-            <Tab.Pane eventKey="ibft">
+            <Tab.Pane eventKey="bank">
               <Row>
                 <Col sm={12} md={6}>
-                  <p>IBFT TRANSFER</p>
-                  <IBFTForm />
-                </Col>
-              </Row>
-            </Tab.Pane>
-
-            <Tab.Pane eventKey="ips">
-              <Row>
-                <Col sm={12} md={6}>
-                  <p>connect ips transfer</p>
-                  <IBFTForm />
+                  <BankTransfer />
                 </Col>
               </Row>
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>
       </Container>
+      <ToastContainer />
     </div>
   );
 };

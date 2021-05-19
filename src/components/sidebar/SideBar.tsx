@@ -55,7 +55,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
           <Accordion defaultActiveKey="account">
             <MenuHandle
               goto={goto}
-              menuHeader="account"
+              menuHeader="account" 
               menuHeaderIcon={<HouseDoor size={iconsize} />}
             />
 

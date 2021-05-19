@@ -1,9 +1,11 @@
 import axios from "axios";
-import { getBearerToken, goToLoginPage } from "./AuthService";
+import { getBearerToken } from "./AuthService";
+import { client_id } from "./Constants";
+import { toast } from "react-toastify";
+import { baseUrl } from "./BaseUrl";
 
-const baseEndPoint = "http://202.63.242.139:9091/";
-// "http://172.16.55.3:9091";
-// "http://172.16.55.29:8080";
+const baseEndPoint = baseUrl;
+
 const instance = axios.create({
   baseURL: baseEndPoint,
 });
@@ -13,6 +15,7 @@ instance.interceptors.request.use(
     const token = getBearerToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.headers.client = client_id;
     }
 
     return config;
@@ -29,7 +32,7 @@ instance.interceptors.response.use(
   function (error: any) {
     if (error.response && error.response.status === 401) {
       // goToLoginPage();
-      alert("unAuthorized client");
+      toast.error("unAuthorized client");
     } else {
       return Promise.reject(error);
     }
@@ -37,8 +40,9 @@ instance.interceptors.response.use(
 );
 
 export function handleError(error: any, onError?: false | (() => void)) {
+  // console.log(error);
   const statusCode =
-    error.response !== undefined ? error.response.status : 500 || 500; 
+    error.response !== undefined ? error.response.status : 500 || 500;
 
   var errorTitle = "Task failed, please retry.";
   if (
@@ -60,15 +64,18 @@ export function handleError(error: any, onError?: false | (() => void)) {
     errorTitle = "Unauthorized, please login again.";
   }
 
-  alert(errorTitle);
+  // alert(errorTitle);
+  toast(errorTitle);
   if (onError) onError();
 }
 
 export async function get<TResponse>(url: string) {
-  return instance.get<TResponse>(url).catch((error: any) => {
-    handleError(error);
-    throw error;
-  });
+  return instance.get<TResponse>(url);
+  // .catch((error: any) => {
+  // handleError(error);
+  // throw error;
+  // }
+  // );
 }
 
 export async function post<TResponse>(
@@ -76,11 +83,13 @@ export async function post<TResponse>(
   body: {},
   onError?: false | (() => void)
 ) {
-  try {
-    const res = await instance.post<TResponse>(url, body);
-    return res && res;
-  } catch (error) {
-    handleError(error, onError);
-    console.log(error);
-  }
+  const res = await instance.post<TResponse>(url, body);
+  return res && res;
+  // try {
+  //   const res = await instance.post<TResponse>(url, body);
+  //   return res && res;
+  // } catch (error) {
+  //   handleError(error, onError);
+  //   console.log(error.response.data);
+  // }
 }

@@ -5,9 +5,10 @@ export const Loader = () => {
     <div
       style={{
         width: "100%",
-        height: "100%",
-        textAlign: "center",
-        verticalAlign: "middle",
+        minHeight: "50vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Spinner as="span" animation="border" variant="warning" />

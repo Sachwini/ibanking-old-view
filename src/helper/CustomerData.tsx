@@ -1,4 +1,3 @@
-import React from "react";
 import { useStateValue } from "state-provider/StateProvider";
 
 export const GetAccountNumber = () => {

@@ -6,7 +6,7 @@ import {
   LayoutBodyWrapper,
   LayoutContainer,
   LayoutSidebar,
-  LayoutContentField, 
+  LayoutContentField,
 } from "styling/layout/LayoutStyling";
 import { useEffect, useState } from "react";
 import { apiResponse } from "models/apiResponse";
@@ -21,15 +21,19 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
     let isSubscribed = true;
 
     const loadData = async () => {
-      const res = await get<apiResponse<userDetail>>(
-        "api/customerdetails?additionalDetails=true"
-      );
-      if (isSubscribed) {
-        setUserInfo(res.data.details);
-        dispatch({
-          type: "USER_DETAILS",
-          customerDetail: res.data.details,
-        });
+      try {
+        const res = await get<apiResponse<userDetail>>(
+          "api/customerdetails?additionalDetails=true"
+        );
+        if (isSubscribed) {
+          setUserInfo(res.data.details);
+          dispatch({
+            type: "USER_DETAILS",
+            customerDetail: res.data.details,
+          });
+        }
+      } catch {
+        window.location.href = `/login`;
       }
     };
 
@@ -38,7 +42,6 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
       isSubscribed = false;
     };
   }, []);
-
 
   let sidbarWidth;
   if (isMenuButtonClick) {

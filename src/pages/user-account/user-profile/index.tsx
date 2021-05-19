@@ -1,34 +1,11 @@
 import { PageTitle } from "components/page-title";
-import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
-import { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { get } from "services/AjaxService";
 import { useStateValue } from "state-provider/StateProvider";
-import { userDetail } from "./model";
 
 const Profile = () => {
-  const [{ customerDetails }, dispatch] = useStateValue();
-  // const [userInfo, setUserInfo] = useState<userDetail>();
-  // const [customerdetails, setCustomerdetails] = useState<string>("customerdetails");
-
-  // const init = async () => {
-  //   const res = await get<apiResponse<userDetail>>(
-  //     `api/${customerdetails}?additionalDetails=true`
-  //   );
-  //   if (res) {
-  //     setUserInfo(res.data.details);
-  //     dispatch({
-  //       type: "USER_DETAILS",
-  //       customerDetail: res.data.details, 
-  //     });
-  //   }
-  // };
-  // useEffect(() => {
-  //   init();
-  // }, [customerdetails]);
-
-  console.log("from profile", customerDetails)
+  const [{ customerDetails }] = useStateValue();
+  console.log("from profile", customerDetails);
 
   return (
     <Container fluid>

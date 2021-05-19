@@ -1,5 +1,5 @@
 import { PageTitle } from "components/page-title";
-import { IBFTLimit } from "pages/payment/fund-transfer/IBFTLimit";
+import { FundTransferLimit } from "pages/payment/fund-transfer/FundTransferLimit";
 import { Col, Container, Row } from "react-bootstrap";
 import BillPaymentTransfer from "./BillPaymentTransfer";
 
@@ -16,7 +16,7 @@ const Payment = () => {
           <BillPaymentTransfer />
         </Col>
         <Col sm={12} md={6}>
-          <IBFTLimit />
+          <FundTransferLimit />
         </Col>
       </Row>
     </Container>

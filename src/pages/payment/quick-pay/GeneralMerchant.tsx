@@ -7,8 +7,8 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { baseUrl } from "services/Constants";
-import { QpayService, userServices } from "./model";
+import { baseUrl } from "services/BaseUrl";
+import { QpayService } from "./model";
 import Test2 from "./Test2";
 
 interface paramProps {
@@ -19,8 +19,6 @@ const GeneralMerchant = (props: { data?: QpayService[] }) => {
   const data = props.data;
   let { topicId } = useParams<paramProps>();
   let { path, url } = useRouteMatch();
-
-  let myservices: userServices[] = [];
 
   const page = () => (
     <>
@@ -38,7 +36,7 @@ const GeneralMerchant = (props: { data?: QpayService[] }) => {
       >
         {data?.map((item) => {
           const sname = item.name.toLowerCase().split(" ").join("-");
-          if (sname == topicId) {
+          if (sname === topicId) {
             return item.services.map((sItems) => {
               return (
                 <Link

@@ -4,16 +4,19 @@ import { useStateValue } from "state-provider/StateProvider";
 import AccountView from "./AccountView";
 
 function Account() {
-  const [{ customerDetails }, dispatch] = useStateValue();
+  const [{ customerDetails }] = useStateValue();
   return (
     <Container>
       <PageTitle title="Account" subTitle="manage and view your account" />
       <AccountName
         name={customerDetails?.fullName}
-        accountCode={!customerDetails?.accountDetail ? "":customerDetails?.accountDetail[0]["clientCode"]} 
+        accountCode={
+          !customerDetails?.accountDetail
+            ? ""
+            : customerDetails?.accountDetail[0]["clientCode"]
+        }
       />
 
-      <AccountView />
       <AccountView />
     </Container>
   );
