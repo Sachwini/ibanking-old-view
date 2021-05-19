@@ -38,13 +38,17 @@ const SuccessModal = (props: Props) => {
         ) : (
           <div
             style={{
-              height: "70px",
-              width: "70px",
-              background: "#de795f",
-              borderRadius: "50%",
+              width: "100%",
+              height: "100px",
+              background: "#db211b",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color:"white", 
             }}
           >
-            <MdClose color="white" size={30} fontWeight="800" />
+              {/* <MdClose color="white" size={30} fontWeight="800" /> */}
+              Opps !!!
           </div>
         )}
       </Modal.Header>
