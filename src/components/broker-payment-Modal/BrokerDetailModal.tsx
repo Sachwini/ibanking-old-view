@@ -7,6 +7,7 @@ export interface Props {
   fromAccount: string;
   toAccount: string;
   amount: string;
+  charge: number;
   validDetails: boolean;
   confirmModalCancleButton: (show: boolean) => void;
 }
@@ -19,6 +20,7 @@ function BrokerDetailModal(props: Props) {
     fromAccount,
     toAccount,
     amount,
+    charge,
     confirmModalCancleButton,
     validDetails,
   } = props;
@@ -62,6 +64,12 @@ function BrokerDetailModal(props: Props) {
                 Amount<small>(Rs.)</small>:
               </span>
               <span className="text-muted">{amount}</span>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <span>
+                Charge<small>(Rs.)</small>:
+              </span>
+              <span className="text-muted">{charge}</span>
             </div>
           </ListGroup.Item>
           {/* <small

@@ -32,6 +32,7 @@ const BrokerPayment = () => {
   const [remark, setRemark] = useState<string>("");
   const [broker, setBroker] = useState<selectItem[]>([]);
   const [brokerCode, setBrokerCode] = useState<string>("");
+  const [brokerName, setBrokerName] = useState<string>("");
   const [charge, setCharge] = useState<any>(0);
   const [mpin, setMpin] = useState<string>("");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -80,17 +81,18 @@ const BrokerPayment = () => {
       }
     };
     init();
-    getServiceCharges();
+    // getServiceCharges();
     console.log("useEffect called");
     return () => {
       isSubscribed = false;
     };
-  }, [brokerCode, amount, charge]);
+  }, []);
 
   const handleBrokerCode = (e: any) => {
     try {
       if (e[0].value !== undefined) {
         setBrokerCode(e[0].value);
+        setBrokerName(e[0].label);
       } else {
         setBrokerCode("");
         setBroker([]);
@@ -99,11 +101,10 @@ const BrokerPayment = () => {
   };
 
   const handleReset = (e: any) => {
-    // e.preventDefault();
+    e.preventDefault();
     setAmount("");
     setClientName("");
     setClientId("");
-    setBroker([]);
     setBrokerCode("");
     setCharge(0);
     setMobileNumber("");
@@ -218,14 +219,20 @@ const BrokerPayment = () => {
               </strong>
             </Card.Title>
             <hr />
-            <Form>
+            <Form
+              onSubmit={(e) => {
+                openDetailModel(e);
+                hasInfo();
+                getServiceCharges();
+              }}
+            >
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label className="font-weight-bold">
                   From Account
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter your from account"
+                  placeholder="Enter your account number"
                   name="fromAccount"
                   disabled
                   value={fromAccount}
@@ -255,9 +262,10 @@ const BrokerPayment = () => {
                   placeholder="Enter your Amount"
                   name="amount"
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 />
-                <Form.Text className="text-warning">Charge: {charge}</Form.Text>
+                {/* <Form.Text className="text-warning">Charge: {charge}</Form.Text> */}
               </Form.Group>
               <Form.Group controlId="formGridAddress1">
                 <Form.Label className="font-weight-bold">
@@ -268,6 +276,7 @@ const BrokerPayment = () => {
                   placeholder="Enter your clientName"
                   name="clientName"
                   value={clientName}
+                  required
                   onChange={(e) => setClientName(e.target.value)}
                 />
               </Form.Group>
@@ -278,6 +287,7 @@ const BrokerPayment = () => {
                   placeholder="Enter your clientId"
                   name="clientId"
                   value={clientId}
+                  required
                   onChange={(e) => setClientId(e.target.value)}
                 />
               </Form.Group>
@@ -290,6 +300,7 @@ const BrokerPayment = () => {
                   placeholder="Enter your mobileNumber"
                   name="mobileNumber"
                   value={mobileNumber}
+                  required
                   onChange={(e) => setMobileNumber(e.target.value)}
                 />
               </Form.Group>
@@ -300,6 +311,7 @@ const BrokerPayment = () => {
                   placeholder="Enter your remark"
                   name="remark"
                   value={remark}
+                  required
                   onChange={(e) => setRemark(e.target.value)}
                 />
               </Form.Group>
@@ -307,10 +319,11 @@ const BrokerPayment = () => {
                 className="btn btn-warning"
                 variant="primary"
                 type="submit"
-                onClick={(e) => {
-                  openDetailModel(e);
-                  hasInfo();
-                }}
+                // onClick={(e) => {
+                //   openDetailModel(e);
+                //   hasInfo();
+                //   getServiceCharges();
+                // }}
               >
                 Submit
               </Button>
@@ -334,8 +347,9 @@ const BrokerPayment = () => {
           handleModalShow={(event: boolean) => setDetailModalShow(event)}
           modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
           fromAccount={fromAccount}
-          toAccount={broker[0].label}
+          toAccount={broker ? brokerName : ""}
           amount={amount}
+          charge={charge}
           validDetails={fullDetails}
           confirmModalCancleButton={(event: boolean) =>
             setDetailModalShow(false)

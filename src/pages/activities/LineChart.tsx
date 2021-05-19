@@ -16,14 +16,14 @@ function LineChart() {
       if (accountNumber !== "") {
         const graphData = await getGraph(accountNumber);
         if (graphData) {
-          graphData.forEach((x: any) => loadDays.push("day "+x.day));
+          graphData.forEach((x: any) => loadDays.push(x.day));
           graphData.forEach((x: any) => loadBalance.push(x.balance));
           setDays(loadDays);
           setBalance(loadBalance);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log(error); 
     }
   };
 
@@ -36,10 +36,10 @@ function LineChart() {
   }, []);
 
   const data = {
-    labels: days, 
+    labels: days,
     datasets: [
       {
-        label: "balance/day",
+        label: "balance/last 30 day",
         data: balance,
         fill: false,
         borderColor: "#22f02c",

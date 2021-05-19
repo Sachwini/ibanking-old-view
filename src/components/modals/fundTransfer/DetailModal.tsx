@@ -6,6 +6,7 @@ export interface Props {
   modalFormSubmitHandle: (show: boolean) => void;
   fromAccount: string;
   toAccount: string;
+  destinationAccountHolderName:string
   branch: string;
   amount: string;
   validAccount: boolean;
@@ -19,6 +20,7 @@ function DetailModal(props: Props) {
     modalFormSubmitHandle,
     fromAccount,
     toAccount,
+    destinationAccountHolderName,
     branch,
     amount,
     validAccount,
@@ -58,6 +60,10 @@ function DetailModal(props: Props) {
             <div className="d-flex justify-content-between mb-2">
               <span>Account Number: </span>
               <span className="text-muted">{toAccount}</span>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <span>Destination AccountHolder Name: </span>
+              <span className="text-muted">{destinationAccountHolderName}</span>
             </div>
             {branch ? (
               <div className="d-flex justify-content-between mb-2">
