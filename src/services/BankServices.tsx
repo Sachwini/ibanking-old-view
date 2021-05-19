@@ -1,4 +1,6 @@
+import { GetAccountNumber } from "helper/CustomerData";
 import { get } from "./AjaxService";
+// const accountNumber = GetAccountNumber();
 
 export interface branchModel {
   id: any
@@ -48,5 +50,12 @@ export const getBankBranches = async () => {
 export const getBankList = async () => {
   const res = await get<any>("/api/ips/bank");
   return res && res.data.details
-} 
+}
+
+export const getGraph = async (accountNumber:string) => {
+  const res = await get<any>(
+    "api/graph/balance?accountNumber=" + accountNumber
+  );
+  return res && res.data.detail.balanceList;
+};
 

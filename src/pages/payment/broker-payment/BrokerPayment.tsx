@@ -7,10 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { getBrokerList } from "services/BrokerServices";
 import { get, post } from "services/AjaxService";
 import { brokerPayment } from "../fund-transfer/model";
-import DetailModal from "components/react-modal/DetailModal";
-import MpinModal from "components/react-modal/MpinModal";
-import OtpModal from "components/react-modal/OtpModal";
+import MpinModal from "components/fund-transfer-modals/fundTransfer/MpinModal";
+import OtpModal from "components/fund-transfer-modals/fundTransfer/OtpModal";
 
+import BrokerDetailModal from "components/broker-payment-Modal/BrokerDetailModal";
+import SuccessModal from "components/fund-transfer-modals/fundTransfer/SuccessModal";
 interface selectItem {
   label: string;
   value: string;
@@ -39,6 +40,11 @@ const BrokerPayment = () => {
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [fullDetails, setFullDetails] = useState<boolean>(false);
    const [otp, setOtp] = useState<string>("");
+   const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+   const [responseMessage, setResponseMessage] = useState({
+     status: "",
+     message: "",
+   });
 
   const getServiceCharges = async () => {
     if (amount !== "" && brokerCode !== "") {
@@ -144,12 +150,19 @@ const BrokerPayment = () => {
     try {
       const res = await post<any>(url, model);
       if (res) {
+        setIsSucessMessage(true);
+        setResponseMessage({ status: "success", message: res.data.message });
         toast.success(res.data.details);
         handleReset(e);
         console.log(res.data);
       }
     } catch (error) {
       if (error.response) {
+        setIsSucessMessage(true);
+        setResponseMessage({
+          status: "failure",
+          message: error.response.data.message,
+        });
         toast.error(error.response.data.message);
       }
     }
@@ -178,17 +191,17 @@ const BrokerPayment = () => {
     }
   };
 
-  const isInfo = () => {
+  const hasInfo = () => {
     if(!fromAccount ||
       !amount ||
       !clientName ||
       !clientId ||
       !mobileNumber ||
       !brokerCode) {
-      setFullDetails(false)
+     setFullDetails(false)
     }
     else {
-      setFullDetails(true)
+     setFullDetails(true)
     }
   }
 
@@ -290,21 +303,14 @@ const BrokerPayment = () => {
                   onChange={(e) => setRemark(e.target.value)}
                 />
               </Form.Group>
-              {/* <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">Mpin</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your Mpin"
-                  name="mpin"
-                  value={mpin}
-                  onChange={(e) => setMpin(e.target.value)}
-                />
-              </Form.Group> */}
               <Button
                 className="btn btn-warning"
                 variant="primary"
                 type="submit"
-                onClick={openDetailModel}
+                onClick={(e) => {
+                  openDetailModel(e);
+                  hasInfo();
+                }}
               >
                 Submit
               </Button>
@@ -323,15 +329,17 @@ const BrokerPayment = () => {
         </Card>
       </Container>
       {detailModalShow ? (
-        <DetailModal
+        <BrokerDetailModal
           modalShow={detailModalShow}
           handleModalShow={(event: boolean) => setDetailModalShow(event)}
           modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
           fromAccount={fromAccount}
           toAccount={broker[0].label}
-          branch=""
           amount={amount}
-          validAccount={fullDetails}
+          validDetails={fullDetails}
+          confirmModalCancleButton={(event: boolean) =>
+            setDetailModalShow(false)
+          }
         />
       ) : (
         ""
@@ -352,6 +360,15 @@ const BrokerPayment = () => {
           handleModalShow={(event: boolean) => setOtpRequired(event)}
           userOTP={(otp: string) => setOtp(otp)}
           modalFormSubmitHandle={changeOtpStatus}
+        />
+      ) : (
+        ""
+      )}
+      {isSuccessMessage ? (
+        <SuccessModal
+          successModalShow={isSuccessMessage}
+          handleModalShow={(e) => setIsSucessMessage(e)}
+          responseMessage={responseMessage}
         />
       ) : (
         ""

@@ -7,10 +7,11 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MpinModal from "../../../components/react-modal/MpinModal";
-import DetailModal from "../../../components/react-modal/DetailModal";
-import OtpModal from "../../../components/react-modal/OtpModal";
+import MpinModal from "../../../components/fund-transfer-modals/fundTransfer/MpinModal";
+import DetailModal from "../../../components/fund-transfer-modals/fundTransfer/DetailModal";
+import OtpModal from "../../../components/fund-transfer-modals/fundTransfer/OtpModal";
 import { apiResponse } from "models/apiResponse";
+import SuccessModal from "components/fund-transfer-modals/fundTransfer/SuccessModal";
 
 interface selectItem {
   label: string;
@@ -32,6 +33,8 @@ export const FundTransfer = () => {
   const [validAccount, setValidAccount] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
+  const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+  const [responseMessage, setResponseMessage] = useState({status:"",message:""});
 
   //For account Validation
   const accountValidation = async () => {
@@ -95,7 +98,7 @@ export const FundTransfer = () => {
     } catch {}
   };
 
-  const handleReset = (e: any) => {
+  const handleReset = (e: any) => { 
     e.preventDefault();
     setToAccount("");
     setBankBranchId("");
@@ -156,12 +159,20 @@ export const FundTransfer = () => {
         () => setLoading(false)
       );
       if (res) {
+        setIsSucessMessage(true)
+        setResponseMessage({ status: "success", message: res.data.message });
         toast.success(res.data.message);
         console.log(res.data);
       }
       handleReset(e);
-    } catch (error){
-      toast.error(error.response); 
+    } catch (error) {
+      setIsSucessMessage(true);
+      setResponseMessage({
+        status: "failure",
+        message: error.response.data.message,
+      });
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
   }
 
@@ -293,6 +304,9 @@ export const FundTransfer = () => {
           branch={branch[0].label}
           amount={amount}
           validAccount={validAccount}
+          confirmModalCancleButton={(event: boolean) =>
+            setDetailModalShow(false)
+          }
         />
       ) : (
         ""
@@ -313,6 +327,15 @@ export const FundTransfer = () => {
           handleModalShow={(event: boolean) => setOtpRequired(event)}
           userOTP={(otp: string) => setOtp(otp)}
           modalFormSubmitHandle={changeOtpStatus}
+        />
+      ) : (
+        ""
+      )}
+      {isSuccessMessage ? (
+        <SuccessModal
+          successModalShow={isSuccessMessage}
+          handleModalShow={(e) => setIsSucessMessage(e)}
+          responseMessage={responseMessage}
         />
       ) : (
         ""
