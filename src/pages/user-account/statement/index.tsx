@@ -42,7 +42,7 @@ const Statement = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [formatedStartDate, formatedEndDate, AccNumber]);
+  }, [formatedStartDate, formatedEndDate, AccNumber]); 
 
   // // console.log("end date", formatedEndDate);
   // console.log("statementData : ", statementData);

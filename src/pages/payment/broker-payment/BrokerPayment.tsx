@@ -209,10 +209,11 @@ const BrokerPayment = () => {
   return (
     <>
       <Container>
-        <Card style={{ maxWidth: "50%" }}>
+        <Card style={{ maxWidth: "90%" }}>
           <Card.Body>
             <Card.Title
-              style={{ display: "flex", justifyContent: "space-between" }}
+              className="card-header"
+              style={{ color: "white", background: "#49c70a" }}
             >
               <strong>
                 Broker Payment <br />
@@ -226,86 +227,106 @@ const BrokerPayment = () => {
                 getServiceCharges();
               }}
             >
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label className="font-weight-bold">
-                  From Account
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your account number"
-                  name="fromAccount"
-                  disabled
-                  value={fromAccount}
-                  onChange={(e) => setFromAccount(e.target.value)}
-                />
-              </Form.Group>
+              <div className="form-group col-md-6">
+                <Form.Group controlId="exampleForm.ControlSelect1">
+                  <Form.Label className="font-weight-normal">
+                    From Account
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your account number"
+                    name="fromAccount"
+                    disabled
+                    value={fromAccount}
+                    onChange={(e) => setFromAccount(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="formGridAddress1">
+                  <Form.Label className="font-weight-normal">
+                    Select Broker
+                  </Form.Label>
+                  <Typeahead
+                    options={broker}
+                    id="my-typeahead-id"
+                    placeholder="Choose your broker..."
+                    onChange={handleBrokerCode}
+                  />
+                  <Form.Text className="text-info">
+                    {brokerCode
+                      ? `Broker Id: ${brokerCode}`
+                      : "Selected None (Please Select One ...)"}
+                  </Form.Text>
+                </Form.Group>
+              </div>
+
+              <div className="form-row">
+                <div className="col">
+                  <Form.Group controlId="formGridAddress1">
+                    <Form.Label className="font-weight-normal">
+                      Client Id
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your clientId"
+                      name="clientId"
+                      value={clientId}
+                      required
+                      onChange={(e) => setClientId(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col">
+                  <Form.Group controlId="formGridAddress1">
+                    <Form.Label className="font-weight-normal">
+                      Client Name
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your clientName"
+                      name="clientName"
+                      value={clientName}
+                      required
+                      onChange={(e) => setClientName(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="col">
+                  <Form.Group controlId="formGridAddress1">
+                    <Form.Label className="font-weight-normal">
+                      Mobile Number
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your mobileNumber"
+                      name="mobileNumber"
+                      value={mobileNumber}
+                      required
+                      onChange={(e) => setMobileNumber(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col">
+                  <Form.Group controlId="formGridAddress1">
+                    <Form.Label className="font-weight-normal">
+                      Amount
+                    </Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Enter your Amount"
+                      name="amount"
+                      value={amount}
+                      required
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                    {/* <Form.Text className="text-warning">Charge: {charge}</Form.Text> */}
+                  </Form.Group>
+                </div>
+              </div>
               <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">
-                  Select Broker
-                </Form.Label>
-                <Typeahead
-                  options={broker}
-                  id="my-typeahead-id"
-                  placeholder="Choose your broker..."
-                  onChange={handleBrokerCode}
-                />
-                <Form.Text className="text-warning">
-                  {brokerCode
-                    ? `Broker Id: ${brokerCode}`
-                    : "Selected None (Please Select One ...)"}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">Amount</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter your Amount"
-                  name="amount"
-                  value={amount}
-                  required
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-                {/* <Form.Text className="text-warning">Charge: {charge}</Form.Text> */}
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">
-                  Client Name
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your clientName"
-                  name="clientName"
-                  value={clientName}
-                  required
-                  onChange={(e) => setClientName(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">Client Id</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your clientId"
-                  name="clientId"
-                  value={clientId}
-                  required
-                  onChange={(e) => setClientId(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">
-                  Mobile Number
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your mobileNumber"
-                  name="mobileNumber"
-                  value={mobileNumber}
-                  required
-                  onChange={(e) => setMobileNumber(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">Remark</Form.Label>
+                <Form.Label className="font-weight-normal">Remark</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter your remark"
@@ -316,7 +337,7 @@ const BrokerPayment = () => {
                 />
               </Form.Group>
               <Button
-                className="btn btn-warning"
+                className="btn btn-primary"
                 variant="primary"
                 type="submit"
                 // onClick={(e) => {
@@ -325,10 +346,10 @@ const BrokerPayment = () => {
                 //   getServiceCharges();
                 // }}
               >
-                Submit
+                Transfer
               </Button>
               <Button
-                className="btn btn-light"
+                className="btn btn-secondary"
                 style={{ marginLeft: "20px" }}
                 variant="secondary"
                 type="submit"
@@ -347,9 +368,11 @@ const BrokerPayment = () => {
           handleModalShow={(event: boolean) => setDetailModalShow(event)}
           modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
           fromAccount={fromAccount}
-          toAccount={broker ? brokerName : ""}
+          toAccount={broker ? brokerName : ""} 
           amount={amount}
           charge={charge}
+          clientName={clientName}
+          mobileNumber={mobileNumber}
           validDetails={fullDetails}
           confirmModalCancleButton={(event: boolean) =>
             setDetailModalShow(false)

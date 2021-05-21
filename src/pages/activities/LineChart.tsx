@@ -34,15 +34,15 @@ function LineChart() {
       isSubscribed = false;
     };
   }, []);
-
+  
   const data = {
     labels: days,
     datasets: [
       {
-        label: "balance/last 30 day",
+        label: "Balance / Last 30 day",
         data: balance,
         fill: false,
-        borderColor: "#22f02c",
+        borderColor: "#22c42a",
       },
       // {
       //   label: "Sending/Earning",

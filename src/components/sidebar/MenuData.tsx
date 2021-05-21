@@ -1,7 +1,7 @@
 const menuData = [
   {
     title: "account",
-    subMenuTitle: ["Account Details", "User Profile", "Statement"],
+    subMenuTitle: ["Account Details", "Statement"],
   },
   {
     title: "Fund Management",

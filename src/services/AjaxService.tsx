@@ -29,7 +29,7 @@ instance.interceptors.response.use(
   function (response: any) {
     return response;
   },
-  function (error: any) {
+  function (error: any) { 
     if (error.response && error.response.status === 401) {
       // goToLoginPage();
       toast.error("unAuthorized client");

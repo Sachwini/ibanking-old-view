@@ -26,7 +26,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
     <MenuList key={menuHeader + 1}>
       {menuData.map((menu) => {
         if (menu.title === menuHeader) {
-          return menu.subMenuTitle.map((listItems,index) => {
+          return (menu.subMenuTitle.map((listItems,index) => {
             return (
               <MenuListItem
                 onClick={() => {
@@ -49,7 +49,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
                 <span className="listText"> {listItems}</span>
               </MenuListItem>
             );
-          });
+          }));
         }
       })}
     </MenuList>

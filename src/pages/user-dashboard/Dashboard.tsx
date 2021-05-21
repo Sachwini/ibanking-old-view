@@ -1,10 +1,10 @@
 import { PageTitle } from "components/page-title/index";
 import { Col, Container, Row } from "react-bootstrap";
-import QuickPay from "pages/activities/QuickPay";
-import UpcomingPayment from "pages/activities/UpComingPayment";
-import FixedDeposit from "pages/activities/FixedDeposit";
+// import QuickPay from "pages/activities/QuickPay";
+// import UpcomingPayment from "pages/activities/UpComingPayment";
+// import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
-import Activities from "pages/activities/Activities";
+import Activities from "pages/activities/Activities"; 
 import LineChart from "pages/activities/LineChart";
 import ProfileCard from "pages/user-account/user-profile/ProfileCard";
 import {
@@ -28,10 +28,10 @@ const Dashboard = () => {
               </p>
               <ProfileCard />
             </Col>
-            <Col md={12} lg={6} className="p-0 my-sm-4 my-md-0 ">
+            {/* <Col md={12} lg={6} className="p-0 my-sm-4 my-md-0 ">
               <strong className="mb-3 pl-3">Quick Pay</strong>
               <QuickPay />
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col sm={12} className="mt-3">
@@ -41,11 +41,11 @@ const Dashboard = () => {
         </Col>
 
         <Col md={12} lg={4} className="w-100">
-          <PageTitle title="Request" />
+          {/* <PageTitle title="Request" />
 
-          <FixedDeposit />
+          <FixedDeposit /> */}
           <Activities />
-          <UpcomingPayment />
+          {/* <UpcomingPayment /> */}
         </Col>
       </Row>
     </Container>

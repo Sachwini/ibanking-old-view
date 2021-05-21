@@ -10,10 +10,10 @@ export interface StatementDataType {
   accountStatementDtos: Sdetails[];
 }
 
-interface Sdetails {
+export interface Sdetails {
   transactionDate: string;
   remarks: string;
   debit: null | number;
-  credit: number;
+  credit: number | null;
   balance: null;
 }

@@ -6,6 +6,8 @@ export interface Props {
   modalFormSubmitHandle: (show: boolean) => void;
   fromAccount: string;
   toAccount: string;
+  clientName: string;
+  mobileNumber: string;
   amount: string;
   charge: number;
   validDetails: boolean;
@@ -19,6 +21,8 @@ function BrokerDetailModal(props: Props) {
     modalFormSubmitHandle,
     fromAccount,
     toAccount,
+    clientName,
+    mobileNumber,
     amount,
     charge,
     confirmModalCancleButton,
@@ -53,11 +57,19 @@ function BrokerDetailModal(props: Props) {
             </div>
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong className="d-block mb-2">Beneficiary Details</strong>
+            <strong className="d-block mb-2">Payments Details</strong>
 
             <div className="d-flex justify-content-between mb-2">
               <span>Broker: </span>
               <span className="text-muted">{toAccount}</span>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <span>Client Name: </span>
+              <span className="text-muted">{clientName}</span>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <span>Mobile Number: </span>
+              <span className="text-muted">{mobileNumber}</span>
             </div>
             <div className="d-flex justify-content-between mb-2">
               <span>

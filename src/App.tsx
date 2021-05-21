@@ -72,7 +72,7 @@ function App() {
             <Route exact path="/" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
-            <Route path="/account/user-profile" component={UserProfile} />
+            <Route path="/user-profile" component={UserProfile} />
             <Route path="/account/account-details" component={Account} />
             <Route path="/account/statement" component={Statement} />
 
