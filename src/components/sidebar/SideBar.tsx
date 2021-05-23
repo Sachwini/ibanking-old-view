@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HouseDoor, Gear } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
 import { useStateValue } from "state-provider/StateProvider";

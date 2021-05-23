@@ -9,7 +9,7 @@ const AccountView = () => {
   const [{ customerDetails }] = useStateValue();
   return (
     <>
-      {!customerDetails?.accountDetail ? (
+      {!customerDetails?.accountDetail ? ( 
         <span>
           <Loader />
         </span>

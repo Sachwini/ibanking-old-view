@@ -8,13 +8,13 @@ import {
   Badge,
   OverlayTrigger,
 } from "react-bootstrap";
-import { IoFileTrayOutline, IoWalletOutline } from "react-icons/io5";
+import { IoWalletOutline } from "react-icons/io5";
 import { BsBell, BsEye, BsEyeSlash } from "react-icons/bs";
 import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
 
 const Header = () => {
-  const [eye, setEye] = useState<boolean>(false);
+  const [eye, setEye] = useState<boolean>(false); 
 
   const handleBalanceShow = () => {
     setEye(!eye);

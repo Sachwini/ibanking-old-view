@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Container, Form, InputGroup } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import {
   setBearerToken,
@@ -14,6 +14,7 @@ import {
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
 import OtpModal from "components/modals/fundTransfer/OtpModal";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -21,6 +22,7 @@ const Login = (props: RouteComponentProps<{}>) => {
   const [loading, setLoading] = useState<boolean>();
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
+  const [mPinInputShow, setMpinInputShow] = useState<boolean>(true);
 
   const [{}, dispatch] = useStateValue();
 
@@ -102,8 +104,10 @@ const Login = (props: RouteComponentProps<{}>) => {
   };
 
   return (
-    <Container>
-      <Card>
+    <Container
+      style={{ display: "flex", justifyContent: "center", marginTop: "10%" }}
+    >
+      <Card style={{ width: "30rem" }}>
         <Card.Body>
           <Card.Title>Login</Card.Title>
           <hr />
@@ -126,13 +130,28 @@ const Login = (props: RouteComponentProps<{}>) => {
               <Form.Label className="font-weight-bold">
                 Password 22069 10368
               </Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              />
+              <InputGroup>
+                <Form.Control
+                  type={`${mPinInputShow ? "password" : "text"}`}
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                />
+                <span
+                  style={{
+                    marginLeft: "-1.3em",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 50,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setMpinInputShow(!mPinInputShow)}
+                >
+                  {mPinInputShow ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </span>
+              </InputGroup>
             </Form.Group>
             <Form.Group controlId="formGridAddress1"></Form.Group>
 

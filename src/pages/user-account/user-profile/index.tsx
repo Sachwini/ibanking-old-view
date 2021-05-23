@@ -9,7 +9,7 @@ const Profile = () => {
 
   return (
     <Container fluid>
-      <PageTitle title={`welcome ${customerDetails?.fullName}`} />
+      <PageTitle title={`welcome ${customerDetails?.fullName}`} /> 
       <Row>
         <Col sm={12} md={6} className="mb-sm-0 mb-md-0">
           <Card className="mb-2">

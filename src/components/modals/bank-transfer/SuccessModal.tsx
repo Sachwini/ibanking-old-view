@@ -1,6 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
-import { MdClose } from "react-icons/md";
 
 export interface Props {
   fundTransferResponse: {

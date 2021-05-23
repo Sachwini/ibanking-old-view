@@ -1,6 +1,6 @@
-import { GetAccountNumber } from "helper/CustomerData";
+import { apiResponse } from "models/apiResponse";
+import { StatementDataType } from "pages/user-account/statement/model";
 import { get } from "./AjaxService";
-// const accountNumber = GetAccountNumber();
 
 export interface branchModel {
   id: any
@@ -58,4 +58,11 @@ export const getGraph = async (accountNumber:string) => {
   );
   return res && res.data.detail.balanceList;
 };
+
+export const getStatement = async (accountNumber: string, formatedStartDate: string, formatedEndDate: string) => {
+  const res = await get<apiResponse<StatementDataType>>(
+    `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${accountNumber}&toDate=${formatedEndDate}`
+  );
+  return res && res.data.details.accountStatementDtos;
+}
 

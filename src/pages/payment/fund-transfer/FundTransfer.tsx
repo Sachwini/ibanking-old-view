@@ -103,6 +103,7 @@ export const FundTransfer = () => {
     setToAccount("");
     setBankBranchId("");
     setAmount("");
+    setDestinationAccountHolderName("");
   };
 
   const openDetailModel = (e: any) => {
@@ -205,7 +206,12 @@ export const FundTransfer = () => {
     <>
       <Card>
         <Card.Body>
-          <Form>
+          <Form
+            onSubmit={(e) => {
+              openDetailModel(e);
+              accountValidation();
+            }}
+          >
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label className="font-weight-bold">From Account</Form.Label>
               <Form.Control
@@ -226,6 +232,7 @@ export const FundTransfer = () => {
                 placeholder="destination account"
                 name="toAccount"
                 value={toAccount}
+                required
                 onChange={(e) => setToAccount(e.target.value)}
               />
               <Form.Text className="text-warning">
@@ -257,6 +264,7 @@ export const FundTransfer = () => {
                 placeholder="Enter your Destination AccountHolder Name"
                 name="destinationAccountHolderName"
                 value={destinationAccountHolderName}
+                required
                 onChange={(e) =>
                   setDestinationAccountHolderName(e.target.value)
                 }
@@ -269,6 +277,7 @@ export const FundTransfer = () => {
                 placeholder="Amount"
                 name="amount"
                 value={amount}
+                required
                 onChange={(e) => setAmount(e.target.value)}
               />
             </Form.Group>
@@ -276,10 +285,10 @@ export const FundTransfer = () => {
               className="btn btn-warning"
               variant="primary"
               type="submit"
-              onClick={(e) => {
-                openDetailModel(e);
-                accountValidation();
-              }}
+              // onClick={(e) => {
+              //   openDetailModel(e);
+              //   accountValidation();
+              // }}
             >
               Submit
             </Button>
@@ -302,6 +311,7 @@ export const FundTransfer = () => {
           modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
           fromAccount={fromAccount}
           toAccount={toAccount}
+          destinationAccountHolderName={destinationAccountHolderName}
           branch={branch[0].label}
           amount={amount}
           validAccount={validAccount}
