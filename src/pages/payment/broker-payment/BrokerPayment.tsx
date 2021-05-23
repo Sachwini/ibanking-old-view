@@ -39,12 +39,12 @@ const BrokerPayment = () => {
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [fullDetails, setFullDetails] = useState<boolean>(false);
-   const [otp, setOtp] = useState<string>("");
-   const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
-   const [responseMessage, setResponseMessage] = useState({
-     status: "",
-     message: "",
-   });
+  const [otp, setOtp] = useState<string>("");
+  const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
 
   const getServiceCharges = async () => {
     if (amount !== "" && brokerCode !== "") {
@@ -115,7 +115,7 @@ const BrokerPayment = () => {
   const openDetailModel = (e: any) => {
     e.preventDefault();
     setDetailModalShow(true);
-  }; 
+  };
 
   const handleSubmit = async (e: any) => {
     if (
@@ -129,7 +129,7 @@ const BrokerPayment = () => {
       toast.error("Incomplete field");
       return;
     }
-    
+
     const model: brokerPayment = {
       accountNumber: fromAccount,
       amount: amount,
@@ -138,12 +138,12 @@ const BrokerPayment = () => {
       clientName: clientName,
       clientId: clientId,
       mobileNumber: mobileNumber,
-      remarks: remark, 
+      remarks: remark,
     };
 
     let url = "";
     if (parseFloat(amount) > 5000) {
-      url = "/api/broker/payment?mPin=" + mpin + "&otp="+otp;
+      url = "/api/broker/payment?mPin=" + mpin + "&otp=" + otp;
     } else {
       url = "/api/broker/payment?mPin=" + mpin;
     }
@@ -172,7 +172,7 @@ const BrokerPayment = () => {
     if (parseFloat(amount) <= 5000) {
       setOtpRequired(false);
       handleSubmit(e);
-    } else if(parseFloat(amount) > 5000){
+    } else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
       requestOtp();
     }
@@ -188,23 +188,24 @@ const BrokerPayment = () => {
         handleSubmit(e);
       }
     } catch (error) {
-      toast.error(error.response.data.message); 
+      toast.error(error.response.data.message);
     }
   };
 
   const hasInfo = () => {
-    if(!fromAccount ||
+    if (
+      !fromAccount ||
       !amount ||
       !clientName ||
       !clientId ||
       !mobileNumber ||
-      !brokerCode) {
-     setFullDetails(false)
+      !brokerCode
+    ) {
+      setFullDetails(false);
+    } else {
+      setFullDetails(true);
     }
-    else {
-     setFullDetails(true)
-    }
-  }
+  };
 
   return (
     <>
@@ -368,7 +369,7 @@ const BrokerPayment = () => {
           handleModalShow={(event: boolean) => setDetailModalShow(event)}
           modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
           fromAccount={fromAccount}
-          toAccount={broker ? brokerName : ""} 
+          toAccount={broker ? brokerName : ""}
           amount={amount}
           charge={charge}
           clientName={clientName}
@@ -416,6 +417,5 @@ const BrokerPayment = () => {
 function e(e: any) {
   throw new Error("Function not implemented.");
 }
-
 
 export default BrokerPayment;
