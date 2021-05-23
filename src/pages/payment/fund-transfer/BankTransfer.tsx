@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
 import MpinModal from "components/modals/bank-transfer/MpinModal";
 import OTPModal from "components/modals/bank-transfer/OTPModal";
-import { bankBranchType, BankList } from "./model";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
+import { bankBranchType, BankList } from "./model";
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -107,7 +107,7 @@ export const BankTransfer = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [DESTBankName]);
+  }, [DESTBankID]);
 
   // Get Selected Bank id While on user Bank Select
   const handleBankSelect = (e: string[]) => {

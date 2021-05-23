@@ -12,7 +12,7 @@ const OurPagination = (props: { paginate: paginate }) => {
   const [savePageNumber, setSavePageNumber] = useState<number>(0);
 
   // page number initializing as array
-  const pageNumbers = [];
+  const pageNumbers: number[] = [];
 
   for (let i = 1; i <= 10; i++) {
     pageNumbers.push(i);
