@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HouseDoor, Gear } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
 import { useStateValue } from "state-provider/StateProvider";
@@ -55,7 +55,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
           <Accordion defaultActiveKey="account">
             <MenuHandle
               goto={goto}
-              menuHeader="account"
+              menuHeader="account" 
               menuHeaderIcon={<HouseDoor size={iconsize} />}
             />
 

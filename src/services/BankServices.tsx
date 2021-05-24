@@ -1,3 +1,5 @@
+import { apiResponse } from "models/apiResponse";
+import { StatementDataType } from "pages/user-account/statement/model";
 import { get } from "./AjaxService";
 
 export interface branchModel {
@@ -48,5 +50,19 @@ export const getBankBranches = async () => {
 export const getBankList = async () => {
   const res = await get<any>("/api/ips/bank");
   return res && res.data.details
-} 
+}
+
+export const getGraph = async (accountNumber:string) => {
+  const res = await get<any>(
+    "api/graph/balance?accountNumber=" + accountNumber
+  );
+  return res && res.data.detail.balanceList;
+};
+
+export const getStatement = async (accountNumber: string, formatedStartDate: string, formatedEndDate: string) => {
+  const res = await get<apiResponse<StatementDataType>>(
+    `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${accountNumber}&toDate=${formatedEndDate}`
+  );
+  return res && res.data.details.accountStatementDtos;
+}
 

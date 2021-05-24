@@ -1,19 +1,22 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
+import { MdClose } from "react-icons/md";
 
 export interface Props {
-  fundTransferResponse: {
+  successModalShow: boolean;
+  handleModalShow: (show: boolean) => void;
+  responseMessage: {
     status: string;
     message: string;
   };
-  successModalShow: boolean;
-  successModalShowHandle: (show: boolean) => void;
 }
 
+
 const SuccessModal = (props: Props) => {
+  const { successModalShow, handleModalShow, responseMessage } = props;
   return (
     <Modal
-      show={props.successModalShow}
+      show={successModalShow}
       backdrop="static"
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
@@ -21,7 +24,7 @@ const SuccessModal = (props: Props) => {
       style={{ zIndex: 1400 }}
     >
       <Modal.Header className="justify-content-center p-0">
-        {props.fundTransferResponse.status === "success" ? (
+        {responseMessage.status === "success" ? (
           <div
             style={{
               width: "100%",
@@ -37,24 +40,20 @@ const SuccessModal = (props: Props) => {
         ) : (
           <div
             style={{
-              width: "100%",
-              height: "100px",
-              background: "#db211b",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color:"white", 
+              height: "70px",
+              width: "70px",
+              background: "#de795f",
+              borderRadius: "50%",
             }}
           >
-              {/* <MdClose color="white" size={30} fontWeight="800" /> */}
-              Opps !!!
+            <MdClose color="white" size={30} fontWeight="800" />
           </div>
         )}
       </Modal.Header>
       <Modal.Body style={{ padding: "2em" }}>
-        <div className="mb-4">{props.fundTransferResponse.message}</div>
+        <div className="mb-4">{responseMessage.message}</div>
         <Button
-          onClick={() => props.successModalShowHandle(false)}
+          onClick={() => handleModalShow(false)}
           style={{ float: "right", padding: "8px 1.8em" }}
         >
           OK

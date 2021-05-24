@@ -1,7 +1,7 @@
 import { useStateValue } from "state-provider/StateProvider";
 import { RouteComponentProps, withRouter } from "react-router";
-import Header2 from "components/header/Header2";
-import SideBar from "components/sidebar/SideBar";
+import Header from "components/header";
+import SideBar from "components/sidebar";
 import {
   LayoutBodyWrapper,
   LayoutContainer,
@@ -54,7 +54,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
   return (
     <LayoutContainer>
-      <Header2 />
+      <Header />
 
       <LayoutBodyWrapper>
         <LayoutSidebar width={sidbarWidth}>

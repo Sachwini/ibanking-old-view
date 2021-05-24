@@ -16,7 +16,7 @@ function VendorPayment() {
           >
             <Card.Title style={{ display: "flex", justifyContent: "center" }}>
               <button id="button2">To Mobile Number</button>
-              <button id="button1">To Account Number</button>
+              <button id="button1">To Account Number</button> 
             </Card.Title>
             <GoSync color="green" />
           </Card.Title>

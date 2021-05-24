@@ -1,22 +1,3 @@
-body {
-  font-family: Montserrat, sans-serif;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.myPointer {
-  cursor: pointer;
-  position: relative;
-}
-
-.mytest {
-  z-index: auto;
-}
-
 .statement_datePicker {
   margin-right: 10px;
   text-align: center;

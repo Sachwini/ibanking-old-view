@@ -1,18 +1,22 @@
-import { Spinner } from "react-bootstrap";
+import {
+  LoaderContainer,
+  SpinnerContainer,
+  Ctrl,
+} from "styling/common/SpinnerStyling";
 
 export const Loader = () => {
+  // const [enable, setEnable] = useState<boolean>(false);
+
+  // setTimeout(() => {
+  //   setEnable(!enable);
+  // }, 30000);
+
+  // if (enable)
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: "50vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Spinner as="span" animation="border" variant="warning" />
-      <span className="pl-2"> Loading... </span>
-    </div>
+    <LoaderContainer>
+      <SpinnerContainer>
+        <Ctrl />
+      </SpinnerContainer>
+    </LoaderContainer>
   );
 };

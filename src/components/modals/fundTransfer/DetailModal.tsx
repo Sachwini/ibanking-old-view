@@ -1,31 +1,49 @@
-import { Button, ListGroup, Modal } from "react-bootstrap";
+import { Button, Modal, ListGroup } from "react-bootstrap";
 
 export interface Props {
+  modalShow: boolean;
+  handleModalShow: (show: boolean) => void;
+  modalFormSubmitHandle: (show: boolean) => void;
   fromAccount: string;
   toAccount: string;
-  DESTBankName: string;
-  DESTAccHolderName: string;
-  DESTBranchName: string;
-  transctionAmount: string;
-  transctionCharge: string | number;
-  confirmModalShow: boolean;
-  confirmModalShowHandle: (show: boolean) => void;
+  destinationAccountHolderName:string
+  branch: string;
+  amount: string;
+  validAccount: boolean;
   confirmModalCancleButton: (show: boolean) => void;
-  // confirmModelSubmitHandle: (e: React.MouseEvent) => void;
 }
 
-const ConfirmDetailModal = (props: Props) => {
+function DetailModal(props: Props) {
+  const {
+    modalShow,
+    handleModalShow,
+    modalFormSubmitHandle,
+    fromAccount,
+    toAccount,
+    destinationAccountHolderName,
+    branch,
+    amount,
+    validAccount,
+    confirmModalCancleButton, 
+  } = props;
+
+  const handleSubmit = (e: any) => {
+    modalFormSubmitHandle(e);
+    handleModalShow(false);
+  };
+
   return (
     <Modal
-      show={props.confirmModalShow}
+      show={modalShow}
+      onHide={() => handleModalShow(false)}
       backdrop="static"
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
       style={{ zIndex: 1400 }}
     >
-      <Modal.Header className="justify-content-center text-uppercase">
-        <Modal.Title as="h5">Confirm Payment</Modal.Title>
+      <Modal.Header closeButton>
+        <Modal.Title as="h6">Details of your Transaction</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ padding: "1em" }}>
         <ListGroup variant="flush">
@@ -33,7 +51,7 @@ const ConfirmDetailModal = (props: Props) => {
             <strong className="d-block mb-2">Customer Details</strong>
             <div className="d-flex justify-content-between mb-2">
               <span>Account Number: </span>
-              <span className="text-muted">{props.fromAccount}</span>
+              <span className="text-muted">{fromAccount}</span>
             </div>
           </ListGroup.Item>
           <ListGroup.Item>
@@ -41,34 +59,28 @@ const ConfirmDetailModal = (props: Props) => {
 
             <div className="d-flex justify-content-between mb-2">
               <span>Account Number: </span>
-              <span className="text-muted">{props.toAccount}</span>
+              <span className="text-muted">{toAccount}</span>
             </div>
             <div className="d-flex justify-content-between mb-2">
-              <span>Bank Name: </span>
-              <span className="text-muted">{props.DESTBankName}</span>
+              <span>Destination AccountHolder Name: </span>
+              <span className="text-muted">{destinationAccountHolderName}</span>
             </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Account Holder Name: </span>
-              <span className="text-muted">{props.DESTAccHolderName}</span>
-            </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Branch: </span>
-              <span className="text-muted">{props.DESTBranchName}</span>
-            </div>
+            {branch ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span> Branch Name: </span>
+                <span className="text-muted">{branch}</span>
+              </div>
+            ) : (
+              ""
+            )}
             <div className="d-flex justify-content-between mb-2">
               <span>
                 Amount<small>(Rs.)</small>:
               </span>
-              <span className="text-muted">{props.transctionAmount}</span>
-            </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>
-                Charge<small>(Rs.)</small>:
-              </span>
-              <span className="text-muted">{props.transctionCharge}</span>
+              <span className="text-muted">{amount}</span>
             </div>
           </ListGroup.Item>
-          <small
+          {/* <small
             style={{
               color: "green",
               fontStyle: "italic",
@@ -77,25 +89,28 @@ const ConfirmDetailModal = (props: Props) => {
           >
             Benificiary Name Matches With Account Holder Name Do you Want to
             Continue?
-          </small>
+          </small> */}
         </ListGroup>
         <div className="float-right">
           <Button
-            onClick={() => props.confirmModalCancleButton(false)}
+            onClick={() => confirmModalCancleButton(false)}
             style={{ padding: "7px 12px", marginRight: "1em" }}
           >
             Cancel
           </Button>
           <Button
-            onClick={() => props.confirmModalShowHandle(false)}
+            variant="primary"
+            type="submit"
             style={{ padding: "7px 12px" }}
+            onClick={handleSubmit}
+            disabled={!validAccount}
           >
-            Confirm
+            Submit
           </Button>
         </div>
       </Modal.Body>
     </Modal>
   );
-};
+}
 
-export default ConfirmDetailModal;
+export default DetailModal;

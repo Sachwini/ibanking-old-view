@@ -6,6 +6,7 @@ import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
 import { FiUser } from "react-icons/fi";
 import { useStateValue } from "state-provider/StateProvider";
+import { Link } from "react-router-dom";
 import {
   HeaderNavbar,
   HeaderContainer,
@@ -13,9 +14,9 @@ import {
   HeaderCol,
   MenuIcon,
   HeaderLink,
-  H_Notification,
+  H_Notification as Hnotification,
 } from "styling/header/HeaderStyling";
-import { IconStyle } from "styling/comp/IconStyling";
+import { IconStyle } from "styling/common/IconStyling";
 import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
@@ -48,9 +49,23 @@ const Header2 = (props: any) => {
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
         <Card style={CardStyle}>
-          <Card.Text>User Profile</Card.Text>
-          <Card.Text>User Details</Card.Text>
+          {/* <Card.Text>User Profile</Card.Text> */}
         </Card>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "8px",
+            background: "#f5f5f5",
+            cursor: "pointer",
+          }}
+        >
+          <Link
+            to="/user-profile"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            User Details
+          </Link>
+        </div>
         <div
           style={{
             textAlign: "center",
@@ -83,7 +98,7 @@ const Header2 = (props: any) => {
               <HeaderCol sm={8} md={10} className="pl-0">
                 <HeaderLink to="/">
                   <Image
-                    src="/uploads/aaratiLogo.png"
+                    src="../../baner.png"
                     alt="Company Name"
                     height="45px"
                     style={{ maxWidth: "100%", objectFit: "contain" }}
@@ -107,12 +122,12 @@ const Header2 = (props: any) => {
                     overlay={notification}
                     rootClose
                   >
-                    <H_Notification>
+                    <Hnotification>
                       <IconStyle hover>
                         <BsBell size="25px" className="bell_ctrl" />
                       </IconStyle>
                       <Badge className="badge_ctrl">9</Badge>
-                    </H_Notification>
+                    </Hnotification>
                   </OverlayTrigger>
                 </div>
 

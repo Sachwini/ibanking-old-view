@@ -34,6 +34,7 @@ export const SideBarMenuControl = styled.div`
     width: 8px;
     height: 100%;
     border-radius: 30px;
+    background: transparent;
   }
 
   &::-webkit-scrollbar-thumb {

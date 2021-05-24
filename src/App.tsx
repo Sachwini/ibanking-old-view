@@ -57,24 +57,28 @@ function App() {
 
   if (isLoginPage)
     return (
-      <SwitchWithCatch>
-        <React.Suspense fallback={<Loader />}>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/otp" component={Otp} />
-        </React.Suspense>
-      </SwitchWithCatch>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <SwitchWithCatch>
+          <React.Suspense fallback={<Loader />}>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/otp" component={Otp} />
+          </React.Suspense>
+        </SwitchWithCatch>
+      </ThemeProvider>
     );
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+
       <DefaultLayout>
         <SwitchWithCatch>
           <React.Suspense fallback={<Loader />}>
             <Route exact path="/" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
-            <Route path="/account/user-profile" component={UserProfile} />
+            <Route path="/user-profile" component={UserProfile} />
             <Route path="/account/account-details" component={Account} />
             <Route path="/account/statement" component={Statement} />
 
