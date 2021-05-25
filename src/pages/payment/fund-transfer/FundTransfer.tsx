@@ -16,16 +16,6 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { IconStyle } from "styling/common/IconStyling";
 
-const CardStyle = {
-  border: "none",
-  paddingLeft: "0.7rem",
-  paddingRight: "0.7rem",
-};
-const PopoverStyle = {
-  minWidth: "12rem",
-  marginTop: "1rem",
-};
-
 interface selectItem {
   label: string;
   value: string;
@@ -236,17 +226,26 @@ export const FundTransfer = () => {
   };
 
   const UserProfile = (
-    <Popover id="popover-basic" style={PopoverStyle}>
+    <Popover id="popover-basic">
       <Popover.Content
         style={{
           padding: "0",
-          height: "300px",
+          maxHeight: "20rem",
+          minWidth: "10rem",
           overflowY: "auto",
           whiteSpace: "pre-wrap",
         }}
       >
-        <Card style={CardStyle}>
-          <Card.Text style={{ padding: "6px" }}>
+        <Card>
+          <Card.Text
+            style={{
+              padding: "12px",
+              fontWeight: "bold",
+              backgroundColor: "#436b33",
+              color: "#fff",
+              fontSize: "110%",
+            }}
+          >
             {" "}
             My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
           </Card.Text>
@@ -283,13 +282,24 @@ export const FundTransfer = () => {
                     <Container>
                       <Row>
                         <Col xs={3}>
-                          <RiBankLine />
+                          <RiBankLine size={30} />
                         </Col>
                         <Col>
-                          <div>{fav.data.destinationBankName}</div>
-                          <div>{fav.data.destinationAccountNumber}</div>
+                          <div
+                            style={{
+                              fontWeight: "bold",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {fav.data.destinationBankName}
+                          </div>
+                          <div style={{ fontSize: "110%" }}> 
+                            {fav.data.destinationAccountNumber}
+                          </div>
                           {fav.data.destinationAccountHolderName ? (
-                            <div>{fav.data.destinationAccountHolderName}</div>
+                            <div style={{ fontSize: "small",fontWeight:"bold" }}> 
+                              {fav.data.destinationAccountHolderName}
+                            </div>
                           ) : (
                             ""
                           )}
