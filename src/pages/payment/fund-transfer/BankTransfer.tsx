@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber } from "helper/CustomerData";
@@ -11,6 +11,20 @@ import MpinModal from "components/modals/bank-transfer/MpinModal";
 import OTPModal from "components/modals/bank-transfer/OTPModal";
 import { bankBranchType, BankList } from "./model";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
+import { OverlayTrigger, Popover } from "react-bootstrap";
+import { IconStyle } from "styling/comp/IconStyling";
+import { RiUserStarLine, RiBankLine } from "react-icons/ri"; 
+
+
+const CardStyle = {
+  border: "none",
+  paddingLeft: "0.7rem",
+  paddingRight: "0.7rem",
+};
+const PopoverStyle = {
+  minWidth: "12rem",
+  marginTop: "1rem",
+};
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -34,6 +48,7 @@ export const BankTransfer = () => {
   const [transctionAmount, setTransctionAmount] = useState<string>("");
   const [transctionCharge, setTransctionCharge] = useState<string>("");
   const [remarks, setRemarks] = useState<string>("");
+  const [favoriteAcc, setFavoriteAcc] = useState<any[]>([]);
 
   // For ConformDetails Modal Show
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false);
@@ -56,6 +71,21 @@ export const BankTransfer = () => {
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  // for loading favorite accout
+  const favAcc = async () => {
+    try {
+      const res = await get<any>(
+        "/api/userSavedPayment?serviceInfoType=CONNECT_IPS"
+      );
+      if (res) {
+        setFavoriteAcc(res.data.details);
+        console.log(favoriteAcc); 
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Getting Bank List
   useEffect(() => {
@@ -371,6 +401,77 @@ export const BankTransfer = () => {
     setMpin("");
   };
 
+  const UserProfile = (
+    <Popover id="popover-basic" style={PopoverStyle}>
+      <Popover.Content
+        style={{
+          padding: "0",
+          height: "50px",
+          overflowY: "auto",
+          whiteSpace: "pre-wrap",
+        }}
+      >
+        <Card style={CardStyle}>
+          <Card.Text style={{ padding: "6px" }}>
+            {" "}
+            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
+          </Card.Text>
+        </Card>
+        <div
+          style={{
+            padding: "8px",
+            background: "#f5f5f5",
+            cursor: "pointer",
+          }}
+        ></div>
+        <div
+          style={{
+            padding: "8px",
+            background: "#f5f5f5bc",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            favAcc();
+          }}
+        >
+          {favoriteAcc
+            ? favoriteAcc.map((fav, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setToAccount(fav.data.destinationAccountNumber);
+                      setDESTAccHolderName(
+                        fav.data.destinationAccountHolderName
+                      );
+                    }}
+                  >
+                    <Container>
+                      <Row>
+                        <Col xs={3}>
+                          <RiBankLine />
+                        </Col>
+                        <Col>
+                          <div>{fav.data.destinationBankName}</div>
+                          <div>{fav.data.destinationAccountNumber}</div>
+                          {fav.data.destinationAccountHolderName ? (
+                            <div>{fav.data.destinationAccountHolderName}</div>
+                          ) : (
+                            ""
+                          )}
+                          <hr />
+                        </Col>
+                      </Row>
+                    </Container>
+                  </div>
+                );
+              })
+            : ""}
+        </div>
+      </Popover.Content>
+    </Popover>
+  );
+
   return (
     <>
       <MpinModal
@@ -438,22 +539,40 @@ export const BankTransfer = () => {
                   onChange={handleBankSelect}
                 />
               </Form.Group>
-              <Form.Group controlId="bankTransfer">
-                <Form.Label className="font-weight-bold">
-                  Account Number
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="destination bank account number..."
-                  name="toAccount"
-                  value={toAccount}
-                  required
-                  onChange={(e) => setToAccount(e.target.value)}
-                />
-                <Form.Text className="text-warning">
-                  Please Insure the account number is correct before transaction
-                </Form.Text>
-              </Form.Group>
+              <div className="form-row">
+                <div className="col">
+                  <Form.Group controlId="bankTransfer">
+                    <Form.Label className="font-weight-bold">
+                      Account Number
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="destination bank account number..."
+                      name="toAccount"
+                      value={toAccount}
+                      required
+                      onChange={(e) => setToAccount(e.target.value)}
+                    />
+                    <Form.Text className="text-warning">
+                      Please Insure the account number is correct before
+                      transaction
+                    </Form.Text>
+                  </Form.Group>
+                </div>
+                <div className="pl-4 d-flex align-items-center">
+                  <OverlayTrigger
+                    transition={false}
+                    trigger="click"
+                    placement="bottom"
+                    overlay={UserProfile}
+                    rootClose
+                  >
+                    <IconStyle hover>
+                      <RiUserStarLine size={30} onClick={(e) => favAcc()} />
+                    </IconStyle>
+                  </OverlayTrigger>
+                </div>
+              </div>
               <Form.Group controlId="bankTransfer">
                 <Form.Label className="font-weight-bold">
                   Account Holder Name

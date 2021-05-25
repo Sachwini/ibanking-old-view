@@ -68,6 +68,7 @@ const Login = (props: RouteComponentProps<{}>) => {
         method: "POST",
       });
       if (res) {
+        setOtpRequired(false);
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
         console.log("message :", res.data);
@@ -78,6 +79,7 @@ const Login = (props: RouteComponentProps<{}>) => {
         });
       } else {
         console.log("messsage:");
+        setOtpRequired(false);
         props.history.push("/login");
         dispatch({
           type: "IS_LOGIN",
@@ -86,20 +88,32 @@ const Login = (props: RouteComponentProps<{}>) => {
       }
     } catch (error) {
       setLoading(false);
-      if (error.response) {
-        console.log("Message", error.response.data);
-        const otpRequiredMsg =
-          "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
-        const otpRequiredMsg1 =
-          "unauthorized device. We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code.";
-        if (
-          error.response.data.error_description === otpRequiredMsg ||
-          otpRequiredMsg1
-        ) {
-          setOtpRequired(true);
-          alert(error.response.data.error_description);
-        }
+      const badCredentials = "Bad credentials";
+      const invalidUser = "Invalid Mobile Number or Username";
+      const maxLogin = "Maximum login attempt reached. User has been blocked.";
+      const otpRequiredMsg =
+        "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
+      const otpRequiredMsg1 =
+        "unauthorized device. We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code.";
+       if (error.response.data.error_description === badCredentials) {
+         alert(error.response.data.error_description);
       }
+      if (error.response.data.error_description === invalidUser) {
+        alert(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === maxLogin) {
+        alert(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === otpRequiredMsg) {
+        alert(error.response.data.error_description);
+        setOtpRequired(true);
+      }
+      if (error.response.data.error_description === otpRequiredMsg1) {
+        alert(error.response.data.error_description);
+        setOtpRequired(true);
+      }
+      
+
     }
   };
 

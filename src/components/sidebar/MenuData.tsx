@@ -30,6 +30,10 @@ const menuData = [
     title: "Activity Log",
     subMenuTitle: ["Logs"],
   },
+  {
+    title: "Favorite Listing",
+    subMenuTitle: ["Add Favorite"],
+  },
 ];
 
 export default menuData;

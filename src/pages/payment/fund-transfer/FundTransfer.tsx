@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 import { fundTransfer } from "./model";
 import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
@@ -12,6 +12,19 @@ import DetailModal from "components/modals/fundTransfer/DetailModal";
 import MpinModal from "components/modals/fundTransfer/MpinModal";
 import OtpModal from "components/modals/fundTransfer/OtpModal";
 import SuccessModal from "components/modals/fundTransfer/SuccessModal";
+import { OverlayTrigger, Popover } from "react-bootstrap";
+import { IconStyle } from "styling/comp/IconStyling";
+import { RiUserStarLine, RiBankLine } from "react-icons/ri";
+
+const CardStyle = {
+  border: "none",
+  paddingLeft: "0.7rem",
+  paddingRight: "0.7rem",
+};
+const PopoverStyle = {
+  minWidth: "12rem",
+  marginTop: "1rem",
+};
 
 interface selectItem {
   label: string;
@@ -29,41 +42,63 @@ export const FundTransfer = () => {
   const [branch, setBranch] = useState<selectItem[]>([]);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
-  const [destinationAccountHolderName, setDestinationAccountHolderName] = useState<string>("");
+  const [destinationAccountHolderName, setDestinationAccountHolderName] =
+    useState<string>("");
   const [validAccount, setValidAccount] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
-  const [responseMessage, setResponseMessage] = useState({status:"",message:""});
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
+  const [favoriteAcc, setFavoriteAcc] = useState<any[]>([]);
 
   //For account Validation
   const accountValidation = async () => {
     try {
-      if (toAccount !== "" && destinationAccountHolderName !== "" && bankBranchId !== "") {
+      if (
+        toAccount !== "" &&
+        destinationAccountHolderName !== "" &&
+        bankBranchId !== ""
+      ) {
         const res = get<any>(
           "api/account/validation?destinationAccountNumber=" +
-           toAccount  +
-          "&destinationAccountName=" +
-           destinationAccountHolderName  +
-          "&destinationBranchId=" +
-           bankBranchId 
+            toAccount +
+            "&destinationAccountName=" +
+            destinationAccountHolderName +
+            "&destinationBranchId=" +
+            bankBranchId
         );
         return res && setValidAccount(true);
       }
     } catch {
-      setValidAccount(false); 
+      setValidAccount(false);
     }
-  }
+  };
 
   //for request Otp
   const requestOtp = async () => {
-    const res =
-      get <
-      apiResponse<any>>(
-        "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
-          amount 
+    const res = get<apiResponse<any>>(
+      "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
+        amount
+    );
+  };
+
+  // for loading favorite accout
+  const favAcc = async () => {
+    try {
+      const res = await get<any>(
+        "/api/userSavedPayment?serviceInfoType=CONNECT_IPS"
       );
-  }
+      if (res) {
+        setFavoriteAcc(res.data.details);
+        console.log(favoriteAcc);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     let isSubscribed = true;
@@ -83,7 +118,7 @@ export const FundTransfer = () => {
     init();
     return () => {
       isSubscribed = false;
-    }; 
+    };
   }, []);
 
   //for setting the value for bankId
@@ -98,7 +133,7 @@ export const FundTransfer = () => {
     } catch {}
   };
 
-  const handleReset = (e: any) => { 
+  const handleReset = (e: any) => {
     e.preventDefault();
     setToAccount("");
     setBankBranchId("");
@@ -109,7 +144,7 @@ export const FundTransfer = () => {
   const openDetailModel = (e: any) => {
     e.preventDefault();
     setDetailModalShow(true);
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) {
@@ -117,7 +152,7 @@ export const FundTransfer = () => {
       return;
     }
     setLoading(true);
-    
+
     const model: fundTransfer = {
       from_account_number: fromAccount,
       to_account_number: toAccount,
@@ -130,7 +165,8 @@ export const FundTransfer = () => {
 
     let url = "";
     if (parseFloat(amount) > 5000) {
-      url = "api/fundtransfer?from_account_number=" +
+      url =
+        "api/fundtransfer?from_account_number=" +
         fromAccount +
         "&to_account_number=" +
         toAccount +
@@ -139,10 +175,12 @@ export const FundTransfer = () => {
         "&amount=" +
         amount +
         "&mPin=" +
-        mpin + "&otp=" + otp
-    }
-    else {
-      url = "api/fundtransfer?from_account_number=" +
+        mpin +
+        "&otp=" +
+        otp;
+    } else {
+      url =
+        "api/fundtransfer?from_account_number=" +
         fromAccount +
         "&to_account_number=" +
         toAccount +
@@ -151,16 +189,12 @@ export const FundTransfer = () => {
         "&amount=" +
         amount +
         "&mPin=" +
-        mpin
+        mpin;
     }
     try {
-      const res = await post<fundTransfer>(
-        url,
-        {},
-        () => setLoading(false)
-      );
+      const res = await post<fundTransfer>(url, {}, () => setLoading(false));
       if (res) {
-        setIsSucessMessage(true)
+        setIsSucessMessage(true);
         setResponseMessage({ status: "success", message: res.data.message });
         toast.success(res.data.message);
         console.log(res.data);
@@ -175,14 +209,13 @@ export const FundTransfer = () => {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     }
-  }
+  };
 
   const handleOtpRequired = () => {
     if (parseFloat(amount) <= 5000) {
       setOtpRequired(false);
       handleSubmit(e);
-    }
-    else if (parseFloat(amount) > 5000) {
+    } else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
       requestOtp();
     }
@@ -197,10 +230,74 @@ export const FundTransfer = () => {
       if (res) {
         handleSubmit(e);
       }
-    } catch(error) {
+    } catch (error) {
       toast.error(error.response.data.message);
     }
   };
+
+  const UserProfile = (
+    <Popover id="popover-basic" style={PopoverStyle}>
+      <Popover.Content style={{ padding: "0" }}>
+        <Card style={CardStyle}>
+          <Card.Text style={{padding:"6px"}}>
+            {" "}
+            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
+          </Card.Text>
+        </Card>
+        <div
+          style={{
+            padding: "8px",
+            background: "#f5f5f5",
+            cursor: "pointer",
+          }}
+        ></div>
+        <div
+          style={{
+            padding: "8px",
+            background: "#f5f5f5bc",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            favAcc();
+          }}
+        >
+          {favoriteAcc
+            ? favoriteAcc.map((fav, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setToAccount(fav.data.destinationAccountNumber);
+                      setDestinationAccountHolderName(
+                        fav.data.destinationAccountHolderName
+                      );
+                    }}
+                  >
+                    <Container>
+                      <Row>
+                        <Col xs={3}>
+                          <RiBankLine />
+                        </Col>
+                        <Col>
+                          <div>{fav.data.destinationBankName}</div>
+                          <div>{fav.data.destinationAccountNumber}</div>
+                          {fav.data.destinationAccountHolderName ? (
+                            <div>{fav.data.destinationAccountHolderName}</div>
+                          ) : (
+                            ""
+                          )}
+                          <hr />
+                        </Col>
+                      </Row>
+                    </Container>
+                  </div>
+                );
+              })
+            : ""}
+        </div>
+      </Popover.Content>
+    </Popover>
+  );
 
   return (
     <>
@@ -223,22 +320,40 @@ export const FundTransfer = () => {
                 onChange={(e) => setFromAccount(e.target.value)}
               />
             </Form.Group>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Destination Account
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="destination account"
-                name="toAccount"
-                value={toAccount}
-                required
-                onChange={(e) => setToAccount(e.target.value)}
-              />
-              <Form.Text className="text-warning">
-                Please Insure the account number is correct before transaction
-              </Form.Text>
-            </Form.Group>
+            <div className="form-row">
+              <div className="col">
+                <Form.Group controlId="formGridAddress1">
+                  <Form.Label className="font-weight-bold">
+                    Destination Account
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="destination account"
+                    name="toAccount"
+                    value={toAccount}
+                    required
+                    onChange={(e) => setToAccount(e.target.value)}
+                  />
+                  <Form.Text className="text-warning">
+                    Please Insure the account number is correct before
+                    transaction
+                  </Form.Text>
+                </Form.Group>
+              </div>
+              <div className="pl-4 d-flex align-items-center">
+                <OverlayTrigger
+                  transition={false}
+                  trigger="click"
+                  placement="bottom"
+                  overlay={UserProfile}
+                  rootClose
+                >
+                  <IconStyle hover>
+                    <RiUserStarLine size={30} onClick={(e) => favAcc()} />
+                  </IconStyle>
+                </OverlayTrigger>
+              </div>
+            </div>
             <Form.Group controlId="formGridAddress1">
               <Form.Label className="font-weight-bold">
                 Select Destination Bank Branch
@@ -357,4 +472,3 @@ export const FundTransfer = () => {
 function e(e: any) {
   throw new Error("Function not implemented.");
 }
-
