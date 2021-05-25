@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { Button, Card, Container, Form, InputGroup } from "react-bootstrap";
+import { Card, Form, Image, InputGroup } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import {
-  setBearerToken,
-  setRefreshToken,
-} from "services/AuthService";
+import { setBearerToken, setRefreshToken } from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -13,26 +10,34 @@ import {
 } from "services/Constants";
 import { useStateValue } from "state-provider/StateProvider";
 import axios from "axios";
-import OtpModal from "components/modals/fundTransfer/OtpModal";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import {
+  LoginContainer,
+  EyeContainer,
+  MyCard,
+} from "styling/login/LoginStyling";
+import { MyButton } from "styling/common/ButtonStyling";
+import { Loader } from "pages/static/Loader";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState<boolean>();
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
-  const [mPinInputShow, setMpinInputShow] = useState<boolean>(true);
+  const [inputFieldValueShow, setInputFieldValueShow] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessageShowHandle, setErrorMessageShowHandle] =
+    useState<boolean>(false);
 
   const [{}, dispatch] = useStateValue();
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
+
     if (!identity || !password) return;
-    setLoading(true);
 
     const deviceUniqueIdentifier = DeviceUniqueIdentifier();
-    let url = ""
+    let url = "";
     if (otpRequired) {
       url =
         "http://202.63.242.139:9091/oauth/token?client_id=" +
@@ -49,20 +54,20 @@ const Login = (props: RouteComponentProps<{}>) => {
         identity +
         "&otp=" +
         otp;
-    }
-    else url =
-      "http://202.63.242.139:9091/oauth/token?client_id=" +
-      client_id +
-      "&client_secret=" +
-      client_secret +
-      "&grant_type=" +
-      grant_type +
-      "&deviceUniqueIdentifier=" +
-      deviceUniqueIdentifier +
-      "&password=" +
-      password +
-      "&username=" +
-      identity;
+    } else
+      url =
+        "http://202.63.242.139:9091/oauth/token?client_id=" +
+        client_id +
+        "&client_secret=" +
+        client_secret +
+        "&grant_type=" +
+        grant_type +
+        "&deviceUniqueIdentifier=" +
+        deviceUniqueIdentifier +
+        "&password=" +
+        password +
+        "&username=" +
+        identity;
     try {
       const res = await axios(url, {
         method: "POST",
@@ -71,14 +76,13 @@ const Login = (props: RouteComponentProps<{}>) => {
         setOtpRequired(false);
         setBearerToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);
-        console.log("message :", res.data);
+
         props.history.push("/");
         dispatch({
           type: "IS_LOGIN",
           value: true,
         });
       } else {
-        console.log("messsage:");
         setOtpRequired(false);
         props.history.push("/login");
         dispatch({
@@ -87,7 +91,7 @@ const Login = (props: RouteComponentProps<{}>) => {
         });
       }
     } catch (error) {
-      setLoading(false);
+      setErrorMessageShowHandle(true);
       const badCredentials = "Bad credentials";
       const invalidUser = "Invalid Mobile Number or Username";
       const maxLogin = "Maximum login attempt reached. User has been blocked.";
@@ -95,8 +99,27 @@ const Login = (props: RouteComponentProps<{}>) => {
         "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
       const otpRequiredMsg1 =
         "unauthorized device. We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code.";
-       if (error.response.data.error_description === badCredentials) {
-         alert(error.response.data.error_description);
+      const otpExpire = "OTP expired. Please Request a new One.";
+
+      if (error.response.data.error_description === badCredentials) {
+        setErrorMessage(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === invalidUser) {
+        setErrorMessage(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === maxLogin) {
+        setErrorMessage(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === otpRequiredMsg) {
+        setErrorMessage(error.response.data.error_description);
+        setOtpRequired(true);
+      }
+      if (error.response.data.error_description === otpRequiredMsg1) {
+        setErrorMessage(error.response.data.error_description);
+        setOtpRequired(true);
+      }
+      if (error.response.data.error_description === otpExpire) {
+        setOtpRequired(true);
       }
       if (error.response.data.error_description === invalidUser) {
         alert(error.response.data.error_description);
@@ -118,80 +141,122 @@ const Login = (props: RouteComponentProps<{}>) => {
   };
 
   return (
-    <Container
-      style={{ display: "flex", justifyContent: "center", marginTop: "10%" }}
-    >
-      <Card style={{ width: "30rem" }}>
+    <LoginContainer>
+      <MyCard style={{ width: "30rem", marginBottom: "1rem" }}>
+        <Card.Header className="image_wrapper">
+          <Image
+            src="./logo.jpg"
+            alt="logo"
+            roundedCircle
+            className="login_logo"
+          />
+          <Card.Title className="login_header_text">
+            {otpRequired ? "OTP Validation Form" : " Sign In To Your Account"}
+          </Card.Title>
+        </Card.Header>
+
         <Card.Body>
-          <Card.Title>Login</Card.Title>
-          <hr />
-          <Form>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Identity VBMRDWEVFV9840069570 VBMRDWEVFV9843750574
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="identity"
-                value={identity}
-                onChange={(e) => setIdentity(e.target.value)}
-                placeholder="Mobile Number or Email"
-              />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
+          {otpRequired ? (
+            <Form onSubmit={handleLogin}>
+              <Form.Group controlId="OTPField" className="pb-3">
+                {errorMessageShowHandle ? (
+                  <Form.Text className="text-danger pb-1 text-center text-capitalize">
+                    {errorMessage}
+                  </Form.Text>
+                ) : (
+                  ""
+                )}
 
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Password 22069 10368
-              </Form.Label>
-              <InputGroup>
+                <Form.Label className="font-weight-bold pt-4">
+                  Your OTP
+                </Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type={`${inputFieldValueShow ? "password" : "text"}`}
+                    name="otp"
+                    value={otp}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                      setErrorMessageShowHandle(false);
+                    }}
+                    placeholder="please provide OTP here"
+                    required
+                  />
+                  <EyeContainer
+                    onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
+                  >
+                    {inputFieldValueShow ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </EyeContainer>
+                </InputGroup>
+              </Form.Group>
+
+              <MyButton type="submit" width="100%">
+                Submit
+              </MyButton>
+            </Form>
+          ) : (
+            <Form onSubmit={handleLogin}>
+              <Form.Group controlId="username">
+                {errorMessageShowHandle ? (
+                  <Form.Text className="text-danger pb-1 text-center text-capitalize">
+                    {errorMessage}
+                  </Form.Text>
+                ) : (
+                  ""
+                )}
+
+                <Form.Label className="font-weight-bold">UserName</Form.Label>
                 <Form.Control
-                  type={`${mPinInputShow ? "password" : "text"}`}
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                />
-                <span
-                  style={{
-                    marginLeft: "-1.3em",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    zIndex: 50,
-                    cursor: "pointer",
+                  type="text"
+                  name="identity"
+                  value={identity}
+                  onChange={(e) => {
+                    setIdentity(e.target.value);
+                    setErrorMessageShowHandle(false);
                   }}
-                  onClick={() => setMpinInputShow(!mPinInputShow)}
-                >
-                  {mPinInputShow ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                </span>
-              </InputGroup>
-            </Form.Group>
-            <Form.Group controlId="formGridAddress1"></Form.Group>
+                  placeholder="Mobile Number or Email"
+                  required
+                />
+              </Form.Group>
 
-            <Button
-              className="btn btn-warning"
-              variant="primary"
-              type="submit"
-              block
-              onClick={handleLogin}
-            >
-              Login
-            </Button>
-          </Form>
+              <Form.Group controlId="password" className="py-2">
+                <Form.Label className="font-weight-bold">Password</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type={`${inputFieldValueShow ? "password" : "text"}`}
+                    name="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrorMessageShowHandle(false);
+                    }}
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <EyeContainer
+                    onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
+                  >
+                    {inputFieldValueShow ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </EyeContainer>
+                </InputGroup>
+              </Form.Group>
+
+              <MyButton type="submit" width="100%">
+                Login
+              </MyButton>
+            </Form>
+          )}
         </Card.Body>
-      </Card>
-      {otpRequired ? (
-        <OtpModal
-          modalShow={otpRequired}
-          handleModalShow={(event: boolean) => setOtpRequired(event)}
-          userOTP={(otp: string) => setOtp(otp)}
-          modalFormSubmitHandle={handleLogin}
-        />
-      ) : (
-        ""
-      )}
-    </Container>
+      </MyCard>
+    </LoginContainer>
   );
 };
 

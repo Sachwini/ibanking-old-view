@@ -115,8 +115,8 @@ const OTPModal = (props: Props) => {
             </div>
           ) : (
             // <span>Request Again For OTP Enabling in {counter} seconds </span>
-              ""
-          )} 
+            ""
+          )}
 
           <Button variant="primary" type="submit" style={{ float: "right" }}>
             Submit

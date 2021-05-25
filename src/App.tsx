@@ -10,6 +10,7 @@ import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
 import Otp from "pages/login/Otp";
+import { GlobalStyle } from "styling/GlobalStyling";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
@@ -59,16 +60,21 @@ function App() {
 
   if (isLoginPage)
     return (
-      <SwitchWithCatch>
-        <React.Suspense fallback={<Loader />}>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/otp" component={Otp} />
-        </React.Suspense>
-      </SwitchWithCatch>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <SwitchWithCatch>
+          <React.Suspense fallback={<Loader />}>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/otp" component={Otp} />
+          </React.Suspense>
+        </SwitchWithCatch>
+      </ThemeProvider>
     );
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
+
       <DefaultLayout>
         <SwitchWithCatch>
           <React.Suspense fallback={<Loader />}>

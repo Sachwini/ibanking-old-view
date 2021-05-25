@@ -1,4 +1,4 @@
-import { IconStyle } from "styling/comp/IconStyling";
+import { IconStyle } from "styling/common/IconStyling";
 import { HeaderSearchForm } from "styling/header/HeaderStyling";
 import { FormControl } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";

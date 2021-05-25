@@ -16,7 +16,7 @@ import {
   HeaderLink,
   H_Notification as Hnotification,
 } from "styling/header/HeaderStyling";
-import { IconStyle } from "styling/comp/IconStyling";
+import { IconStyle } from "styling/common/IconStyling";
 import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
@@ -98,7 +98,7 @@ const Header2 = (props: any) => {
               <HeaderCol sm={8} md={10} className="pl-0">
                 <HeaderLink to="/">
                   <Image
-                    src="/uploads/aaratiLogo.png"
+                    src="../../baner.png"
                     alt="Company Name"
                     height="45px"
                     style={{ maxWidth: "100%", objectFit: "contain" }}

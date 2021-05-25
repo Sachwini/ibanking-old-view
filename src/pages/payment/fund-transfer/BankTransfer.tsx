@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
 import MpinModal from "components/modals/bank-transfer/MpinModal";
 import OTPModal from "components/modals/bank-transfer/OTPModal";
-import { bankBranchType, BankList } from "./model";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { IconStyle } from "styling/comp/IconStyling";
+import { IconStyle } from "styling/common/IconStyling";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri"; 
+import { bankBranchType, BankList } from "./model";
 
 
 const CardStyle = {
@@ -137,7 +137,7 @@ export const BankTransfer = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [DESTBankName]);
+  }, [DESTBankID]);
 
   // Get Selected Bank id While on user Bank Select
   const handleBankSelect = (e: string[]) => {

@@ -13,8 +13,8 @@ import MpinModal from "components/modals/fundTransfer/MpinModal";
 import OtpModal from "components/modals/fundTransfer/OtpModal";
 import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { IconStyle } from "styling/comp/IconStyling";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
+import { IconStyle } from "styling/common/IconStyling";
 
 const CardStyle = {
   border: "none",
