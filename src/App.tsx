@@ -51,6 +51,9 @@ function App() {
 
   /* ----------For History Log Import--------------------- */
   const Activities = React.lazy(() => import("pages/activities/Activities"));
+  const AddFavorite = React.lazy(
+    () => import("pages/favoriteListing/AddFavorite")
+  );
 
   const isLoginPage = window.location.pathname.startsWith("/login");
 
@@ -97,6 +100,10 @@ function App() {
               component={ConfigureService}
             />
             <Route path="/setting/configure-theme" component={ThemeSetting} />
+            <Route
+              path="/favorite-listing/add-favorite"
+              component={AddFavorite}
+            />
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route path="/activity-log/logs" component={Activities} />

@@ -6,6 +6,7 @@ import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
 import { MdPayment } from "react-icons/md";
+import { MdFavoriteBorder } from "react-icons/md";
 import {
   MiniMenuIconHandle,
   SidebarContainer,
@@ -55,7 +56,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
           <Accordion defaultActiveKey="account">
             <MenuHandle
               goto={goto}
-              menuHeader="account" 
+              menuHeader="account"
               menuHeaderIcon={<HouseDoor size={iconsize} />}
             />
 
@@ -83,6 +84,11 @@ const SideBar: React.FC<Props> = ({ goto }) => {
               menuHeaderIcon={<Gear size={iconsize} />}
             />
 
+            <MenuHandle
+              goto={goto}
+              menuHeader="Favorite Listing"
+              menuHeaderIcon={<MdFavoriteBorder size={iconsize} />}
+            />
             <MenuHandle
               goto={goto}
               menuHeader="Activity Log"
