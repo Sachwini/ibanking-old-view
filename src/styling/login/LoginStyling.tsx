@@ -21,9 +21,13 @@ export const LoginContainer = styled(Container)`
   }
 
   .login_logo {
-    width: 100px;
-    height: 100px;
-    margin-top: -2.5rem;
+    width: 120px;
+    height: 120px;
+    margin-top: -3rem;
+    border-radius: 50%;
+    border: 4px solid ${(props) => props.theme.primary};
+    /* border-right-color: ${(props) => props.theme.secondary};
+    border-bottom-color: ${(props) => props.theme.secondary}; */
   }
 
   .login_header_text {

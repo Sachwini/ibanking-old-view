@@ -11,7 +11,7 @@ export const LoaderContainer = styled.div`
 export const SpinnerContainer = styled.div`
   height: 50px;
   width: 50px;
-  background-image: url("../logoPNG.png");
+  background-image: url("../logo.png");
 
   background-position: center;
   background-repeat: no-repeat;
