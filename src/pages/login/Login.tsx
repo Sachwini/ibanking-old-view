@@ -17,7 +17,7 @@ import {
   MyCard,
 } from "styling/login/LoginStyling";
 import { MyButton } from "styling/common/ButtonStyling";
-import { Loader } from "pages/static/Loader";
+import { IconStyle } from "styling/common/IconStyling";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -145,7 +145,7 @@ const Login = (props: RouteComponentProps<{}>) => {
       <MyCard style={{ width: "30rem", marginBottom: "1rem" }}>
         <Card.Header className="image_wrapper">
           <Image
-            src="./logo.jpg"
+            src="./logo.png"
             alt="logo"
             roundedCircle
             className="login_logo"
@@ -186,9 +186,13 @@ const Login = (props: RouteComponentProps<{}>) => {
                     onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
                   >
                     {inputFieldValueShow ? (
-                      <AiOutlineEyeInvisible />
+                      <IconStyle hover>
+                        <AiOutlineEyeInvisible />
+                      </IconStyle>
                     ) : (
-                      <AiOutlineEye />
+                      <IconStyle hover>
+                        <AiOutlineEye />
+                      </IconStyle>
                     )}
                   </EyeContainer>
                 </InputGroup>

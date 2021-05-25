@@ -16,11 +16,11 @@ import {
   HeaderLink,
   H_Notification as Hnotification,
 } from "styling/header/HeaderStyling";
-import { IconStyle } from "styling/common/IconStyling";
 import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
 } from "services/AuthService";
+import { IconStyle } from "styling/common/IconStyling";
 
 const CardStyle = {
   border: "none",
@@ -32,7 +32,7 @@ const PopoverStyle = {
   marginTop: "1rem",
 };
 
-const Header2 = (props: any) => {
+const Header = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   const [{}, dispatch] = useStateValue();
   const history = useHistory();
@@ -153,6 +153,6 @@ const Header2 = (props: any) => {
   );
 };
 
-export default Header2;
+export default Header;
 
 // skdokosdksd

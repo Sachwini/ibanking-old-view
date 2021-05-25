@@ -5,8 +5,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   *{
       padding:0;
       margin:0;
-      box-sizing:border-box;
-      color: ${(props) => props.theme.primary};
+      box-sizing:border-box;     
   }
 
   html, body{
@@ -15,6 +14,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     sans-serif;
   /* -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
+   color: ${(props) => props.theme.primary};
   }
 
   a{
@@ -24,10 +24,9 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   ul{list-style-type: none}
 
 &::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
     height: 100%;
     border-radius: 30px;
-    /* background: ${(props) => props.theme.primary}; */
     background: #949494bb;
   }
 

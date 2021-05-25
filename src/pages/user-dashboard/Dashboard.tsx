@@ -11,7 +11,7 @@ import {
   localStrorageIdentityKey,
   localStroragePasswordKey,
 } from "services/AuthService";
-import { Loader } from "pages/static/Loader";
+import { IconStyle } from "styling/common/IconStyling";
 
 const Dashboard = () => {
   localStorage.removeItem(localStrorageIdentityKey);
@@ -24,17 +24,14 @@ const Dashboard = () => {
           <Row>
             <Col md={12} lg={6}>
               <p className="d-flex justify-content-end">
-                <FcSynchronize size="24px" />
+                <IconStyle hover>
+                  <FcSynchronize size="24px" />
+                </IconStyle>
+
                 <strong className="px-2">Switch Account</strong>
               </p>
               <ProfileCard />
-
-              {/* <Loader /> */}
             </Col>
-            {/* <Col md={12} lg={6} className="p-0 my-sm-4 my-md-0 ">
-              <strong className="mb-3 pl-3">Quick Pay</strong>
-              <QuickPay />
-            </Col> */}
           </Row>
           <Row>
             <Col sm={12} className="mt-3">
