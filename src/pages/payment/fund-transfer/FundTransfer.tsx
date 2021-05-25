@@ -237,9 +237,16 @@ export const FundTransfer = () => {
 
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
-      <Popover.Content style={{ padding: "0" }}>
+      <Popover.Content
+        style={{
+          padding: "0",
+          height: "300px",
+          overflowY: "auto",
+          whiteSpace: "pre-wrap",
+        }}
+      >
         <Card style={CardStyle}>
-          <Card.Text style={{padding:"6px"}}>
+          <Card.Text style={{ padding: "6px" }}>
             {" "}
             My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
           </Card.Text>

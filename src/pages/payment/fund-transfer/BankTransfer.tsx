@@ -406,7 +406,7 @@ export const BankTransfer = () => {
       <Popover.Content
         style={{
           padding: "0",
-          height: "50px",
+          height: "300px",
           overflowY: "auto",
           whiteSpace: "pre-wrap",
         }}
