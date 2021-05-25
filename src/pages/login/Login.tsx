@@ -17,6 +17,7 @@ import {
   MyCard,
 } from "styling/login/LoginStyling";
 import { MyButton } from "styling/common/ButtonStyling";
+import { IconStyle } from "styling/common/IconStyling";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -169,9 +170,13 @@ const Login = (props: RouteComponentProps<{}>) => {
                     onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
                   >
                     {inputFieldValueShow ? (
-                      <AiOutlineEyeInvisible />
+                      <IconStyle hover>
+                        <AiOutlineEyeInvisible />
+                      </IconStyle>
                     ) : (
-                      <AiOutlineEye />
+                      <IconStyle hover>
+                        <AiOutlineEye />
+                      </IconStyle>
                     )}
                   </EyeContainer>
                 </InputGroup>
