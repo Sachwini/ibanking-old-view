@@ -412,7 +412,7 @@ export const BankTransfer = () => {
             }}
           >
             {" "}
-            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
+            My Saved Bank Account ({favoriteAcc ? favoriteAcc.length : "0"})
           </Card.Text>
         </Card>
         <div

@@ -236,27 +236,20 @@ export const FundTransfer = () => {
           whiteSpace: "pre-wrap",
         }}
       >
-        <Card>
-          <Card.Text
+        <Card> 
+          <Card.Header
             style={{
-              padding: "12px",
               fontWeight: "bold",
               backgroundColor: "#436b33",
               color: "#fff",
               fontSize: "110%",
+              width: "100%",
             }}
           >
             {" "}
-            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
-          </Card.Text>
+            My Saved Bank Account ({favoriteAcc ? favoriteAcc.length : "0"})
+          </Card.Header>
         </Card>
-        <div
-          style={{
-            padding: "8px",
-            background: "#f5f5f5",
-            cursor: "pointer",
-          }}
-        ></div>
         <div
           style={{
             padding: "8px",
@@ -293,11 +286,13 @@ export const FundTransfer = () => {
                           >
                             {fav.data.destinationBankName}
                           </div>
-                          <div style={{ fontSize: "110%" }}> 
+                          <div style={{ fontSize: "110%" }}>
                             {fav.data.destinationAccountNumber}
                           </div>
                           {fav.data.destinationAccountHolderName ? (
-                            <div style={{ fontSize: "small",fontWeight:"bold" }}> 
+                            <div
+                              style={{ fontSize: "small", fontWeight: "bold" }}
+                            >
                               {fav.data.destinationAccountHolderName}
                             </div>
                           ) : (
