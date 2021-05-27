@@ -80,33 +80,33 @@ function App() {
 
             {/* ---------- For Account Routing--------------------- */}
             <Route path="/user-profile" component={UserProfile} />
-            <Route path="/account/account-details" component={Account} />
-            <Route path="/account/statement" component={Statement} />
+            <Route path="/account-details" component={Account} />
+            <Route path="/statement" component={Statement} />
 
             {/* ---------- For Fund Management Routing--------------------- */}
 
             {/* ---------- For Payment Routing--------------------- */}
-            <Route path="/payment/fund-transfer" component={Transfer} />
-            <Route path="/payment/bulk-payment" component={BulkPayment} />
-            <Route path="/payment/vendor-payment" component={VendorPayment} />
-            <Route path="/payment/broker-payment" component={BrokerPayment} />
-            <Route path="/payment/quick-payment" component={QuickPay} />
+            <Route path="/fund-transfer" component={Transfer} />
+            <Route path="/bulk-payment" component={BulkPayment} />
+            <Route path="/vendor-payment" component={VendorPayment} />
+            <Route path="/broker-payment" component={BrokerPayment} />
+            <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
 
             {/* ---------- For Setting Routing--------------------- */}
             <Route
-              path="/setting/configure-service"
+              path="/configure-service"
               component={ConfigureService}
             />
-            <Route path="/setting/configure-theme" component={ThemeSetting} />
+            <Route path="/configure-theme" component={ThemeSetting} />
             <Route
-              path="/favorite-listing/add-favorite"
+              path="/add-favorite"
               component={AddFavorite}
             />
 
             {/* ---------- For history Logs Routing--------------------- */}
-            <Route path="/activity-log/logs" component={Activities} />
+            <Route path="/logs" component={Activities} />
           </React.Suspense>
         </SwitchWithCatch>
       </DefaultLayout>

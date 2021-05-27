@@ -14,6 +14,8 @@ export const IconStyle = styled.span<Props>`
   cursor: pointer;
   text-align: center;
   font-weight: bold;
+  z-index: 5;
+  /* margin-left: -1rem; */
 
   color: ${(props) => (props.color ? props.color : props.theme.primary)};
 

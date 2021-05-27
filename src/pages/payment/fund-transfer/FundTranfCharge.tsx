@@ -1,11 +1,12 @@
 import { Card, Table } from "react-bootstrap";
 import "./index.css";
 
-function FundTranfCharge() { 
+function FundTranfCharge() {
+  
   return (
     <Card className="mt-3">
       <Card.Body>
-        <Card.Title>MBank Charge Slab</Card.Title> 
+        <Card.Title>MBank Charge Slab</Card.Title>
         <Table responsive="sm">
           <thead>
             <tr>

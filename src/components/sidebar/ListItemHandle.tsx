@@ -32,10 +32,7 @@ const ListItemHandle: React.FC<Props> = ({ goto, menuHeader }) => {
                 onClick={() => {
                   handleMenuItemClick(`${listItems}`);
                   goto(
-                    `/${menuHeader
-                      .toLowerCase()
-                      .split(" ")
-                      .join("-")}/${listItems
+                    `/${listItems
                       .toLowerCase()
                       .split(" ")
                       .join("-")}`
