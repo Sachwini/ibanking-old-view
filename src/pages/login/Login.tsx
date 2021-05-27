@@ -151,7 +151,7 @@ const Login = (props: RouteComponentProps<{}>) => {
             className="login_logo"
           />
           <Card.Title className="login_header_text">
-            {otpRequired ? "OTP Validation Form" : " Sign In To Your Account"}
+            {otpRequired ? "OTP Validation Form" : " Sign In To iBank"}
           </Card.Title>
         </Card.Header>
 
