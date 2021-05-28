@@ -1,4 +1,4 @@
-import { IconStyle } from "styling/common/IconStyling";
+import { IconStyle, Typeahead_form } from "styling/common/IconStyling";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -37,16 +37,19 @@ const HeaderSearch = () => {
   }
   return (
     <>
-      <Typeahead
-        options={searchItem}
-        id="my-typeahead-id"
-        placeholder="Search..."
-        onChange={handleChange}
-        minLength={2}
-      />
+      <Typeahead_form>
+        <Typeahead
+          options={searchItem}
+          id="my-typeahead-id"
+          placeholder="Search..."
+          onChange={handleChange}
+          minLength={2}
+          className="inputForm"
+        />
+      </Typeahead_form>
       <IconStyle
         hover
-        style={{ background: "#8fafdf", padding: "4px", borderRadius: "4px" }}
+        style={{ background: "#7bbad8", padding: "4px", borderRadius: "0px" }}
       >
         <BsSearch size={27} className="search__icon" onClick={redirectTo} />
       </IconStyle>

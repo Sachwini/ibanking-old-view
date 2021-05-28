@@ -10,11 +10,18 @@ interface Props {
   Opacity?: string;
 }
 
+export const Typeahead_form = styled.div`
+  .form-control {
+    border-radius: 0px;
+  }
+`;
+
 export const IconStyle = styled.span<Props>`
   cursor: pointer;
   text-align: center;
   font-weight: bold;
   z-index: 5;
+  height: calc(1.5em + 0.75rem + 2px);
   /* margin-left: -1rem; */
 
   color: ${(props) => (props.color ? props.color : props.theme.primary)};
