@@ -1,6 +1,8 @@
 import { Loader } from "pages/static/Loader";
 import { useState } from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import { Card, ListGroup, Table } from "react-bootstrap";
+import { getNpDate } from "services/dateService";
+import { formatLakh } from "services/numberService";
 import { StatementDataType } from "./model";
 import OurPagination from "./OurPagination";
 
@@ -40,28 +42,32 @@ const StatementView = (props: {
         </span>
 
         <span className="pr-4">
-          Opening Balance: Rs: {statementData?.openingBalance}
+          Opening Balance: Rs: {formatLakh(statementData?.openingBalance || 0)}
         </span>
-        <span>Closing Balance: Rs: {statementData?.closingBalance}</span>
+        <span>Closing Balance: Rs: {formatLakh(statementData?.closingBalance || 0)}</span>
       </Card.Header>
-      <ListGroup variant="flush">
-        {currentPageStatement?.map((data, index) => {
-          return (
-            <ListGroup.Item
-              className="d-flex justify-content-between"
-              key={index}
-            >
-              <small>{data.transactionDate}</small>
-              <small>{data.remarks}</small>
-              <small style={{ color: `${data.credit ? "green" : "red"}` }}>
-                {data.credit !== null
-                  ? `Credited By: Rs ${data.credit}`
-                  : `Debited By: Rs.${data.debit}`}
-              </small>
-            </ListGroup.Item>
-          );
-        })}
-      </ListGroup>
+      <Table bordered size="sm">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Date AD</th>
+            <th>Statement Reference</th>
+            <th>Withdraw</th>
+            <th>Deposit</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentPageStatement?.map(item => <tr>
+            <td>{getNpDate(item.transactionDate as any)}</td>
+            <td>{item.transactionDate}</td>
+            <td>{item.remarks}</td>
+            <td style={{textAlign: 'right'}}>{formatLakh(item.debit || 0)}</td>
+            <td style={{textAlign: 'right'}}>{formatLakh(item.credit || 0)}</td>
+            <td style={{textAlign: 'right'}}>{formatLakh(item.balance || 0)}</td>
+          </tr>)}
+        </tbody>
+      </Table>
       <Card.Footer>
         <OurPagination paginate={paginate} />
       </Card.Footer>

@@ -11,7 +11,7 @@ function FundTranfCharge() {
           <thead>
             <tr>
               <th>TXN SLAB(NPR)</th>
-              <th>FEE (NPR)</th>
+              <th className="right-aligned">FEE (NPR)</th>
             </tr>
           </thead>
           <tbody>
