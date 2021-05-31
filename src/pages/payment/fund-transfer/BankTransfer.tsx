@@ -526,7 +526,21 @@ export const BankTransfer = () => {
         <Card>
           <Card.Body>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="bankTransfer">
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label className="font-weight-bold">
+                  From Account
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="fromAccount"
+                  value={fromAccount}
+                  onChange={(e) => setFromAccount(e.target.value)}
+                >
+                  <option value={accountNumber}>{accountNumber}</option>
+                  <option value="...">...</option>
+                </Form.Control>
+              </Form.Group>
+              {/* <Form.Group controlId="bankTransfer">
                 <Form.Label className="font-weight-bold">
                   From Account
                 </Form.Label>
@@ -538,7 +552,7 @@ export const BankTransfer = () => {
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group controlId="bankTransfer" aria-required>
                 <Form.Label className="font-weight-bold">
                   Select Bank
@@ -562,6 +576,7 @@ export const BankTransfer = () => {
                       name="toAccount"
                       value={toAccount}
                       required
+                      autoComplete="off"
                       onChange={(e) => setToAccount(e.target.value)}
                     />
                     <Form.Text className="text-warning">
@@ -594,6 +609,7 @@ export const BankTransfer = () => {
                   name="destAccountHilderName"
                   value={DESTAccHolderName}
                   required
+                  autoComplete="off"
                   onChange={(e) => setDESTAccHolderName(e.target.value)}
                 />
               </Form.Group>
@@ -617,11 +633,13 @@ export const BankTransfer = () => {
               <Form.Group controlId="bankTransfer">
                 <Form.Label className="font-weight-bold">Amount</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Amount"
                   name="amount"
                   value={transctionAmount}
+                  autoComplete="off"
                   required
+                  min={0}
                   onChange={(e) => setTransctionAmount(e.target.value)}
                 />
               </Form.Group>
@@ -633,6 +651,7 @@ export const BankTransfer = () => {
                   placeholder="remarks..."
                   name="remarks"
                   value={remarks}
+                  autoComplete="off"
                   required
                   onChange={(e) => setRemarks(e.target.value)}
                 />

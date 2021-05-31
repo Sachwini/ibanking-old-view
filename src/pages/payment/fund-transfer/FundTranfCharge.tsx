@@ -16,20 +16,20 @@ function FundTranfCharge() {
           </thead>
           <tbody>
             <tr>
-              <td>100-5000</td>
-              <td>5</td>
+              <td>100 - 5,000</td>
+              <td className="right-aligned">5</td>
             </tr>
             <tr>
-              <td>5001-50000</td>
-              <td>10</td>
+              <td>5,001 - 5,0000</td>
+              <td className="right-aligned">10</td>
             </tr>
             <tr>
-              <td>50001-100000</td>
-              <td>20</td>
+              <td>50,001 - 1,00,000</td>
+              <td className="right-aligned">20</td>
             </tr>
             <tr>
-              <td>100001-1000000</td>
-              <td>40</td>
+              <td>1,00,001 - 10,00,000</td>
+              <td className="right-aligned">40</td>
             </tr>
           </tbody>
         </Table>

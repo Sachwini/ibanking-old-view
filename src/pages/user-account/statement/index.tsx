@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
 import { StatementDataType } from "./model";
@@ -24,28 +24,35 @@ const Statement = () => {
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
 
-  useEffect(() => {
-    let isSubscribed = true;
+  // useEffect(() => {
+  //   let isSubscribed = true;
+  //   setLoading(true);
+
+  //   const loadData = async () => {
+  //     const res = await get<apiResponse<StatementDataType>>(
+  //       `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}`
+  //     );
+  //     if (isSubscribed) {
+  //       setStatementData(res.data.details);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadData();
+  //   return () => {
+  //     isSubscribed = false;
+  //   };
+  // }, [formatedStartDate, formatedEndDate, AccNumber]); 
+
+  const handleShow = async() => {
     setLoading(true);
-
-    const loadData = async () => {
-      const res = await get<apiResponse<StatementDataType>>(
-        `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}`
-      );
-      if (isSubscribed) {
-        setStatementData(res.data.details);
-        setLoading(false);
-      }
-    };
-
-    loadData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [formatedStartDate, formatedEndDate, AccNumber]); 
-
-  // // console.log("end date", formatedEndDate);
-  // console.log("statementData : ", statementData);
+    const res = await get<apiResponse<StatementDataType>>(
+      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}`
+    );
+    setStatementData(undefined);
+      setStatementData(res.data.details);
+      setLoading(false);
+  }
 
   return (
     <Container>
@@ -102,6 +109,9 @@ const Statement = () => {
               className="statement_datePicker"
             />
           </div>
+          <Button variant="info" onClick={handleShow}>
+            Show
+          </Button>
         </div>
         <div>
           <StatementView statementData={statementData} loading={loading} />

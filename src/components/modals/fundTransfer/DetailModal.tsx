@@ -1,4 +1,5 @@
 import { Button, Modal, ListGroup } from "react-bootstrap";
+import { formatLakh } from "services/numberService";
 
 export interface Props {
   modalShow: boolean;
@@ -77,7 +78,7 @@ function DetailModal(props: Props) {
               <span>
                 Amount<small>(Rs.)</small>:
               </span>
-              <span className="text-muted">{amount}</span>
+              <span className="text-muted">{formatLakh(parseInt(amount))}</span>
             </div>
           </ListGroup.Item>
           {/* <small

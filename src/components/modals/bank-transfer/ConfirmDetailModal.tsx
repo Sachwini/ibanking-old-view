@@ -1,4 +1,5 @@
 import { Button, ListGroup, Modal } from "react-bootstrap";
+import { formatLakh } from "services/numberService";
 
 export interface Props {
   fromAccount: string;
@@ -59,7 +60,9 @@ const ConfirmDetailModal = (props: Props) => {
               <span>
                 Amount<small>(Rs.)</small>:
               </span>
-              <span className="text-muted">{props.transctionAmount}</span>
+              <span className="text-muted">
+                {formatLakh(parseInt(props.transctionAmount))}
+              </span>
             </div>
             <div className="d-flex justify-content-between mb-2">
               <span>

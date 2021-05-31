@@ -1,4 +1,5 @@
 import { Button, Modal, ListGroup } from "react-bootstrap";
+import { formatLakh } from "services/numberService";
 
 export interface Props {
   modalShow: boolean;
@@ -75,7 +76,7 @@ function BrokerDetailModal(props: Props) {
               <span>
                 Amount<small>(Rs.)</small>:
               </span>
-              <span className="text-muted">{amount}</span>
+              <span className="text-muted">{formatLakh(parseInt(amount))}</span>
             </div>
             <div className="d-flex justify-content-between mb-2">
               <span>
