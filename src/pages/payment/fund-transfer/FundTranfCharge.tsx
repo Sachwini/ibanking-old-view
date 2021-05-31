@@ -10,25 +10,25 @@ function FundTranfCharge() {
           <thead>
             <tr>
               <th>TXN SLAB(NPR)</th>
-              <th>FEE (NPR)</th>
+              <th className="right-aligned">FEE (NPR)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>10-500</td>
-              <td>2</td>
+              <td className="right-aligned">2</td>
             </tr>
             <tr>
               <td>500-5000</td>
-              <td>5</td>
+              <td className="right-aligned">5</td>
             </tr>
             <tr>
               <td>5000-50000</td>
-              <td>10</td>
+              <td className="right-aligned">10</td>
             </tr>
             <tr>
               <td>50000-2000000</td>
-              <td>15</td>
+              <td className="right-aligned">15</td>
             </tr>
           </tbody>
         </Table>

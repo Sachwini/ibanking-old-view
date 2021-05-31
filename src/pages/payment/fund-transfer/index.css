@@ -16,3 +16,7 @@ th {
   color: #e6d604;
   font-weight: 600;
 }
+
+.right-aligned {
+  text-align: right;
+}

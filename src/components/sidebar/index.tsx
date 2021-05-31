@@ -51,7 +51,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
 
   if (!isMenuButtonClick) {
     return (
-      <SidebarContainer customWidth={sidbarWidth}>
+      <SidebarContainer customWidth={sidbarWidth} style={{zIndex: 0}}>
         <SideBarMenuControl onClick={handleSideMenuShow}>
           <Accordion defaultActiveKey="account">
             <MenuHandle
@@ -101,7 +101,7 @@ const SideBar: React.FC<Props> = ({ goto }) => {
   }
 
   return (
-    <SidebarContainer customWidth={sidbarWidth}>
+    <SidebarContainer customWidth={sidbarWidth} style={{zIndex: 0}}>
       <SideBarMenuControl onClick={handleSideMenuShow}>
         {meniSidebarIcon.map((icon, index) => {
           return (

@@ -335,6 +335,7 @@ export const FundTransfer = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    autoComplete="off"
                     placeholder="destination account"
                     name="toAccount"
                     value={toAccount}
@@ -383,6 +384,7 @@ export const FundTransfer = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                autoComplete="off"
                 placeholder="Enter your Destination AccountHolder Name"
                 name="destinationAccountHolderName"
                 value={destinationAccountHolderName}
@@ -400,6 +402,7 @@ export const FundTransfer = () => {
                 name="amount"
                 value={amount}
                 required
+                min={0}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </Form.Group>
