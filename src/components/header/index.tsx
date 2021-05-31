@@ -22,6 +22,7 @@ import {
 } from "services/AuthService";
 import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
+import styled from "styled-components";
 
 const CardStyle = {
   border: "none",
@@ -29,9 +30,26 @@ const CardStyle = {
   paddingRight: "0.7rem",
 };
 const PopoverStyle = {
-  minWidth: "12rem",
+  minWidth: "10rem",
   marginTop: "1rem",
 };
+
+const PopoverItem = styled.div`
+  text-align: center;
+  padding: 8px;
+  background: #e7e7e7;
+  cursor: pointer;
+  font-weight: bold;
+  &:hover {
+    background: #3e4d40;
+    color: #fff;
+  }
+`;
+
+const hrStyle = {
+  border: "1px solid white",
+  margin:"0px",
+}
 
 const Header = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
@@ -50,37 +68,23 @@ const Header = (props: any) => {
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
-        <Card style={CardStyle}>
-          {/* <Card.Text>User Profile</Card.Text> */}
-        </Card>
-        <div
-          style={{
-            textAlign: "center",
-            padding: "8px",
-            background: "#f5f5f5",
-            cursor: "pointer",
-          }}
-        >
+        <Card style={CardStyle}></Card>
+        <PopoverItem>
           <Link
             to="/user-profile"
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             User Details
           </Link>
-        </div>
-        <div
-          style={{
-            textAlign: "center",
-            padding: "8px",
-            background: "#f5f5f5",
-            cursor: "pointer",
-          }}
+        </PopoverItem>
+        <hr style={hrStyle} />
+        <PopoverItem
           onClick={() => {
             setShowLogoutModal(true);
           }}
         >
           LogOut
-        </div>
+        </PopoverItem>
       </Popover.Content>
     </Popover>
   );

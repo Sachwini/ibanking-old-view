@@ -18,6 +18,7 @@ import {
 } from "styling/login/LoginStyling";
 import { MyButton } from "styling/common/ButtonStyling";
 import { IconStyle } from "styling/common/IconStyling";
+import { baseUrl } from "services/BaseUrl";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -39,35 +40,9 @@ const Login = (props: RouteComponentProps<{}>) => {
     const deviceUniqueIdentifier = DeviceUniqueIdentifier();
     let url = "";
     if (otpRequired) {
-      url =
-        "http://202.63.242.139:9091/oauth/token?client_id=" +
-        client_id +
-        "&client_secret=" +
-        client_secret +
-        "&grant_type=" +
-        grant_type +
-        "&deviceUniqueIdentifier=" +
-        deviceUniqueIdentifier +
-        "&password=" +
-        password +
-        "&username=" +
-        identity +
-        "&otp=" +
-        otp;
+      url = `${baseUrl}/oauth/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&deviceUniqueIdentifier=${deviceUniqueIdentifier}&password=${password}&username=${client_id}${identity}&otp=${otp}`;
     } else
-      url =
-        "http://202.63.242.139:9091/oauth/token?client_id=" +
-        client_id +
-        "&client_secret=" +
-        client_secret +
-        "&grant_type=" +
-        grant_type +
-        "&deviceUniqueIdentifier=" +
-        deviceUniqueIdentifier +
-        "&password=" +
-        password +
-        "&username=" +
-        identity;
+      url = `${baseUrl}/oauth/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&deviceUniqueIdentifier=${deviceUniqueIdentifier}&password=${password}&username=${client_id}${identity}`;
     try {
       const res = await axios(url, {
         method: "POST",
@@ -135,8 +110,6 @@ const Login = (props: RouteComponentProps<{}>) => {
         alert(error.response.data.error_description);
         setOtpRequired(true);
       }
-      
-
     }
   };
 

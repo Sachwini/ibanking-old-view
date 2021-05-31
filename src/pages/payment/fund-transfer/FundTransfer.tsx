@@ -379,7 +379,7 @@ export const FundTransfer = () => {
               <Form.Text className="text-warning">
                 {bankBranchId
                   ? `bankBranchId: ${bankBranchId}`
-                  : "Selected None (Please Select One ...)"}
+                  : "Selected none (Please select one... )"}
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formGridAddress1">
