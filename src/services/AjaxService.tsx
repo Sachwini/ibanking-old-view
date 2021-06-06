@@ -71,11 +71,6 @@ export function handleError(error: any, onError?: false | (() => void)) {
 
 export async function get<TResponse>(url: string) {
   return instance.get<TResponse>(url);
-  // .catch((error: any) => {
-  // handleError(error);
-  // throw error;
-  // }
-  // );
 }
 
 export async function post<TResponse>(
@@ -85,11 +80,4 @@ export async function post<TResponse>(
 ) {
   const res = await instance.post<TResponse>(url, body);
   return res && res;
-  // try {
-  //   const res = await instance.post<TResponse>(url, body);
-  //   return res && res;
-  // } catch (error) {
-  //   handleError(error, onError);
-  //   console.log(error.response.data);
-  // }
 }

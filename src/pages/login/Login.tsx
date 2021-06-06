@@ -96,20 +96,6 @@ const Login = (props: RouteComponentProps<{}>) => {
       if (error.response.data.error_description === otpExpire) {
         setOtpRequired(true);
       }
-      if (error.response.data.error_description === invalidUser) {
-        alert(error.response.data.error_description);
-      }
-      if (error.response.data.error_description === maxLogin) {
-        alert(error.response.data.error_description);
-      }
-      if (error.response.data.error_description === otpRequiredMsg) {
-        alert(error.response.data.error_description);
-        setOtpRequired(true);
-      }
-      if (error.response.data.error_description === otpRequiredMsg1) {
-        alert(error.response.data.error_description);
-        setOtpRequired(true);
-      }
     }
   };
 

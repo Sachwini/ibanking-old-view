@@ -8,10 +8,11 @@ import { getBrokerList } from "services/BrokerServices";
 import { get, post } from "services/AjaxService";
 import { brokerPayment } from "../fund-transfer/model";
 import MpinModal from "components/modals/fundTransfer/MpinModal";
-import OtpModal from "components/modals/fundTransfer/OtpModal";
-import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 import BrokerDetailModal from "components/modals/broker-payment/BrokerDetailModal";
 import { Loader } from "pages/static/Loader";
+import SuccessModal from "components/modals/broker-payment/SuccessModal";
+import { apiResponse } from "models/apiResponse";
+import OtpModal from "components/modals/broker-payment/OtpModal";
 interface selectItem {
   label: string;
   value: string;
@@ -61,10 +62,16 @@ const BrokerPayment = () => {
 
   //for request Otp
   const requestOtp = async () => {
-    const res = get<any>(
+    const req = await get<apiResponse<any>>(
       "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
         amount
     );
+    if (req && req.data.detail.otpRequired === true) {
+      const res = await post<apiResponse<any>>(
+        `api/changeBankTransferOtpStatus?status=true&otp=${otp}`,
+        {}
+      );
+    }
   };
 
   useEffect(() => {
@@ -119,7 +126,7 @@ const BrokerPayment = () => {
     setDetailModalShow(true);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     if (
       !fromAccount ||
       !amount ||
@@ -155,7 +162,6 @@ const BrokerPayment = () => {
         setIsSucessMessage(true);
         setResponseMessage({ status: "success", message: res.data.message });
         toast.success(res.data.details);
-        handleReset(e);
         console.log(res.data);
       }
     } catch (error) {
@@ -172,8 +178,10 @@ const BrokerPayment = () => {
 
   const handleOtpRequired = () => {
     if (parseFloat(amount) <= 5000) {
-      setOtpRequired(false);
-      handleSubmit(e);
+      {
+        setOtpRequired(false);
+        handleSubmit();
+      }
     } else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
       requestOtp();
@@ -187,7 +195,7 @@ const BrokerPayment = () => {
         {}
       );
       if (res) {
-        handleSubmit(e);
+        handleSubmit();
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -262,7 +270,7 @@ const BrokerPayment = () => {
                     <Form.Text className="text-info">
                       {brokerCode
                         ? `Broker Id: ${brokerCode}`
-                        : "Selected None (Please Select One ...)"}
+                        : "selected none (please select one... )"}
                     </Form.Text>
                   </Form.Group>
                 </div>
@@ -380,6 +388,7 @@ const BrokerPayment = () => {
           amount={amount}
           charge={charge}
           clientName={clientName}
+          clientId={clientId}
           mobileNumber={mobileNumber}
           validDetails={fullDetails}
           confirmModalCancleButton={(event: boolean) =>
@@ -405,6 +414,7 @@ const BrokerPayment = () => {
           handleModalShow={(event: boolean) => setOtpRequired(event)}
           userOTP={(otp: string) => setOtp(otp)}
           modalFormSubmitHandle={changeOtpStatus}
+          resendOtp={() => requestOtp}
         />
       ) : (
         ""
@@ -414,6 +424,14 @@ const BrokerPayment = () => {
           successModalShow={isSuccessMessage}
           handleModalShow={(e) => setIsSucessMessage(e)}
           responseMessage={responseMessage}
+          fromAccount={fromAccount}
+          toAccount={broker ? brokerName : ""}
+          amount={amount}
+          charge={charge}
+          clientId={clientId}
+          clientName={clientName}
+          mobileNumber={mobileNumber}
+          mpin={mpin}
         />
       ) : (
         ""
@@ -421,9 +439,4 @@ const BrokerPayment = () => {
     </>
   );
 };
-
-function e(e: any) {
-  throw new Error("Function not implemented.");
-}
-
 export default BrokerPayment;

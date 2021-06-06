@@ -8,6 +8,9 @@ export const initialState = {
   menuListId: "",
   isLogin: token !== undefined,
   customerDetails: {} !== undefined,
+  fundTransferDetails: {},
+  bankTransferDetails:{},
+  brokerPaymentDetails:{},
 };
 
 const reducer = (state: any, action: any) => {
@@ -45,6 +48,21 @@ const reducer = (state: any, action: any) => {
       return {
         ...state,
         customerDetails: action.customerDetail,
+      };
+    case "FUND_TRANSFER_DETAILS":
+      return {
+        ...state,
+        fundTransferDetails: action.fundTransferDetails,
+      };
+    case "BANK_TRANSFER_DETAILS":
+      return {
+        ...state,
+        bankTransferDetails: action.bankTransferDetails,
+      };
+    case "BROKER_PAYMENT_DETAILS":
+      return {
+        ...state,
+        brokerPaymentDetails: action.brokerPaymentDetails,
       };
 
     default:

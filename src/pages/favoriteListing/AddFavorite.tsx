@@ -8,7 +8,8 @@ import { post } from "services/AjaxService";
 const AddFavorite = () => {
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [destinationBankName, setDestinationBankName] = useState<string>("");
-  const [destinationAccountHolderName, setDestinationAccountHolderName] = useState<string>("");
+  const [destinationAccountHolderName, setDestinationAccountHolderName] =
+    useState<string>("");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
 
   const handleReset = (e: any) => {
@@ -23,26 +24,23 @@ const AddFavorite = () => {
       reminderType: "OneTime",
       serviceInfoType: "CONNECT_IPS",
       data: {
-      destinationAccountNumber: accountNumber,
-      destinationBankName: destinationBankName,
-      destinationAccountHolderName: destinationAccountHolderName,
-    }
+        destinationAccountNumber: accountNumber,
+        destinationBankName: destinationBankName,
+        destinationAccountHolderName: destinationAccountHolderName,
+      },
     };
-    if (!accountNumber || !destinationBankName ||!destinationAccountHolderName)
-      return
+    if (!accountNumber || !destinationBankName || !destinationAccountHolderName)
+      return;
     try {
       const res = await post<any>("/api/saveuserpayment", model);
       if (res) {
-        toast.success(res.data.message)
+        toast.success(res.data.message);
         handleReset(e);
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
-      
   };
-
-  
 
   return (
     <>
@@ -75,6 +73,7 @@ const AddFavorite = () => {
                     name="accountNumber"
                     value={accountNumber}
                     required
+                    autoComplete="off"
                     onChange={(e) => setAccountNumber(e.target.value)}
                   />
                 </Form.Group>
@@ -91,6 +90,7 @@ const AddFavorite = () => {
                       name="destinationAccountHolderName"
                       value={destinationAccountHolderName}
                       required
+                      autoComplete="off"
                       onChange={(e) =>
                         setDestinationAccountHolderName(e.target.value)
                       }
@@ -108,6 +108,7 @@ const AddFavorite = () => {
                       name="destinationBankName"
                       value={destinationBankName}
                       required
+                      autoComplete="off"
                       onChange={(e) => setDestinationBankName(e.target.value)}
                     />
                   </Form.Group>

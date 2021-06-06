@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -18,26 +18,13 @@ const OTPModal = (props: Props) => {
     props;
 
   const [OTPInputShow, setOTPInputShow] = useState<boolean>(true);
-  const [showRequestOTPAgain, setShowRequestOTPAgain] =
-    useState<boolean>(false);
-  const [counter, setCounter] = useState<number>(90);
 
-  // React.useEffect(() => {
-  //   setInterval(() => {
-  //     setCounter(counter - 1);
-  //   }, 1000);
-  //   return () => clearInterval(1000);
-  // }, [counter]);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
-  const showOTPRequest = () => {
-    setTimeout(() => {
-      setShowRequestOTPAgain(!showRequestOTPAgain);
-    }, 90000);
-  };
-
-  if (OTPResponse.message === "failed") {
-    showOTPRequest();
-  }
+  useEffect(() => {
+    setTimeout(() => setButtonDisabled(false), 61000);
+    console.log("Timer for 61 sec");
+  }, [buttonDisabled]);
 
   return (
     <Modal
@@ -63,6 +50,7 @@ const OTPModal = (props: Props) => {
                 type={`${OTPInputShow ? "password" : "text"}`}
                 placeholder="Provide Your OTP"
                 required
+                autoComplete="off"
                 onChange={(e) => userOTP(e.target.value)}
               />
               <span
@@ -95,28 +83,17 @@ const OTPModal = (props: Props) => {
               </Form.Text>
             )}
           </Form.Group>
-
-          {showRequestOTPAgain ? (
-            <div className="py-3">
-              <small className="d-block py-2">Not Getting OTP On Mobile?</small>
-              <span
-                style={{
-                  fontSize: "10px",
-                  padding: "6px",
-                  backgroundColor: "#0fa181",
-                  color: "white",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-                onClick={() => resendOTPHandle()}
-              >
-                Request Again
-              </span>
-            </div>
-          ) : (
-            // <span>Request Again For OTP Enabling in {counter} seconds </span>
-            ""
-          )}
+          <Button
+            disabled={buttonDisabled}
+            onClick={() => {
+              {
+                resendOTPHandle();
+                setButtonDisabled(true);
+              }
+            }}
+          >
+            Resend
+          </Button>
 
           <Button variant="primary" type="submit" style={{ float: "right" }}>
             Submit

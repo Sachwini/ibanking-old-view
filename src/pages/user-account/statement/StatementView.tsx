@@ -1,10 +1,13 @@
 import { Loader } from "pages/static/Loader";
 import { useState } from "react";
-import { Card, ListGroup, Table } from "react-bootstrap";
+import { Button, Card, Table } from "react-bootstrap";
 import { getNpDate } from "services/dateService";
 import { formatLakh } from "services/numberService";
 import { StatementDataType } from "./model";
 import OurPagination from "./OurPagination";
+import { GrDownload } from "react-icons/gr";
+import { baseUrl } from "services/BaseUrl";
+import { toast } from "react-toastify";
 
 const StatementView = (props: {
   statementData?: StatementDataType;
@@ -31,6 +34,16 @@ const StatementView = (props: {
     setCurrentPage(numbers);
   };
 
+  const downloadUrl = statementData?.pdfUrl;
+  const handleDownload = async () => {
+    console.log("download called");
+    try {
+      await window.open(`${baseUrl}`.concat(`${downloadUrl}`));
+    } catch {
+      toast.error("Download not available");
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -44,7 +57,9 @@ const StatementView = (props: {
         <span className="pr-4">
           Opening Balance: Rs: {formatLakh(statementData?.openingBalance || 0)}
         </span>
-        <span>Closing Balance: Rs: {formatLakh(statementData?.closingBalance || 0)}</span>
+        <span>
+          Closing Balance: Rs: {formatLakh(statementData?.closingBalance || 0)}
+        </span>
       </Card.Header>
       <Table bordered size="sm">
         <thead>
@@ -58,17 +73,41 @@ const StatementView = (props: {
           </tr>
         </thead>
         <tbody>
-          {currentPageStatement?.map(item => <tr>
-            <td>{getNpDate(item.transactionDate as any)}</td>
-            <td>{item.transactionDate}</td>
-            <td>{item.remarks}</td>
-            <td style={{textAlign: 'right'}}>{formatLakh(item.debit || 0)}</td>
-            <td style={{textAlign: 'right'}}>{formatLakh(item.credit || 0)}</td>
-            <td style={{textAlign: 'right'}}>{formatLakh(item.balance || 0)}</td>
-          </tr>)}
+          {currentPageStatement?.map((item, index) => (
+            <tr key={index}>
+              <td>{getNpDate(item.transactionDate as any)}</td>
+              <td>{item.transactionDate}</td>
+              <td>{item.remarks}</td>
+              <td style={{ textAlign: "right" }}>
+                {formatLakh(item.debit || 0)}
+              </td>
+              <td style={{ textAlign: "right" }}>
+                {formatLakh(item.credit || 0)}
+              </td>
+              <td style={{ textAlign: "right" }}>
+                {formatLakh(item.balance || 0)}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
       <Card.Footer>
+        {statementData ? (
+          <Button
+            onClick={handleDownload}
+            className="m-0 float-left"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "#a60812",
+              border: "none",
+            }}
+          >
+            <GrDownload style={{ marginRight: "6px" }} /> Download
+          </Button>
+        ) : (
+          ""
+        )}
         <OurPagination paginate={paginate} />
       </Card.Footer>
     </Card>

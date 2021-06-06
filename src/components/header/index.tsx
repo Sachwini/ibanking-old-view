@@ -69,14 +69,14 @@ const Header = (props: any) => {
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
         <Card style={CardStyle}></Card>
-        <PopoverItem>
           <Link
             to="/user-profile"
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
+        <PopoverItem>
             User Details
-          </Link>
         </PopoverItem>
+          </Link>
         <hr style={hrStyle} />
         <PopoverItem
           onClick={() => {

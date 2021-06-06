@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Container } from "react-bootstrap";
@@ -24,35 +24,15 @@ const Statement = () => {
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
 
-  // useEffect(() => {
-  //   let isSubscribed = true;
-  //   setLoading(true);
-
-  //   const loadData = async () => {
-  //     const res = await get<apiResponse<StatementDataType>>(
-  //       `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}`
-  //     );
-  //     if (isSubscribed) {
-  //       setStatementData(res.data.details);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   loadData();
-  //   return () => {
-  //     isSubscribed = false;
-  //   };
-  // }, [formatedStartDate, formatedEndDate, AccNumber]); 
-
-  const handleShow = async() => {
+  const handleShow = async () => {
     setLoading(true);
     const res = await get<apiResponse<StatementDataType>>(
-      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}`
+      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}&pdf=true`
     );
     setStatementData(undefined);
-      setStatementData(res.data.details);
-      setLoading(false);
-  }
+    setStatementData(res.data.details);
+    setLoading(false);
+  };
 
   return (
     <Container>

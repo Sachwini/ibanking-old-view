@@ -284,15 +284,9 @@ export const BankTransfer = () => {
         {}
       );
       if (res) {
-        toast.success(res.data.message);
-
-        // && res.data.status.toLowerCase() === "success") ||
-        // res.data.message.toLowerCase() ===
-        //   "OTP For Bank Transfer Enabled Successfully"
-
         // Calling Fund Transfer API
         fundTransferAPI();
-      }
+      } 
     } catch (error: any) {
       if (
         error.response.data.status === "FAILURE" &&
@@ -332,7 +326,6 @@ export const BankTransfer = () => {
           status: "success",
           message: bankTransfer.data.details,
         });
-        // toast.success(bankTransfer.data.details);
         console.log("tansfer response : ", bankTransfer.data);
       }
     } catch (error: any) {
@@ -344,16 +337,6 @@ export const BankTransfer = () => {
         setSuccessModalShow(true);
         toast.error(error.response.data.details);
       }
-      // if (
-      //   error.response.data.status.message ===
-      //   "OTP Expired Please Request a New One"
-      // ) {
-      //   resendOTPHandle();
-      //   setOTPRequiredMessage(
-      //     "OTP Expire!!! New OTP is send to your Phone. Please Enter New One..."
-      //   );
-      //   setOTPModalShow(true);
-      // }
     }
     // calling Fund Transfer Response Modal
     setSuccessModalShow(true);
@@ -517,8 +500,16 @@ export const BankTransfer = () => {
 
       <SuccessModal
         successModalShow={successModalShow}
-        fundTransferResponse={fundTransferResponse}
+        bankTransferResponse={fundTransferResponse}
         successModalShowHandle={(e) => setSuccessModalShow(e)}
+        fromAccount={fromAccount}
+        toAccount={toAccount}
+        DESTBankName={DESTBankName}
+        DESTAccHolderName={DESTAccHolderName}
+        DESTBranchName={DESTBranchName}
+        transctionAmount={transctionAmount}
+        transctionCharge={transctionCharge}
+        mpin={mpin}
       />
       {loading ? (
         <Loader />
@@ -540,19 +531,6 @@ export const BankTransfer = () => {
                   <option value="...">...</option>
                 </Form.Control>
               </Form.Group>
-              {/* <Form.Group controlId="bankTransfer">
-                <Form.Label className="font-weight-bold">
-                  From Account
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="from account"
-                  name="fromAccount"
-                  disabled
-                  value={fromAccount}
-                  onChange={(e) => setFromAccount(e.target.value)}
-                />
-              </Form.Group> */}
               <Form.Group controlId="bankTransfer" aria-required>
                 <Form.Label className="font-weight-bold">
                   Select Bank

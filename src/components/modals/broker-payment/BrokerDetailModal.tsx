@@ -8,6 +8,7 @@ export interface Props {
   fromAccount: string;
   toAccount: string;
   clientName: string;
+  clientId: string;
   mobileNumber: string;
   amount: string;
   charge: number;
@@ -23,6 +24,7 @@ function BrokerDetailModal(props: Props) {
     fromAccount,
     toAccount,
     clientName,
+    clientId,
     mobileNumber,
     amount,
     charge,
@@ -67,6 +69,10 @@ function BrokerDetailModal(props: Props) {
             <div className="d-flex justify-content-between mb-2">
               <span>Client Name: </span>
               <span className="text-muted">{clientName}</span>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <span>Client Id: </span>
+              <span className="text-muted">{clientId}</span>
             </div>
             <div className="d-flex justify-content-between mb-2">
               <span>Mobile Number: </span>

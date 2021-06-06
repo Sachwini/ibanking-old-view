@@ -30,9 +30,21 @@ function App() {
 
   /* ----------For Payment Import--------------------- */
   const Transfer = React.lazy(() => import("pages/payment/fund-transfer"));
+  const FundTransferSuccessConfirmation = React.lazy(
+    () =>
+      import("components/modals/fundTransfer/FundTransferSuccessConfirmation")
+  );
+  const BankTransferSuccessConfirmation = React.lazy(
+    () =>
+      import("components/modals/bank-transfer/BankTransferSuccessConfirmation")
+  );
   const BulkPayment = React.lazy(() => import("pages/payment/bulk-payment"));
   const BrokerPayment = React.lazy(
     () => import("pages/payment/broker-payment/BrokerPayment")
+  );
+  const BrokerPaymentSuccessConfirmation = React.lazy(
+    () =>
+      import("components/modals/broker-payment/BrokerPaymentSuccessConfirmation")
   );
   const QuickPay = React.lazy(() => import("pages/payment/quick-pay"));
   const VendorPayment = React.lazy(
@@ -87,23 +99,29 @@ function App() {
 
             {/* ---------- For Payment Routing--------------------- */}
             <Route path="/fund-transfer" component={Transfer} />
+            <Route
+              path="/fund-transfer-success-confirmation"
+              component={FundTransferSuccessConfirmation}
+            />
+            <Route
+              path="/bank-transfer-success-confirmation"
+              component={BankTransferSuccessConfirmation}
+            />
             <Route path="/bulk-payment" component={BulkPayment} />
             <Route path="/vendor-payment" component={VendorPayment} />
             <Route path="/broker-payment" component={BrokerPayment} />
+            <Route
+              path="/broker-payment-success-confirmation"
+              component={BrokerPaymentSuccessConfirmation}
+            />
             <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
 
             {/* ---------- For Setting Routing--------------------- */}
-            <Route
-              path="/configure-service"
-              component={ConfigureService}
-            />
+            <Route path="/configure-service" component={ConfigureService} />
             <Route path="/configure-theme" component={ThemeSetting} />
-            <Route
-              path="/add-favorite"
-              component={AddFavorite}
-            />
+            <Route path="/add-favorite" component={AddFavorite} />
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route path="/logs" component={Activities} />
