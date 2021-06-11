@@ -3,12 +3,16 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useStateValue } from "state-provider/StateProvider";
 
 const ProfileCard = () => {
-  const [{ customerDetails }] = useStateValue();
+  const [{ customerDetails, switchAccount }] = useStateValue();
   console.log("fromCard", customerDetails);
   return (
     <div>
       <Card
-        style={{ backgroundColor: "#5bac47", minWidth: "340px", color: "white" }}
+        style={{
+          backgroundColor: "#5bac47",
+          minWidth: "340px",
+          color: "white",
+        }}
       >
         <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
           <div style={{ width: "20%" }}>
@@ -22,13 +26,18 @@ const ProfileCard = () => {
                 {customerDetails?.fullName}
               </Card.Title>
               <Card.Text className="m-0">
-                {customerDetails?.accountDetail[0]["accountNumber"]}
+                {customerDetails?.accountDetail[switchAccount]["accountNumber"]}
               </Card.Text>
               <Card.Text>
-                {customerDetails?.accountDetail[0]["accountType"]}
+                {customerDetails?.accountDetail[switchAccount]["accountType"]}
               </Card.Text>
               <Card.Text>
-                NPR. {customerDetails?.accountDetail[0]["availableBalance"]}
+                NPR.{" "}
+                {
+                  customerDetails?.accountDetail[switchAccount][
+                    "availableBalance"
+                  ]
+                }
               </Card.Text>
             </div>
           )}

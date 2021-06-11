@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { Badge, OverlayTrigger, Image, Popover, Card } from "react-bootstrap";
+import { Badge, OverlayTrigger, Image, Popover } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
 import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
@@ -24,11 +24,6 @@ import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
 
-const CardStyle = {
-  border: "none",
-  paddingLeft: "0.7rem",
-  paddingRight: "0.7rem",
-};
 const PopoverStyle = {
   minWidth: "10rem",
   marginTop: "1rem",
@@ -68,7 +63,6 @@ const Header = (props: any) => {
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
-        <Card style={CardStyle}></Card>
           <Link
             to="/user-profile"
             style={{ color: "inherit", textDecoration: "inherit" }}

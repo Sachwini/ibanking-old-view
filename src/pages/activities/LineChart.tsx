@@ -1,20 +1,31 @@
 import { useEffect, useState } from "react";
-import { GetAccountNumber } from "helper/CustomerData";
+import { GetAccountNumber, GetAccountNumber2 } from "helper/CustomerData";
 import { Card } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { getGraph } from "services/BankServices";
+import { useStateValue } from "state-provider/StateProvider";
 
 function LineChart() {
   const accountNumber = GetAccountNumber();
+  const accountNumber2 = GetAccountNumber2();
   const [days, setDays] = useState<string[]>([]);
   const [balance, setBalance] = useState<any>([]);
+  const [{ switchAccount }] = useStateValue();
+
+  let actualAccountNumber = "";
+  if (switchAccount === 0) {
+    actualAccountNumber = accountNumber;
+  }
+  if (switchAccount === 1) {
+    actualAccountNumber = accountNumber2;
+  }
 
   const loadDays: string[] = [];
   const loadBalance: number[] = [];
   const getChartData = async () => {
     try {
-      if (accountNumber !== "") {
-        const graphData = await getGraph(accountNumber);
+      if (actualAccountNumber !== "") {
+        const graphData = await getGraph(actualAccountNumber);
         if (graphData) {
           graphData.forEach((x: any) => loadDays.push(x.day));
           graphData.forEach((x: any) => loadBalance.push(x.balance));
@@ -23,7 +34,7 @@ function LineChart() {
         }
       }
     } catch (error) {
-      console.log(error); 
+      console.log(error);
     }
   };
 
@@ -34,7 +45,7 @@ function LineChart() {
       isSubscribed = false;
     };
   }, []);
-  
+
   const data = {
     labels: days,
     datasets: [

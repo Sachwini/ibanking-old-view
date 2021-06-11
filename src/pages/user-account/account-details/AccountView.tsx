@@ -7,7 +7,7 @@ import { Loader } from "pages/static/Loader";
 import { Link } from "react-router-dom";
 
 const AccountView = () => {
-  const [{ customerDetails }] = useStateValue();
+  const [{ customerDetails, switchAccount }] = useStateValue();
   return (
     <>
       {!customerDetails?.accountDetail ? (
@@ -25,9 +25,20 @@ const AccountView = () => {
                   </Col>
                   <Col sm={12} md={9}>
                     <p>
-                      {customerDetails?.accountDetail[0]["accountType"]} Account
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "accountType"
+                        ]
+                      }{" "}
+                      Account
                     </p>
-                    <p>{customerDetails?.accountDetail[0]["accountNumber"]}</p>
+                    <p>
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "accountNumber"
+                        ]
+                      }
+                    </p>
                   </Col>
                 </Row>
               </Col>
@@ -37,14 +48,22 @@ const AccountView = () => {
                     <p>Available Balance</p>
                     <p>
                       <strong className="npr">NPR.</strong>{" "}
-                      {customerDetails?.accountDetail[0]["availableBalance"]}
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "availableBalance"
+                        ]
+                      }
                     </p>
                   </Col>
                   <Col sm={12} md={6}>
                     <p>Acutal Balance</p>
                     <p>
                       <strong className="npr">NPR.</strong>{" "}
-                      {customerDetails?.accountDetail[0]["availableBalance"]}
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "availableBalance"
+                        ]
+                      }
                     </p>
                   </Col>
                 </Row>

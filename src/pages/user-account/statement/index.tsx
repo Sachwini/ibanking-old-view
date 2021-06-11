@@ -6,8 +6,11 @@ import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
 import { StatementDataType } from "./model";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
-import { GetAccountNumber } from "helper/CustomerData";
+import {
+  GetAllAccountNumber,
+} from "helper/CustomerData";
 import StatementView from "./StatementView";
+import { useStateValue } from "state-provider/StateProvider";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -15,19 +18,27 @@ const Statement = () => {
   const [startDate, setStartDate] = useState(new Date(`${threeMonthBackDate}`));
   const [endDate, setEndDate] = useState(new Date());
   const [statementData, setStatementData] = useState<StatementDataType>();
+  const [{ switchAccount }] = useStateValue();
 
   //Use state for Pagination
   const [loading, setLoading] = useState<boolean>(false);
 
   // Getting Required Data From Helper
-  const AccNumber = GetAccountNumber();
+  const accountNumber = GetAllAccountNumber();
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
+
+  let actualAccountNumber = "";
+  switch (switchAccount) {
+    case switchAccount:
+      actualAccountNumber = accountNumber[switchAccount];
+      break;
+  }
 
   const handleShow = async () => {
     setLoading(true);
     const res = await get<apiResponse<StatementDataType>>(
-      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${AccNumber}&toDate=${formatedEndDate}&pdf=true`
+      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
     );
     setStatementData(undefined);
     setStatementData(res.data.details);

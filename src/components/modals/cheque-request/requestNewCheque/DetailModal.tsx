@@ -1,25 +1,22 @@
-import { Button, Modal, ListGroup } from "react-bootstrap";
-import "../../modals/index.css";
-
+import { Button, Modal } from "react-bootstrap";
+import "../../../modals/index.css";
 export interface Props {
   modalShow: boolean;
   handleModalShow: (show: boolean) => void;
   modalFormSubmitHandle: (show: boolean) => void;
-  accountNumber: string;
-  destinationBankName: string;
-  destinationAccountHolderName: string; 
-  confirmModalCancleButton: (show: boolean) => void;
+  fromAccount: string;
+  chequeLeaves: string;
+  cancleButton: (show: boolean) => void;
 }
 
-function ConfirmModal(props: Props) {
+function DetailModal(props: Props) {
   const {
     modalShow,
     handleModalShow,
     modalFormSubmitHandle,
-    accountNumber,
-    destinationBankName,
-    destinationAccountHolderName,
-    confirmModalCancleButton,
+    fromAccount,
+    chequeLeaves,
+    cancleButton,
   } = props;
 
   const handleSubmit = (e: any) => {
@@ -38,26 +35,22 @@ function ConfirmModal(props: Props) {
       style={{ zIndex: 1400 }}
     >
       <Modal.Header closeButton className="modal_header">
-        <Modal.Title as="h6">Details of your Favorite Account</Modal.Title>
+        <Modal.Title as="h6">Details of your Cheque Request</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ padding: "1em" }} className="modal_body">
-        <strong className="d-block mb-2">Account Details</strong>
+        <strong className="d-block mb-2">Input Details</strong>
         <div className="d-flex justify-content-between mb-2">
           <span>Account Number: </span>
-          <span className="text-muted">{accountNumber}</span>
+          <span className="text-muted">{fromAccount}</span>
         </div>
         <div className="d-flex justify-content-between mb-2">
-          <span>Destination Account Holder Name: </span>
-          <span className="text-muted">{destinationAccountHolderName}</span>
-        </div>
-        <div className="d-flex justify-content-between mb-2">
-          <span>Destination BankName: </span>
-          <span className="text-muted">{destinationBankName}</span>
+          <span>Cheque Leaves: </span>
+          <span className="text-muted">{chequeLeaves}</span>
         </div>
         <div className="float-right">
           <Button
             variant="secondary"
-            onClick={() => confirmModalCancleButton(false)}
+            onClick={() => cancleButton(false)}
             style={{ padding: "7px 12px", marginRight: "1em" }}
           >
             Cancel
@@ -68,7 +61,7 @@ function ConfirmModal(props: Props) {
             style={{ padding: "7px 12px" }}
             onClick={handleSubmit}
           >
-            Confirm
+            Submit
           </Button>
         </div>
       </Modal.Body>
@@ -76,4 +69,4 @@ function ConfirmModal(props: Props) {
   );
 }
 
-export default ConfirmModal;
+export default DetailModal;

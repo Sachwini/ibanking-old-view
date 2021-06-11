@@ -44,7 +44,9 @@ function App() {
   );
   const BrokerPaymentSuccessConfirmation = React.lazy(
     () =>
-      import("components/modals/broker-payment/BrokerPaymentSuccessConfirmation")
+      import(
+        "components/modals/broker-payment/BrokerPaymentSuccessConfirmation"
+      )
   );
   const QuickPay = React.lazy(() => import("pages/payment/quick-pay"));
   const VendorPayment = React.lazy(
@@ -52,6 +54,9 @@ function App() {
   );
 
   /* ----------For request Import--------------------- */
+  const ChequeRequest = React.lazy(
+    () => import("pages/request/cheque-request/index")
+  );
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
@@ -118,7 +123,10 @@ function App() {
 
             {/* ---------- For Request Routing--------------------- */}
 
+            <Route path="/cheque-request" component={ChequeRequest} />
+
             {/* ---------- For Setting Routing--------------------- */}
+
             <Route path="/configure-service" component={ConfigureService} />
             <Route path="/configure-theme" component={ThemeSetting} />
             <Route path="/add-favorite" component={AddFavorite} />

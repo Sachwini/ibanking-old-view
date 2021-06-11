@@ -12,7 +12,7 @@ import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 
 const Profile = () => {
-  const [{ customerDetails }] = useStateValue();
+  const [{ customerDetails, switchAccount }] = useStateValue();
   const [image, setImage] = useState<string>("");
   console.log("from profile", customerDetails);
 
@@ -23,11 +23,11 @@ const Profile = () => {
     letterSpacing: "1px",
   };
 
-  const handleImageChange = (e:any) => {
+  const handleImageChange = (e: any) => {
     if (e.target.files.length) {
-      setImage(e.target.files[0])
-    } 
-  }
+      setImage(e.target.files[0]);
+    }
+  };
 
   const handleUpload = async (e: any) => {
     e.preventDefault();
@@ -59,7 +59,13 @@ const Profile = () => {
               <label htmlFor="upload-button">
                 <FcOldTimeCamera size={40} className="camera_icon" />
               </label>
-              {image ? <button className="upload_button" onClick={handleUpload}>upload</button> : ""}
+              {image ? (
+                <button className="upload_button" onClick={handleUpload}>
+                  upload
+                </button>
+              ) : (
+                ""
+              )}
               <input
                 id="upload-button"
                 type="file"
@@ -176,21 +182,39 @@ const Profile = () => {
                           <tr>
                             <th scope="row">Branch Code</th>
                             <td>
-                              {customerDetails?.accountDetail[0]["branchCode"]}
+                              {
+                                customerDetails?.accountDetail[switchAccount][
+                                  "branchCode"
+                                ]
+                              }
                             </td>
                           </tr>
                           <tr>
                             <th scope="row">Main Code</th>
                             <td>
-                              {customerDetails?.accountDetail[0]["mainCode"]}
+                              {
+                                customerDetails?.accountDetail[switchAccount][
+                                  "mainCode"
+                                ]
+                              }
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Primary Account</th>
+                            <td>
+                              {customerDetails?.accountDetail[switchAccount][
+                                "primary"
+                              ] === "true"
+                                ? "yes"
+                                : "No"}
                             </td>
                           </tr>
                           <tr>
                             <th scope="row">Mobile Banking</th>
                             <td>
-                              {customerDetails?.accountDetail[0][
+                              {customerDetails?.accountDetail[switchAccount][
                                 "mobileBanking"
-                              ]
+                              ] === "true"
                                 ? "yes"
                                 : "No"}
                             </td>
@@ -198,7 +222,9 @@ const Profile = () => {
                           <tr>
                             <th scope="row">SMS Service</th>
                             <td>
-                              {customerDetails?.accountDetail[0]["sms"]
+                              {customerDetails?.accountDetail[switchAccount][
+                                "sms"
+                              ] === "true"
                                 ? "yes"
                                 : "No"}
                             </td>
@@ -206,18 +232,28 @@ const Profile = () => {
                           <tr>
                             <th scope="row">Branch Name</th>
                             <td>
-                              {customerDetails?.accountDetail[0]["branchName"]}
+                              {
+                                customerDetails?.accountDetail[switchAccount][
+                                  "branchName"
+                                ]
+                              }
                             </td>
                           </tr>
                           <tr>
                             <th scope="row">Id</th>
-                            <td>{customerDetails?.accountDetail[0]["id"]}</td>
+                            <td>
+                              {
+                                customerDetails?.accountDetail[switchAccount][
+                                  "id"
+                                ]
+                              }
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">Account Number</th>
                             <td>
                               {
-                                customerDetails?.accountDetail[0][
+                                customerDetails?.accountDetail[switchAccount][
                                   "accountNumber"
                                 ]
                               }
@@ -227,7 +263,7 @@ const Profile = () => {
                             <th scope="row">Account Holder Name</th>
                             <td>
                               {
-                                customerDetails?.accountDetail[0][
+                                customerDetails?.accountDetail[switchAccount][
                                   "accountHolderName"
                                 ]
                               }
@@ -238,7 +274,7 @@ const Profile = () => {
                             <td>
                               NPR.{" "}
                               {
-                                customerDetails?.accountDetail[0][
+                                customerDetails?.accountDetail[switchAccount][
                                   "accruedInterest"
                                 ]
                               }
@@ -249,7 +285,7 @@ const Profile = () => {
                             <td>
                               NPR.{" "}
                               {
-                                customerDetails?.accountDetail[0][
+                                customerDetails?.accountDetail[switchAccount][
                                   "availableBalance"
                                 ]
                               }

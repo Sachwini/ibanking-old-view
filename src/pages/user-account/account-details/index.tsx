@@ -4,7 +4,7 @@ import { useStateValue } from "state-provider/StateProvider";
 import AccountView from "./AccountView";
 
 function Account() {
-  const [{ customerDetails }] = useStateValue();
+  const [{ customerDetails, switchAccount }] = useStateValue();
   return (
     <Container>
       <PageTitle title="Account" subTitle="manage and view your account" />
@@ -13,11 +13,11 @@ function Account() {
         accountCode={
           !customerDetails?.accountDetail
             ? ""
-            : customerDetails?.accountDetail[0]["clientCode"]
+            : customerDetails?.accountDetail[switchAccount]["clientCode"]
         }
       />
 
-      <AccountView /> 
+      <AccountView />
     </Container>
   );
 }

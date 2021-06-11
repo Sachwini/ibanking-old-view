@@ -9,8 +9,9 @@ export const initialState = {
   isLogin: token !== undefined,
   customerDetails: {} !== undefined,
   fundTransferDetails: {},
-  bankTransferDetails:{},
-  brokerPaymentDetails:{},
+  bankTransferDetails: {},
+  brokerPaymentDetails: {},
+  switchAccount: 0,
 };
 
 const reducer = (state: any, action: any) => {
@@ -42,6 +43,11 @@ const reducer = (state: any, action: any) => {
       return {
         ...state,
         token: action.value,
+      };
+    case "SWITCH_ACCOUNT":
+      return {
+        ...state,
+        switchAccount: action.value,
       };
 
     case "USER_DETAILS":

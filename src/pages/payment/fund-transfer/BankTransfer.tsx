@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { GetAccountNumber } from "helper/CustomerData";
+import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
 import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
 import { toast } from "react-toastify";
@@ -12,11 +12,12 @@ import OTPModal from "components/modals/bank-transfer/OTPModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { IconStyle } from "styling/common/IconStyling";
-import { RiUserStarLine, RiBankLine } from "react-icons/ri"; 
+import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { bankBranchType, BankList } from "./model";
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
+  const getAllAccountNumber = GetAllAccountNumber();
 
   // For Bank Handle
   const [DESTBankList, setDESTBankList] = useState<BankList[]>([]);
@@ -69,7 +70,7 @@ export const BankTransfer = () => {
       );
       if (res) {
         setFavoriteAcc(res.data.details);
-        console.log(favoriteAcc); 
+        console.log(favoriteAcc);
       }
     } catch (error) {
       console.log(error);
@@ -286,7 +287,7 @@ export const BankTransfer = () => {
       if (res) {
         // Calling Fund Transfer API
         fundTransferAPI();
-      } 
+      }
     } catch (error: any) {
       if (
         error.response.data.status === "FAILURE" &&
@@ -472,6 +473,7 @@ export const BankTransfer = () => {
         userMpin={(mPin: string) => setMpin(mPin)}
         mPinModalShow={mPinModalShow}
         mPinFormSubmitHandle={(e) => mPinFormSubmitHandle(e)}
+        cancleButton={(event: boolean) => setMpinModalShow(false)}
       />
 
       <ConfirmDetailModal
@@ -496,6 +498,7 @@ export const BankTransfer = () => {
         OTPResponse={OTPResponse}
         OTPFormHandle={(e) => OTPFormHandle(e)}
         resendOTPHandle={() => resendOTPHandle()}
+        cancleButton={(event: boolean) => setOTPModalShow(false)}
       />
 
       <SuccessModal
@@ -527,8 +530,15 @@ export const BankTransfer = () => {
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                 >
-                  <option value={accountNumber}>{accountNumber}</option>
-                  <option value="...">...</option>
+                  {!getAllAccountNumber ? (
+                    <option></option>
+                  ) : (
+                    getAllAccountNumber?.map((accNum: any) => (
+                      <option value={accNum} key={accNum}>
+                        {accNum}
+                      </option>
+                    ))
+                  )}
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="bankTransfer" aria-required>
