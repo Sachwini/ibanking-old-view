@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import "../../modals/index.css";
 
 export interface Props {
   mpin: (mpin: string) => void;
   modalShow: boolean;
   handleModalShow: (show: boolean) => void;
   modalFormSubmitHandle: (e: React.FormEvent) => void;
+  cancleButton: (show: boolean) => void;
 }
 
 const MpinModal = (props: Props) => {
-  const { modalShow, handleModalShow, mpin, modalFormSubmitHandle } = props;
+  const {
+    modalShow,
+    handleModalShow,
+    mpin,
+    modalFormSubmitHandle,
+    cancleButton,
+  } = props;
   const [mPinInputShow, setMpinInputShow] = useState<boolean>(true);
   return (
     <Modal
@@ -22,10 +30,10 @@ const MpinModal = (props: Props) => {
       centered
       style={{ zIndex: 1400 }}
     >
-      <Modal.Header closeButton>
-        <Modal.Title as="h6">provide Your Transaction pin</Modal.Title> 
+      <Modal.Header closeButton className="modal_header">
+        <Modal.Title as="h6">provide Your Transaction pin</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ padding: "2em 3em" }}>
+      <Modal.Body style={{ padding: "2em 3em" }} className="modal_body">
         <Form
           onSubmit={(e) => {
             modalFormSubmitHandle(e);
@@ -54,18 +62,33 @@ const MpinModal = (props: Props) => {
                 {mPinInputShow ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </span>
             </InputGroup>
-              <Form.Text className="text-muted">
-                provide your transaction pin
-              </Form.Text>
+            <Form.Text className="text-muted">
+              provide your transaction pin
+            </Form.Text>
           </Form.Group>
+          <Modal.Footer>
+            <div className="float-right">
+              <Button
+                variant="secondary"
+                onClick={() => cancleButton(false)}
+                style={{ padding: "7px 12px", marginRight: "1em" }}
+              >
+                Cancel
+              </Button>
 
-          <Button variant="primary" type="submit" style={{ float: "right" }}>
-            Submit
-          </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ float: "right" }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>
   );
 };
 
-export default MpinModal
+export default MpinModal;

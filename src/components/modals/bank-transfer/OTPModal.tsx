@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import "../../modals/index.css";
 
 export interface Props {
   userOTP: (otp: string) => void;
@@ -11,33 +12,27 @@ export interface Props {
   };
   OTPFormHandle: (e: React.FormEvent) => void;
   resendOTPHandle: () => void;
+  cancleButton: (show: boolean) => void;
 }
 
 const OTPModal = (props: Props) => {
-  const { userOTP, OTPModalShow, OTPResponse, OTPFormHandle, resendOTPHandle } =
-    props;
+  const {
+    userOTP,
+    OTPModalShow,
+    OTPResponse,
+    OTPFormHandle,
+    resendOTPHandle,
+    cancleButton,
+  } = props;
 
   const [OTPInputShow, setOTPInputShow] = useState<boolean>(true);
-  const [showRequestOTPAgain, setShowRequestOTPAgain] =
-    useState<boolean>(false);
-  const [counter, setCounter] = useState<number>(90);
 
-  // React.useEffect(() => {
-  //   setInterval(() => {
-  //     setCounter(counter - 1);
-  //   }, 1000);
-  //   return () => clearInterval(1000);
-  // }, [counter]);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
-  const showOTPRequest = () => {
-    setTimeout(() => {
-      setShowRequestOTPAgain(!showRequestOTPAgain);
-    }, 90000);
-  };
-
-  if (OTPResponse.message === "failed") {
-    showOTPRequest();
-  }
+  useEffect(() => {
+    setTimeout(() => setButtonDisabled(false), 61000);
+    console.log("Timer for 61 sec");
+  }, [buttonDisabled]);
 
   return (
     <Modal
@@ -48,10 +43,10 @@ const OTPModal = (props: Props) => {
       centered
       style={{ zIndex: 1400, padding: "1em" }}
     >
-      <Modal.Header className="justify-content-center">
+      <Modal.Header closeButton className="modal_header">
         <Modal.Title as="h5">Submit Your OTP</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ padding: "2em 3em" }}>
+      <Modal.Body style={{ padding: "2em 3em" }} className="modal_body">
         <Form
           onSubmit={(e) => {
             OTPFormHandle(e);
@@ -63,6 +58,7 @@ const OTPModal = (props: Props) => {
                 type={`${OTPInputShow ? "password" : "text"}`}
                 placeholder="Provide Your OTP"
                 required
+                autoComplete="off"
                 onChange={(e) => userOTP(e.target.value)}
               />
               <span
@@ -95,32 +91,40 @@ const OTPModal = (props: Props) => {
               </Form.Text>
             )}
           </Form.Group>
-
-          {showRequestOTPAgain ? (
-            <div className="py-3">
-              <small className="d-block py-2">Not Getting OTP On Mobile?</small>
-              <span
-                style={{
-                  fontSize: "10px",
-                  padding: "6px",
-                  backgroundColor: "#0fa181",
-                  color: "white",
-                  fontWeight: "bold",
-                  cursor: "pointer",
+          <Modal.Footer>
+            <div className="float-right">
+              <Button
+                variant="light"
+                disabled={buttonDisabled}
+                className="float-left"
+                style={{ padding: "7px 12px", marginRight: "130px" }}
+                onClick={() => {
+                  {
+                    resendOTPHandle();
+                    setButtonDisabled(true);
+                  }
                 }}
-                onClick={() => resendOTPHandle()}
               >
-                Request Again
-              </span>
-            </div>
-          ) : (
-            // <span>Request Again For OTP Enabling in {counter} seconds </span>
-            ""
-          )}
+                Resend
+              </Button>
 
-          <Button variant="primary" type="submit" style={{ float: "right" }}>
-            Submit
-          </Button>
+              <Button
+                variant="secondary"
+                onClick={() => cancleButton(false)}
+                style={{ padding: "7px 12px", marginRight: "1em" }}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ float: "right", marginRight: "-0.9em" }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

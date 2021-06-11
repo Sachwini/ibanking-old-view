@@ -30,9 +30,23 @@ function App() {
 
   /* ----------For Payment Import--------------------- */
   const Transfer = React.lazy(() => import("pages/payment/fund-transfer"));
+  const FundTransferSuccessConfirmation = React.lazy(
+    () =>
+      import("components/modals/fundTransfer/FundTransferSuccessConfirmation")
+  );
+  const BankTransferSuccessConfirmation = React.lazy(
+    () =>
+      import("components/modals/bank-transfer/BankTransferSuccessConfirmation")
+  );
   const BulkPayment = React.lazy(() => import("pages/payment/bulk-payment"));
   const BrokerPayment = React.lazy(
     () => import("pages/payment/broker-payment/BrokerPayment")
+  );
+  const BrokerPaymentSuccessConfirmation = React.lazy(
+    () =>
+      import(
+        "components/modals/broker-payment/BrokerPaymentSuccessConfirmation"
+      )
   );
   const QuickPay = React.lazy(() => import("pages/payment/quick-pay"));
   const VendorPayment = React.lazy(
@@ -40,6 +54,9 @@ function App() {
   );
 
   /* ----------For request Import--------------------- */
+  const ChequeRequest = React.lazy(
+    () => import("pages/request/cheque-request/index")
+  );
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
@@ -80,33 +97,42 @@ function App() {
 
             {/* ---------- For Account Routing--------------------- */}
             <Route path="/user-profile" component={UserProfile} />
-            <Route path="/account/account-details" component={Account} />
-            <Route path="/account/statement" component={Statement} />
+            <Route path="/account-details" component={Account} />
+            <Route path="/statement" component={Statement} />
 
             {/* ---------- For Fund Management Routing--------------------- */}
 
             {/* ---------- For Payment Routing--------------------- */}
-            <Route path="/payment/fund-transfer" component={Transfer} />
-            <Route path="/payment/bulk-payment" component={BulkPayment} />
-            <Route path="/payment/vendor-payment" component={VendorPayment} />
-            <Route path="/payment/broker-payment" component={BrokerPayment} />
-            <Route path="/payment/quick-payment" component={QuickPay} />
+            <Route path="/fund-transfer" component={Transfer} />
+            <Route
+              path="/fund-transfer-success-confirmation"
+              component={FundTransferSuccessConfirmation}
+            />
+            <Route
+              path="/bank-transfer-success-confirmation"
+              component={BankTransferSuccessConfirmation}
+            />
+            <Route path="/bulk-payment" component={BulkPayment} />
+            <Route path="/vendor-payment" component={VendorPayment} />
+            <Route path="/broker-payment" component={BrokerPayment} />
+            <Route
+              path="/broker-payment-success-confirmation"
+              component={BrokerPaymentSuccessConfirmation}
+            />
+            <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
 
+            <Route path="/cheque-request" component={ChequeRequest} />
+
             {/* ---------- For Setting Routing--------------------- */}
-            <Route
-              path="/setting/configure-service"
-              component={ConfigureService}
-            />
-            <Route path="/setting/configure-theme" component={ThemeSetting} />
-            <Route
-              path="/favorite-listing/add-favorite"
-              component={AddFavorite}
-            />
+
+            <Route path="/configure-service" component={ConfigureService} />
+            <Route path="/configure-theme" component={ThemeSetting} />
+            <Route path="/add-favorite" component={AddFavorite} />
 
             {/* ---------- For history Logs Routing--------------------- */}
-            <Route path="/activity-log/logs" component={Activities} />
+            <Route path="/logs" component={Activities} />
           </React.Suspense>
         </SwitchWithCatch>
       </DefaultLayout>

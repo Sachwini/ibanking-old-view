@@ -7,6 +7,7 @@ import {
   LayoutContainer,
   LayoutSidebar,
   LayoutContentField,
+  FooterContent,
 } from "styling/layout/LayoutStyling";
 import { useEffect, useState } from "react";
 import { apiResponse } from "models/apiResponse";
@@ -65,6 +66,9 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
           {props.children}
         </LayoutContentField>
       </LayoutBodyWrapper>
+      <FooterContent>
+        <p>© Copyright 2021 mbank Technologies Pvt.Ltd</p>
+      </FooterContent>
     </LayoutContainer>
   );
 };

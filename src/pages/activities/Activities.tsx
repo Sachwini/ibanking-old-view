@@ -8,6 +8,7 @@ import {
 import { GetAccountNumber } from "helper/CustomerData";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { getStatement } from "services/BankServices";
+import { Loader } from "pages/static/Loader";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -15,36 +16,40 @@ const Activities = () => {
   const startDate=new Date(`${threeMonthBackDate}`);
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const accountNumber = GetAccountNumber();
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
 
-  const init = async () => {
-    try {
-      if (accountNumber !== "") {
-        const res = await getStatement(
-          accountNumber,
-          formatedStartDate,
-          formatedEndDate
-        );
-        if (res) {
-          setStatementData(res.slice(0, 6));
-        }  
-      }
-    } catch (error) {
-       console.log(error);
-    }
-  };
-
   useEffect(() => {
     let isSubscribed = true;
+    const init = async () => {
+      try {
+        if (accountNumber !== "") {
+          const res = await getStatement(
+            accountNumber,
+            formatedStartDate,
+            formatedEndDate
+          );
+          if (res) {
+            setStatementData(res.slice(0, 6));
+            setLoading(false);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     init();
+    console.log("activities called");
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [accountNumber]); 
   return (
+  <>
+      {loading?<Loader/>:(
     <>
       <div className="pl-1 mt-4 mb-2">
         <strong className="activity__title">Account Activities</strong>
@@ -77,7 +82,9 @@ const Activities = () => {
           </Card>
         );
       })}
-    </>
+      </>
+      )}
+      </>
   );
 };
 

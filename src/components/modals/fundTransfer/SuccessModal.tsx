@@ -1,19 +1,51 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { useStateValue } from "state-provider/StateProvider";
 
 export interface Props {
   successModalShow: boolean;
   handleModalShow: (show: boolean) => void;
+  fromAccount: string;
+  toAccount: string;
+  destinationAccountHolderName: string;
+  branch: string;
+  amount: string;
+  mpin: string;
   responseMessage: {
     status: string;
     message: string;
   };
 }
 
-
 const SuccessModal = (props: Props) => {
-  const { successModalShow, handleModalShow, responseMessage } = props;
+  const {
+    successModalShow,
+    handleModalShow,
+    responseMessage,
+    fromAccount,
+    toAccount,
+    amount,
+    branch,
+    destinationAccountHolderName,
+    mpin,
+  } = props;
+  const [{}, dispatch] = useStateValue();
+
+  const handleInfo = () => {
+    dispatch({
+      type: "FUND_TRANSFER_DETAILS",
+      fundTransferDetails: {
+        fromAccount,
+        toAccount,
+        amount,
+        destinationAccountHolderName,
+        branch,
+        mpin,
+      },
+    });
+  };
   return (
     <Modal
       show={successModalShow}
@@ -24,7 +56,7 @@ const SuccessModal = (props: Props) => {
       style={{ zIndex: 1400 }}
     >
       <Modal.Header className="justify-content-center p-0">
-        {responseMessage.status === "success" ? (
+        {responseMessage?.status === "success" ? (
           <div
             style={{
               width: "100%",
@@ -51,13 +83,30 @@ const SuccessModal = (props: Props) => {
         )}
       </Modal.Header>
       <Modal.Body style={{ padding: "2em" }}>
-        <div className="mb-4">{responseMessage.message}</div>
-        <Button
-          onClick={() => handleModalShow(false)}
-          style={{ float: "right", padding: "8px 1.8em" }}
-        >
-          OK
-        </Button>
+        <div className="mb-4">{responseMessage?.message}</div>
+        {responseMessage?.status === "success" ? (
+          <Link
+            to="/fund-transfer-success-confirmation"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <Button
+              onClick={() => {
+                handleModalShow(false);
+                handleInfo();
+              }}
+              style={{ float: "right", padding: "8px 1.8em" }}
+            >
+              OK
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            onClick={() => handleModalShow(false)}
+            style={{ float: "right", padding: "8px 1.8em" }}
+          >
+            OK
+          </Button>
+        )}
       </Modal.Body>
     </Modal>
   );

@@ -10,6 +10,7 @@
     "@types/jest": "^26.0.22",
     "@types/node": "^12.20.7",
     "@types/react": "^17.0.3",
+    "@types/react-bootstrap": "^0.32.25",
     "@types/react-dom": "^17.0.3",
     "@types/react-otp-input": "^2.0.0",
     "@types/styled-components": "^5.1.9",
@@ -17,7 +18,12 @@
     "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.4",
+<<<<<<< HEAD
     "firebase": "^8.6.2",
+=======
+    "dateformat": "^4.5.1",
+    "firebase": "^8.6.1",
+>>>>>>> 43027b77265a45b4bf8d4ff6ae170d37fdf54fa9
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -66,6 +72,7 @@
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.32",
+    "@types/dateformat": "^3.0.1",
     "@types/lodash": "^4.14.168",
     "@types/react-bootstrap-typeahead": "^5.1.4",
     "@types/react-datepicker": "^3.1.8",

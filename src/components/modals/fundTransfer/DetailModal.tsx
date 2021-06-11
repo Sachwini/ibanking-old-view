@@ -1,4 +1,6 @@
-import { Button, Modal, ListGroup } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+import { formatLakh } from "services/numberService";
+import "../../modals/index.css";
 
 export interface Props {
   modalShow: boolean;
@@ -6,7 +8,7 @@ export interface Props {
   modalFormSubmitHandle: (show: boolean) => void;
   fromAccount: string;
   toAccount: string;
-  destinationAccountHolderName:string
+  destinationAccountHolderName: string;
   branch: string;
   amount: string;
   validAccount: boolean;
@@ -24,7 +26,7 @@ function DetailModal(props: Props) {
     branch,
     amount,
     validAccount,
-    confirmModalCancleButton, 
+    confirmModalCancleButton,
   } = props;
 
   const handleSubmit = (e: any) => {
@@ -33,53 +35,49 @@ function DetailModal(props: Props) {
   };
 
   return (
-    <Modal
-      show={modalShow}
-      onHide={() => handleModalShow(false)}
-      backdrop="static"
-      keyboard={false}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      style={{ zIndex: 1400 }}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title as="h6">Details of your Transaction</Modal.Title>
-      </Modal.Header>
-      <Modal.Body style={{ padding: "1em" }}>
-        <ListGroup variant="flush">
-          <ListGroup.Item>
-            <strong className="d-block mb-2">Customer Details</strong>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Account Number: </span>
-              <span className="text-muted">{fromAccount}</span>
-            </div>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <strong className="d-block mb-2">Beneficiary Details</strong>
+    <>
+      <Modal
+        show={modalShow}
+        onHide={() => handleModalShow(false)}
+        backdrop="static"
+        keyboard={false}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        style={{ zIndex: 1400 }}
+      >
+        <Modal.Header closeButton className="modal_header">
+          <Modal.Title as="h6">Details of your Transaction </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ padding: "1em" }} className="modal_body">
+          <strong className="d-block mb-2">Customer Details</strong>
+          <div className="d-flex justify-content-between mb-2">
+            <span>Account Number: </span>
+            <span className="text-muted">{fromAccount}</span>
+          </div>
+          <strong className="d-block mb-2">Beneficiary Details</strong>
 
+          <div className="d-flex justify-content-between mb-2">
+            <span>Account Number: </span>
+            <span className="text-muted">{toAccount}</span>
+          </div>
+          <div className="d-flex justify-content-between mb-2">
+            <span>Destination AccountHolder Name: </span>
+            <span className="text-muted">{destinationAccountHolderName}</span>
+          </div>
+          {branch ? (
             <div className="d-flex justify-content-between mb-2">
-              <span>Account Number: </span>
-              <span className="text-muted">{toAccount}</span>
+              <span> Branch Name: </span>
+              <span className="text-muted">{branch}</span>
             </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Destination AccountHolder Name: </span>
-              <span className="text-muted">{destinationAccountHolderName}</span>
-            </div>
-            {branch ? (
-              <div className="d-flex justify-content-between mb-2">
-                <span> Branch Name: </span>
-                <span className="text-muted">{branch}</span>
-              </div>
-            ) : (
-              ""
-            )}
-            <div className="d-flex justify-content-between mb-2">
-              <span>
-                Amount<small>(Rs.)</small>:
-              </span>
-              <span className="text-muted">{amount}</span>
-            </div>
-          </ListGroup.Item>
+          ) : (
+            ""
+          )}
+          <div className="d-flex justify-content-between mb-2">
+            <span>
+              Amount<small>(Rs.)</small>:
+            </span>
+            <span className="text-muted">{formatLakh(parseInt(amount))}</span>
+          </div>
           {/* <small
             style={{
               color: "green",
@@ -90,26 +88,29 @@ function DetailModal(props: Props) {
             Benificiary Name Matches With Account Holder Name Do you Want to
             Continue?
           </small> */}
-        </ListGroup>
-        <div className="float-right">
-          <Button
-            onClick={() => confirmModalCancleButton(false)}
-            style={{ padding: "7px 12px", marginRight: "1em" }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            style={{ padding: "7px 12px" }}
-            onClick={handleSubmit}
-            disabled={!validAccount}
-          >
-            Submit
-          </Button>
-        </div>
-      </Modal.Body>
-    </Modal>
+          <Modal.Footer>
+            <div className="float-right">
+              <Button
+                variant="secondary"
+                onClick={() => confirmModalCancleButton(false)}
+                style={{ padding: "7px 12px", marginRight: "1em" }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ padding: "7px 12px" }}
+                onClick={handleSubmit}
+                disabled={!validAccount}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal.Footer>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
 

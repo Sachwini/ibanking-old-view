@@ -4,12 +4,13 @@ import { CgNotes } from "react-icons/cg";
 import "./Account.css";
 import { useStateValue } from "state-provider/StateProvider";
 import { Loader } from "pages/static/Loader";
+import { Link } from "react-router-dom";
 
 const AccountView = () => {
-  const [{ customerDetails }] = useStateValue();
+  const [{ customerDetails, switchAccount }] = useStateValue();
   return (
     <>
-      {!customerDetails?.accountDetail ? ( 
+      {!customerDetails?.accountDetail ? (
         <span>
           <Loader />
         </span>
@@ -24,9 +25,20 @@ const AccountView = () => {
                   </Col>
                   <Col sm={12} md={9}>
                     <p>
-                      {customerDetails?.accountDetail[0]["accountType"]} Account
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "accountType"
+                        ]
+                      }{" "}
+                      Account
                     </p>
-                    <p>{customerDetails?.accountDetail[0]["accountNumber"]}</p>
+                    <p>
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "accountNumber"
+                        ]
+                      }
+                    </p>
                   </Col>
                 </Row>
               </Col>
@@ -36,21 +48,36 @@ const AccountView = () => {
                     <p>Available Balance</p>
                     <p>
                       <strong className="npr">NPR.</strong>{" "}
-                      {customerDetails?.accountDetail[0]["availableBalance"]}
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "availableBalance"
+                        ]
+                      }
                     </p>
                   </Col>
                   <Col sm={12} md={6}>
                     <p>Acutal Balance</p>
                     <p>
                       <strong className="npr">NPR.</strong>{" "}
-                      {customerDetails?.accountDetail[0]["availableBalance"]}
+                      {
+                        customerDetails?.accountDetail[switchAccount][
+                          "availableBalance"
+                        ]
+                      }
                     </p>
                   </Col>
                 </Row>
               </Col>
               <Col sm={12} md={3} className="justify-content-end px-0">
                 <CgNotes size="23px" />
-                <strong className="iconSpacing ">Statment</strong>
+                <strong className="iconSpacing ">
+                  <Link
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    to="/statement"
+                  >
+                    Statment
+                  </Link>
+                </strong>
               </Col>
             </Row>
           </Card.Body>

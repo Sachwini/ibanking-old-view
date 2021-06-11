@@ -55,7 +55,6 @@ const Transfer = () => {
                 </Col>
                 <Col sm={12} md={6}>
                   <FundTransferLimit />
-                  <FundTranfCharge />
                 </Col>
               </Row>
             </Tab.Pane>
@@ -64,6 +63,10 @@ const Transfer = () => {
               <Row>
                 <Col sm={12} md={6}>
                   <BankTransfer />
+                </Col>
+                <Col sm={12} md={6}>
+                  <FundTransferLimit />
+                  <FundTranfCharge />
                 </Col>
               </Row>
             </Tab.Pane>

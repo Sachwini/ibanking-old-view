@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import "../../modals/index.css";
 
 export interface Props {
   userMpin: (mPin: string) => void;
   mPinModalShow: boolean;
-  // handleMpinModalShow: (show: boolean) => void;
   mPinFormSubmitHandle: (e: React.FormEvent) => void;
+  cancleButton: (show: boolean) => void;
 }
 
 const MpinModal = (props: Props) => {
-  const { userMpin, mPinModalShow, mPinFormSubmitHandle } = props;
+  const { userMpin, mPinModalShow, mPinFormSubmitHandle, cancleButton } = props;
 
   const [mPinInputShow, setMpinInputShow] = useState<boolean>(true);
 
@@ -23,10 +24,10 @@ const MpinModal = (props: Props) => {
       centered
       style={{ zIndex: 1400, padding: "1em" }}
     >
-      <Modal.Header className="justify-content-center">
-        <Modal.Title as="h5">Provide Your Transction Pin</Modal.Title>
+      <Modal.Header closeButton className="modal_header">
+        <Modal.Title as="h5">Provide Your Transaction Pin</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ padding: "2em 3em" }}>
+      <Modal.Body style={{ padding: "2em 3em" }} className="modal_body">
         <Form
           onSubmit={(e) => {
             mPinFormSubmitHandle(e);
@@ -55,14 +56,24 @@ const MpinModal = (props: Props) => {
               </span>
             </InputGroup>
           </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            style={{ float: "right", marginRight: "-0.9em" }}
-          >
-            Submit
-          </Button>
+          <Modal.Footer>
+            <div className="float-right">
+              <Button
+                variant="secondary"
+                onClick={() => cancleButton(false)}
+                style={{ padding: "7px 12px", marginRight: "1em" }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ float: "right", marginRight: "-0.9em" }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

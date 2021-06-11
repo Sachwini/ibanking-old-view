@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { GetAccountNumber } from "helper/CustomerData";
+import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
 import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
 import { toast } from "react-toastify";
@@ -12,22 +12,12 @@ import OTPModal from "components/modals/bank-transfer/OTPModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { IconStyle } from "styling/common/IconStyling";
-import { RiUserStarLine, RiBankLine } from "react-icons/ri"; 
+import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { bankBranchType, BankList } from "./model";
-
-
-const CardStyle = {
-  border: "none",
-  paddingLeft: "0.7rem",
-  paddingRight: "0.7rem",
-};
-const PopoverStyle = {
-  minWidth: "12rem",
-  marginTop: "1rem",
-};
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
+  const getAllAccountNumber = GetAllAccountNumber();
 
   // For Bank Handle
   const [DESTBankList, setDESTBankList] = useState<BankList[]>([]);
@@ -80,7 +70,7 @@ export const BankTransfer = () => {
       );
       if (res) {
         setFavoriteAcc(res.data.details);
-        console.log(favoriteAcc); 
+        console.log(favoriteAcc);
       }
     } catch (error) {
       console.log(error);
@@ -295,12 +285,6 @@ export const BankTransfer = () => {
         {}
       );
       if (res) {
-        toast.success(res.data.message);
-
-        // && res.data.status.toLowerCase() === "success") ||
-        // res.data.message.toLowerCase() ===
-        //   "OTP For Bank Transfer Enabled Successfully"
-
         // Calling Fund Transfer API
         fundTransferAPI();
       }
@@ -343,7 +327,6 @@ export const BankTransfer = () => {
           status: "success",
           message: bankTransfer.data.details,
         });
-        // toast.success(bankTransfer.data.details);
         console.log("tansfer response : ", bankTransfer.data);
       }
     } catch (error: any) {
@@ -355,16 +338,6 @@ export const BankTransfer = () => {
         setSuccessModalShow(true);
         toast.error(error.response.data.details);
       }
-      // if (
-      //   error.response.data.status.message ===
-      //   "OTP Expired Please Request a New One"
-      // ) {
-      //   resendOTPHandle();
-      //   setOTPRequiredMessage(
-      //     "OTP Expire!!! New OTP is send to your Phone. Please Enter New One..."
-      //   );
-      //   setOTPModalShow(true);
-      // }
     }
     // calling Fund Transfer Response Modal
     setSuccessModalShow(true);
@@ -402,19 +375,28 @@ export const BankTransfer = () => {
   };
 
   const UserProfile = (
-    <Popover id="popover-basic" style={PopoverStyle}>
+    <Popover id="popover-basic">
       <Popover.Content
         style={{
           padding: "0",
-          height: "300px",
+          maxHeight: "20rem",
+          minWidth: "10rem",
           overflowY: "auto",
           whiteSpace: "pre-wrap",
         }}
       >
-        <Card style={CardStyle}>
-          <Card.Text style={{ padding: "6px" }}>
+        <Card>
+          <Card.Text
+            style={{
+              padding: "12px",
+              fontWeight: "bold",
+              backgroundColor: "#436b33",
+              color: "#fff",
+              fontSize: "110%",
+            }}
+          >
             {" "}
-            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
+            My Saved Bank Account ({favoriteAcc ? favoriteAcc.length : "0"})
           </Card.Text>
         </Card>
         <div
@@ -449,13 +431,26 @@ export const BankTransfer = () => {
                     <Container>
                       <Row>
                         <Col xs={3}>
-                          <RiBankLine />
+                          <RiBankLine size={30} />
                         </Col>
                         <Col>
-                          <div>{fav.data.destinationBankName}</div>
-                          <div>{fav.data.destinationAccountNumber}</div>
+                          <div
+                            style={{
+                              fontWeight: "bold",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {fav.data.destinationBankName}
+                          </div>
+                          <div style={{ fontSize: "110%" }}>
+                            {fav.data.destinationAccountNumber}
+                          </div>
                           {fav.data.destinationAccountHolderName ? (
-                            <div>{fav.data.destinationAccountHolderName}</div>
+                            <div
+                              style={{ fontSize: "small", fontWeight: "bold" }}
+                            >
+                              {fav.data.destinationAccountHolderName}
+                            </div>
                           ) : (
                             ""
                           )}
@@ -478,6 +473,7 @@ export const BankTransfer = () => {
         userMpin={(mPin: string) => setMpin(mPin)}
         mPinModalShow={mPinModalShow}
         mPinFormSubmitHandle={(e) => mPinFormSubmitHandle(e)}
+        cancleButton={(event: boolean) => setMpinModalShow(false)}
       />
 
       <ConfirmDetailModal
@@ -502,12 +498,21 @@ export const BankTransfer = () => {
         OTPResponse={OTPResponse}
         OTPFormHandle={(e) => OTPFormHandle(e)}
         resendOTPHandle={() => resendOTPHandle()}
+        cancleButton={(event: boolean) => setOTPModalShow(false)}
       />
 
       <SuccessModal
         successModalShow={successModalShow}
-        fundTransferResponse={fundTransferResponse}
+        bankTransferResponse={fundTransferResponse}
         successModalShowHandle={(e) => setSuccessModalShow(e)}
+        fromAccount={fromAccount}
+        toAccount={toAccount}
+        DESTBankName={DESTBankName}
+        DESTAccHolderName={DESTAccHolderName}
+        DESTBranchName={DESTBranchName}
+        transctionAmount={transctionAmount}
+        transctionCharge={transctionCharge}
+        mpin={mpin}
       />
       {loading ? (
         <Loader />
@@ -515,18 +520,26 @@ export const BankTransfer = () => {
         <Card>
           <Card.Body>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="bankTransfer">
+              <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label className="font-weight-bold">
                   From Account
                 </Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="from account"
+                  as="select"
                   name="fromAccount"
-                  disabled
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
-                />
+                >
+                  {!getAllAccountNumber ? (
+                    <option></option>
+                  ) : (
+                    getAllAccountNumber?.map((accNum: any) => (
+                      <option value={accNum} key={accNum}>
+                        {accNum}
+                      </option>
+                    ))
+                  )}
+                </Form.Control>
               </Form.Group>
               <Form.Group controlId="bankTransfer" aria-required>
                 <Form.Label className="font-weight-bold">
@@ -551,6 +564,7 @@ export const BankTransfer = () => {
                       name="toAccount"
                       value={toAccount}
                       required
+                      autoComplete="off"
                       onChange={(e) => setToAccount(e.target.value)}
                     />
                     <Form.Text className="text-warning">
@@ -583,6 +597,7 @@ export const BankTransfer = () => {
                   name="destAccountHilderName"
                   value={DESTAccHolderName}
                   required
+                  autoComplete="off"
                   onChange={(e) => setDESTAccHolderName(e.target.value)}
                 />
               </Form.Group>
@@ -606,11 +621,13 @@ export const BankTransfer = () => {
               <Form.Group controlId="bankTransfer">
                 <Form.Label className="font-weight-bold">Amount</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Amount"
                   name="amount"
                   value={transctionAmount}
+                  autoComplete="off"
                   required
+                  min={0}
                   onChange={(e) => setTransctionAmount(e.target.value)}
                 />
               </Form.Group>
@@ -622,6 +639,7 @@ export const BankTransfer = () => {
                   placeholder="remarks..."
                   name="remarks"
                   value={remarks}
+                  autoComplete="off"
                   required
                   onChange={(e) => setRemarks(e.target.value)}
                 />

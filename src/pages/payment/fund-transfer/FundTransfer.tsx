@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import { fundTransfer } from "./model";
 import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { GetAccountNumber } from "helper/CustomerData";
+import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiResponse } from "models/apiResponse";
@@ -15,16 +15,7 @@ import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { IconStyle } from "styling/common/IconStyling";
-
-const CardStyle = {
-  border: "none",
-  paddingLeft: "0.7rem",
-  paddingRight: "0.7rem",
-};
-const PopoverStyle = {
-  minWidth: "12rem",
-  marginTop: "1rem",
-};
+import { Loader } from "pages/static/Loader";
 
 interface selectItem {
   label: string;
@@ -33,12 +24,13 @@ interface selectItem {
 
 export const FundTransfer = () => {
   const accountNumber = GetAccountNumber();
+  const getAllAccountNumber = GetAllAccountNumber();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [branch, setBranch] = useState<selectItem[]>([]);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -79,7 +71,7 @@ export const FundTransfer = () => {
 
   //for request Otp
   const requestOtp = async () => {
-    const res = get<apiResponse<any>>(
+    const req = await get<apiResponse<any>>(
       "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
         amount
     );
@@ -112,6 +104,7 @@ export const FundTransfer = () => {
             branchData.push({ label: x.name, value: x.id.toString() })
           );
           setBranch(branchData);
+          setLoading(false);
         }
       }
     };
@@ -147,6 +140,7 @@ export const FundTransfer = () => {
   };
 
   const handleSubmit = async (e: any) => {
+    e.preventDefault();
     if (!fromAccount || !toAccount || !bankBranchId || !amount || !mpin) {
       toast.error("Incomplete field");
       return;
@@ -198,30 +192,38 @@ export const FundTransfer = () => {
         setResponseMessage({ status: "success", message: res.data.message });
         toast.success(res.data.message);
         console.log(res.data);
+        setLoading(false);
       }
-      handleReset(e);
+      // handleReset(e);
     } catch (error) {
       setIsSucessMessage(true);
       setResponseMessage({
         status: "failure",
         message: error.response.data.message,
       });
+      setLoading(false);
       toast.error(error.response.data.message);
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
     }
   };
 
-  const handleOtpRequired = () => {
+  const handleOtpRequired = (e: any) => {
+    e.preventDefault();
     if (parseFloat(amount) <= 5000) {
-      setOtpRequired(false);
-      handleSubmit(e);
+      {
+        {
+          setOtpRequired(false);
+          handleSubmit(e);
+        }
+      }
     } else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
       requestOtp();
     }
   };
 
-  const changeOtpStatus = async () => {
+  const changeOtpStatus = async (e: any) => {
+    e.preventDefault();
     try {
       const res = post<any>(
         "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
@@ -236,28 +238,30 @@ export const FundTransfer = () => {
   };
 
   const UserProfile = (
-    <Popover id="popover-basic" style={PopoverStyle}>
+    <Popover id="popover-basic">
       <Popover.Content
         style={{
           padding: "0",
-          height: "300px",
+          maxHeight: "20rem",
+          minWidth: "10rem",
           overflowY: "auto",
           whiteSpace: "pre-wrap",
         }}
       >
-        <Card style={CardStyle}>
-          <Card.Text style={{ padding: "6px" }}>
+        <Card>
+          <Card.Header
+            style={{
+              fontWeight: "bold",
+              backgroundColor: "#436b33",
+              color: "#fff",
+              fontSize: "110%",
+              width: "100%",
+            }}
+          >
             {" "}
-            My Saved Bank Account({favoriteAcc ? favoriteAcc.length : "0"})
-          </Card.Text>
+            My Saved Bank Account ({favoriteAcc ? favoriteAcc.length : "0"})
+          </Card.Header>
         </Card>
-        <div
-          style={{
-            padding: "8px",
-            background: "#f5f5f5",
-            cursor: "pointer",
-          }}
-        ></div>
         <div
           style={{
             padding: "8px",
@@ -283,13 +287,26 @@ export const FundTransfer = () => {
                     <Container>
                       <Row>
                         <Col xs={3}>
-                          <RiBankLine />
+                          <RiBankLine size={30} />
                         </Col>
                         <Col>
-                          <div>{fav.data.destinationBankName}</div>
-                          <div>{fav.data.destinationAccountNumber}</div>
+                          <div
+                            style={{
+                              fontWeight: "bold",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {fav.data.destinationBankName}
+                          </div>
+                          <div style={{ fontSize: "110%" }}>
+                            {fav.data.destinationAccountNumber}
+                          </div>
                           {fav.data.destinationAccountHolderName ? (
-                            <div>{fav.data.destinationAccountHolderName}</div>
+                            <div
+                              style={{ fontSize: "small", fontWeight: "bold" }}
+                            >
+                              {fav.data.destinationAccountHolderName}
+                            </div>
                           ) : (
                             ""
                           )}
@@ -308,174 +325,175 @@ export const FundTransfer = () => {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <Form
-            onSubmit={(e) => {
-              openDetailModel(e);
-              accountValidation();
-            }}
-          >
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label className="font-weight-bold">From Account</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="from account"
-                name="fromAccount"
-                disabled
-                value={fromAccount}
-                onChange={(e) => setFromAccount(e.target.value)}
-              />
-            </Form.Group>
-            <div className="form-row">
-              <div className="col">
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Destination Account
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="destination account"
-                    name="toAccount"
-                    value={toAccount}
-                    required
-                    onChange={(e) => setToAccount(e.target.value)}
-                  />
-                  <Form.Text className="text-warning">
-                    Please Insure the account number is correct before
-                    transaction
-                  </Form.Text>
-                </Form.Group>
-              </div>
-              <div className="pl-4 d-flex align-items-center">
-                <OverlayTrigger
-                  transition={false}
-                  trigger="click"
-                  placement="bottom"
-                  overlay={UserProfile}
-                  rootClose
+      {loading ? (
+        <Loader />
+      ) : (
+        <Card>
+          <Card.Body>
+            <Form
+              onSubmit={(e) => {
+                openDetailModel(e);
+                accountValidation();
+              }}
+            >
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label className="font-weight-bold">
+                  From Account
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="fromAccount"
+                  value={fromAccount}
+                  onChange={(e) => setFromAccount(e.target.value)}
                 >
-                  <IconStyle hover>
-                    <RiUserStarLine size={30} onClick={(e) => favAcc()} />
-                  </IconStyle>
-                </OverlayTrigger>
+                  {!getAllAccountNumber ? (
+                    <option></option>
+                  ) : (
+                    getAllAccountNumber?.map((accNum: any) => (
+                      <option value={accNum} key={accNum}>
+                        {accNum}
+                      </option>
+                    ))
+                  )}
+                </Form.Control>
+              </Form.Group>
+              <div className="form-row">
+                <div className="col">
+                  <Form.Group controlId="formGridAddress1">
+                    <Form.Label className="font-weight-bold">
+                      Destination Account
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      autoComplete="off"
+                      placeholder="destination account"
+                      name="toAccount"
+                      value={toAccount}
+                      required
+                      onChange={(e) => setToAccount(e.target.value)}
+                    />
+                    <Form.Text className="text-warning">
+                      Please Insure the account number is correct before
+                      transaction
+                    </Form.Text>
+                  </Form.Group>
+                </div>
+                <div className="pl-4 d-flex align-items-center">
+                  <OverlayTrigger
+                    transition={false}
+                    trigger="click"
+                    placement="bottom"
+                    overlay={UserProfile}
+                    rootClose
+                  >
+                    <IconStyle hover>
+                      <RiUserStarLine size={30} onClick={(e) => favAcc()} />
+                    </IconStyle>
+                  </OverlayTrigger>
+                </div>
               </div>
-            </div>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Select Destination Bank Branch
-              </Form.Label>
-              <Typeahead
-                options={branch}
-                id="my-typeahead-id"
-                placeholder="Choose destination branch..."
-                onChange={handleBranchID}
-              />
-              <Form.Text className="text-warning">
-                {bankBranchId
-                  ? `bankBranchId: ${bankBranchId}`
-                  : "Selected None (Please Select One ...)"}
-              </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">
-                Destination AccountHolder Name
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your Destination AccountHolder Name"
-                name="destinationAccountHolderName"
-                value={destinationAccountHolderName}
-                required
-                onChange={(e) =>
-                  setDestinationAccountHolderName(e.target.value)
-                }
-              />
-            </Form.Group>
-            <Form.Group controlId="formGridAddress1">
-              <Form.Label className="font-weight-bold">Amount</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Amount"
-                name="amount"
-                value={amount}
-                required
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </Form.Group>
-            <Button
-              className="btn btn-warning"
-              variant="primary"
-              type="submit"
-              // onClick={(e) => {
-              //   openDetailModel(e);
-              //   accountValidation();
-              // }}
-            >
-              Submit
-            </Button>
-            <Button
-              className="btn btn-light"
-              style={{ marginLeft: "20px" }}
-              variant="secondary"
-              type="submit"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      {detailModalShow ? (
-        <DetailModal
-          modalShow={detailModalShow}
-          handleModalShow={(event: boolean) => setDetailModalShow(event)}
-          modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
-          fromAccount={fromAccount}
-          toAccount={toAccount}
-          destinationAccountHolderName={destinationAccountHolderName}
-          branch={branch[0].label}
-          amount={amount}
-          validAccount={validAccount}
-          confirmModalCancleButton={(event: boolean) =>
-            setDetailModalShow(false)
-          }
-        />
-      ) : (
-        ""
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label className="font-weight-bold">
+                  Select Destination Bank Branch
+                </Form.Label>
+                <Typeahead
+                  options={branch}
+                  id="my-typeahead-id"
+                  placeholder="Choose destination branch..."
+                  onChange={handleBranchID}
+                />
+                <Form.Text className="text-warning">
+                  {bankBranchId
+                    ? `bankBranchId: ${bankBranchId}`
+                    : "selected none (please select one... )"}
+                </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label className="font-weight-bold">
+                  Destination AccountHolder Name
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Enter your Destination AccountHolder Name"
+                  name="destinationAccountHolderName"
+                  value={destinationAccountHolderName}
+                  required
+                  onChange={(e) =>
+                    setDestinationAccountHolderName(e.target.value)
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label className="font-weight-bold">Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Amount"
+                  name="amount"
+                  value={amount}
+                  required
+                  autoComplete="off"
+                  min={0}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                className="btn btn-warning"
+                variant="primary"
+                type="submit"
+              >
+                Submit
+              </Button>
+              <Button
+                className="btn btn-light"
+                style={{ marginLeft: "20px" }}
+                variant="secondary"
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
       )}
-      {mpinModalShow ? (
-        <MpinModal
-          modalShow={mpinModalShow}
-          handleModalShow={(event: boolean) => setMpinModalShow(event)}
-          mpin={(mpin: string) => setMpin(mpin)}
-          modalFormSubmitHandle={handleOtpRequired}
-        />
-      ) : (
-        ""
-      )}
-      {otpRequired ? (
-        <OtpModal
-          modalShow={otpRequired}
-          handleModalShow={(event: boolean) => setOtpRequired(event)}
-          userOTP={(otp: string) => setOtp(otp)}
-          modalFormSubmitHandle={changeOtpStatus}
-        />
-      ) : (
-        ""
-      )}
-      {isSuccessMessage ? (
-        <SuccessModal
-          successModalShow={isSuccessMessage}
-          handleModalShow={(e) => setIsSucessMessage(e)}
-          responseMessage={responseMessage}
-        />
-      ) : (
-        ""
-      )}
+      <DetailModal
+        modalShow={detailModalShow}
+        handleModalShow={(event: boolean) => setDetailModalShow(event)}
+        modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
+        fromAccount={fromAccount}
+        toAccount={toAccount}
+        destinationAccountHolderName={destinationAccountHolderName}
+        branch={branch[0]?.label}
+        amount={amount}
+        validAccount={validAccount}
+        confirmModalCancleButton={(event: boolean) => setDetailModalShow(false)}
+      />
+      <MpinModal
+        modalShow={mpinModalShow}
+        handleModalShow={(event: boolean) => setMpinModalShow(event)}
+        mpin={(mpin: string) => setMpin(mpin)}
+        modalFormSubmitHandle={handleOtpRequired}
+        cancleButton={(event: boolean) => setMpinModalShow(false)}
+      />
+      <OtpModal
+        modalShow={otpRequired}
+        handleModalShow={(event: boolean) => setOtpRequired(event)}
+        userOTP={(otp: string) => setOtp(otp)}
+        modalFormSubmitHandle={changeOtpStatus}
+        resendOtp={() => requestOtp()}
+        cancleButton={(event: boolean) => setOtpRequired(false)}
+      />
+      <SuccessModal
+        successModalShow={isSuccessMessage}
+        handleModalShow={(e) => setIsSucessMessage(e)}
+        fromAccount={fromAccount}
+        branch={branch[0]?.label}
+        toAccount={toAccount}
+        destinationAccountHolderName={destinationAccountHolderName}
+        amount={amount}
+        responseMessage={responseMessage}
+        mpin={mpin}
+      />
     </>
   );
 };
-function e(e: any) {
-  throw new Error("Function not implemented.");
-}
