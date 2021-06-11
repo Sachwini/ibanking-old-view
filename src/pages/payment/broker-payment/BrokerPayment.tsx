@@ -186,7 +186,7 @@ const BrokerPayment = () => {
 
   const changeOtpStatus = async () => {
     try {
-      const res = post<any>(
+      const res = await post<any>(
         "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
         {}
       );
