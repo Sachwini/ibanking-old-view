@@ -15,7 +15,7 @@ export const SpinnerContainer = styled.div`
 
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 50%;
 `;
 
