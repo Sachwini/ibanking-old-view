@@ -48,7 +48,7 @@ const StatementView = (props: {
     return <Loader />;
   }
   return (
-    <Card>
+    <Card className="card_Shadow">
       <Card.Header style={{ display: "flex" }}>
         <span className="flex-grow-1">
           Account Number: {statementData?.accountNumber}

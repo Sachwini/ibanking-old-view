@@ -1,11 +1,5 @@
 import { PageTitle } from "components/page-title/index";
-import {
-  Col,
-  Container,
-  OverlayTrigger,
-  Popover,
-  Row,
-} from "react-bootstrap";
+import { Col, Container, OverlayTrigger, Popover, Row } from "react-bootstrap";
 // import QuickPay from "pages/activities/QuickPay";
 // import UpcomingPayment from "pages/activities/UpComingPayment";
 // import FixedDeposit from "pages/activities/FixedDeposit";
@@ -25,11 +19,12 @@ const PopoverStyle = {
 const PopoverItem = styled.div`
   text-align: center;
   padding: 8px;
-  background: #e7e7e7;
+  background: #2f312f;
   cursor: pointer;
   font-weight: bold;
+  color: #fff;
   &:hover {
-    background: #3e4d40;
+    background: #575857;
     color: #fff;
   }
 `;

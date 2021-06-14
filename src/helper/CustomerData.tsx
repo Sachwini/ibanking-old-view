@@ -21,6 +21,5 @@ export const GetAllAccountNumber = () => {
   let allAccountNumber = !customerDetails?.accountDetail
     ? ""
     : customerDetails.accountDetail.map((accNum: any) => accNum.accountNumber);
-  console.log(allAccountNumber);
   return allAccountNumber;
 };

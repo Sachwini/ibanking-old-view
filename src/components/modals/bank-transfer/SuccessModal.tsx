@@ -1,7 +1,9 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
+import { VscError } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
+import { ErrorModalHeader, SuccessModalHeader } from "../ModalStyling";
 
 export interface Props {
   fromAccount: string;
@@ -15,6 +17,7 @@ export interface Props {
   bankTransferResponse: {
     status: string;
     message: string;
+    details: string;
   };
   successModalShow: boolean;
   successModalShowHandle: (show: boolean) => void;
@@ -62,63 +65,48 @@ const SuccessModal = (props: Props) => {
     >
       <Modal.Header className="justify-content-center p-0">
         {bankTransferResponse?.status === "success" ? (
-          <div
-            style={{
-              width: "100%",
-              height: "100px",
-              background: "#44ab76",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <GiCheckMark color="white" size={30} fontWeight="800" />
-            jkjkjk
-          </div>
+          <SuccessModalHeader>
+            <GiCheckMark color="white" size={60} />
+            <h4>Success</h4>
+          </SuccessModalHeader>
         ) : (
-          <div
-            style={{
-              width: "100%",
-              height: "100px",
-              background: "#db211b",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-            }}
-          >
-            {/* <MdClose color="white" size={30} fontWeight="800" /> */}
-            Opps !!!
-          </div>
+          <ErrorModalHeader>
+            <VscError color="white" size={60} />
+            <h4>Oops !!!</h4>
+          </ErrorModalHeader>
         )}
       </Modal.Header>
-      <Modal.Body style={{ padding: "2em" }}>
-        <div className="mb-4">{bankTransferResponse?.message}</div>
-        {bankTransferResponse?.status === "success" ? (
-          <Link
-            to="/bank-transfer-success-confirmation"
-            style={{ color: "inherit", textDecoration: "inherit" }}
-          >
+      <Modal.Body style={{ padding: "2em", color: "black" }}>
+        <div className="mb-4">{bankTransferResponse?.message}ggg</div>
+        {/* <div className="mb-4">{bankTransferResponse?.details}</div> */}
+        <div>h</div>
+        <Modal.Footer>
+          {bankTransferResponse?.status === "success" ? (
+            <Link
+              to="/bank-transfer-success-confirmation"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Button
+                onClick={() => {
+                  successModalShowHandle(false);
+                  handleInfo();
+                }}
+                style={{ float: "right", padding: "8px 1.8em" }}
+              >
+                OK
+              </Button>
+            </Link>
+          ) : (
             <Button
               onClick={() => {
                 successModalShowHandle(false);
-                handleInfo();
               }}
               style={{ float: "right", padding: "8px 1.8em" }}
             >
               OK
             </Button>
-          </Link>
-        ) : (
-          <Button
-            onClick={() => {
-              successModalShowHandle(false);
-            }}
-            style={{ float: "right", padding: "8px 1.8em" }}
-          >
-            OK
-          </Button>
-        )}
+          )}
+        </Modal.Footer>
       </Modal.Body>
     </Modal>
   );

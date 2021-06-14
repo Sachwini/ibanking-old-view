@@ -23,8 +23,14 @@ const OtpModal = (props: Props) => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    setTimeout(() => setButtonDisabled(false), 60000);
-    console.log("Timer for 60 sec");
+    let isSubscribed = true;
+    if (isSubscribed) {
+      setTimeout(() => setButtonDisabled(false), 60000);
+      console.log("Timer for 60 sec");
+    }
+    return () => {
+      isSubscribed = false;
+    };
   }, [buttonDisabled]);
 
   return (

@@ -11,6 +11,18 @@ import DetailModal from "components/modals/cheque-request/requestNewCheque/Detai
 import MpinModal from "components/modals/fundTransfer/MpinModal";
 import SuccessModal from "components/modals/cheque-request/requestNewCheque/SuccessModal";
 
+const ChequeReqHeader = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  color: green;
+
+  .space_item {
+    margin-right: 20px;
+  }
+`;
+
 function RequestNewCheque() {
   const accountNumber = GetAccountNumber();
   const getAllAccountNumber = GetAllAccountNumber();
@@ -32,17 +44,6 @@ function RequestNewCheque() {
     letterSpacing: "1px",
   };
 
-  const ChequeReqHeader = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-    color: green;
-
-    .space_item {
-      margin-right: 10px;
-    }
-  `;
   const openDetailModel = (e: any) => {
     e.preventDefault();
     setDetailModalShow(true);
@@ -84,19 +85,19 @@ function RequestNewCheque() {
   };
   return (
     <>
-      <Card>
+      <Card className="card_Shadow">
         <Card.Header>
           <ChequeReqHeader>
-            <BsPencilSquare size={35} className="space_item" />
-            <h3 className="text-muted">Request Cheque Book</h3>
+            <BsPencilSquare size={30} className="space_item" />
+            <h4 className="text-muted">Request Cheque Book</h4>
           </ChequeReqHeader>
         </Card.Header>
         <Card.Body>
-          <h3 className="mb-3">Input Details</h3>
+          {/* <h3 className="mb-3">Input Details</h3> */}
           <span className="text-muted">{localDate()}</span>
-          <h4 className="mt-4 text-muted">
+          <h6 className="mt-4 text-muted">
             I would like to request cheque book
-          </h4>
+          </h6>
           <hr style={ActiveStyle} />
 
           <Form onSubmit={(e) => openDetailModel(e)}>

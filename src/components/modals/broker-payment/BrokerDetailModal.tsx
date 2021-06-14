@@ -1,4 +1,4 @@
-import { Button, Modal, ListGroup } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { formatLakh } from "services/numberService";
 import "../../modals/index.css";
 
@@ -52,15 +52,11 @@ function BrokerDetailModal(props: Props) {
         <Modal.Title as="h6">Details of your Transaction</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ padding: "1em" }} className="modal_body">
-        {/* <ListGroup variant="flush"> */}
-        {/* <ListGroup.Item> */}
         <strong className="d-block mb-2">Customer Details</strong>
         <div className="d-flex justify-content-between mb-2">
           <span>Account Number: </span>
           <span className="text-muted">{fromAccount}</span>
         </div>
-        {/* </ListGroup.Item> */}
-        {/* <ListGroup.Item> */}
         <strong className="d-block mb-2">Payments Details</strong>
 
         <div className="d-flex justify-content-between mb-2">
@@ -91,18 +87,11 @@ function BrokerDetailModal(props: Props) {
           </span>
           <span className="text-muted">{charge}</span>
         </div>
-        {/* </ListGroup.Item> */}
-        {/* <small
-            style={{
-              color: "green",
-              fontStyle: "italic",
-              padding: "30px 10px",
-            }}
-          >
-            Benificiary Name Matches With Account Holder Name Do you Want to
-            Continue?
-          </small> */}
-        {/* </ListGroup> */}
+        {!validDetails ? (
+          <span className="error_text">Account validation failed</span>
+        ) : (
+          ""
+        )}
         <Modal.Footer>
           <div className="float-right">
             <Button

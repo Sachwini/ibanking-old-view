@@ -103,7 +103,7 @@ function LineChart() {
   };
 
   return (
-    <Card>
+    <Card className="card_Shadow">
       <Card.Body>
         {!days ? "" : <Line data={data} options={options} />}
       </Card.Body>

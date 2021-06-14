@@ -12,6 +12,10 @@ export interface Props {
   branch: string;
   amount: string;
   validAccount: boolean;
+  accountValidationResponseMessage: {
+    message: string;
+    matchPercentage: string;
+  };
   confirmModalCancleButton: (show: boolean) => void;
 }
 
@@ -26,6 +30,7 @@ function DetailModal(props: Props) {
     branch,
     amount,
     validAccount,
+    accountValidationResponseMessage,
     confirmModalCancleButton,
   } = props;
 
@@ -78,16 +83,26 @@ function DetailModal(props: Props) {
             </span>
             <span className="text-muted">{formatLakh(parseInt(amount))}</span>
           </div>
-          {/* <small
-            style={{
-              color: "green",
-              fontStyle: "italic",
-              padding: "30px 10px",
-            }}
-          >
-            Benificiary Name Matches With Account Holder Name Do you Want to
-            Continue?
-          </small> */}
+          {/* {!validAccount ? (
+            <span className="error_text">Account validation failed</span>
+          ) : (
+            ""
+          )} */}
+          {accountValidationResponseMessage ? (
+            <div className={validAccount ? "success_text" : "error_text"}>
+              {accountValidationResponseMessage?.message}
+            </div>
+          ) : (
+            ""
+          )}
+          {accountValidationResponseMessage ? (
+            <div>
+              Match Percentage:{" "}
+              {accountValidationResponseMessage?.matchPercentage}
+            </div>
+          ) : (
+            ""
+          )}
           <Modal.Footer>
             <div className="float-right">
               <Button

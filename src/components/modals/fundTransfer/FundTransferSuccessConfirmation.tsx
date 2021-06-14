@@ -31,12 +31,12 @@ function FundTransferSuccessConfirmation() {
         const res = await get<apiResponse<any>>(
           `api/transactionhistory?mPin=${fundTransferDetails?.mpin}&page_no=1`
         );
-        console.log("UseEffect called fund success")
+        console.log("UseEffect called fund success");
         if (isSubscribed) {
           setTransactionInfo(res.data.details.transactionList);
           setLoading(false);
         }
-      } catch(error) {
+      } catch (error) {
         console.log(error);
       }
     };
@@ -51,7 +51,7 @@ function FundTransferSuccessConfirmation() {
       `${baseUrl}/api/gettransactionreceiptpdf?transactionId=${transactionInfo[0]?.transactionIdentifier}`
     );
     if (res) {
-      window.open(`${baseUrl}${res.data.detail.URL}`)
+      window.open(`${baseUrl}${res.data.detail.URL}`);
     }
   };
 
@@ -61,7 +61,7 @@ function FundTransferSuccessConfirmation() {
         <Loader />
       ) : (
         <Container>
-          <Card style={{ maxWidth: "40rem" }}>
+          <Card style={{ maxWidth: "40rem" }} className="card_Shadow">
             <Card.Header>
               <PaymentHeader>
                 <GiConfirmed size={60} />
