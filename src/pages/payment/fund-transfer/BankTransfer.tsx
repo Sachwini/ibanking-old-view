@@ -14,6 +14,7 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { IconStyle } from "styling/common/IconStyling";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { bankBranchType, BankList } from "./model";
+import { identity } from "lodash";
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -272,8 +273,8 @@ export const BankTransfer = () => {
       // To Enabling OTP required at Transction
       setOTPModalShow(true);
     } else {
-      // Enabling Success Message Modal
-      setSuccessModalShow(true);
+      // calling fund transfer api form here
+      fundTransferAPI();
     }
   };
 
@@ -333,10 +334,9 @@ export const BankTransfer = () => {
       if (error.response) {
         setFundTransferResponse({
           status: "failed",
-          message: error.response.data.details,
+          message: error.response.data.message,
         });
         setSuccessModalShow(true);
-        toast.error(error.response.data.details);
       }
     }
     // calling Fund Transfer Response Modal
@@ -395,7 +395,6 @@ export const BankTransfer = () => {
               fontSize: "110%",
             }}
           >
-            {" "}
             My Saved Bank Account ({favoriteAcc ? favoriteAcc.length : "0"})
           </Card.Text>
         </Card>

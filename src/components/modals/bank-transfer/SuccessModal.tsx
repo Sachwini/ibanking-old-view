@@ -73,7 +73,6 @@ const SuccessModal = (props: Props) => {
             }}
           >
             <GiCheckMark color="white" size={30} fontWeight="800" />
-            jkjkjk
           </div>
         ) : (
           <div
