@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
@@ -14,7 +14,6 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { IconStyle } from "styling/common/IconStyling";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { bankBranchType, BankList } from "./model";
-import { identity } from "lodash";
 
 export const BankTransfer = () => {
   const accountNumber = GetAccountNumber();
@@ -382,7 +381,6 @@ export const BankTransfer = () => {
           maxHeight: "20rem",
           minWidth: "10rem",
           overflowY: "auto",
-          whiteSpace: "pre-wrap",
         }}
       >
         <Card>
