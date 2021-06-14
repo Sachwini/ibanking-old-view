@@ -7,7 +7,7 @@ function Account() {
   const [{ customerDetails, switchAccount }] = useStateValue();
   return (
     <Container>
-      <PageTitle title="Account" subTitle="manage and view your account" />
+      <PageTitle title="Account" subTitle="Manage and view your account" />
       <AccountName
         name={customerDetails?.fullName}
         accountCode={

@@ -32,7 +32,7 @@ export const FundTransferLimit = () => {
     };
   }, []);
   return (
-    <Card>
+    <Card className="card_Shadow">
       <Card.Body>
         <Card.Title>Fund Transfer Limits</Card.Title>
         <Table responsive="sm">

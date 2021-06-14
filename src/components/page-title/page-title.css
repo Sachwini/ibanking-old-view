@@ -7,16 +7,21 @@
 .account__title h1 {
   font-size: 1.4rem;
   font-weight: 640;
-  color: #0a410d;
+  color: #444242e5;
   text-transform: capitalize;
   font-family: "Open Sans", sans-serif;
+  text-shadow: 0px 2px 2px #dfdfdfee;
 }
 
 .page__title h6,
 .account__title h6 {
-  color: #a3a7ab;
-  font-size: 0.8rem;
-  text-transform: capitalize;
+  color: #606264;
+  font-size: 0.9rem;
+}
+
+.page__title h6:hover {
+  cursor: pointer;
+  text-shadow: 0px 2px 2px #dfdfdfee;
 }
 
 .account__title {
@@ -27,7 +32,3 @@
   text-transform: uppercase;
   letter-spacing: 2px;
 }
-
-/* .AccountName {
-  text-transform: uppercase;
-} */

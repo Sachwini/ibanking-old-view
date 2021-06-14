@@ -37,7 +37,7 @@ const MpinModal = (props: Props) => {
             <InputGroup>
               <Form.Control
                 type={`${mPinInputShow ? "password" : "text"}`}
-                placeholder="Transction Pin Code..."
+                placeholder="Transaction Pin Code..."
                 required
                 onChange={(e) => userMpin(e.target.value)}
               />

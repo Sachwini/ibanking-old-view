@@ -6,7 +6,7 @@ import "./billPaymentLog.css";
 function BillPaymentLog() {
   return (
     <>
-      <Card style={{ width: "67rem" }}>
+      <Card style={{ width: "67rem" }} className="card_Shadow">
         <Card.Body>
           <div className="inputBoxesLayout">
             <div>
@@ -26,18 +26,12 @@ function BillPaymentLog() {
             <div className="inputBoxesLayout">
               <div>
                 <label>From</label>
-                <input
-                  type="date"
-                  className="form-control"
-                />
+                <input type="date" className="form-control" />
               </div>
               <div className="boxSpacing">
                 <label>To</label>
                 <div>
-                  <input
-                    type="date"
-                    className="form-control"
-                  />
+                  <input type="date" className="form-control" />
                 </div>
               </div>
 

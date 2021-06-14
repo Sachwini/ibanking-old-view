@@ -8,7 +8,7 @@ function BillPaymentTransfer() {
   const [payfor] = useState<any>(["c1", "c2", "p3", "a4", "b5"]);
   return (
     <>
-      <Card>
+      <Card className="card_Shadow">
         <Card.Body>
           <Form>
             <Form.Group

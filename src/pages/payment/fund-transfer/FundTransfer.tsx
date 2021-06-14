@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
-import { fundTransfer } from "./model";
 import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -39,10 +38,18 @@ export const FundTransfer = () => {
   const [validAccount, setValidAccount] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
-  const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+  const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState({
     status: "",
     message: "",
+    // details: "",
+  });
+  const [
+    accountValidationResponseMessage,
+    setAccountValidationResponseMessage,
+  ] = useState({
+    message: "",
+    matchPercentage: "",
   });
   const [favoriteAcc, setFavoriteAcc] = useState<any[]>([]);
 
@@ -54,7 +61,7 @@ export const FundTransfer = () => {
         destinationAccountHolderName !== "" &&
         bankBranchId !== ""
       ) {
-        const res = get<any>(
+        const res = await get<any>(
           "api/account/validation?destinationAccountNumber=" +
             toAccount +
             "&destinationAccountName=" +
@@ -62,10 +69,18 @@ export const FundTransfer = () => {
             "&destinationBranchId=" +
             bankBranchId
         );
+        setAccountValidationResponseMessage({
+          message: res.data.detail.message,
+          matchPercentage: res.data.detail.matchPercentage,
+        });
         return res && setValidAccount(true);
       }
-    } catch {
+    } catch (error) {
       setValidAccount(false);
+      setAccountValidationResponseMessage({
+        message: error.response.data.detail.message,
+        matchPercentage: error.response.data.detail.matchPercentage,
+      });
     }
   };
 
@@ -145,17 +160,6 @@ export const FundTransfer = () => {
       toast.error("Incomplete field");
       return;
     }
-    setLoading(true);
-
-    const model: fundTransfer = {
-      from_account_number: fromAccount,
-      to_account_number: toAccount,
-      bank_branch_id: bankBranchId,
-      amount: amount,
-      mPin: mpin,
-      message: "",
-    };
-    console.log("fundTranfer data", model);
 
     let url = "";
     if (parseFloat(amount) > 5000) {
@@ -186,29 +190,29 @@ export const FundTransfer = () => {
         mpin;
     }
     try {
-      const res = await post<fundTransfer>(url, {}, () => setLoading(false));
+      const res = await post<any>(url, "");
       if (res) {
-        setIsSucessMessage(true);
-        setResponseMessage({ status: "success", message: res.data.message });
-        toast.success(res.data.message);
-        console.log(res.data);
-        setLoading(false);
+        setIsSuccessMessage(true);
+        setResponseMessage({
+          status: "success",
+          message: res.data.message,
+        });
       }
-      // handleReset(e);
     } catch (error) {
-      setIsSucessMessage(true);
-      setResponseMessage({
-        status: "failure",
-        message: error.response.data.message,
-      });
-      setLoading(false);
-      toast.error(error.response.data.message);
-      // console.log(error.response.data.message);
+      if (error.response) {
+        toast.error("Error");
+        setIsSuccessMessage(true);
+        setResponseMessage({
+          status: "failure",
+          message: error.response.data.message,
+        });
+        console.log("ERROR message", error.response.data.message);
+      }
     }
   };
 
   const handleOtpRequired = (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (parseFloat(amount) <= 5000) {
       {
         {
@@ -225,7 +229,7 @@ export const FundTransfer = () => {
   const changeOtpStatus = async (e: any) => {
     e.preventDefault();
     try {
-      const res = post<any>(
+      const res = await post<any>(
         "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
         {}
       );
@@ -233,7 +237,7 @@ export const FundTransfer = () => {
         handleSubmit(e);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("catch inside changeOTP", error.response.data.message);
     }
   };
 
@@ -285,11 +289,17 @@ export const FundTransfer = () => {
                     }}
                   >
                     <Container>
-                      <Row>
-                        <Col xs={3}>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        {/* <Col xs={3}> */}
+                        <div style={{ marginRight: "20px" }}>
                           <RiBankLine size={30} />
-                        </Col>
-                        <Col>
+                          {/* </Col> */}
+                        </div>
+                        <div>
                           <div
                             style={{
                               fontWeight: "bold",
@@ -311,8 +321,8 @@ export const FundTransfer = () => {
                             ""
                           )}
                           <hr />
-                        </Col>
-                      </Row>
+                        </div>
+                      </div>
                     </Container>
                   </div>
                 );
@@ -328,7 +338,7 @@ export const FundTransfer = () => {
       {loading ? (
         <Loader />
       ) : (
-        <Card>
+        <Card className="card_Shadow">
           <Card.Body>
             <Form
               onSubmit={(e) => {
@@ -466,6 +476,7 @@ export const FundTransfer = () => {
         branch={branch[0]?.label}
         amount={amount}
         validAccount={validAccount}
+        accountValidationResponseMessage={accountValidationResponseMessage}
         confirmModalCancleButton={(event: boolean) => setDetailModalShow(false)}
       />
       <MpinModal
@@ -485,7 +496,7 @@ export const FundTransfer = () => {
       />
       <SuccessModal
         successModalShow={isSuccessMessage}
-        handleModalShow={(e) => setIsSucessMessage(e)}
+        handleModalShow={(e) => setIsSuccessMessage(e)}
         fromAccount={fromAccount}
         branch={branch[0]?.label}
         toAccount={toAccount}

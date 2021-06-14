@@ -330,7 +330,7 @@ export const BankTransfer = () => {
         });
         console.log("tansfer response : ", bankTransfer.data);
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error.response) {
         setFundTransferResponse({
           status: "failed",
@@ -428,11 +428,15 @@ export const BankTransfer = () => {
                     }}
                   >
                     <Container>
-                      <Row>
-                        <Col xs={3}>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <div style={{ marginRight: "20px" }}>
                           <RiBankLine size={30} />
-                        </Col>
-                        <Col>
+                        </div>
+                        <div>
                           <div
                             style={{
                               fontWeight: "bold",
@@ -454,8 +458,8 @@ export const BankTransfer = () => {
                             ""
                           )}
                           <hr />
-                        </Col>
-                      </Row>
+                        </div>
+                      </div>
                     </Container>
                   </div>
                 );
@@ -516,7 +520,7 @@ export const BankTransfer = () => {
       {loading ? (
         <Loader />
       ) : (
-        <Card>
+        <Card className="card_Shadow">
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="exampleForm.ControlSelect1">

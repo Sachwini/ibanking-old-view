@@ -57,7 +57,7 @@ function BankTransferSuccessConfirmation() {
         <Loader />
       ) : (
         <Container>
-          <Card style={{ maxWidth: "40rem" }}>
+          <Card style={{ maxWidth: "40rem" }} className="card_Shadow">
             <Card.Header>
               <PaymentHeader>
                 <GiConfirmed size={60} />

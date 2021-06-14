@@ -2,9 +2,8 @@ import { Card, Table } from "react-bootstrap";
 import "./index.css";
 
 function FundTranfCharge() {
-  
   return (
-    <Card className="mt-3">
+    <Card className="mt-3 card_Shadow">
       <Card.Body>
         <Card.Title>MBank Charge Slab</Card.Title>
         <Table responsive="sm">

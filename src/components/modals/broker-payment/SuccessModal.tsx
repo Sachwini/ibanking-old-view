@@ -1,8 +1,9 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
-import { MdClose } from "react-icons/md";
+import { VscError } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
+import { ErrorModalHeader, SuccessModalHeader } from "../ModalStyling";
 
 export interface Props {
   successModalShow: boolean;
@@ -18,6 +19,7 @@ export interface Props {
   responseMessage: {
     status: string;
     message: string;
+    details: string;
   };
 }
 
@@ -63,33 +65,19 @@ const SuccessModal = (props: Props) => {
     >
       <Modal.Header className="justify-content-center p-0">
         {responseMessage.status === "success" ? (
-          <div
-            style={{
-              width: "100%",
-              height: "100px",
-              background: "#44ab76",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <GiCheckMark color="white" size={30} fontWeight="800" />
-          </div>
+          <SuccessModalHeader>
+            <GiCheckMark color="white" size={60} />
+            <h4>Success</h4>
+          </SuccessModalHeader>
         ) : (
-          <div
-            style={{
-              height: "70px",
-              width: "70px",
-              background: "#de795f",
-              borderRadius: "50%",
-            }}
-          >
-            <MdClose color="white" size={30} fontWeight="800" />
-          </div>
+          <ErrorModalHeader>
+            <VscError color="white" size={60} />
+            <h4>Oops !!!</h4>
+          </ErrorModalHeader>
         )}
       </Modal.Header>
       <Modal.Body style={{ padding: "2em" }}>
-        <div className="mb-4">{responseMessage.message}</div>
+        <div className="mb-4">{responseMessage?.message}</div>
         {responseMessage.status === "success" ? (
           <Link
             to="/broker-payment-success-confirmation"

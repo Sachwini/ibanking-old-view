@@ -29,9 +29,9 @@ instance.interceptors.response.use(
   function (response: any) {
     return response;
   },
-  function (error: any) { 
-    if (error.response && error.response.status === 401) {
-      // goToLoginPage();
+  function (error: any) {
+    if (error.response && error.response.status === 4010) {
+      //"401 was preventing from showing error model in fund trasfer so I put random(4010)"
       toast.error("unAuthorized client");
     } else {
       return Promise.reject(error);
@@ -40,7 +40,6 @@ instance.interceptors.response.use(
 );
 
 export function handleError(error: any, onError?: false | (() => void)) {
-  // console.log(error);
   const statusCode =
     error.response !== undefined ? error.response.status : 500 || 500;
 
@@ -64,7 +63,6 @@ export function handleError(error: any, onError?: false | (() => void)) {
     errorTitle = "Unauthorized, please login again.";
   }
 
-  // alert(errorTitle);
   toast(errorTitle);
   if (onError) onError();
 }

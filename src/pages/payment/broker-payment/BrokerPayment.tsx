@@ -44,10 +44,11 @@ const BrokerPayment = () => {
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
   const [fullDetails, setFullDetails] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
-  const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+  const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState({
     status: "",
     message: "",
+    details: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -122,7 +123,8 @@ const BrokerPayment = () => {
     setDetailModalShow(true);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     if (
       !fromAccount ||
       !amount ||
@@ -155,28 +157,33 @@ const BrokerPayment = () => {
     try {
       const res = await post<any>(url, model);
       if (res) {
-        setIsSucessMessage(true);
-        setResponseMessage({ status: "success", message: res.data.message });
+        setIsSuccessMessage(true);
+        setResponseMessage({
+          status: "success",
+          message: res.data.message,
+          details: res.data.details,
+        });
         toast.success(res.data.details);
         console.log(res.data);
       }
     } catch (error) {
       if (error.response) {
-        setIsSucessMessage(true);
+        setIsSuccessMessage(true);
         setResponseMessage({
           status: "failure",
           message: error.response.data.message,
+          details: error.response.data.details,
         });
         toast.error(error.response.data.message);
       }
     }
   };
 
-  const handleOtpRequired = () => {
+  const handleOtpRequired = (e: any) => {
     if (parseFloat(amount) <= 5000) {
       {
         setOtpRequired(false);
-        handleSubmit();
+        handleSubmit(e);
       }
     } else if (parseFloat(amount) > 5000) {
       setOtpRequired(true);
@@ -184,14 +191,15 @@ const BrokerPayment = () => {
     }
   };
 
-  const changeOtpStatus = async () => {
+  const changeOtpStatus = async (e: any) => {
+    e.preventDefault();
     try {
       const res = await post<any>(
         "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
         {}
       );
       if (res) {
-        handleSubmit();
+        handleSubmit(e);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -216,14 +224,17 @@ const BrokerPayment = () => {
   return (
     <>
       <Container>
-        <PageTitle title="Broker Payment" />
+        <PageTitle
+          title="Broker Payment"
+          subTitle="Select and transfer money to your Broker"
+        />
         <hr />
         {loading ? (
           <Loader />
         ) : (
           <>
             <Col sm={12} md={6}>
-              <Card style={{ marginTop: "2rem" }}>
+              <Card className="card_Shadow" style={{ marginTop: "2rem" }}>
                 <Card.Body>
                   <Form
                     onSubmit={(e) => {
@@ -410,7 +421,7 @@ const BrokerPayment = () => {
       />
       <SuccessModal
         successModalShow={isSuccessMessage}
-        handleModalShow={(e) => setIsSucessMessage(e)}
+        handleModalShow={(e) => setIsSuccessMessage(e)}
         responseMessage={responseMessage}
         fromAccount={fromAccount}
         toAccount={broker ? brokerName : ""}
