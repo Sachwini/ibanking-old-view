@@ -45,10 +45,13 @@ const AddFavorite = () => {
 
   return (
     <>
-      <PageTitle title="Add Your Favorite Account" />
+      <PageTitle
+        title="Add Your Favorite Account"
+        subTitle="Manage and add your Favorite listing &hearts;"
+      />
       <hr />
       <Col sm={12} md={6}>
-        <Card style={{ marginTop: "2rem" }}>
+        <Card className="card_Shadow" style={{ marginTop: "2rem" }}>
           <Card.Body>
             <Form
               onSubmit={(e) => {
@@ -116,7 +119,7 @@ const AddFavorite = () => {
                   type="submit"
                   onClick={handleReset}
                 >
-                  Reset
+                  Cancel
                 </Button>
               </div>
               <ToastContainer autoClose={5000} position="top-center" />

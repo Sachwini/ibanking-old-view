@@ -25,7 +25,7 @@ const ChequeBlockHeader = styled.div`
   color: red;
 
   .space_item {
-    margin-right: 10px;
+    margin-right: 20px;
   }
 `;
 
@@ -94,17 +94,17 @@ function BlockChequeBook() {
 
   return (
     <>
-      <Card>
+      <Card className="card_Shadow">
         <Card.Header>
           <ChequeBlockHeader>
-            <BiBlock size={37} className="space_item" />
-            <h3 className="text-muted">Block Cheque Book</h3>
+            <BiBlock size={30} className="space_item" />
+            <h4 className="text-muted">Block Cheque Book</h4>
           </ChequeBlockHeader>
         </Card.Header>
         <Card.Body>
-          <h3 className="mb-3">Input Details</h3>
+          {/* <h3 className="mb-3">Input Details</h3> */}
           <span className="text-muted">{localDate()}</span>
-          <h4 className="mt-4 text-muted">I would like to block my cheque</h4>
+          <h6 className="mt-4 text-muted">I would like to block my cheque</h6>
           <hr style={ActiveStyle} />
 
           <Form onSubmit={(e) => openDetailModel(e)}>

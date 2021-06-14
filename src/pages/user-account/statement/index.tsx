@@ -6,11 +6,10 @@ import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
 import { StatementDataType } from "./model";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
-import {
-  GetAllAccountNumber,
-} from "helper/CustomerData";
+import { GetAllAccountNumber } from "helper/CustomerData";
 import StatementView from "./StatementView";
 import { useStateValue } from "state-provider/StateProvider";
+import { PageTitle } from "components/page-title";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -47,6 +46,11 @@ const Statement = () => {
 
   return (
     <Container>
+      <PageTitle
+        title="Full Statement"
+        subTitle="View your full statement with Date Range"
+      />
+      <hr />
       <div>
         <div
           style={{

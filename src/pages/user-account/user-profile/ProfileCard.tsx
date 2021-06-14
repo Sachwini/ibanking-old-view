@@ -1,17 +1,25 @@
+import { useState } from "react";
 import { Card } from "react-bootstrap";
-import { AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { useStateValue } from "state-provider/StateProvider";
 
 const ProfileCard = () => {
   const [{ customerDetails, switchAccount }] = useStateValue();
+  const [showDetails, setShowDetails] = useState<boolean>(false);
   console.log("fromCard", customerDetails);
   return (
     <div>
       <Card
+        className="card_Shadow"
         style={{
           backgroundColor: "#5bac47",
           minWidth: "340px",
           color: "white",
+          border: "none",
         }}
       >
         <Card.Body style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
@@ -23,21 +31,46 @@ const ProfileCard = () => {
           ) : (
             <div style={{ width: "80%" }}>
               <Card.Title style={{ fontSize: "18px" }}>
-                {customerDetails?.fullName}
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {customerDetails?.fullName}
+                  <span onClick={() => setShowDetails(!showDetails)}>
+                    {showDetails ? (
+                      <AiOutlineEye
+                        size="23px"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      />
+                    ) : (
+                      <AiOutlineEyeInvisible
+                        size="23px"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      />
+                    )}
+                  </span>
+                </div>
               </Card.Title>
               <Card.Text className="m-0">
-                {customerDetails?.accountDetail[switchAccount]["accountNumber"]}
+                {showDetails
+                  ? customerDetails?.accountDetail[switchAccount][
+                      "accountNumber"
+                    ]
+                  : "XXX-XXX-XXX-XXX"}
               </Card.Text>
               <Card.Text>
                 {customerDetails?.accountDetail[switchAccount]["accountType"]}
               </Card.Text>
               <Card.Text>
                 NPR.{" "}
-                {
-                  customerDetails?.accountDetail[switchAccount][
-                    "availableBalance"
-                  ]
-                }
+                {showDetails
+                  ? customerDetails?.accountDetail[switchAccount][
+                      "availableBalance"
+                    ]
+                  : "XXX.XX"}
               </Card.Text>
             </div>
           )}

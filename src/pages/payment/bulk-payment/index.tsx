@@ -3,6 +3,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { GoSync } from "react-icons/go";
 import { FaUpload } from "react-icons/fa";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { PageTitle } from "components/page-title";
 
 function BulkPayment() {
   const [bank, setBank] = useState<any>([
@@ -14,12 +15,13 @@ function BulkPayment() {
   ]);
   return (
     <Container>
-      {/* <PageTitle
+      <PageTitle
         title="Bulk Payment"
-        subTitle="upload your excel file to pay"
-      /> */}
+        subTitle="Send money instantly to any bank with Bulk payment service"
+      />
+      <hr />
 
-      <Card>
+      <Card className="card_Shadow">
         <Card.Body>
           <Card.Title
             style={{ display: "flex", justifyContent: "space-between" }}

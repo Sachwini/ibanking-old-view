@@ -47,6 +47,7 @@ const MpinModal = (props: Props) => {
                 placeholder="Your Transaction Pin"
                 required
                 onChange={(e) => mpin(e.target.value)}
+                autoComplete="off"
               />
               <span
                 style={{

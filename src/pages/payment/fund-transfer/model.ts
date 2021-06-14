@@ -28,6 +28,7 @@ export interface fundTransfer {
   amount: string;
   mPin: string;
   message: string;
+  details: string;
 }
 // -------------------Fund Transfer Moduls END Here------------------------------
 

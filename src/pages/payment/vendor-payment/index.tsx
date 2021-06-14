@@ -8,15 +8,16 @@ function VendorPayment() {
   const [bank] = useState<any>(["BankA", "BankB", "BankC", "BankD", "BankE"]);
   return (
     <Container>
-      <PageTitle title="Vender Payment" />
-      <Card style={{ maxWidth: "50em" }}>
+      <PageTitle title="Vendor Payment" subTitle="Send money to your vendor" />
+      <hr />
+      <Card style={{ maxWidth: "50em" }} className="card_Shadow">
         <Card.Body>
           <Card.Title
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <Card.Title style={{ display: "flex", justifyContent: "center" }}>
               <button id="button2">To Mobile Number</button>
-              <button id="button1">To Account Number</button> 
+              <button id="button1">To Account Number</button>
             </Card.Title>
             <GoSync color="green" />
           </Card.Title>

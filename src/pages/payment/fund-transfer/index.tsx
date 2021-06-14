@@ -8,27 +8,30 @@ import { FundTransferLimit } from "./FundTransferLimit";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 
+const ActiveStyle = {
+  color: "#f58228",
+  borderBottom: "3px solid #f58228",
+  paddingBottom: "8px",
+  letterSpacing: "1px",
+};
+
+const inActiveStyle = {
+  ...ActiveStyle,
+  background: "transparent",
+  borderBottom: "",
+  color: "inherit",
+};
+
 const Transfer = () => {
   const [key, setKey] = useState<string | boolean | null>("fund");
-
-  const ActiveStyle = {
-    color: "#f58228",
-    borderBottom: "3px solid #f58228",
-    paddingBottom: "8px",
-    letterSpacing: "1px",
-  };
-
-  const inActiveStyle = {
-    ...ActiveStyle,
-    background: "transparent",
-    borderColor: "transparent",
-    color: "inherit",
-  };
 
   return (
     <div>
       <Container>
-        <PageTitle title="Fund Transfer" />
+        <PageTitle
+          title="Fund Transfer"
+          subTitle="Transfer fund instantly to account in our bank or any other bank"
+        />
 
         <Tab.Container activeKey={key} onSelect={(key) => setKey(key)}>
           <div className="custom__tab">

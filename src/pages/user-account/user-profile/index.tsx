@@ -40,7 +40,8 @@ const Profile = () => {
 
   return (
     <Container fluid>
-      <PageTitle title="User Profile" />
+      <PageTitle title="User Profile" subTitle="View your Details" />
+      <hr />
       <Form>
         <Row>
           <Col xs={3} className="profile_background">

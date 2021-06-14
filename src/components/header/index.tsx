@@ -32,19 +32,20 @@ const PopoverStyle = {
 const PopoverItem = styled.div`
   text-align: center;
   padding: 8px;
-  background: #e7e7e7;
+  background: #2f312f;
   cursor: pointer;
   font-weight: bold;
+  color: #fff;
   &:hover {
-    background: #3e4d40;
+    background: #575857;
     color: #fff;
   }
 `;
 
-const hrStyle = {
-  border: "1px solid white",
-  margin:"0px",
-}
+// const hrStyle = {
+//   border: "1px solid white",
+//   margin: "0px",
+// };
 
 const Header = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
@@ -63,15 +64,12 @@ const Header = (props: any) => {
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
-          <Link
-            to="/user-profile"
-            style={{ color: "inherit", textDecoration: "inherit" }}
-          >
-        <PopoverItem>
-            User Details
-        </PopoverItem>
-          </Link>
-        <hr style={hrStyle} />
+        <Link
+          to="/user-profile"
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <PopoverItem>User Details</PopoverItem>
+        </Link>
         <PopoverItem
           onClick={() => {
             setShowLogoutModal(true);
@@ -131,7 +129,7 @@ const Header = (props: any) => {
                         <IconStyle hover>
                           <BsBell size="25px" className="bell_ctrl" />
                         </IconStyle>
-                        <Badge className="badge_ctrl">9</Badge>
+                        <Badge className="badge_ctrl">0</Badge>
                       </Hnotification>
                     </OverlayTrigger>
                   </div>
@@ -165,5 +163,3 @@ const Header = (props: any) => {
 };
 
 export default Header;
-
-// skdokosdksd
