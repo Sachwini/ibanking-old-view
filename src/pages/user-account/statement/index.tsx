@@ -17,6 +17,11 @@ const Statement = () => {
   const [startDate, setStartDate] = useState(new Date(`${threeMonthBackDate}`));
   const [endDate, setEndDate] = useState(new Date());
   const [statementData, setStatementData] = useState<StatementDataType>();
+  const [errorMessage, setErrorMessage] = useState({
+    errorOccured: true,
+    message:
+      "Select date range and click on show button to view your statement",
+  });
   const [{ switchAccount }] = useStateValue();
 
   //Use state for Pagination
@@ -36,12 +41,29 @@ const Statement = () => {
 
   const handleShow = async () => {
     setLoading(true);
-    const res = await get<apiResponse<StatementDataType>>(
-      `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
-    );
-    setStatementData(undefined);
-    setStatementData(res.data.details);
-    setLoading(false);
+    try {
+      const res = await get<apiResponse<StatementDataType>>(
+        `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
+      );
+      if (res) {
+        setStatementData(undefined);
+        setStatementData(res.data.details);
+        setLoading(false);
+        setErrorMessage({ errorOccured: false, message: "" });
+      }
+      if (res.data.details.accountStatementDtos.length === 0) {
+        setErrorMessage({
+          errorOccured: true,
+          message: "No statement Available...",
+        });
+      }
+    } catch (error: any) {
+      setLoading(false);
+      setErrorMessage({
+        errorOccured: true,
+        message: "Something Going Wrong...",
+      });
+    }
   };
 
   return (
@@ -109,7 +131,10 @@ const Statement = () => {
           </Button>
         </div>
         <div>
-          <StatementView statementData={statementData} loading={loading} />
+          <StatementView
+            statementData={statementData}
+            errorMessage={errorMessage}
+          />
         </div>
       </div>
     </Container>

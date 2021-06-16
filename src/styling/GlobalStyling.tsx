@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
       padding:0;
       margin:0;
       box-sizing:border-box;
-      z-index:0 ;
+      /* z-index:0 ; */
   }
 
   html, body{
