@@ -78,11 +78,12 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <SwitchWithCatch>
-          <React.Suspense fallback={<Loader />}>
+
+        <React.Suspense fallback={<Loader />}>
+          <SwitchWithCatch>
             <Route exact path="/login" component={Login} />
-          </React.Suspense>
-        </SwitchWithCatch>
+          </SwitchWithCatch>
+        </React.Suspense>
       </ThemeProvider>
     );
 
@@ -90,9 +91,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
-      <DefaultLayout>
-        <SwitchWithCatch>
-          <React.Suspense fallback={<Loader />}>
+      <React.Suspense fallback={<Loader />}>
+        <DefaultLayout>
+          <SwitchWithCatch>
             <Route exact path="/" component={Dashboard} />
 
             {/* ---------- For Account Routing--------------------- */}
@@ -133,9 +134,9 @@ function App() {
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route path="/logs" component={Activities} />
-          </React.Suspense>
-        </SwitchWithCatch>
-      </DefaultLayout>
+          </SwitchWithCatch>
+        </DefaultLayout>
+      </React.Suspense>
     </ThemeProvider>
   );
 }

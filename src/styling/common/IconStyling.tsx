@@ -10,12 +10,6 @@ interface Props {
   Opacity?: string;
 }
 
-export const Typeahead_form = styled.div`
-  .form-control {
-    border-radius: 0px;
-  }
-`;
-
 export const IconStyle = styled.span<Props>`
   cursor: pointer;
   text-align: center;
