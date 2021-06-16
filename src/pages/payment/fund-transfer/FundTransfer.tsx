@@ -294,10 +294,8 @@ export const FundTransfer = () => {
                           display: "flex",
                         }}
                       >
-                        {/* <Col xs={3}> */}
                         <div style={{ marginRight: "20px" }}>
                           <RiBankLine size={30} />
-                          {/* </Col> */}
                         </div>
                         <div>
                           <div

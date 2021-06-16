@@ -1,8 +1,44 @@
-.profile_background{
-    background: rgb(2,0,36);
-background: linear-gradient(210deg, rgba(2,0,36,1) 0%, rgba(9,21,121,1) 38%, rgba(0,212,255,1) 100%);
+.profile_background {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    210deg,
+    rgb(8, 4, 92) 0%,
+    rgba(9, 21, 121, 1) 38%,
+    rgba(17, 119, 139, 0.781) 100%
+  );
 }
 
-th{
-    color: #352975;
+th {
+  color: #48434d;
+  font-size: 15px;
+  font-family: "Yanone Kaffeesatz", sans-serif;
+}
+
+td {
+  font-size: 15px;
+  font-family: "Teko", sans-serif;
+  font-family: "Yanone Kaffeesatz", sans-serif;
+}
+
+.nav-tabs .nav-item.show,
+.nav-tabs .nav-link.active {
+  color: black;
+  font-size: 16px;
+  border: 0;
+  border-bottom: 3px solid #f58228 !important;
+}
+
+.nav-link {
+  color: #f58228;
+  border: 0px solid transparent;
+}
+
+.nav-tabs {
+  font-size: 16px;
+  border: 0px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  border: 0;
+  color: inherit;
 }
