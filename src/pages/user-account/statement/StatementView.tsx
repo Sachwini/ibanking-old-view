@@ -9,12 +9,17 @@ import { GrDownload } from "react-icons/gr";
 import { baseUrl } from "services/BaseUrl";
 import { toast } from "react-toastify";
 
+interface errorType {
+  errorOccured: boolean;
+  message: string;
+}
+
 const StatementView = (props: {
   statementData?: StatementDataType;
-  loading: boolean;
+  errorMessage: errorType;
 }) => {
   const statementData = props.statementData;
-  const loading = props.loading;
+  const errorMessage = props.errorMessage;
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [statementPerPage] = useState<number>(10);
@@ -28,7 +33,7 @@ const StatementView = (props: {
   );
 
   // get length of statements data
-  // const statemetLength = statementData?.accountStatementDtos.length;
+  const statemetLength = statementData?.accountStatementDtos.length;
 
   const paginate = (numbers: number) => {
     setCurrentPage(numbers);
@@ -44,8 +49,14 @@ const StatementView = (props: {
     }
   };
 
-  if (loading) {
-    return <Loader />;
+  if (errorMessage?.errorOccured) {
+    return (
+      <Card>
+        <Card.Body className="text-capitalize">
+          {errorMessage.message}
+        </Card.Body>
+      </Card>
+    );
   }
   return (
     <Card className="card_Shadow">

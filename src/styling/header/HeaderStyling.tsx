@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Container, Navbar, Row, Col, Form } from "react-bootstrap";
+import styled from "styled-components/macro";
+import { Container, Navbar, Row, Col } from "react-bootstrap";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
@@ -73,15 +73,35 @@ export const H_Notification = styled.span`
   }
 `;
 
-export const HeaderSearchForm = styled(Form)`
+export const HeaderSearchContainer = styled.div`
   width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0;
+  }
 
   input {
-    width: 100% !important;
+    width: 100%;
     padding: 0.5em;
     color: ${(props) => props.theme.primary};
-    border: 1px solid #dfdfdf;
+    border: 1px solid #d1d1d1;
     border-radius: 3px;
+
+    &::placeholder {
+      padding-left: 1.5em;
+      text-transform: capitalize;
+      font-size: 14px;
+      color: #1d1d1d;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+    }
 
     &:focus {
       color: ${(props) => props.theme.primary};
@@ -89,23 +109,24 @@ export const HeaderSearchForm = styled(Form)`
       border-color: ${(props) => props.theme.secondary};
       outline: 0;
       box-shadow: 0 0 4px ${(props) => props.theme.secondary};
-    }
 
-    &::placeholder {
-      padding-left: 1.5em;
-      font-family: cursive;
-      text-transform: capitalize;
-      font-size: 14px;
-      color: #969696;
-      letter-spacing: 1.2px;
+      &::placeholder {
+        color: #797979;
+        font-weight: bold;
+      }
     }
   }
 
-  .search__icon {
-    margin-left: -40px;
-    cursor: pointer;
-    clear: both;
-    z-index: 100;
-    padding: 5px;
+  .header_search_icon {
+    position: absolute;
+    right: 1.6rem;
+    top: 15%;
+  }
+
+  @media only screen and (max-width: 1100px) {
+    .container {
+      width: 100%;
+      margin: 0;
+    }
   }
 `;

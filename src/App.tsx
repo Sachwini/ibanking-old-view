@@ -83,11 +83,12 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <SwitchWithCatch>
-          <React.Suspense fallback={<Loader />}>
+
+        <React.Suspense fallback={<Loader />}>
+          <SwitchWithCatch>
             <Route exact path="/login" component={Login} />
-          </React.Suspense>
-        </SwitchWithCatch>
+          </SwitchWithCatch>
+        </React.Suspense>
       </ThemeProvider>
     );
 
