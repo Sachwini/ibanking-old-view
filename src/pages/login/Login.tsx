@@ -70,6 +70,7 @@ const Login = (props: RouteComponentProps<{}>) => {
       const badCredentials = "Bad credentials";
       const invalidUser = "Invalid Mobile Number or Username";
       const maxLogin = "Maximum login attempt reached. User has been blocked.";
+      const maxLogin1 = "User account is locked";
       const otpRequiredMsg =
         "unauthorized device. You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email.";
       const otpRequiredMsg1 =
@@ -85,16 +86,28 @@ const Login = (props: RouteComponentProps<{}>) => {
       if (error.response.data.error_description === maxLogin) {
         setErrorMessage(error.response.data.error_description);
       }
-      if (error.response.data.error_description === otpRequiredMsg) {
+      if (error.response.data.error_description === maxLogin1) {
         setErrorMessage(error.response.data.error_description);
+      }
+      if (error.response.data.error_description === otpRequiredMsg) {
+        // setErrorMessage(error.response.data.error_description);
+        setErrorMessage(
+          "You are Logged In from another Device. If you want to Logout from that device, please verify entering OTP sent to your registered Mobile Number or registered Email."
+        );
         setOtpRequired(true);
       }
       if (error.response.data.error_description === otpRequiredMsg1) {
-        setErrorMessage(error.response.data.error_description);
+        // setErrorMessage(error.response.data.error_description);
+        setErrorMessage(
+          "We have sent an numeric verification code to your registered mobile number by sms. Kindly authenticate with the received code."
+        );
         setOtpRequired(true);
       }
       if (error.response.data.error_description === otpExpire) {
         setOtpRequired(true);
+      }
+      if (error.response.data.error_description) {
+        setErrorMessage(error.response.data.error_description);
       }
     }
   };

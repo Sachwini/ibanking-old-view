@@ -11,9 +11,7 @@ const AccountView = () => {
   return (
     <>
       {!customerDetails?.accountDetail ? (
-        <span>
-          <Loader />
-        </span>
+        <Loader />
       ) : (
         <Card className="mb-3 w-100">
           <Card.Body className="w-100 d-flex ">

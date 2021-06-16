@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const ModalStyle = styled.div`
-  .modal_header {
+  .modal__header {
     background: #cbccce;
   }
   .modal_cancel {
@@ -20,7 +20,7 @@ const ModalStyle = styled.div`
     float: right;
     padding: 4px 1.7em;
   }
-  .modal_body {
+  .modal__body {
     background: #f2f4f7;
   }
 `;
@@ -37,15 +37,16 @@ function LogoutModal(props: Props) {
       size="sm"
     >
       <ModalStyle>
-        <Modal.Header closeButton className="modal_header">
+        <Modal.Header className="modal__header">
           <Modal.Title as="h6">Logout</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal_body">
+        <Modal.Body className="modal__body">
           <div className="mb-4 text-center">
             Are you sure you want to logout?
           </div>
           <div className="d-flex justify-content-center">
             <Button
+              variant="secondary"
               className="modal_cancel"
               onClick={() => handleModalShow(false)}
             >

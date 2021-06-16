@@ -49,7 +49,7 @@ const OTPModal = (props: Props) => {
       centered
       style={{ zIndex: 1400, padding: "1em" }}
     >
-      <Modal.Header closeButton className="modal_header">
+      <Modal.Header className="modal_header">
         <Modal.Title as="h5">Submit Your OTP</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ padding: "2em 3em" }} className="modal_body">
