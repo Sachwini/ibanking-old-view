@@ -62,6 +62,11 @@ function App() {
   const ConfigureService = React.lazy(
     () => import("pages/user-setting/service-config/ConfigureService")
   );
+
+  const ChangeMpin = React.lazy(
+    () => import("pages/user-account/user-profile/ChangeMpin")
+  );
+
   const ThemeSetting = React.lazy(
     () => import("pages/user-setting/theme-setting")
   );
@@ -128,6 +133,7 @@ function App() {
             {/* ---------- For Setting Routing--------------------- */}
 
             <Route path="/configure-service" component={ConfigureService} />
+            <Route path="/change-mpin" component={ChangeMpin} />
             <Route path="/configure-theme" component={ThemeSetting} />
             <Route path="/add-favorite" component={AddFavorite} />
 

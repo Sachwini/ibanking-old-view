@@ -4,7 +4,7 @@ import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiResponse } from "models/apiResponse";
 import DetailModal from "components/modals/fundTransfer/DetailModal";

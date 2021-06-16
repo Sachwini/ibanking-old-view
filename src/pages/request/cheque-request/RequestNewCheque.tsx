@@ -28,7 +28,7 @@ function RequestNewCheque() {
   const getAllAccountNumber = GetAllAccountNumber();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [mpin, setMpin] = useState<string>("");
-  const [chequeLeaves, setChequeLeaves] = useState<string>("100");
+  const [chequeLeaves, setChequeLeaves] = useState<string>("10");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
@@ -125,6 +125,28 @@ function RequestNewCheque() {
                       </option>
                     ))
                   )}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              controlId="exampleForm.ControlSelect1"
+              className="mb-4"
+            >
+              <Form.Label className="font-weight-bold" column sm="4">
+                No. of Copies
+              </Form.Label>
+              <Col>
+                <Form.Control
+                  as="select"
+                  name="chequeLeaves"
+                  value={chequeLeaves}
+                  onChange={(e) => setChequeLeaves(e.target.value)}
+                >
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
                 </Form.Control>
               </Col>
             </Form.Group>
