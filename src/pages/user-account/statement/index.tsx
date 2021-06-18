@@ -9,7 +9,7 @@ import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { GetAllAccountNumber } from "helper/CustomerData";
 import StatementView from "./StatementView";
 import { useStateValue } from "state-provider/StateProvider";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -54,7 +54,7 @@ const Statement = () => {
       if (res.data.details.accountStatementDtos.length === 0) {
         setErrorMessage({
           errorOccured: true,
-          message: "No statement Available...",
+          message: "No statement Available ... for this selected date range",
         });
       }
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title/index";
+import { PageTitle } from "components/PageTitle";
 import { useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import FundTranfCharge from "./FundTranfCharge";
@@ -7,6 +7,9 @@ import { BankTransfer } from "./BankTransfer";
 import { FundTransferLimit } from "./FundTransferLimit";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
+import StaticBar from "components/StaticBar";
+import { fundTransferPageTitle } from "static-data/forPageTitle";
+import { forFundTransfer } from "static-data/forBreadCrumb";
 
 const ActiveStyle = {
   color: "#f58228",
@@ -26,11 +29,11 @@ const Transfer = () => {
   const [key, setKey] = useState<string | boolean | null>("fund");
 
   return (
-    <div>
+    <>
       <Container>
-        <PageTitle
-          title="Fund Transfer"
-          subTitle="Transfer fund instantly to account in our bank or any other bank"
+        <StaticBar
+          pageTitle={fundTransferPageTitle}
+          breadCrumbData={forFundTransfer}
         />
 
         <Tab.Container activeKey={key} onSelect={(key) => setKey(key)}>
@@ -77,7 +80,7 @@ const Transfer = () => {
         </Tab.Container>
       </Container>
       <ToastContainer />
-    </div>
+    </>
   );
 };
 

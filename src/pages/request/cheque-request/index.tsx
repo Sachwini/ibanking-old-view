@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 import { useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import BlockChequeBook from "./BlockChequeBook";

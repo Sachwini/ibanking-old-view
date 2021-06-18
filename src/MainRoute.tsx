@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 
 const MainRoute = () => {
   /* ----------For Default Dashboard Import------------------- */
-  const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
+  const Dashboard = React.lazy(() => import("pages/user-dashboard"));
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(
@@ -37,7 +37,7 @@ const MainRoute = () => {
   );
 
   /* ----------For History Log Import--------------------- */
-  const Activities = React.lazy(() => import("pages/activities/Activities"));
+  const Activities = React.lazy(() => import("pages/activities"));
 
   return (
     <DefaultLayout>

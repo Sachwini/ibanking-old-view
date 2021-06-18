@@ -1,5 +1,5 @@
 import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
-import { PageTitle } from "components/page-title/index";
+import { PageTitle } from "components/PageTitle";
 import BillPaymentLog from "./billPaymentLog";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useState } from "react";

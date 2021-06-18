@@ -2,7 +2,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 import { GoSync } from "react-icons/go";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 
 function VendorPayment() {
   const [bank] = useState<any>(["BankA", "BankB", "BankC", "BankD", "BankE"]);

@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { GrDocumentTransfer } from "react-icons/gr";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { FcQuestions } from "react-icons/fc";
@@ -6,13 +6,7 @@ import "./activities.css";
 
 function QuickPay() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-      }}
-      className="mt-1"
-    >
+    <Container className="mt-1">
       <Card className="quickPay__card__ctrl">
         <Card.Body className="quickPay__cardBody__ctrl">
           <Card.Title>
@@ -62,7 +56,7 @@ function QuickPay() {
           <Card.Text className="cardText"></Card.Text>
         </Card.Body>
       </Card>
-    </div>
+    </Container>
   );
 }
 

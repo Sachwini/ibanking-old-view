@@ -7,7 +7,7 @@ import { GetAccountNumber } from "helper/CustomerData";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { getStatement } from "services/BankServices";
 import { Loader } from "pages/static/Loader";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -31,7 +31,7 @@ const Activities = () => {
             formatedStartDate,
             formatedEndDate
           );
-          if (res) {
+          if (res || isSubscribed) {
             setStatementData(res.slice(0, 6));
             setLoading(false);
           }

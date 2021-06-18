@@ -11,7 +11,7 @@ import { GrDocumentTime } from "react-icons/gr";
 import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
 import "./ConfigureService.css";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 
 function ConfigureService() {
   return (

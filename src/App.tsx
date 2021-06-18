@@ -16,7 +16,7 @@ function App() {
 
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
-  const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
+  const Dashboard = React.lazy(() => import("pages/user-dashboard"));
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(
@@ -67,7 +67,7 @@ function App() {
   );
 
   /* ----------For History Log Import--------------------- */
-  const Activities = React.lazy(() => import("pages/activities/Activities"));
+  const Activities = React.lazy(() => import("pages/activities"));
   const AddFavorite = React.lazy(
     () => import("pages/favoriteListing/AddFavorite")
   );

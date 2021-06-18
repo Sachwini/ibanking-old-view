@@ -1,4 +1,4 @@
-import { AccountName, PageTitle } from "components/page-title";
+import { AccountName, PageTitle } from "components/PageTitle";
 import { Container } from "react-bootstrap";
 import { useStateValue } from "state-provider/StateProvider";
 import AccountView from "./AccountView";

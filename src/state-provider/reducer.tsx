@@ -12,6 +12,8 @@ export const initialState = {
   bankTransferDetails: {},
   brokerPaymentDetails: {},
   switchAccount: 0,
+  breadCrumbData: [],
+  pageTitle: {},
 };
 
 const reducer = (state: any, action: any) => {
@@ -43,6 +45,16 @@ const reducer = (state: any, action: any) => {
       return {
         ...state,
         token: action.value,
+      };
+    case "BREAD_CRUMB":
+      return {
+        ...state,
+        breadCrumbData: action.breadCrumbsData,
+      };
+    case "PAGE_TITLE":
+      return {
+        ...state,
+        pageTitle: action.pageTitleData,
       };
     case "SWITCH_ACCOUNT":
       return {

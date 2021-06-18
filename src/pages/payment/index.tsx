@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 import { FundTransferLimit } from "pages/payment/fund-transfer/FundTransferLimit";
 import { Col, Container, Row } from "react-bootstrap";
 import BillPaymentTransfer from "./BillPaymentTransfer";

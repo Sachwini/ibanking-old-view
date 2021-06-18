@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 import { Container, Image } from "react-bootstrap";
 import {
   Link,
@@ -7,7 +7,7 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { baseUrl } from "services/BaseUrl"; 
+import { baseUrl } from "services/BaseUrl";
 import { QpayService } from "./model";
 import Test2 from "./Test2";
 

@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 import { Container, Image } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { baseUrl } from "services/BaseUrl";

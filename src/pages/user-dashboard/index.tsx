@@ -1,16 +1,18 @@
-import { PageTitle } from "components/page-title/index";
+import { PageTitle } from "components/PageTitle";
 import { Col, Container, OverlayTrigger, Popover, Row } from "react-bootstrap";
 // import QuickPay from "pages/activities/QuickPay";
 // import UpcomingPayment from "pages/activities/UpComingPayment";
 // import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
-import Activities from "pages/activities/Activities";
-import LineChart from "pages/activities/LineChart";
+import Activities from "pages/activities";
+import LineChart from "pages/user-dashboard/LineChart";
 import ProfileCard from "pages/user-account/user-profile/ProfileCard";
 import { IconStyle } from "styling/common/IconStyling";
 import styled from "styled-components";
 import { GetAllAccountNumber } from "helper/CustomerData";
 import { useStateValue } from "state-provider/StateProvider";
+import StaticBar from "components/StaticBar";
+import { UserDetect } from "styling/common/PageTitleStyling";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -32,6 +34,16 @@ const Dashboard = () => {
   const getAllAccountNumber = GetAllAccountNumber();
   const [{ customerDetails }, dispatch] = useStateValue();
 
+  const pageTitle = {
+    title: "Dashboard",
+    subTitle: (
+      <span>
+        Welcome Mr/Ms.
+        <UserDetect>{customerDetails.fullName}</UserDetect>
+        in mBank i-Banking System
+      </span>
+    ),
+  };
   const changeAccount = (value: any) => {
     dispatch({
       type: "SWITCH_ACCOUNT",
@@ -59,7 +71,8 @@ const Dashboard = () => {
   );
   return (
     <Container fluid>
-      <PageTitle title="Dashboard" />
+      <StaticBar pageTitle={pageTitle} />
+
       <Row className="w-100">
         <Col md={12} lg={8}>
           <Row>
@@ -94,9 +107,8 @@ const Dashboard = () => {
         </Col>
 
         <Col md={12} lg={4} className="w-100">
-          {/* <PageTitle title="Request" />
+          {/* <FixedDeposit />  */}
 
-          <FixedDeposit /> */}
           <Activities />
           {/* <UpcomingPayment /> */}
         </Col>
