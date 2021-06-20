@@ -1,18 +1,17 @@
-import { PageTitle } from "components/PageTitle";
 import { Col, Container, OverlayTrigger, Popover, Row } from "react-bootstrap";
 // import QuickPay from "pages/activities/QuickPay";
 // import UpcomingPayment from "pages/activities/UpComingPayment";
 // import FixedDeposit from "pages/activities/FixedDeposit";
 import { FcSynchronize } from "react-icons/fc";
-import Activities from "pages/activities";
 import LineChart from "pages/user-dashboard/LineChart";
-import ProfileCard from "pages/user-account/user-profile/ProfileCard";
-import { IconStyle } from "styling/common/IconStyling";
+import ProfileCard from "pages/user-dashboard/UserProfileCard";
 import styled from "styled-components";
 import { GetAllAccountNumber } from "helper/CustomerData";
 import { useStateValue } from "state-provider/StateProvider";
 import StaticBar from "components/StaticBar";
 import { UserDetect } from "styling/common/PageTitleStyling";
+import { forDashboard } from "static-data/forBreadCrumb";
+import MiniStatementCard from "./MiniStatementCard";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -44,6 +43,7 @@ const Dashboard = () => {
       </span>
     ),
   };
+
   const changeAccount = (value: any) => {
     dispatch({
       type: "SWITCH_ACCOUNT",
@@ -69,48 +69,19 @@ const Dashboard = () => {
       </Popover.Content>
     </Popover>
   );
+
   return (
     <Container fluid>
-      <StaticBar pageTitle={pageTitle} />
+      <StaticBar pageTitle={pageTitle} breadCrumbData={forDashboard} />
 
       <Row className="w-100">
         <Col md={12} lg={8}>
-          <Row>
-            <Col md={12} lg={6}>
-              {customerDetails?.accountDetail?.length > 1 ? (
-                <p className="d-flex justify-content-end">
-                  <OverlayTrigger
-                    transition={false}
-                    trigger="click"
-                    placement="bottom"
-                    overlay={SwitchAccount()}
-                    rootClose
-                  >
-                    <IconStyle hover>
-                      <FcSynchronize size="24px" />
-                    </IconStyle>
-                  </OverlayTrigger>
-
-                  <strong className="px-2">Switch Account</strong>
-                </p>
-              ) : (
-                ""
-              )}
-              <ProfileCard />
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12} className="mt-3">
-              <LineChart />
-            </Col>
-          </Row>
+          <LineChart />
         </Col>
 
-        <Col md={12} lg={4} className="w-100">
-          {/* <FixedDeposit />  */}
-
-          <Activities />
-          {/* <UpcomingPayment /> */}
+        <Col md={12} lg={4} className="w-100 pr-0">
+          <ProfileCard />
+          <MiniStatementCard />
         </Col>
       </Row>
     </Container>
@@ -118,3 +89,25 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+// {
+//   customerDetails?.accountDetail?.length > 1 ? (
+//     <p className="d-flex justify-content-end">
+//       <OverlayTrigger
+//         transition={false}
+//         trigger="click"
+//         placement="bottom"
+//         overlay={SwitchAccount()}
+//         rootClose
+//       >
+//         <IconStyle hover>
+//           <FcSynchronize size="24px" />
+//         </IconStyle>
+//       </OverlayTrigger>
+
+//       <strong className="px-2">Switch Account</strong>
+//     </p>
+//   ) : (
+//     ""
+//   );
+// }

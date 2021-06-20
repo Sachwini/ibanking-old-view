@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 
 const MainRoute = () => {
   /* ----------For Default Dashboard Import------------------- */
-  const Dashboard = React.lazy(() => import("pages/user-dashboard"));
+  const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(
@@ -30,10 +30,7 @@ const MainRoute = () => {
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
-    () => import("pages/user-setting/service-config/ConfigureService")
-  );
-  const ThemeSetting = React.lazy(
-    () => import("pages/user-setting/theme-setting")
+    () => import("pages/user-setting/ConfigureService")
   );
 
   /* ----------For History Log Import--------------------- */
@@ -64,7 +61,6 @@ const MainRoute = () => {
             path="/setting/configure-service"
             component={ConfigureService}
           />
-          <Route path="/setting/configure-theme" component={ThemeSetting} />
 
           {/* ---------- For history Logs Routing--------------------- */}
           <Route path="/activity-log/logs" component={Activities} />

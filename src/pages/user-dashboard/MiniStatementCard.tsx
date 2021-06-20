@@ -1,23 +1,17 @@
 import { AiOutlineUser } from "react-icons/ai";
 import { Card, ListGroup } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import "./activities.css";
 import { Sdetails } from "pages/user-account/statement/model";
 import { GetAccountNumber } from "helper/CustomerData";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { getStatement } from "services/BankServices";
-import { Loader } from "pages/static/Loader";
-import StaticBar from "components/StaticBar";
-import { activityLogPageTitle } from "static-data/forPageTitle";
-import { forActivityLog } from "static-data/forBreadCrumb";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
-const Activities = () => {
+const MiniStatementCard = () => {
   const startDate = new Date(`${threeMonthBackDate}`);
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const accountNumber = GetAccountNumber();
   const formatedStartDate = formatDate(startDate);
@@ -35,7 +29,6 @@ const Activities = () => {
           );
           if (res || isSubscribed) {
             setStatementData(res.slice(0, 6));
-            setLoading(false);
           }
         }
       } catch (error) {
@@ -49,17 +42,8 @@ const Activities = () => {
     };
   }, [accountNumber]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <>
-      <StaticBar
-        pageTitle={activityLogPageTitle}
-        breadCrumbData={forActivityLog}
-      />
-
       {statementData?.map((data, index) => {
         return (
           <Card
@@ -96,4 +80,4 @@ const Activities = () => {
   );
 };
 
-export default Activities;
+export default MiniStatementCard;

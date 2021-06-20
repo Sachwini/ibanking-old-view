@@ -11,14 +11,16 @@ import { GrDocumentTime } from "react-icons/gr";
 import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
 import "./ConfigureService.css";
-import { PageTitle } from "components/PageTitle";
+import StaticBar from "components/StaticBar";
+import { userServiceSettingPageTitle } from "static-data/forPageTitle";
+import { forUserServiceSetting } from "static-data/forBreadCrumb";
 
 function ConfigureService() {
   return (
     <Container className="justify-content-center">
-      <PageTitle
-        title="Configur Services"
-        subTitle="Change Your Internet Banking Settings"
+      <StaticBar
+        pageTitle={userServiceSettingPageTitle}
+        breadCrumbData={forUserServiceSetting}
       />
       <div className="d-flex flex-wrap mt-1">
         <Card className="card__ctrl">

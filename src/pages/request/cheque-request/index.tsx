@@ -4,6 +4,9 @@ import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import BlockChequeBook from "./BlockChequeBook";
 import RequestNewCheque from "./RequestNewCheque";
 import "./index.css";
+import StaticBar from "components/StaticBar";
+import { chequeRequestPageTitle } from "static-data/forPageTitle";
+import { forChequeRequest } from "static-data/forBreadCrumb";
 
 const ActiveStyle = {
   color: "#f58228",
@@ -25,9 +28,9 @@ function ChequeRequest() {
   return (
     <div>
       <Container>
-        <PageTitle
-          title="Cheque inquiry"
-          subTitle="Request for new cheque book or block the current one"
+        <StaticBar
+          pageTitle={chequeRequestPageTitle}
+          breadCrumbData={forChequeRequest}
         />
 
         <Tab.Container activeKey={key} onSelect={(key) => setKey(key)}>

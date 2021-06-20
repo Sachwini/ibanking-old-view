@@ -16,7 +16,7 @@ function App() {
 
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
-  const Dashboard = React.lazy(() => import("pages/user-dashboard"));
+  const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
   const Account = React.lazy(
@@ -60,10 +60,7 @@ function App() {
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
-    () => import("pages/user-setting/service-config/ConfigureService")
-  );
-  const ThemeSetting = React.lazy(
-    () => import("pages/user-setting/theme-setting")
+    () => import("pages/user-setting/ConfigureService")
   );
 
   /* ----------For History Log Import--------------------- */
@@ -123,13 +120,11 @@ function App() {
             <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
-
             <Route path="/cheque-request" component={ChequeRequest} />
 
             {/* ---------- For Setting Routing--------------------- */}
-
             <Route path="/configure-service" component={ConfigureService} />
-            <Route path="/configure-theme" component={ThemeSetting} />
+
             <Route path="/add-favorite" component={AddFavorite} />
 
             {/* ---------- For history Logs Routing--------------------- */}

@@ -13,7 +13,7 @@ export interface StatementDataType {
 export interface Sdetails {
   transactionDate: string;
   remarks: string;
-  debit: null | number;
+  debit: number | null;
   credit: number | null;
-  balance: null;
+  balance: number | null;
 }

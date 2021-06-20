@@ -11,8 +11,6 @@ const menuData = [
     title: "Payment",
     subMenuTitle: [
       "Fund Transfer",
-      "Bulk Payment",
-      "bulk Recharge",
       "Vendor Payment",
       "Broker Payment",
       "Quick Payment",
@@ -20,11 +18,11 @@ const menuData = [
   },
   {
     title: "Request",
-    subMenuTitle: ["Cheque Request", "Service Request"],
+    subMenuTitle: ["Cheque Request", "Remit Request", "Loan Request"],
   },
   {
     title: "Setting",
-    subMenuTitle: ["Configure Theme", "Configure Service"],
+    subMenuTitle: ["Configure Service"],
   },
   {
     title: "Activity Log",

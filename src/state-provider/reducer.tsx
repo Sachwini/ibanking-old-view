@@ -1,3 +1,4 @@
+import { StatementDataType } from "pages/user-account/statement/model";
 import { getBearerToken } from "services/AuthService";
 
 const token = getBearerToken();
@@ -12,8 +13,7 @@ export const initialState = {
   bankTransferDetails: {},
   brokerPaymentDetails: {},
   switchAccount: 0,
-  breadCrumbData: [],
-  pageTitle: {},
+  statementData: {} as StatementDataType,
 };
 
 const reducer = (state: any, action: any) => {
@@ -41,32 +41,30 @@ const reducer = (state: any, action: any) => {
         ...state,
         isLogin: action.value,
       };
+    case "USER_DETAILS":
+      return {
+        ...state,
+        customerDetails: action.customerDetail,
+      };
+
+    case "ACCOUNT_STATEMENT":
+      return {
+        ...state,
+        statementData: action.accStatement,
+      };
+
     case "Has_TOKEN":
       return {
         ...state,
         token: action.value,
       };
-    case "BREAD_CRUMB":
-      return {
-        ...state,
-        breadCrumbData: action.breadCrumbsData,
-      };
-    case "PAGE_TITLE":
-      return {
-        ...state,
-        pageTitle: action.pageTitleData,
-      };
+
     case "SWITCH_ACCOUNT":
       return {
         ...state,
         switchAccount: action.value,
       };
 
-    case "USER_DETAILS":
-      return {
-        ...state,
-        customerDetails: action.customerDetail,
-      };
     case "FUND_TRANSFER_DETAILS":
       return {
         ...state,
@@ -77,6 +75,7 @@ const reducer = (state: any, action: any) => {
         ...state,
         bankTransferDetails: action.bankTransferDetails,
       };
+
     case "BROKER_PAYMENT_DETAILS":
       return {
         ...state,
