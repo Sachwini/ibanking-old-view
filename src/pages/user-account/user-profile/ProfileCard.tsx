@@ -56,9 +56,7 @@ const ProfileCard = () => {
               </Card.Title>
               <Card.Text className="m-0">
                 {showDetails
-                  ? customerDetails?.accountDetail[switchAccount][
-                      "accountNumber"
-                    ]
+                  ? customerDetails?.accountDetail[switchAccount]["mainCode"]
                   : "XXX-XXX-XXX-XXX"}
               </Card.Text>
               <Card.Text>

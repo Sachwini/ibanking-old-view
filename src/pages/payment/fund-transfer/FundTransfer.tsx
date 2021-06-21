@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { getBankBranches } from "services/BankServices";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
-import { toast, ToastContainer } from "react-toastify";
+import {
+  GetAccountNumber,
+  GetAccountNumberValueMainCodeKey,
+} from "helper/CustomerData";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiResponse } from "models/apiResponse";
 import DetailModal from "components/modals/fundTransfer/DetailModal";
@@ -23,7 +26,7 @@ interface selectItem {
 
 export const FundTransfer = () => {
   const accountNumber = GetAccountNumber();
-  const getAllAccountNumber = GetAllAccountNumber();
+  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
@@ -124,6 +127,7 @@ export const FundTransfer = () => {
       }
     };
     init();
+    // getAccountNumberValueMainCodeKey();
     return () => {
       isSubscribed = false;
     };
@@ -354,12 +358,12 @@ export const FundTransfer = () => {
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                 >
-                  {!getAllAccountNumber ? (
+                  {!getAccountNumberValueMainCodeKey ? (
                     <option></option>
                   ) : (
-                    getAllAccountNumber?.map((accNum: any) => (
-                      <option value={accNum} key={accNum}>
-                        {accNum}
+                    getAccountNumberValueMainCodeKey?.map((accNum: any) => (
+                      <option value={accNum.AccountNumber} key={accNum}>
+                        {accNum.mainCode}
                       </option>
                     ))
                   )}

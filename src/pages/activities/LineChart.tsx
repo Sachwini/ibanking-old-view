@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
-import { GetAccountNumber, GetAccountNumber2 } from "helper/CustomerData";
+import { GetAllAccountNumber } from "helper/CustomerData";
 import { Card } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { getGraph } from "services/BankServices";
 import { useStateValue } from "state-provider/StateProvider";
 
 function LineChart() {
-  const accountNumber = GetAccountNumber();
-  const accountNumber2 = GetAccountNumber2();
+  const [{ switchAccount }] = useStateValue();
+  const accountNumber = GetAllAccountNumber();
   const [days, setDays] = useState<string[]>([]);
   const [balance, setBalance] = useState<any>([]);
-  const [{ switchAccount }] = useStateValue();
 
   let actualAccountNumber = "";
-  if (switchAccount === 0) {
-    actualAccountNumber = accountNumber;
-  }
-  if (switchAccount === 1) {
-    actualAccountNumber = accountNumber2;
+  switch (switchAccount) {
+    case switchAccount:
+      actualAccountNumber = accountNumber[switchAccount];
+      break;
   }
 
   const loadDays: string[] = [];

@@ -9,7 +9,10 @@ import LineChart from "pages/activities/LineChart";
 import ProfileCard from "pages/user-account/user-profile/ProfileCard";
 import { IconStyle } from "styling/common/IconStyling";
 import styled from "styled-components";
-import { GetAllAccountNumber } from "helper/CustomerData";
+import {
+  GetAccountNumberValueMainCodeKey,
+  GetAllAccountNumber,
+} from "helper/CustomerData";
 import { useStateValue } from "state-provider/StateProvider";
 
 const PopoverStyle = {
@@ -30,6 +33,7 @@ const PopoverItem = styled.div`
 `;
 const Dashboard = () => {
   const getAllAccountNumber = GetAllAccountNumber();
+  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [{ customerDetails }, dispatch] = useStateValue();
 
   const changeAccount = (value: any) => {
@@ -42,7 +46,7 @@ const Dashboard = () => {
   const SwitchAccount = () => (
     <Popover id="popover-basic" style={PopoverStyle}>
       <Popover.Content style={{ padding: "0" }}>
-        {getAllAccountNumber?.map((accNum: any, index: any) => {
+        {getAccountNumberValueMainCodeKey?.map((accNum: any, index: any) => {
           return (
             <PopoverItem
               key={index}
@@ -50,7 +54,7 @@ const Dashboard = () => {
                 changeAccount(index);
               }}
             >
-              {accNum}
+              {accNum.mainCode}
             </PopoverItem>
           );
         })}

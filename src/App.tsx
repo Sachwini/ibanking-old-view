@@ -10,6 +10,7 @@ import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
 import { GlobalStyle } from "styling/GlobalStyling";
+import ListWallet from "pages/fundManagement/loadWallet/walletList/ListWallet";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
@@ -27,6 +28,13 @@ function App() {
   );
   const Statement = React.lazy(() => import("pages/user-account/statement"));
   /* ----------For Fund Management Import--------------------- */
+  const LoadWallet = React.lazy(
+    () => import("pages/fundManagement/loadWallet/LoadWallet")
+  );
+
+  const ListWallet = React.lazy(
+    () => import("pages/fundManagement/loadWallet/walletList/ListWallet")
+  );
 
   /* ----------For Payment Import--------------------- */
   const Transfer = React.lazy(() => import("pages/payment/fund-transfer"));
@@ -107,6 +115,8 @@ function App() {
             <Route path="/statement" component={Statement} />
 
             {/* ---------- For Fund Management Routing--------------------- */}
+            <Route path="/list-wallet/load-wallet" component={LoadWallet} />
+            <Route path="/load-wallet" component={ListWallet} />
 
             {/* ---------- For Payment Routing--------------------- */}
             <Route path="/fund-transfer" component={Transfer} />

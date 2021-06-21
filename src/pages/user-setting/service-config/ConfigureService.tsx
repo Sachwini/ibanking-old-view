@@ -12,6 +12,12 @@ import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
 import "./ConfigureService.css";
 import { PageTitle } from "components/page-title";
+import { Link } from "react-router-dom";
+
+const linkStyle = {
+  color: "inherit",
+  textDecoration: "inherit",
+};
 
 function ConfigureService() {
   return (
@@ -21,14 +27,16 @@ function ConfigureService() {
         subTitle="Change Your Internet Banking Settings"
       />
       <div className="d-flex flex-wrap mt-1">
-        <Card className="card__ctrl">
-          <Card.Body className="cardBody__ctrl">
-            <Card.Title>
-              <RiLockPasswordLine size="40px" />
-            </Card.Title>
-            <Card.Text className="cardText">Change Password</Card.Text>
-          </Card.Body>
-        </Card>
+        <Link to="/change-mpin" style={linkStyle}>
+          <Card className="card__ctrl">
+            <Card.Body className="cardBody__ctrl">
+              <Card.Title>
+                <RiLockPasswordLine size="40px" />
+              </Card.Title>
+              <Card.Text className="cardText">Change Password</Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
 
         <Card className="card__ctrl">
           <Card.Body className="cardBody__ctrl">

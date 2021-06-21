@@ -143,7 +143,7 @@ function ChangeMpin() {
                     variant="primary"
                     type="submit"
                   >
-                    Submit
+                    Confirm
                   </Button>
                   <Button
                     className="btn btn-light"

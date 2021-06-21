@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form } from "react-bootstrap";
-import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
+import {
+  GetAccountNumber,
+  GetAccountNumberValueMainCodeKey,
+} from "helper/CustomerData";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +30,7 @@ export interface serviceChargeItem {
 
 const BrokerPayment = () => {
   const accountNumber = GetAccountNumber();
-  const getAllAccountNumber = GetAllAccountNumber();
+  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [amount, setAmount] = useState<string>("");
   const [clientName, setClientName] = useState<string>("");
@@ -254,14 +257,16 @@ const BrokerPayment = () => {
                         value={fromAccount}
                         onChange={(e) => setFromAccount(e.target.value)}
                       >
-                        {!getAllAccountNumber ? (
+                        {!getAccountNumberValueMainCodeKey ? (
                           <option></option>
                         ) : (
-                          getAllAccountNumber?.map((accNum: any) => (
-                            <option value={accNum} key={accNum}>
-                              {accNum}
-                            </option>
-                          ))
+                          getAccountNumberValueMainCodeKey?.map(
+                            (accNum: any) => (
+                              <option value={accNum.AccountNumber} key={accNum}>
+                                {accNum.mainCode}
+                              </option>
+                            )
+                          )
                         )}
                       </Form.Control>
                     </Form.Group>

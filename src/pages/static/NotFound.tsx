@@ -1,14 +1,32 @@
 import { Container } from "react-bootstrap";
+import "./PageNotFound.css";
 
 const FourZeroFour = () => {
   return (
     <Container>
-      <h2>Not Found</h2>
-      <h5>Page url searching is not found.</h5>
+      <section className="page_404">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12 ">
+              <div className="col-sm-10 col-sm-offset-1  text-center">
+                <div className="four_zero_four_bg">
+                  <h1 className="text-center ">404</h1>
+                </div>
 
-      <button onClick={() => (window.location.href = "/")}>
-        Go to dashboard
-      </button>
+                <div className="contant_box_404">
+                  <h3 className="h2">Look like you're lost</h3>
+
+                  <p>the page you are looking for not available!</p>
+
+                  <a href="/" className="link_404">
+                    Go to Dashboard
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </Container>
   );
 };
