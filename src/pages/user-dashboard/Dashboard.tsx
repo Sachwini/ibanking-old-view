@@ -2,84 +2,47 @@ import { Col, Container, OverlayTrigger, Popover, Row } from "react-bootstrap";
 // import QuickPay from "pages/activities/QuickPay";
 // import UpcomingPayment from "pages/activities/UpComingPayment";
 // import FixedDeposit from "pages/activities/FixedDeposit";
-import { FcSynchronize } from "react-icons/fc";
 import LineChart from "pages/user-dashboard/LineChart";
 import ProfileCard from "pages/user-dashboard/UserProfileCard";
-import styled from "styled-components";
-import { GetAllAccountNumber } from "helper/CustomerData";
 import { useStateValue } from "state-provider/StateProvider";
 import StaticBar from "components/StaticBar";
 import { UserDetect } from "styling/common/PageTitleStyling";
 import { forDashboard } from "static-data/forBreadCrumb";
 import MiniStatementCard from "./MiniStatementCard";
+import { useState } from "react";
 
-const PopoverStyle = {
-  minWidth: "10rem",
-  marginTop: "1rem",
-};
-const PopoverItem = styled.div`
-  text-align: center;
-  padding: 8px;
-  background: #2f312f;
-  cursor: pointer;
-  font-weight: bold;
-  color: #fff;
-  &:hover {
-    background: #575857;
-    color: #fff;
-  }
-`;
 const Dashboard = () => {
-  const getAllAccountNumber = GetAllAccountNumber();
   const [{ customerDetails }, dispatch] = useStateValue();
+  const [salutation, setSalutation] = useState<string>("");
+
+  if (customerDetails! == "") {
+    if (customerDetails?.gender?.toLowerCase() === "male") {
+      setSalutation("Mr.");
+    }
+    setSalutation("Ms.");
+  }
 
   const pageTitle = {
     title: "Dashboard",
     subTitle: (
       <span>
-        Welcome Mr/Ms.
+        Welcome Mr./Ms.
         <UserDetect>{customerDetails.fullName}</UserDetect>
         in mBank i-Banking System
       </span>
     ),
   };
 
-  const changeAccount = (value: any) => {
-    dispatch({
-      type: "SWITCH_ACCOUNT",
-      value: value,
-    });
-  };
-
-  const SwitchAccount = () => (
-    <Popover id="popover-basic" style={PopoverStyle}>
-      <Popover.Content style={{ padding: "0" }}>
-        {getAllAccountNumber?.map((accNum: any, index: any) => {
-          return (
-            <PopoverItem
-              key={index}
-              onClick={() => {
-                changeAccount(index);
-              }}
-            >
-              {accNum}
-            </PopoverItem>
-          );
-        })}
-      </Popover.Content>
-    </Popover>
-  );
-
   return (
     <Container fluid>
       <StaticBar pageTitle={pageTitle} breadCrumbData={forDashboard} />
 
       <Row className="w-100">
-        <Col md={12} lg={8}>
+        <Col md={12} lg={7}>
           <LineChart />
         </Col>
 
-        <Col md={12} lg={4} className="w-100 pr-0">
+        <Col md={12} lg={5} className="w-100 pr-0">
           <ProfileCard />
           <MiniStatementCard />
         </Col>
@@ -89,25 +52,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// {
-//   customerDetails?.accountDetail?.length > 1 ? (
-//     <p className="d-flex justify-content-end">
-//       <OverlayTrigger
-//         transition={false}
-//         trigger="click"
-//         placement="bottom"
-//         overlay={SwitchAccount()}
-//         rootClose
-//       >
-//         <IconStyle hover>
-//           <FcSynchronize size="24px" />
-//         </IconStyle>
-//       </OverlayTrigger>
-
-//       <strong className="px-2">Switch Account</strong>
-//     </p>
-//   ) : (
-//     ""
-//   );
-// }

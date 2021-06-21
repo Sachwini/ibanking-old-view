@@ -33,7 +33,7 @@ export interface userDetail {
   registered: boolean;
 }
 
-interface userAccount {
+export interface userAccount {
   interestRate: string;
   accountType: string;
   branchName: string;

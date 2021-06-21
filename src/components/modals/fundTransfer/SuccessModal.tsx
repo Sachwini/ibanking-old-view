@@ -3,7 +3,10 @@ import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
-import { ErrorModalHeader, SuccessModalHeader } from "../ModalStyling";
+import {
+  ErrorModalHeader,
+  SuccessModalHeader,
+} from "styling/common/ModalStyling";
 
 export interface Props {
   successModalShow: boolean;

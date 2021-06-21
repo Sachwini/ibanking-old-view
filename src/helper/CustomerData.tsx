@@ -1,3 +1,5 @@
+import { userAccount } from "pages/user-account/user-profile/model";
+import { useState } from "react";
 import { useStateValue } from "state-provider/StateProvider";
 
 export const GetAccountNumber = () => {
@@ -22,4 +24,24 @@ export const GetAllAccountNumber = () => {
     ? ""
     : customerDetails.accountDetail.map((accNum: any) => accNum.accountNumber);
   return allAccountNumber;
+};
+
+interface getAllAccNoType {
+  accountNumber: string;
+  accoutType: string;
+}
+
+export const GetAllAccNoWithType = () => {
+  const [{ customerDetails }] = useStateValue();
+
+  let data: getAllAccNoType[] = !customerDetails?.accountDetail
+    ? ""
+    : customerDetails?.accountDetail?.map((items: userAccount) => {
+        return {
+          accountNumber: items.accountNumber,
+          accoutType: items.accountType,
+        };
+      });
+
+  return data;
 };

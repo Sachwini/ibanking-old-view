@@ -1,3 +1,4 @@
+import SwitchAccountModal from "components/modals/SwitchAccountModal";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Row, Col } from "react-bootstrap";
@@ -9,12 +10,13 @@ import {
 import { FcSynchronize } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
-import { MyButton } from "styling/common/ButtonStyling";
 import { UserProfileCardContainer } from "styling/for-dashboard/UserProfileCardStyling";
 
 const ProfileCard = () => {
   const [{ customerDetails, switchAccount }] = useStateValue();
   const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [switchAccountModalShow, setSwitchAccountModalShow] =
+    useState<boolean>(false);
 
   const handleShowDetails = (title: string) => {
     if (showDetails) {
@@ -22,6 +24,17 @@ const ProfileCard = () => {
     }
     return "xxx-xxx-xxx";
   };
+
+  if (switchAccountModalShow) {
+    return (
+      <SwitchAccountModal
+        switchAccountModalShow={switchAccountModalShow}
+        switchAccountModalShowHandle={(value) =>
+          setSwitchAccountModalShow(value)
+        }
+      />
+    );
+  }
 
   return (
     <UserProfileCardContainer>
@@ -84,8 +97,11 @@ const ProfileCard = () => {
               <Button variant="light">View Profile</Button>
             </Link>
           </Col>
-          <Col sm={6} className="pr-0">
-            <Button variant="light">
+          <Col sm={6} className="pr-0 d-flex justify-content-end">
+            <Button
+              variant="light"
+              onClick={() => setSwitchAccountModalShow(true)}
+            >
               Switch Account <FcSynchronize size={24} />
             </Button>
           </Col>

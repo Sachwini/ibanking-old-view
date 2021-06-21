@@ -25,6 +25,7 @@ export const theme = {
   // ---------Default Theme color defining END Here-----------
 
   alert: "red",
+  bgColor: "#f5f5f5",
 };
 
 export type ThemeType = typeof theme;

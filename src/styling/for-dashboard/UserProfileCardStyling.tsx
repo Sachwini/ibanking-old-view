@@ -54,13 +54,15 @@ export const UserProfileCardContainer = styled(Card)`
   }
 
   .card_body {
-    padding: 0.5rem 1rem 1rem;
+    padding: 0.5rem 1rem 2rem;
     border: none;
   }
 
   .card_footer {
     padding: 0.6rem;
     border: none;
+    border-top: 1px solid #f1f1f1;
+    background: transparent;
   }
 
   .btn_ctrl {

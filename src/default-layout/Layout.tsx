@@ -7,12 +7,13 @@ import {
   LayoutContainer,
   LayoutSidebar,
   LayoutContentField,
-  FooterContent,
+  FooterWrapper,
 } from "styling/layout/LayoutStyling";
 import { useEffect, useState } from "react";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
 import { userDetail } from "pages/user-account/user-profile/model";
+import Footer from "components/Footer";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ isMenuButtonClick }, dispatch] = useStateValue();
@@ -66,9 +67,10 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
           {props.children}
         </LayoutContentField>
       </LayoutBodyWrapper>
-      <FooterContent>
-        <p>© Copyright 2021 mbank Technologies Pvt.Ltd</p>
-      </FooterContent>
+
+      <FooterWrapper width={sidbarWidth}>
+        <Footer />
+      </FooterWrapper>
     </LayoutContainer>
   );
 };
