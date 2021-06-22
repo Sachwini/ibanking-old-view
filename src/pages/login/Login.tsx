@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Card, Form, Image, InputGroup } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
-import { setBearerToken, setRefreshToken } from "services/AuthService";
+import {
+  getRememberMe,
+  setBearerToken,
+  setRefreshToken,
+  setRememberMe,
+} from "services/AuthService";
 import {
   client_id,
   client_secret,
@@ -14,11 +19,14 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import {
   LoginContainer,
   EyeContainer,
-  MyCard,
+  LoginWrapper,
+  PoweredBy,
 } from "styling/login/LoginStyling";
 import { MyButton } from "styling/common/ButtonStyling";
 import { IconStyle } from "styling/common/IconStyling";
 import { baseUrl } from "services/BaseUrl";
+import { WindowSidebar } from "react-bootstrap-icons";
+import { LogoWrapper } from "styling/layout/FooterStyling";
 
 const Login = (props: RouteComponentProps<{}>) => {
   const [identity, setIdentity] = useState("");
@@ -29,8 +37,18 @@ const Login = (props: RouteComponentProps<{}>) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [errorMessageShowHandle, setErrorMessageShowHandle] =
     useState<boolean>(false);
-
   const [{}, dispatch] = useStateValue();
+
+  const rememberValue = getRememberMe();
+  console.log("localstorage remember value", rememberValue);
+
+  const handleRememberMe = (value: boolean) => {
+    setRememberMe(value.toString());
+  };
+
+  window.onbeforeunload = function () {
+    alert("are you sure?");
+  };
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -113,126 +131,167 @@ const Login = (props: RouteComponentProps<{}>) => {
   };
 
   return (
-    <LoginContainer>
-      <MyCard style={{ width: "30rem", marginBottom: "1rem" }}>
-        <Card.Header className="image_wrapper">
-          <Image
-            src="./logo.png"
-            alt="logo"
-            roundedCircle
-            className="login_logo"
-          />
-          <Card.Title className="login_header_text">
-            {otpRequired ? "OTP Validation Form" : " Sign In To iBank"}
-          </Card.Title>
-        </Card.Header>
+    <>
+      <LoginContainer>
+        <LoginWrapper>
+          <Card style={{ width: "30rem", marginBottom: "1rem" }}>
+            <Card.Header className="image_wrapper">
+              <Image
+                src="./logo.png"
+                alt="logo"
+                roundedCircle
+                className="login_logo"
+              />
+              <Card.Title className="login_header_text">
+                {otpRequired ? "OTP Validation Form" : " Sign In To iBank"}
+              </Card.Title>
+            </Card.Header>
 
-        <Card.Body>
-          {otpRequired ? (
-            <Form onSubmit={handleLogin}>
-              <Form.Group controlId="OTPField" className="pb-3">
-                {errorMessageShowHandle ? (
-                  <Form.Text className="text-danger pb-1 text-center text-capitalize">
-                    {errorMessage}
-                  </Form.Text>
-                ) : (
-                  ""
-                )}
-
-                <Form.Label className="font-weight-bold pt-4">
-                  Your OTP
-                </Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={`${inputFieldValueShow ? "password" : "text"}`}
-                    name="otp"
-                    value={otp}
-                    onChange={(e) => {
-                      setOtp(e.target.value);
-                      setErrorMessageShowHandle(false);
-                    }}
-                    placeholder="please provide OTP here"
-                    required
-                  />
-                  <EyeContainer
-                    onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
-                  >
-                    {inputFieldValueShow ? (
-                      <IconStyle hover>
-                        <AiOutlineEyeInvisible />
-                      </IconStyle>
+            <Card.Body>
+              {otpRequired ? (
+                <Form onSubmit={handleLogin}>
+                  <Form.Group controlId="OTPField" className="pb-3">
+                    {errorMessageShowHandle ? (
+                      <Form.Text className="text-danger pb-1 text-center text-capitalize">
+                        {errorMessage}
+                      </Form.Text>
                     ) : (
-                      <IconStyle hover>
-                        <AiOutlineEye />
-                      </IconStyle>
+                      ""
                     )}
-                  </EyeContainer>
-                </InputGroup>
-              </Form.Group>
 
-              <MyButton type="submit" width="100%">
-                Submit
-              </MyButton>
-            </Form>
-          ) : (
-            <Form onSubmit={handleLogin}>
-              <Form.Group controlId="username">
-                {errorMessageShowHandle ? (
-                  <Form.Text className="text-danger pb-1 text-center text-capitalize">
-                    {errorMessage}
-                  </Form.Text>
-                ) : (
-                  ""
-                )}
+                    <Form.Label className="font-weight-bold pt-4">
+                      Your OTP
+                    </Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type={`${inputFieldValueShow ? "password" : "text"}`}
+                        name="otp"
+                        value={otp}
+                        onChange={(e) => {
+                          setOtp(e.target.value);
+                          setErrorMessageShowHandle(false);
+                        }}
+                        placeholder="please provide OTP here"
+                        required
+                      />
+                      <EyeContainer
+                        onClick={() =>
+                          setInputFieldValueShow(!inputFieldValueShow)
+                        }
+                      >
+                        {inputFieldValueShow ? (
+                          <IconStyle hover>
+                            <AiOutlineEyeInvisible />
+                          </IconStyle>
+                        ) : (
+                          <IconStyle hover>
+                            <AiOutlineEye />
+                          </IconStyle>
+                        )}
+                      </EyeContainer>
+                    </InputGroup>
+                  </Form.Group>
 
-                <Form.Label className="font-weight-bold">UserName</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="identity"
-                  value={identity}
-                  onChange={(e) => {
-                    setIdentity(e.target.value);
-                    setErrorMessageShowHandle(false);
-                  }}
-                  placeholder="Mobile Number or Email"
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="password" className="py-2">
-                <Form.Label className="font-weight-bold">Password</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={`${inputFieldValueShow ? "password" : "text"}`}
-                    name="password"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      setErrorMessageShowHandle(false);
-                    }}
-                    placeholder="Enter your password"
-                    required
-                  />
-                  <EyeContainer
-                    onClick={() => setInputFieldValueShow(!inputFieldValueShow)}
-                  >
-                    {inputFieldValueShow ? (
-                      <AiOutlineEyeInvisible />
+                  <MyButton type="submit" width="100%">
+                    Submit
+                  </MyButton>
+                </Form>
+              ) : (
+                <Form onSubmit={handleLogin}>
+                  <Form.Group controlId="username">
+                    {errorMessageShowHandle ? (
+                      <Form.Text className="text-danger pb-1 text-center text-capitalize">
+                        {errorMessage}
+                      </Form.Text>
                     ) : (
-                      <AiOutlineEye />
+                      ""
                     )}
-                  </EyeContainer>
-                </InputGroup>
-              </Form.Group>
 
-              <MyButton type="submit" width="100%">
-                Login
-              </MyButton>
-            </Form>
-          )}
-        </Card.Body>
-      </MyCard>
-    </LoginContainer>
+                    <Form.Label className="font-weight-bold">
+                      UserName
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="identity"
+                      value={identity}
+                      onChange={(e) => {
+                        setIdentity(e.target.value);
+                        setErrorMessageShowHandle(false);
+                      }}
+                      placeholder="Mobile Number or Email"
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="password" className="py-2">
+                    <Form.Label className="font-weight-bold">
+                      Password
+                    </Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type={`${inputFieldValueShow ? "password" : "text"}`}
+                        name="password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          setErrorMessageShowHandle(false);
+                        }}
+                        placeholder="Enter your password"
+                        required
+                      />
+                      <EyeContainer
+                        onClick={() =>
+                          setInputFieldValueShow(!inputFieldValueShow)
+                        }
+                      >
+                        {inputFieldValueShow ? (
+                          <AiOutlineEyeInvisible />
+                        ) : (
+                          <AiOutlineEye />
+                        )}
+                      </EyeContainer>
+                    </InputGroup>
+                  </Form.Group>
+
+                  <MyButton type="submit" width="100%">
+                    Login
+                  </MyButton>
+                </Form>
+              )}
+            </Card.Body>
+          </Card>
+          <div className="input_wrapper">
+            <input
+              type="checkbox"
+              id="remember"
+              className="remember_meInput"
+              defaultChecked={rememberValue === "true" ? true : false}
+              onChange={(e) => handleRememberMe(e.target.checked)}
+            />
+            <label htmlFor="remember">Remember Me</label>
+          </div>
+        </LoginWrapper>
+        <PoweredBy>
+          <p className="text_wrapper underline">Powered By</p>
+          <LogoWrapper className="pt-3">
+            <Image
+              src="../ibankLogo.png"
+              alt="iBanking System"
+              className="logo_image pr-5"
+            />
+            <Image
+              src="../mBankLogo.png"
+              alt="iBanking System"
+              className="logo_image"
+            />
+
+            <p className="power_by bold">
+              Hamro Technology PVT.LTD, Kalanki Kathmandu
+            </p>
+          </LogoWrapper>
+        </PoweredBy>
+      </LoginContainer>
+    </>
   );
 };
 

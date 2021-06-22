@@ -5,7 +5,8 @@ export const LoginContainer = styled(Container)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 7rem;
+  margin-top: 5rem;
+  flex-direction: column;
   position: relative;
 
   .image_wrapper {
@@ -62,8 +63,26 @@ export const LoginContainer = styled(Container)`
   }
 `;
 
-export const MyCard = styled(Card)`
-  border-color: ${(props) => props.theme.primary};
+export const LoginWrapper = styled.div`
+  /* border: 1px solid ${(props) => props.theme.primary}; */
+  border: 2px solid #f0f0f0;
+
+  .input_wrapper {
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    background: ${(props) => props.theme.bgColor};
+  }
+
+  input {
+    height: 20px;
+    width: 20px;
+  }
+
+  label {
+    padding-left: 1rem;
+    padding-top: 5px;
+  }
 `;
 
 export const EyeContainer = styled.span`
@@ -74,4 +93,29 @@ export const EyeContainer = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const PoweredBy = styled.div`
+  padding: 3rem 1rem 1rem;
+
+  .text_wrapper {
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+
+    &::after {
+      content: ":";
+      padding: 0 5px;
+    }
+  }
+
+  .bold {
+    padding-top: 2px;
+    font-weight: 500;
+  }
+
+  .underline {
+    padding-bottom: 5px;
+    border-bottom: 3px solid #e2e2e2;
+  }
 `;

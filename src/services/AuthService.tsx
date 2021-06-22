@@ -3,6 +3,7 @@ export const localStorageRefreshTokenKey = "refreshToken";
 export const localStrorageIdentityKey = "identity";
 export const localStroragePasswordKey = "password";
 export const localStorageDeviceUID = "DeviceUID";
+export const localStorageRememberMe = "rememberMe";
 
 export function getDeviceUID() {
   return localStorage.getItem(localStorageDeviceUID);
@@ -42,4 +43,12 @@ export function setPassword1(password: string) {
 
 export function goToLoginPage() {
   window.location.href = `/login`;
+}
+
+export function setRememberMe(value: string) {
+  localStorage.setItem(localStorageRememberMe, value);
+}
+
+export function getRememberMe() {
+  return localStorage.getItem(localStorageRememberMe);
 }
