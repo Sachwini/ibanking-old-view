@@ -10,7 +10,6 @@ import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
 import { GlobalStyle } from "styling/GlobalStyling";
-import ListWallet from "pages/fundManagement/loadWallet/walletList/ListWallet";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
@@ -68,7 +67,7 @@ function App() {
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
-    () => import("pages/user-setting/service-config/ConfigureService")
+    () => import("pages/user-setting/ConfigureService")
   );
 
   const ChangeMpin = React.lazy(
@@ -76,11 +75,11 @@ function App() {
   );
 
   const ThemeSetting = React.lazy(
-    () => import("pages/user-setting/theme-setting")
+    () => import("pages/user-setting/ConfigureService")
   );
 
   /* ----------For History Log Import--------------------- */
-  const Activities = React.lazy(() => import("pages/activities/Activities"));
+  const Activities = React.lazy(() => import("pages/activities"));
   const AddFavorite = React.lazy(
     () => import("pages/favoriteListing/AddFavorite")
   );
@@ -138,14 +137,13 @@ function App() {
             <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}
-
             <Route path="/cheque-request" component={ChequeRequest} />
 
             {/* ---------- For Setting Routing--------------------- */}
-
             <Route path="/configure-service" component={ConfigureService} />
             <Route path="/change-mpin" component={ChangeMpin} />
             <Route path="/configure-theme" component={ThemeSetting} />
+
             <Route path="/add-favorite" component={AddFavorite} />
 
             {/* ---------- For history Logs Routing--------------------- */}

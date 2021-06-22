@@ -1,8 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
-import { Link } from "react-router-dom";
-import { ErrorModalHeader, SuccessModalHeader } from "../ModalStyling";
 
 export interface Props {
   successModalShow: boolean;
@@ -29,15 +27,15 @@ const SuccessModal = (props: Props) => {
     >
       <Modal.Header className="justify-content-center p-0">
         {responseMessage?.status === "success" ? (
-          <SuccessModalHeader>
+          <div>
             <GiCheckMark color="white" size={60} />
             <h4>Success</h4>
-          </SuccessModalHeader>
+          </div>
         ) : (
-          <ErrorModalHeader>
+          <div>
             <VscError color="white" size={60} />
             <h4>Oops !!!</h4>
-          </ErrorModalHeader>
+          </div>
         )}
       </Modal.Header>
       <Modal.Body style={{ padding: "2em", color: "black" }}>

@@ -1,9 +1,11 @@
 import { Button, Card, Form, Container, Col, Row } from "react-bootstrap";
-import { PageTitle } from "components/page-title/index";
 import { useState } from "react";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 import { toast, ToastContainer } from "react-toastify";
+import StaticBar from "components/StaticBar";
+import { ChangeMpinPageTitle } from "static-data/forPageTitle";
+import { forChangeMpin } from "static-data/forBreadCrumb";
 
 function ChangeMpin() {
   const [currentMpin, setCurrentMpin] = useState<string>("");
@@ -51,13 +53,10 @@ function ChangeMpin() {
 
   return (
     <Container fluid className="justify-content-center pt-4">
-      <div className="d-flex flex-wrap mt-1">
-        <PageTitle
-          title="Change Mpin"
-          subTitle="Change your current mpin with a new one"
-        />
-      </div>
-      <hr />
+      <StaticBar
+        pageTitle={ChangeMpinPageTitle}
+        breadCrumbData={forChangeMpin}
+      />
       <div style={{ display: "flex" }}>
         <Row>
           <Col sm={12} md={6}>

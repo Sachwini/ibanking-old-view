@@ -86,7 +86,6 @@ const StatementView = (props: {
         <tbody>
           {currentPageStatement?.map((item, index) => (
             <tr key={index}>
-              <td>{getNpDate(item.transactionDate as any)}</td>
               <td>{item.transactionDate}</td>
               <td>{item.remarks}</td>
               <td style={{ textAlign: "right" }}>

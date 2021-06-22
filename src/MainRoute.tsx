@@ -30,14 +30,11 @@ const MainRoute = () => {
 
   /* ----------For Setting Import--------------------- */
   const ConfigureService = React.lazy(
-    () => import("pages/user-setting/service-config/ConfigureService")
-  );
-  const ThemeSetting = React.lazy(
-    () => import("pages/user-setting/theme-setting")
+    () => import("pages/user-setting/ConfigureService")
   );
 
   /* ----------For History Log Import--------------------- */
-  const Activities = React.lazy(() => import("pages/activities/Activities"));
+  const Activities = React.lazy(() => import("pages/activities"));
 
   return (
     <DefaultLayout>
@@ -64,7 +61,6 @@ const MainRoute = () => {
             path="/setting/configure-service"
             component={ConfigureService}
           />
-          <Route path="/setting/configure-theme" component={ThemeSetting} />
 
           {/* ---------- For history Logs Routing--------------------- */}
           <Route path="/activity-log/logs" component={Activities} />

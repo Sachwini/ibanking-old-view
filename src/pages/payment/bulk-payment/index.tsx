@@ -3,7 +3,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { GoSync } from "react-icons/go";
 import { FaUpload } from "react-icons/fa";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 
 function BulkPayment() {
   const [bank, setBank] = useState<any>([

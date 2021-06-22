@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
 import { Loader } from "pages/static/Loader";
 import { Col, Container, Image, Row, Form, Tab } from "react-bootstrap";
 import Tabs from "react-bootstrap/Tabs";
@@ -10,6 +10,9 @@ import "./index.css";
 import { useState } from "react";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
+import StaticBar from "components/StaticBar";
+import { userProfilePageTitle } from "static-data/forPageTitle";
+import { forUserProfile } from "static-data/forBreadCrumb";
 
 const Profile = () => {
   const [{ customerDetails, switchAccount }] = useStateValue();
@@ -40,8 +43,10 @@ const Profile = () => {
 
   return (
     <Container fluid>
-      <PageTitle title="User Profile" subTitle="View your Details" />
-      <hr />
+      <StaticBar
+        pageTitle={userProfilePageTitle}
+        breadCrumbData={forUserProfile}
+      />
       <Form>
         <Row>
           <Col xs={3} className="profile_background">
@@ -273,7 +278,7 @@ const Profile = () => {
                           <tr>
                             <th scope="row">Accrued Interest</th>
                             <td>
-                              NPR.{" "}
+                              NPR.
                               {
                                 customerDetails?.accountDetail[switchAccount][
                                   "accruedInterest"

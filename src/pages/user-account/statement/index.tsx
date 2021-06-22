@@ -9,7 +9,9 @@ import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { GetAllAccountNumber } from "helper/CustomerData";
 import StatementView from "./StatementView";
 import { useStateValue } from "state-provider/StateProvider";
-import { PageTitle } from "components/page-title";
+import StaticBar from "components/StaticBar";
+import { statementPageTitle } from "static-data/forPageTitle";
+import { forStatement } from "static-data/forBreadCrumb";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -54,7 +56,7 @@ const Statement = () => {
       if (res.data.details.accountStatementDtos.length === 0) {
         setErrorMessage({
           errorOccured: true,
-          message: "No statement Available...",
+          message: "No statement Available ... for this selected date range",
         });
       }
     } catch (error: any) {
@@ -68,11 +70,7 @@ const Statement = () => {
 
   return (
     <Container>
-      <PageTitle
-        title="Full Statement"
-        subTitle="View your full statement with Date Range"
-      />
-      <hr />
+      <StaticBar pageTitle={statementPageTitle} breadCrumbData={forStatement} />
       <div>
         <div
           style={{

@@ -2,13 +2,19 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 import { GoSync } from "react-icons/go";
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
+import StaticBar from "components/StaticBar";
+import { forVendorPayment } from "static-data/forBreadCrumb";
+import { vendorPaymentPageTitle } from "static-data/forPageTitle";
 
 function VendorPayment() {
   const [bank] = useState<any>(["BankA", "BankB", "BankC", "BankD", "BankE"]);
   return (
     <Container>
-      <PageTitle title="Vendor Payment" subTitle="Send money to your vendor" />
+      <StaticBar
+        pageTitle={vendorPaymentPageTitle}
+        breadCrumbData={forVendorPayment}
+      />
       <hr />
       <Card style={{ maxWidth: "50em" }} className="card_Shadow">
         <Card.Body>

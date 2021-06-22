@@ -1,4 +1,5 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
+import StaticBar from "components/StaticBar";
 import { Container, Image } from "react-bootstrap";
 import {
   Link,
@@ -7,7 +8,9 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { baseUrl } from "services/BaseUrl"; 
+import { baseUrl } from "services/BaseUrl";
+import { forQuickPay } from "static-data/forBreadCrumb";
+import { quickPayPageTitle } from "static-data/forPageTitle";
 import { QpayService } from "./model";
 import Test2 from "./Test2";
 
@@ -22,10 +25,7 @@ const GeneralMerchant = (props: { data?: QpayService[] }) => {
 
   const page = () => (
     <>
-      <PageTitle
-        title={`${topicId.split("-").join(" ").toUpperCase()}`}
-        subTitle="Enjoy Quick Payment Facility"
-      />
+      <StaticBar pageTitle={quickPayPageTitle} breadCrumbData={forQuickPay} />
       <div
         style={{
           width: "fit-content",

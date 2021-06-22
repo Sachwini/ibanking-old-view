@@ -1,108 +1,39 @@
-import { PageTitle } from "components/page-title/index";
-import { Col, Container, OverlayTrigger, Popover, Row } from "react-bootstrap";
-// import QuickPay from "pages/activities/QuickPay";
-// import UpcomingPayment from "pages/activities/UpComingPayment";
-// import FixedDeposit from "pages/activities/FixedDeposit";
-import { FcSynchronize } from "react-icons/fc";
-import Activities from "pages/activities/Activities";
-import LineChart from "pages/activities/LineChart";
-import ProfileCard from "pages/user-account/user-profile/ProfileCard";
-import { IconStyle } from "styling/common/IconStyling";
-import styled from "styled-components";
-import {
-  GetAccountNumberValueMainCodeKey,
-  GetAllAccountNumber,
-} from "helper/CustomerData";
+import { Col, Container, Row } from "react-bootstrap";
+import LineChart from "pages/user-dashboard/LineChart";
+import ProfileCard from "pages/user-dashboard/UserProfileCard";
 import { useStateValue } from "state-provider/StateProvider";
+import StaticBar from "components/StaticBar";
+import { UserDetect } from "styling/common/PageTitleStyling";
+import { forDashboard } from "static-data/forBreadCrumb";
+import MiniStatementCard from "./MiniStatementCard";
 
-const PopoverStyle = {
-  minWidth: "10rem",
-  marginTop: "1rem",
-};
-const PopoverItem = styled.div`
-  text-align: center;
-  padding: 8px;
-  background: #2f312f;
-  cursor: pointer;
-  font-weight: bold;
-  color: #fff;
-  &:hover {
-    background: #575857;
-    color: #fff;
-  }
-`;
 const Dashboard = () => {
-  const getAllAccountNumber = GetAllAccountNumber();
-  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
-  const [{ customerDetails }, dispatch] = useStateValue();
+  const [{ customerDetails }] = useStateValue();
 
-  const changeAccount = (value: any) => {
-    dispatch({
-      type: "SWITCH_ACCOUNT",
-      value: value,
-    });
+  const pageTitle = {
+    title: "Dashboard",
+    subTitle: (
+      <span>
+        Welcome{" "}
+        {customerDetails?.gender?.toLowerCase() === "male" ? "Mr." : "Mrs."}
+        <UserDetect>{customerDetails.fullName}</UserDetect>
+        in mBank i-Banking System
+      </span>
+    ),
   };
 
-  const SwitchAccount = () => (
-    <Popover id="popover-basic" style={PopoverStyle}>
-      <Popover.Content style={{ padding: "0" }}>
-        {getAccountNumberValueMainCodeKey?.map((accNum: any, index: any) => {
-          return (
-            <PopoverItem
-              key={index}
-              onClick={() => {
-                changeAccount(index);
-              }}
-            >
-              {accNum.mainCode}
-            </PopoverItem>
-          );
-        })}
-      </Popover.Content>
-    </Popover>
-  );
   return (
     <Container fluid>
-      <PageTitle title="Dashboard" />
-      <Row className="w-100">
-        <Col md={12} lg={8}>
-          <Row>
-            <Col md={12} lg={6}>
-              {customerDetails?.accountDetail?.length > 1 ? (
-                <p className="d-flex justify-content-end">
-                  <OverlayTrigger
-                    transition={false}
-                    trigger="click"
-                    placement="bottom"
-                    overlay={SwitchAccount()}
-                    rootClose
-                  >
-                    <IconStyle hover>
-                      <FcSynchronize size="24px" />
-                    </IconStyle>
-                  </OverlayTrigger>
+      <StaticBar pageTitle={pageTitle} breadCrumbData={forDashboard} />
 
-                  <strong className="px-2">Switch Account</strong>
-                </p>
-              ) : (
-                ""
-              )}
-              <ProfileCard />
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12} className="mt-3">
-              <LineChart />
-            </Col>
-          </Row>
+      <Row className="w-100">
+        <Col md={12} lg={7}>
+          <LineChart />
         </Col>
 
-        <Col md={12} lg={4} className="w-100">
-          {/* <PageTitle title="Request" />
-
-          <FixedDeposit /> */}
-          <Activities />
-          {/* <UpcomingPayment /> */}
+        <Col md={12} lg={5} className="w-100 pr-0">
+          <ProfileCard />
+          <MiniStatementCard />
         </Col>
       </Row>
     </Container>

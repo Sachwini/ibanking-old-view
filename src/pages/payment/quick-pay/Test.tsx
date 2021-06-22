@@ -1,7 +1,10 @@
-import { PageTitle } from "components/page-title";
+import { PageTitle } from "components/PageTitle";
+import StaticBar from "components/StaticBar";
 import { Container, Image } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { baseUrl } from "services/BaseUrl";
+import { forQuickPay } from "static-data/forBreadCrumb";
+import { quickPayPageTitle } from "static-data/forPageTitle";
 import { QpayService } from "./model";
 
 const Test = (props: { data?: QpayService[] }) => {
@@ -12,10 +15,7 @@ const Test = (props: { data?: QpayService[] }) => {
 
   return (
     <Container>
-      <PageTitle
-        title="Quick paymment"
-        subTitle="Enjoy Quick Payment Facility"
-      />
+      <StaticBar pageTitle={quickPayPageTitle} breadCrumbData={forQuickPay} />
       <div
         style={{
           width: "fit-content",

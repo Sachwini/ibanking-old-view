@@ -3,7 +3,10 @@ import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
-import { ErrorModalHeader, SuccessModalHeader } from "../ModalStyling";
+import {
+  ErrorModalHeader,
+  SuccessModalHeader,
+} from "../../../styling/common/ModalStyling";
 
 export interface Props {
   fromAccount: string;
@@ -77,35 +80,35 @@ const SuccessModal = (props: Props) => {
       </Modal.Header>
       <Modal.Body style={{ padding: "2em", color: "black" }}>
         <div className="mb-4">{bankTransferResponse?.message}</div>
-        {/* <div className="mb-4">{bankTransferResponse?.details}</div> */}
-        <Modal.Footer>
-          {bankTransferResponse?.status === "success" ? (
-            <Link
-              to="/bank-transfer-success-confirmation"
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <Button
-                onClick={() => {
-                  successModalShowHandle(false);
-                  handleInfo();
-                }}
-                style={{ float: "right", padding: "8px 1.8em" }}
-              >
-                OK
-              </Button>
-            </Link>
-          ) : (
+      </Modal.Body>
+
+      <Modal.Footer>
+        {bankTransferResponse?.status === "success" ? (
+          <Link
+            to="/bank-transfer-success-confirmation"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
             <Button
               onClick={() => {
                 successModalShowHandle(false);
+                handleInfo();
               }}
               style={{ float: "right", padding: "8px 1.8em" }}
             >
               OK
             </Button>
-          )}
-        </Modal.Footer>
-      </Modal.Body>
+          </Link>
+        ) : (
+          <Button
+            onClick={() => {
+              successModalShowHandle(false);
+            }}
+            style={{ float: "right", padding: "8px 1.8em" }}
+          >
+            OK
+          </Button>
+        )}
+      </Modal.Footer>
     </Modal>
   );
 };

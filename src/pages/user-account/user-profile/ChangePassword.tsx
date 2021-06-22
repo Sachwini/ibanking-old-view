@@ -1,5 +1,5 @@
 import { Button, Card, Form, Container, Col, Row } from "react-bootstrap";
-import { PageTitle } from "components/page-title/index";
+import { PageTitle } from "components/PageTitle";
 
 function ChangePassword() {
   return (

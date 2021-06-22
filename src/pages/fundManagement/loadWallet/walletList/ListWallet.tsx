@@ -1,4 +1,4 @@
-import { PageTitle } from "components/page-title";
+import StaticBar from "components/StaticBar";
 import { apiResponse } from "models/apiResponse";
 import { Loader } from "pages/static/Loader";
 import { useEffect, useState } from "react";
@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { get } from "services/AjaxService";
 import { baseUrl } from "services/BaseUrl";
 import { useStateValue } from "state-provider/StateProvider";
+import { forLoadWallet } from "static-data/forBreadCrumb";
+import { loadWalletPageTitle } from "static-data/forPageTitle";
 import "./ListWallet.css";
 import { WalletList } from "./model";
 
@@ -56,9 +58,9 @@ function ListWallet() {
         <Loader />
       ) : (
         <Container className="justify-content-center">
-          <PageTitle
-            title="Load Wallet"
-            subTitle="Load balance to your available digital Wallet"
+          <StaticBar
+            pageTitle={loadWalletPageTitle}
+            breadCrumbData={forLoadWallet}
           />
           <div className="d-flex flex-wrap mt-1">
             {wallets?.map((wallet, index) => {

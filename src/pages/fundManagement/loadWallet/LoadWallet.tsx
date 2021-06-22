@@ -6,10 +6,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiResponse } from "models/apiResponse";
 import { Col } from "react-bootstrap";
-import { PageTitle } from "components/page-title";
+// import { PageTitle } from "components/page-title";
 import { useStateValue } from "state-provider/StateProvider";
 import DetailModal from "components/modals/load-wallet/DetailModal";
 import SuccessModal from "components/modals/load-wallet/SuccessModal";
+import { forLoadWallet } from "static-data/forBreadCrumb";
+import { loadWalletPageTitle } from "static-data/forPageTitle";
+import StaticBar from "components/StaticBar";
 
 function LoadWallet() {
   const accountNumber = GetAccountNumber();
@@ -107,11 +110,10 @@ function LoadWallet() {
   return (
     <>
       <Container>
-        <PageTitle
-          title="Load Wallet"
-          subTitle={`Load balance to ${walletDetails?.name}`}
+        <StaticBar
+          pageTitle={loadWalletPageTitle}
+          breadCrumbData={forLoadWallet}
         />
-        <hr />
         <Col sm={12} md={6}>
           <Card className="card_Shadow">
             <Card.Body>

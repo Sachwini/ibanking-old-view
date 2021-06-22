@@ -38,7 +38,9 @@ function LineChart() {
 
   useEffect(() => {
     let isSubscribed = true;
-    getChartData();
+    if (isSubscribed) {
+      getChartData();
+    }
     return () => {
       isSubscribed = false;
     };
@@ -53,24 +55,6 @@ function LineChart() {
         fill: false,
         borderColor: "#22c42a",
       },
-      // {
-      //   label: "Sending/Earning",
-      //   data: [
-      //     33000, 53000, 85000, 41000, 44000, 65000, 76000, 45000, 67000, 56000,
-      //     60000, 59000, 60000,
-      //   ],
-      //   fill: false,
-      //   borderColor: "#2713d6",
-      // },
-      // {
-      //   label: "Saving Margin",
-      //   data: [
-      //     33000, 25000, 3500, 51000, 54000, 76000, 45000, 67000, 56000, 60000,
-      //     59000, 60000,
-      //   ],
-      //   fill: false,
-      //   borderColor: "#22f02c",
-      // },
     ],
   };
 
