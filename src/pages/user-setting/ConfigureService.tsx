@@ -12,14 +12,14 @@ import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
 import "./ConfigureService.css";
 import { Link } from "react-router-dom";
+import StaticBar from "components/StaticBar";
+import { userServiceSettingPageTitle } from "static-data/forPageTitle";
+import { forUserServiceSetting } from "static-data/forBreadCrumb";
 
 const linkStyle = {
   color: "inherit",
   textDecoration: "inherit",
 };
-import StaticBar from "components/StaticBar";
-import { userServiceSettingPageTitle } from "static-data/forPageTitle";
-import { forUserServiceSetting } from "static-data/forBreadCrumb";
 
 function ConfigureService() {
   return (

@@ -14,8 +14,10 @@ const Dashboard = () => {
     title: "Dashboard",
     subTitle: (
       <span>
-        Welcome{" "}
-        {customerDetails?.gender?.toLowerCase() === "male" ? "Mr." : "Mrs."}
+        Welcome
+        <span className="pl-1">
+          {customerDetails?.gender?.toLowerCase() === "male" ? "Mr." : "Mrs."}
+        </span>
         <UserDetect>{customerDetails.fullName}</UserDetect>
         in mBank i-Banking System
       </span>

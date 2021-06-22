@@ -11,6 +11,7 @@ export const FooterContainer = styled(Container)`
 
 export const LogoWrapper = styled.div`
   text-align: center;
+
   .logo_image {
     height: 30px;
     object-fit: contain;
