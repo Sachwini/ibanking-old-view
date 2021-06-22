@@ -13,6 +13,7 @@ export const initialState = {
   bankTransferDetails: {},
   brokerPaymentDetails: {},
   switchAccount: 0,
+  walletDetails: {} !== undefined,
   statementData: {} as StatementDataType,
 };
 
@@ -80,6 +81,11 @@ const reducer = (state: any, action: any) => {
       return {
         ...state,
         brokerPaymentDetails: action.brokerPaymentDetails,
+      };
+    case "LOAD_WALLET_DETAILS":
+      return {
+        ...state,
+        walletDetails: action.walletDetails,
       };
 
     default:

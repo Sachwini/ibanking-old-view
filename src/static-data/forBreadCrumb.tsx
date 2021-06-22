@@ -95,3 +95,27 @@ export const forActivityLog: breadCrumbType[] = [
     to: "#",
   },
 ];
+
+export const forChangeMpin: breadCrumbType[] = [
+  home,
+  {
+    title: "Change Mpin",
+    to: "#",
+  },
+];
+
+export const forListWallet: breadCrumbType[] = [
+  home,
+  {
+    title: "wallet List",
+    to: "#",
+  },
+];
+
+export const forLoadWallet: breadCrumbType[] = [
+  home,
+  {
+    title: "Load wallet",
+    to: "#",
+  },
+];

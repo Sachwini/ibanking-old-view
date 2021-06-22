@@ -51,3 +51,13 @@ export const activityLogPageTitle: pageTitleType = {
   title: "Activity Log",
   subTitle: "View List of Your Transctions Activities...",
 };
+
+export const loadWalletPageTitle: pageTitleType = {
+  title: "Load Wallet",
+  subTitle: "Load balance to your available digital Wallet...",
+};
+
+export const ChangeMpinPageTitle: pageTitleType = {
+  title: "Change Mpin",
+  subTitle: "Change your current mpin with a new one...",
+};

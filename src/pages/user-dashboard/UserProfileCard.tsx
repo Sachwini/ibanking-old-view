@@ -57,7 +57,7 @@ const ProfileCard = () => {
               </p>
               <p className="text_wrapper">
                 <span className="text_title">Acc NO.</span>
-                {handleShowDetails("accountNumber")}
+                {handleShowDetails("mainCode")}
               </p>
             </div>
           </Col>

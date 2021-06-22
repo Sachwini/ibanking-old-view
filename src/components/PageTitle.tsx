@@ -1,5 +1,4 @@
 import { PageTitleContainer } from "styling/common/PageTitleStyling";
-import { JsxElement } from "typescript";
 
 export const PageTitle = (props: {
   title?: string;

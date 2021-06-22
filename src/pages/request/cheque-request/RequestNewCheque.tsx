@@ -150,7 +150,6 @@ function RequestNewCheque() {
                 </Form.Control>
               </Col>
             </Form.Group>
-
             <Button className="btn btn-light" variant="secondary">
               Cancel
             </Button>

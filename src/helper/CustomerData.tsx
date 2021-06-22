@@ -10,14 +10,6 @@ export const GetAccountNumber = () => {
   return AccNumber;
 };
 
-export const GetAccountNumber2 = () => {
-  const [{ customerDetails }] = useStateValue();
-  let AccountNumber2 = !customerDetails?.accountDetail
-    ? ""
-    : customerDetails?.accountDetail[1]?.accountNumber;
-  return AccountNumber2;
-};
-
 export const GetAllAccountNumber = () => {
   const [{ customerDetails }] = useStateValue();
   let allAccountNumber = !customerDetails?.accountDetail
@@ -26,6 +18,18 @@ export const GetAllAccountNumber = () => {
   return allAccountNumber;
 };
 
+export const GetAccountNumberValueMainCodeKey = () => {
+  const [{ customerDetails }] = useStateValue();
+  let collection = new Map();
+  customerDetails?.accountDetail?.map((AccNo: any) =>
+    collection.set(AccNo.mainCode, AccNo.accountNumber)
+  );
+  let array = Array.from(collection, ([mainCode, AccountNumber]) => ({
+    mainCode,
+    AccountNumber,
+  }));
+  return array;
+};
 interface getAllAccNoType {
   accountNumber: string;
   accoutType: string;

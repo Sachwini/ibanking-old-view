@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { GetAccountNumberValueMainCodeKey } from "helper/CustomerData";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
+import { GetAccountNumber } from "helper/CustomerData";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,7 +30,7 @@ export interface serviceChargeItem {
 
 const BrokerPayment = () => {
   const accountNumber = GetAccountNumber();
-  const getAllAccountNumber = GetAllAccountNumber();
+  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [amount, setAmount] = useState<string>("");
   const [clientName, setClientName] = useState<string>("");
@@ -243,7 +244,6 @@ const BrokerPayment = () => {
                   getServiceCharges();
                 }}
               >
-                {/* <div className="form-group col-md-6"> */}
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label className="font-weight-bold">
                     From Account
@@ -254,12 +254,12 @@ const BrokerPayment = () => {
                     value={fromAccount}
                     onChange={(e) => setFromAccount(e.target.value)}
                   >
-                    {!getAllAccountNumber ? (
+                    {!getAccountNumberValueMainCodeKey ? (
                       <option></option>
                     ) : (
-                      getAllAccountNumber?.map((accNum: any) => (
-                        <option value={accNum} key={accNum}>
-                          {accNum}
+                      getAccountNumberValueMainCodeKey?.map((accNum: any) => (
+                        <option value={accNum.AccountNumber} key={accNum}>
+                          {accNum.mainCode}
                         </option>
                       ))
                     )}
@@ -282,10 +282,7 @@ const BrokerPayment = () => {
                       : "selected none (please select one... )"}
                   </Form.Text>
                 </Form.Group>
-                {/* </div> */}
 
-                {/* <div className="form-row"> */}
-                {/* <div className="col"> */}
                 <Form.Group controlId="formGridAddress1">
                   <Form.Label className="font-weight-bold">
                     Client Id
@@ -300,8 +297,6 @@ const BrokerPayment = () => {
                     onChange={(e) => setClientId(e.target.value)}
                   />
                 </Form.Group>
-                {/* </div> */}
-                {/* <div className="col"> */}
                 <Form.Group controlId="formGridAddress1">
                   <Form.Label className="font-weight-bold">
                     Client Name
@@ -316,8 +311,6 @@ const BrokerPayment = () => {
                     onChange={(e) => setClientName(e.target.value)}
                   />
                 </Form.Group>
-                {/* </div> */}
-                {/* </div> */}
                 <div className="form-row">
                   <div className="col">
                     <Form.Group controlId="formGridAddress1">

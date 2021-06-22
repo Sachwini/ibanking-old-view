@@ -19,9 +19,8 @@ td {
   font-family: "Teko", sans-serif;
   font-family: "Yanone Kaffeesatz", sans-serif;
 }
-
-.nav-tabs .nav-item.show,
-.nav-tabs .nav-link.active {
+.nav-item.show,
+.nav-link.active {
   color: black;
   font-size: 16px;
   border: 0;
@@ -39,6 +38,6 @@ td {
 }
 
 .nav-tabs .nav-link:hover {
-  border: 0;
   color: inherit;
+  border: 0;
 }
