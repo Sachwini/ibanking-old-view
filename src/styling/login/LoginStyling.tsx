@@ -5,7 +5,7 @@ export const LoginContainer = styled(Container)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
+  margin-top: 3rem;
   flex-direction: column;
   position: relative;
 
@@ -96,7 +96,7 @@ export const EyeContainer = styled.span`
 `;
 
 export const PoweredBy = styled.div`
-  padding: 3rem 1rem 1rem;
+  padding: 2rem 1rem 1rem;
 
   .text_wrapper {
     text-align: center;

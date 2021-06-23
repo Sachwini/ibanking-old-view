@@ -34,3 +34,24 @@ export const MyButton = styled.button<ButtonProps>`
     animation-delay: 1s;
   }
 `;
+
+// simple button styling going here
+interface buttonWrapperProps {
+  padding?: string;
+}
+
+export const ButtonWrapper = styled.div<buttonWrapperProps>`
+  text-align: center;
+  padding: ${(props) => (props.padding ? props.padding : "0.5rem")};
+
+  .btn_ctrl {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: 1px solid ${(props) => props.theme.secondary};
+
+    &:hover {
+      border: 1px solid transparent;
+    }
+  }
+`;

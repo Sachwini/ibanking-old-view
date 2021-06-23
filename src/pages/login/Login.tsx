@@ -46,8 +46,10 @@ const Login = (props: RouteComponentProps<{}>) => {
     setRememberMe(value.toString());
   };
 
-  window.onbeforeunload = function () {
-    alert("are you sure?");
+  window.onbeforeunload = function (event: BeforeUnloadEvent) {
+    if (event) {
+      alert("are you sure?");
+    }
   };
 
   const handleLogin = async (e: any) => {

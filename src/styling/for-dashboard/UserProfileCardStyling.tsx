@@ -7,7 +7,7 @@ export const UserProfileCardContainer = styled(Card)`
   margin-bottom: 1rem;
 
   .card_header {
-    background-color: #f9f9f9;
+    background-color: #bcecff;
     border: none;
     padding: 0.5rem 1rem;
   }
@@ -59,14 +59,9 @@ export const UserProfileCardContainer = styled(Card)`
   }
 
   .card_footer {
-    padding: 0.6rem;
+    padding: 0.8rem 0.8rem 0.5rem;
     border: none;
     border-top: 1px solid #f1f1f1;
     background: transparent;
-  }
-
-  .btn_ctrl {
-    font-weight: bold;
-    background-color: #4444;
   }
 `;

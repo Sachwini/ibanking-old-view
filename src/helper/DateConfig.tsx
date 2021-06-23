@@ -9,6 +9,10 @@ export const ThreeMonthsBack = (date: Date) => {
   return moment(date).subtract(3, "M").format("YYYY-MM-DD");
 };
 
+export const yearBack = (date: Date) => {
+  return moment(date).subtract(12, "M").format("YYYY-MM-DD");
+};
+
 export const localDate = () => {
   var now = new Date();
   return dateFormat(now, "dddd, mmmm dS, yyyy");

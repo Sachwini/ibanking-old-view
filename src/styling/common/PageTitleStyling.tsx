@@ -17,10 +17,12 @@ export const StaticBarWrapper = styled.div`
 
 interface PageTitleProps {
   padding?: string;
+  align?: string;
 }
 
 export const PageTitleContainer = styled.div<PageTitleProps>`
   padding: ${(props) => (props.padding ? props.padding : "0.5rem 0 1rem")};
+  text-align: ${(props) => (props.align ? props.align : "start")};
   .page__title {
     font-size: 17.5px;
     font-weight: bold;

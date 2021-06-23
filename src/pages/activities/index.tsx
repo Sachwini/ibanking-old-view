@@ -1,20 +1,22 @@
-import { AiOutlineUser } from "react-icons/ai";
-import { Card, ListGroup } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import "./activities.css";
 import { Sdetails } from "pages/user-account/statement/model";
 import { GetAccountNumber } from "helper/CustomerData";
-import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
+import { formatDate, yearBack } from "helper/DateConfig";
 import { getStatement } from "services/BankServices";
 import { Loader } from "pages/static/Loader";
 import StaticBar from "components/StaticBar";
 import { activityLogPageTitle } from "static-data/forPageTitle";
 import { forActivityLog } from "static-data/forBreadCrumb";
+import {
+  MiniStatementContainer,
+  MiniStatementWrapper,
+} from "styling/for-dashboard/MimiStatementStyling";
+import { PageTitle } from "components/PageTitle";
 
-let threeMonthBackDate = ThreeMonthsBack(new Date());
+let oneYearBack = yearBack(new Date());
 
 const Activities = () => {
-  const startDate = new Date(`${threeMonthBackDate}`);
+  const startDate = new Date(`${oneYearBack}`);
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,7 +36,7 @@ const Activities = () => {
             formatedEndDate
           );
           if (res || isSubscribed) {
-            setStatementData(res.slice(0, 6));
+            setStatementData(res.slice(0, 19));
             setLoading(false);
           }
         }
@@ -59,39 +61,27 @@ const Activities = () => {
         pageTitle={activityLogPageTitle}
         breadCrumbData={forActivityLog}
       />
-
-      {statementData?.map((data, index) => {
-        return (
-          <Card
-            className="mb-4 card_Shadow "
-            key={index}
-            style={{ width: "97%" }}
-          >
-            <ListGroup variant="flush">
-              <ListGroup.Item className="list__ctrl">
-                <div className="activity__icon">
-                  <AiOutlineUser
-                    className="circle-icon"
-                    size="3em"
-                    color="white"
-                  />
-                </div>
-                <div className="activity__desc">
-                  {data.remarks}
-                  <p className="activity__date">{data.transactionDate}</p>
-                </div>
-                {data.debit !== null ? (
-                  <div className="activity__amount" style={{ color: "red" }}>
-                    NPR. {data.debit}{" "}
-                  </div>
-                ) : (
-                  <div className="activity__amount">NPR. {data.credit} </div>
-                )}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        );
-      })}
+      <MiniStatementContainer padding="1rem 2rem">
+        <PageTitle
+          title="Your Transctions Activities"
+          subTitle="To See More Transctions Activities Please Go to Statement Page..."
+          align="center"
+        />
+        {statementData?.map((data, index) => {
+          const amount = data.debit !== null ? data.debit : data.credit;
+          const detectColor = data.debit !== null ? "red" : "green";
+          return (
+            <MiniStatementWrapper
+              key={data.transactionDate + index}
+              color={detectColor}
+            >
+              <p className="date">{data.transactionDate}</p>
+              <p className="desc">{data.remarks}</p>
+              <p className="amount">NPR. {amount}</p>
+            </MiniStatementWrapper>
+          );
+        })}
+      </MiniStatementContainer>
     </>
   );
 };
