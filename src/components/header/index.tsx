@@ -17,13 +17,13 @@ import {
   H_Notification as Hnotification,
 } from "styling/header/HeaderStyling";
 import {
-  getRememberMe,
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
 } from "services/AuthService";
 import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
+import firebase from "firebase";
 
 const PopoverStyle = {
   minWidth: "10rem",

@@ -4,9 +4,10 @@ export const PageTitle = (props: {
   title?: string;
   subTitle?: string | React.ReactNode;
   padding?: string;
+  align?: string;
 }) => {
   return (
-    <PageTitleContainer padding={props.padding}>
+    <PageTitleContainer padding={props.padding} align={props.align}>
       <h5 className="page__title">{props.title}</h5>
       {props.subTitle ? (
         <div className="page_subTitle">{props.subTitle}</div>

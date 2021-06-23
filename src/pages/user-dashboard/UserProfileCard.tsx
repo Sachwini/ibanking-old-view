@@ -10,6 +10,7 @@ import {
 import { FcSynchronize } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useStateValue } from "state-provider/StateProvider";
+import { ButtonWrapper } from "styling/common/ButtonStyling";
 import { UserProfileCardContainer } from "styling/for-dashboard/UserProfileCardStyling";
 
 const ProfileCard = () => {
@@ -93,17 +94,24 @@ const ProfileCard = () => {
       <Card.Footer className="card_footer">
         <Row className="w-100 m-0">
           <Col sm={6} className="pl-0">
-            <Link to="/user-profile">
-              <Button variant="light">View Profile</Button>
-            </Link>
+            <ButtonWrapper padding="0">
+              <Link to="/user-profile">
+                <Button variant="light" className="btn_ctrl">
+                  View Profile
+                </Button>
+              </Link>
+            </ButtonWrapper>
           </Col>
           <Col sm={6} className="pr-0 d-flex justify-content-end">
-            <Button
-              variant="light"
-              onClick={() => setSwitchAccountModalShow(true)}
-            >
-              Switch Account <FcSynchronize size={24} />
-            </Button>
+            <ButtonWrapper padding="0">
+              <Button
+                variant="light"
+                onClick={() => setSwitchAccountModalShow(true)}
+                className="btn_ctrl"
+              >
+                Switch Account <FcSynchronize size={24} />
+              </Button>
+            </ButtonWrapper>
           </Col>
         </Row>
       </Card.Footer>
