@@ -4,15 +4,21 @@ import "react-toastify/dist/ReactToastify.css";
 import { SwitchWithCatch } from "./components/SwitchWithCatch";
 import { Loader } from "pages/static/Loader";
 import { Route } from "react-router-dom";
-import React from "react";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
 import { useStateValue } from "state-provider/StateProvider";
 import { GlobalStyle } from "styling/GlobalStyling";
+import React, { useEffect } from "react";
+import {
+  getRememberMe,
+  localStorageAuthTokenKey,
+  localStorageRefreshTokenKey,
+} from "services/AuthService";
 
 function App() {
   const [{ isLogin }, dispatch] = useStateValue();
+  const RememberMe = getRememberMe();
 
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login/Login"));
@@ -85,6 +91,23 @@ function App() {
   );
 
   const isLoginPage = window.location.pathname.startsWith("/login");
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleLogout);
+    window.addEventListener("unload", handleLogout);
+    return () => {
+      window.removeEventListener("beforeunload", handleLogout);
+      window.removeEventListener("unload", handleLogout);
+      handleLogout();
+    };
+  }, [RememberMe]);
+
+  const handleLogout = () => {
+    if (RememberMe === "false") {
+      localStorage.removeItem(localStorageAuthTokenKey);
+      localStorage.removeItem(localStorageRefreshTokenKey);
+    }
+  };
 
   if (isLoginPage)
     return (
