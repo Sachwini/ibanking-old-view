@@ -33,12 +33,13 @@ export const UserProfileCardContainer = styled(Card)`
 
   .base_info {
     padding-top: 0.3rem;
-    font-size: 13.5px;
+
     color: #444444bc;
     width: 100%;
 
     .text_wrapper {
       margin: 0;
+      font-size: 14px;
     }
 
     .text_title {
