@@ -30,8 +30,6 @@ export const MiniStatementWrapper = styled.div<wrapperProps>`
 
   .date {
     float: right;
-    clear: both;
-    color: #d40404;
     font-weight: bold;
     font-size: 11px;
     margin: 0;
@@ -50,5 +48,6 @@ export const MiniStatementWrapper = styled.div<wrapperProps>`
     margin: 0;
     font-size: 12px;
     font-weight: bold;
+    color: ${(props) => props.color};
   }
 `;

@@ -57,7 +57,7 @@ export const HeaderLink = styled(Link)`
   width: auto;
 `;
 
-export const H_Notification = styled.span`
+export const H_Notification = styled.div`
   .bell_ctrl {
     position: absolute;
   }

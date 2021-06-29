@@ -7,7 +7,6 @@ export const LoginContainer = styled(Container)`
   align-items: center;
   margin-top: 3rem;
   flex-direction: column;
-  position: relative;
 
   .image_wrapper {
     display: flex;
@@ -22,8 +21,8 @@ export const LoginContainer = styled(Container)`
   }
 
   .login_logo {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     margin-top: -3rem;
     border-radius: 50%;
     border: 4px solid ${(props) => props.theme.primary};
@@ -47,6 +46,7 @@ export const LoginContainer = styled(Container)`
     padding-right: 2.5rem;
     font-weight: 500;
     border-color: ${(props) => props.theme.primary};
+    border-radius: 4px;
 
     &:focus {
       color: ${(props) => props.theme.primary};
@@ -59,13 +59,24 @@ export const LoginContainer = styled(Container)`
     &::placeholder {
       font-weight: normal;
       color: #a1a1a1dc;
+      text-transform: capitalize;
     }
+  }
+
+  .input-group:not(.has-validation)
+    > .custom-file:not(:last-child)
+    .custom-file-label::after,
+  .input-group:not(.has-validation) > .custom-select:not(:last-child),
+  .input-group:not(.has-validation) > .form-control:not(:last-child) {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 `;
 
 export const LoginWrapper = styled.div`
   /* border: 1px solid ${(props) => props.theme.primary}; */
-  border: 2px solid #f0f0f0;
+
+  border: 4px solid #f0f0f0;
 
   .input_wrapper {
     padding-left: 2rem;
@@ -83,12 +94,19 @@ export const LoginWrapper = styled.div`
     padding-left: 1rem;
     padding-top: 5px;
   }
+
+  button {
+    margin-top: 0.8rem;
+  }
 `;
 
 export const EyeContainer = styled.span`
-  margin-right: 1.5rem;
-  margin-left: -2.5rem;
+  position: absolute;
+  top: 0.55rem;
+  right: 0.8rem;
   z-index: 50;
+  clear: both;
+
   cursor: pointer;
   display: flex;
   justify-content: center;
