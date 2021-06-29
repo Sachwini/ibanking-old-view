@@ -65,13 +65,30 @@ export const userDetails = atom({
   } as userDetailType,
 });
 
+// Get Account types on the basis of condition
+interface bankAccountType {
+  mainCode: string[];
+  accNo: string[];
+}
+
 export const getBankAccNo = selector({
   key: "get_bank_acc_no",
   get: ({ get }) => {
-    const accountList: string[] = [];
+    // const accountList: bankAccountType = { mainCode: [], accNo: [] };
+    let collection = new Map();
     const userDetailsData = get(userDetails);
 
-    userDetailsData.accountDetail.map((acc) => accountList.push(acc.mainCode));
+    userDetailsData.accountDetail.map((acc) => {
+      collection.set(acc.mainCode, acc.accountNumber);
+    });
+
+    let accountList: bankAccountType[] = Array.from(
+      collection,
+      ([mainCode, accNo]) => ({
+        mainCode,
+        accNo,
+      })
+    );
 
     return accountList;
   },
