@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Badge, OverlayTrigger, Image, Popover } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
@@ -23,7 +23,8 @@ import {
 import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
-import firebase from "firebase";
+import { messaging } from "../../init-fcm";
+import { toast, ToastContainer } from "react-toastify";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -43,11 +44,6 @@ const PopoverItem = styled.div`
   }
 `;
 
-// const hrStyle = {
-//   border: "1px solid white",
-//   margin: "0px",
-// };
-
 const Header = (props: any) => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
@@ -61,6 +57,24 @@ const Header = (props: any) => {
       value: !sideMenuShow,
     });
   };
+
+  useEffect(() => {
+    messaging
+      .requestPermission()
+      .then(() => {
+        return messaging.getToken();
+      })
+      .then((data: any) => {
+        console.warn("firebase token", data);
+      })
+      .catch(function (err) {
+        console.log("You denied the notification");
+      });
+    navigator.serviceWorker.addEventListener("message", (message) =>
+      console.log(message)
+    );
+    console.log("UseEffect called");
+  });
 
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
@@ -159,6 +173,7 @@ const Header = (props: any) => {
         handleModalShow={(e) => setShowLogoutModal(e)}
         confirmModalCancleButton={handleLogout}
       />
+      <ToastContainer autoClose={5000} position="top-center" />
     </>
   );
 };
