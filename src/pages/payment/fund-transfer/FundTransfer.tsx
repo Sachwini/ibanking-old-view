@@ -18,13 +18,35 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { IconStyle } from "styling/common/IconStyling";
 import { Loader } from "pages/static/Loader";
+import { useForm } from "react-hook-form";
+import { fundTransfer } from "./model";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormWatch,
+  UseFormGetValues,
+  UseFormSetValue,
+  Controller,
+} from "react-hook-form";
 
 interface selectItem {
   label: string;
   value: string;
 }
 
-export const FundTransfer = () => {
+interface Props {
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
+  watch: UseFormWatch<any>;
+  control: Control<any>;
+  getValues: UseFormGetValues<any>;
+  setValue: UseFormSetValue<any>;
+  destBankId: (id: string | "") => void;
+  destBranchId: (id: string | "null") => void;
+}
+
+export const FundTransfer = (props: Props) => {
   const accountNumber = GetAccountNumber();
   const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
@@ -55,6 +77,15 @@ export const FundTransfer = () => {
     matchPercentage: "",
   });
   const [favoriteAcc, setFavoriteAcc] = useState<any[]>([]);
+  const {
+    register,
+    errors,
+    watch,
+    getValues,
+    setValue,
+    control,
+    destBranchId,
+  } = props;
 
   //For account Validation
   const accountValidation = async () => {
@@ -143,14 +174,6 @@ export const FundTransfer = () => {
         setBranch([]);
       }
     } catch {}
-  };
-
-  const handleReset = (e: any) => {
-    e.preventDefault();
-    setToAccount("");
-    setBankBranchId("");
-    setAmount("");
-    setDestinationAccountHolderName("");
   };
 
   const openDetailModel = (e: any) => {
@@ -354,9 +377,9 @@ export const FundTransfer = () => {
                 </Form.Label>
                 <Form.Control
                   as="select"
-                  name="fromAccount"
-                  value={fromAccount}
-                  onChange={(e) => setFromAccount(e.target.value)}
+                  {...register("fromAccount")}
+                  // value={fromAccount}
+                  // onChange={(e) => setFromAccount(e.target.value)}
                 >
                   {!getAccountNumberValueMainCodeKey ? (
                     <option></option>
@@ -379,10 +402,10 @@ export const FundTransfer = () => {
                       type="text"
                       autoComplete="off"
                       placeholder="destination account"
-                      name="toAccount"
-                      value={toAccount}
-                      required
-                      onChange={(e) => setToAccount(e.target.value)}
+                      {...register("toAccount")}
+                      // value={toAccount}
+                      // required
+                      // onChange={(e) => setToAccount(e.target.value)}
                     />
                     <Form.Text className="text-warning">
                       Please Insure the account number is correct before
@@ -428,12 +451,12 @@ export const FundTransfer = () => {
                   type="text"
                   autoComplete="off"
                   placeholder="Enter your Destination AccountHolder Name"
-                  name="destinationAccountHolderName"
-                  value={destinationAccountHolderName}
-                  required
-                  onChange={(e) =>
-                    setDestinationAccountHolderName(e.target.value)
-                  }
+                  {...register("destinationAccountHolderName")}
+                  // value={destinationAccountHolderName}
+                  // required
+                  // onChange={(e) =>
+                  //   setDestinationAccountHolderName(e.target.value)
+                  // }
                 />
               </Form.Group>
               <Form.Group controlId="formGridAddress1">
@@ -441,27 +464,19 @@ export const FundTransfer = () => {
                 <Form.Control
                   type="number"
                   placeholder="Amount"
-                  name="amount"
-                  value={amount}
-                  required
-                  autoComplete="off"
-                  min={0}
-                  onChange={(e) => setAmount(e.target.value)}
+                  {...register("amount")}
+                  // value={amount}
+                  // required
+                  // autoComplete="off"
+                  // min={0}
+                  // onChange={(e) => setAmount(e.target.value)}
                 />
               </Form.Group>
-              <Button
-                className="btn btn-warning"
-                variant="primary"
-                type="submit"
-              >
+              <Button variant="success" type="submit">
                 Submit
               </Button>
-              <Button
-                className="btn btn-light"
-                style={{ marginLeft: "20px" }}
-                variant="secondary"
-                onClick={handleReset}
-              >
+
+              <Button className="ml-5" variant="danger" type="reset">
                 Reset
               </Button>
             </Form>
