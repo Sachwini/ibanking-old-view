@@ -1,5 +1,4 @@
-import React, { ElementType } from "react";
-import { JsxElement } from "typescript";
+import React from "react";
 
 export interface breadCrumbPropsType {
   pageTitle?: pageTitleType;

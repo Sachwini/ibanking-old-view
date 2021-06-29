@@ -7,7 +7,6 @@ import { Route } from "react-router-dom";
 import DefaultLayout from "default-layout/Layout";
 import { theme } from "styling/ThemeControl";
 import { ThemeProvider } from "styled-components";
-import { useStateValue } from "state-provider/StateProvider";
 import { GlobalStyle } from "styling/GlobalStyling";
 import React, { useEffect } from "react";
 import {
@@ -15,13 +14,15 @@ import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
 } from "services/AuthService";
+import { useRecoilValue } from "recoil";
+import { isUserLoggedIN } from "state-provider/globalUserData";
 
 function App() {
-  const [{ isLogin }, dispatch] = useStateValue();
   const RememberMe = getRememberMe();
+  const isUserLoggedin = useRecoilValue(isUserLoggedIN);
 
   /* ----------For Default Dashboard Import------------------- */
-  const Login = React.lazy(() => import("pages/login/Login"));
+  const Login = React.lazy(() => import("pages/login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */

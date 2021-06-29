@@ -5,7 +5,6 @@ import { BsBell } from "react-icons/bs";
 import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
 import { FiUser } from "react-icons/fi";
-import { useStateValue } from "state-provider/StateProvider";
 import { Link } from "react-router-dom";
 import {
   HeaderNavbar,
@@ -17,13 +16,15 @@ import {
   H_Notification as Hnotification,
 } from "styling/header/HeaderStyling";
 import {
-  getRememberMe,
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
 } from "services/AuthService";
 import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
+import { isMenuButtonClicked } from "state-provider/forPageSetting";
+import { useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -43,24 +44,15 @@ const PopoverItem = styled.div`
   }
 `;
 
-// const hrStyle = {
-//   border: "1px solid white",
-//   margin: "0px",
-// };
-
-const Header = (props: any) => {
-  const [sideMenuShow, setSideMenuShow] = useState<boolean>(true);
+const Header = () => {
+  const [sideMenuShow, setSideMenuShow] = useState<boolean>(false);
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
-  const [{}, dispatch] = useStateValue();
   const history = useHistory();
+  const setMenuClicked = useSetRecoilState(isMenuButtonClicked);
 
-  const handleSideMenuShow = () => {
-    setSideMenuShow(!sideMenuShow);
-    dispatch({
-      type: "MENU_CLICKED",
-      value: !sideMenuShow,
-    });
-  };
+  useEffect(() => {
+    setMenuClicked(sideMenuShow);
+  }, [sideMenuShow]);
 
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
@@ -97,7 +89,10 @@ const Header = (props: any) => {
             <HeaderCol sm={6}>
               <HeaderRow>
                 <HeaderCol sm={3} md={2}>
-                  <MenuIcon size={35} onClick={handleSideMenuShow} />
+                  <MenuIcon
+                    size={35}
+                    onClick={() => setSideMenuShow(!sideMenuShow)}
+                  />
                 </HeaderCol>
                 <HeaderCol sm={8} md={10} className="pl-0">
                   <HeaderLink to="/">

@@ -9,29 +9,30 @@ import {
   LayoutContentField,
   FooterWrapper,
 } from "styling/layout/LayoutStyling";
-import { useEffect, useState } from "react";
-import { apiResponse } from "models/apiResponse";
-import { get } from "services/AjaxService";
-import { userDetail } from "pages/user-account/user-profile/model";
+import { useEffect } from "react";
 import Footer from "components/Footer";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isMenuButtonClicked } from "state-provider/forPageSetting";
+import { userDetails } from "state-provider/globalUserData";
+import { userDetailType } from "models/for-pages/userAccount_PageModels";
+import { loadUserDetails } from "helper/GetData";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
-  const [{ isMenuButtonClick }, dispatch] = useStateValue();
-  const [userInfo, setUserInfo] = useState<userDetail>();
+  const [{ menuHeaderId }, dispatch] = useStateValue();
+  const isMenuClicked = useRecoilValue(isMenuButtonClicked);
+  const setUserDetails = useSetRecoilState(userDetails);
 
   useEffect(() => {
     let isSubscribed = true;
 
     const loadData = async () => {
       try {
-        const res = await get<apiResponse<userDetail>>(
-          "api/customerdetails?additionalDetails=true"
-        );
-        if (isSubscribed) {
-          setUserInfo(res.data.details);
+        const res = await loadUserDetails();
+        if (isSubscribed && res) {
+          setUserDetails(res);
           dispatch({
             type: "USER_DETAILS",
-            customerDetail: res.data.details as userDetail,
+            customerDetail: res as userDetailType,
           });
         }
       } catch {
@@ -46,9 +47,9 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   }, []);
 
   let sidbarWidth;
-  if (isMenuButtonClick) {
-    sidbarWidth = `70px`;
-  } else sidbarWidth = `250px`;
+  if (isMenuClicked) {
+    sidbarWidth = `250px`;
+  } else sidbarWidth = `70px`;
 
   const gotUrl = (url: string) => {
     props.history.push(url);

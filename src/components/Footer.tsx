@@ -17,7 +17,7 @@ const Footer = () => {
           <span className="px-1">
             <FaHeartbeat color="red" size={18} />
           </span>
-          mBank Technology PVT. LTD
+          Hamro Technology PVT.LTD
         </p>
       </LogoWrapper>
 

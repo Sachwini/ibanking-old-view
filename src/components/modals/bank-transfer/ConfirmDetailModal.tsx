@@ -48,10 +48,15 @@ const ConfirmDetailModal = (props: Props) => {
           <span>Account Holder Name: </span>
           <span className="text-muted">{props.DESTAccHolderName}</span>
         </div>
-        <div className="d-flex justify-content-between mb-2">
-          <span>Branch: </span>
-          <span className="text-muted">{props.DESTBranchName}</span>
-        </div>
+        {props.DESTBranchName === "" ? (
+          ""
+        ) : (
+          <div className="d-flex justify-content-between mb-2">
+            <span>Branch: </span>
+            <span className="text-muted">{props.DESTBranchName}</span>
+          </div>
+        )}
+
         <div className="d-flex justify-content-between mb-2">
           <span>
             Amount<small>(Rs.)</small>:

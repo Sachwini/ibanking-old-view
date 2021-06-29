@@ -5,6 +5,8 @@ import { Accordion } from "react-bootstrap";
 import { ChevronDown, ChevronUp } from "react-bootstrap-icons";
 import menuData from "./MenuData";
 import ListItemHandle from "./ListItemHandle";
+import { useRecoilState } from "recoil";
+import { menuActiveHeaderID } from "state-provider/forPageSetting";
 
 interface Props {
   goto: (url: string) => void;
@@ -14,41 +16,29 @@ interface Props {
 
 const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
   const [changeDropIcon, setChangeDropIcon] = useState<boolean>(true);
-  const [menuActiveID, setMenuActiveID] = useState<string>("account");
-
-  // this is for Header Menu active or not
-  const [{ menuHeaderId }, dispatch] = useStateValue();
-
-  const handleMenuActive = (id: string) => {
-    dispatch({
-      type: "MENU_HEADER_ID",
-      headerID: id,
-    });
-    setMenuActiveID(id);
-  };
+  const [menuActiveID, setMenuActiveID] = useRecoilState(menuActiveHeaderID);
 
   return (
     <MenuContainer>
-      {menuData.map((menu, index) => {
+      {menuData.map((menu) => {
         if (menu.title === menuHeader) {
           return (
-            <div key={index}>
+            <div key={menu.id}>
               <Accordion.Toggle
-                eventKey={`${menu.title}`}  
+                eventKey={`${menu.title}`}
                 as={"div"}
                 onClick={() => {
-                  handleMenuActive(menu.title);
+                  setMenuActiveID(menu.title);
                   setChangeDropIcon(!changeDropIcon);
                 }}
-                className={menuHeaderId === menu.title ? "active" : "inActive"}
-                // key={menu.title}
+                className={menuActiveID === menu.title ? "active" : "inActive"}
               >
                 <div className="menu_HeaderWrapper">
                   <div className="menu_HeaderText">
                     <span className="iconColor">{menuHeaderIcon}</span>
                     <span className="text">{menu.title}</span>
                   </div>
-                  {changeDropIcon && menuHeaderId === menu.title ? (
+                  {changeDropIcon && menuActiveID === menu.title ? (
                     <ChevronUp className="iconColor" />
                   ) : (
                     <ChevronDown className="iconColor" />
@@ -56,17 +46,13 @@ const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
                 </div>
               </Accordion.Toggle>
               <Accordion.Collapse eventKey={`${menu.title}`}>
-                <ListItemHandle
-                  goto={goto}
-                  menuHeader={menu.title}
-                  // key={index + 2}
-                />
+                <ListItemHandle goto={goto} menuHeader={menu.title} />
               </Accordion.Collapse>
             </div>
           );
         }
       })}
-    </MenuContainer> 
+    </MenuContainer>
   );
 };
 

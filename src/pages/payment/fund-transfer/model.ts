@@ -47,11 +47,33 @@ export interface brokerPayment {
 
 export interface TransactionLimit {
   title: string;
-  perTransactionLimit: number,
-  dailyCountLimit: number,
-  remainingDailyCount: number,
-  dailyAmountLimit: number,
-  remainingDailyAmount: number,
-  monthlyAmountLimit: number,
-  remainingMonthlyAmount: number,
+  perTransactionLimit: number;
+  dailyCountLimit: number;
+  remainingDailyCount: number;
+  dailyAmountLimit: number;
+  remainingDailyAmount: number;
+  monthlyAmountLimit: number;
+  remainingMonthlyAmount: number;
+}
+
+export interface bankTransferFormDataType {
+  fromAccount: string;
+  DESTBankName: string;
+  DESTBankID: string | "null";
+  toAccount: string;
+  destAccountHolderName: string;
+  DESTBranchName: string;
+  DESTBranchID: string | "null";
+  transctionAmount: string;
+  remarks: string;
+}
+
+export interface getBankListType {
+  bankList: BankList[];
+  onlyBankNameList: string[];
+}
+
+export interface getBankBranchListType {
+  bankBranchList: bankBranchType[];
+  onlyBankBranchNameList: string[];
 }

@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HouseDoor, Gear } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
-import { useStateValue } from "state-provider/StateProvider";
 import { GoRequestChanges } from "react-icons/go";
 import { RiRefundLine } from "react-icons/ri";
 import { FiActivity } from "react-icons/fi";
@@ -13,22 +12,29 @@ import {
   SideBarMenuControl,
 } from "styling/sidebar/SidebarStyling";
 import MenuHandle from "./MenuHandle";
+import { useRecoilState } from "recoil";
+import { isMenuButtonClicked } from "state-provider/forPageSetting";
 
 interface Props {
   goto: (url: string) => void;
 }
 
 const SideBar: React.FC<Props> = ({ goto }) => {
-  const [{ isMenuButtonClick }, dispatch] = useStateValue();
+  const [isMenuClickd, setIsMenuClicked] = useRecoilState(isMenuButtonClicked);
+  const [sideMenuShow, setSideMenuShow] = useState<boolean>(isMenuClickd);
+
+  useEffect(() => {
+    setIsMenuClicked(sideMenuShow);
+  }, [sideMenuShow]);
 
   // calculate icon size dynamically with changing width
-  let iconsize = `${isMenuButtonClick ? 35 : 25}`;
+  let iconsize = `${isMenuClickd ? 25 : 35}`;
 
   // calculate icon size dynamically with changing width
   let sidbarWidth;
-  if (isMenuButtonClick) {
-    sidbarWidth = `70px`;
-  } else sidbarWidth = `250px`;
+  if (isMenuClickd) {
+    sidbarWidth = `250px`;
+  } else sidbarWidth = `70px`;
 
   // list for mini sidebar
   const meniSidebarIcon = [
@@ -40,19 +46,10 @@ const SideBar: React.FC<Props> = ({ goto }) => {
     <FiActivity size={iconsize} />,
   ];
 
-  const handleSideMenuShow = () => {
-    if (isMenuButtonClick) {
-      dispatch({
-        type: "MENU_CLICKED",
-        value: false,
-      });
-    }
-  };
-
-  if (!isMenuButtonClick) {
+  if (isMenuClickd) {
     return (
-      <SidebarContainer customWidth={sidbarWidth} style={{zIndex: 0}}>
-        <SideBarMenuControl onClick={handleSideMenuShow}>
+      <SidebarContainer customWidth={sidbarWidth} style={{ zIndex: 0 }}>
+        <SideBarMenuControl>
           <Accordion defaultActiveKey="account">
             <MenuHandle
               goto={goto}
@@ -101,8 +98,8 @@ const SideBar: React.FC<Props> = ({ goto }) => {
   }
 
   return (
-    <SidebarContainer customWidth={sidbarWidth} style={{zIndex: 0}}>
-      <SideBarMenuControl onClick={handleSideMenuShow}>
+    <SidebarContainer customWidth={sidbarWidth} style={{ zIndex: 0 }}>
+      <SideBarMenuControl onClick={() => setSideMenuShow(!sideMenuShow)}>
         {meniSidebarIcon.map((icon, index) => {
           return (
             <MiniMenuIconHandle key={index}>
