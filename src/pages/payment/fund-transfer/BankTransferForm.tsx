@@ -123,8 +123,8 @@ const BankTransferForm = (props: Props) => {
         >
           {bankAcclist?.map((Acc) => {
             return (
-              <option value={Acc} key={uuidv4()}>
-                {Acc}
+              <option value={Acc.accNo} key={uuidv4()}>
+                {Acc.mainCode}
               </option>
             );
           })}

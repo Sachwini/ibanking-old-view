@@ -95,7 +95,6 @@ export const getTransctionCharge = async (
 
 export const isAccountValid = async (data: bankTransferFormDataType) => {
   // Checking Beneficiary Account Details
-
   const isValid = await get<apiResponse<any>>(
     `api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destAccountHolderName}&destinationBranchId=${data.DESTBranchID}&destinationBankId=${data.DESTBankID}`
   );
