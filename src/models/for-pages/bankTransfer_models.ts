@@ -26,7 +26,6 @@ export interface bankTransferFormDataType {
   DESTBranchName: string;
   DESTBranchID: string | "null";
   transctionAmount: string;
-  // transctionCharge: string;
   remarks: string;
 }
 

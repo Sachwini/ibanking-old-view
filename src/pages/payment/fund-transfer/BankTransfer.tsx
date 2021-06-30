@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
@@ -27,6 +27,7 @@ export const BankTransfer = () => {
     getValues,
     setValue,
     watch,
+    reset,
     control,
     formState: { errors },
   } = useForm<bankTransferFormDataType>({
@@ -244,6 +245,20 @@ export const BankTransfer = () => {
     setLoading(false);
   };
 
+  const resetClicked = () => {
+    reset({
+      fromAccount: "",
+      DESTBankName: "",
+      DESTBankID: "",
+      toAccount: "",
+      destAccountHolderName: "",
+      DESTBranchName: "",
+      DESTBranchID: "",
+      transctionAmount: "",
+      remarks: "",
+    });
+  };
+
   return (
     <>
       <Card className="card_Shadow">
@@ -259,6 +274,13 @@ export const BankTransfer = () => {
               destBankId={(id) => setDESTBankID(id)}
               destBranchId={(id) => setDESTBranchID(id)}
             />
+            <Button variant="success" type="submit">
+              Submit
+            </Button>
+
+            <Button className="ml-5" variant="danger" onClick={resetClicked}>
+              Reset
+            </Button>
           </Form>
         </Card.Body>
       </Card>

@@ -137,7 +137,7 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="destinationBank" aria-required>
+      <Form.Group controlId="DESTBankName" aria-required>
         <Form.Label className="font-weight-bold">Select Bank</Form.Label>
         <Controller
           control={control}
@@ -153,13 +153,16 @@ const BankTransferForm = (props: Props) => {
             />
           )}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback
+          type="invalid"
+          className={errors.DESTBankName ? "d-block" : ""}
+        >
           {errors.DESTBankName?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
       {DESTBranchList && (
-        <Form.Group controlId="bankTransfer">
+        <Form.Group controlId="DESTBranchName">
           <Form.Label className="font-weight-bold">
             Select Destination Bank Branch
           </Form.Label>
@@ -185,7 +188,7 @@ const BankTransferForm = (props: Props) => {
         </Form.Group>
       )}
 
-      <Form.Group controlId="toAccountNumber" className="">
+      <Form.Group controlId="toAccount">
         <Form.Label className="font-weight-bold">Account Number</Form.Label>
         <div className="d-flex">
           <Form.Control
@@ -203,12 +206,15 @@ const BankTransferForm = (props: Props) => {
           </div>
         </div>
 
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback
+          type="invalid"
+          className={errors.toAccount ? "d-block" : ""}
+        >
           {errors.toAccount?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="DESTAccHolderName">
+      <Form.Group controlId="destAccountHolderName">
         <Form.Label className="font-weight-bold">
           Account Holder Name
         </Form.Label>
@@ -240,7 +246,7 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="bankTransfer">
+      <Form.Group controlId="remarks">
         <Form.Label className="font-weight-bold">Remarks</Form.Label>
         <Form.Control
           type="text"
@@ -253,14 +259,6 @@ const BankTransferForm = (props: Props) => {
           {errors.remarks?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
-      <Button variant="success" type="submit">
-        Submit
-      </Button>
-
-      <Button className="ml-5" variant="danger" type="reset">
-        Reset
-      </Button>
     </>
   );
 };
