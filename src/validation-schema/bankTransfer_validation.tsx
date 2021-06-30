@@ -19,8 +19,5 @@ export const bankTransferScheme = yup.object().shape({
     .required("Transction amount is required")
     .min(3, "minimumm transction amount is Rs.100"),
 
-  remarks: yup
-    .string()
-    .required("Transction amount is required")
-    .min(3, "minimumm transction amount is Rs.100"),
+  remarks: yup.string().required("Remarks is required"),
 });

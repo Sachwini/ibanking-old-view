@@ -33,7 +33,6 @@ const OTPModal = (props: Props) => {
     let isSubscribed = true;
     if (isSubscribed) {
       setTimeout(() => setButtonDisabled(false), 60000);
-      console.log("Timer for 60 sec");
     }
     return () => {
       isSubscribed = false;

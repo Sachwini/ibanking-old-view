@@ -1,14 +1,10 @@
+import { bankTransferFormDataType } from "models/for-pages/bankTransfer_models";
 import { Button, Modal } from "react-bootstrap";
 import { formatLakh } from "services/numberService";
 import "../../modals/index.css";
 
 export interface Props {
-  fromAccount: string;
-  toAccount: string;
-  DESTBankName: string;
-  DESTAccHolderName: string;
-  DESTBranchName: string;
-  transctionAmount: string;
+  data: bankTransferFormDataType;
   transctionCharge: string | number;
   confirmModalShow: boolean;
   confirmModalShowHandle: (show: boolean) => void;
@@ -32,28 +28,26 @@ const ConfirmDetailModal = (props: Props) => {
         <strong className="d-block mb-2">Customer Details</strong>
         <div className="d-flex justify-content-between mb-2">
           <span>Account Number: </span>
-          <span className="text-muted">{props.fromAccount}</span>
+          <span className="text-muted">{props.data.fromAccount}</span>
         </div>
         <strong className="d-block mb-2">Beneficiary Details</strong>
 
         <div className="d-flex justify-content-between mb-2">
           <span>Account Number: </span>
-          <span className="text-muted">{props.toAccount}</span>
+          <span className="text-muted">{props.data.toAccount}</span>
         </div>
         <div className="d-flex justify-content-between mb-2">
           <span>Bank Name: </span>
-          <span className="text-muted">{props.DESTBankName}</span>
+          <span className="text-muted">{props.data.DESTBankName}</span>
         </div>
         <div className="d-flex justify-content-between mb-2">
           <span>Account Holder Name: </span>
-          <span className="text-muted">{props.DESTAccHolderName}</span>
+          <span className="text-muted">{props.data.destAccountHolderName}</span>
         </div>
-        {props.DESTBranchName === "" ? (
-          ""
-        ) : (
+        {props.data.DESTBranchName && (
           <div className="d-flex justify-content-between mb-2">
             <span>Branch: </span>
-            <span className="text-muted">{props.DESTBranchName}</span>
+            <span className="text-muted">{props.data.DESTBranchName}</span>
           </div>
         )}
 
@@ -62,7 +56,7 @@ const ConfirmDetailModal = (props: Props) => {
             Amount<small>(Rs.)</small>:
           </span>
           <span className="text-muted">
-            {formatLakh(parseInt(props.transctionAmount))}
+            {formatLakh(parseInt(props.data.transctionAmount))}
           </span>
         </div>
         <div className="d-flex justify-content-between mb-2">

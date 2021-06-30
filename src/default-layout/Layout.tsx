@@ -12,15 +12,17 @@ import {
 import { useEffect } from "react";
 import Footer from "components/Footer";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { isMenuButtonClicked } from "state-provider/forPageSetting";
+import { isLoading, isMenuButtonClicked } from "state-provider/forPageSetting";
 import { userDetails } from "state-provider/globalUserData";
 import { userDetailType } from "models/for-pages/userAccount_PageModels";
 import { loadUserDetails } from "helper/GetData";
+import { Loader } from "pages/static/Loader";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ menuHeaderId }, dispatch] = useStateValue();
   const isMenuClicked = useRecoilValue(isMenuButtonClicked);
   const setUserDetails = useSetRecoilState(userDetails);
+  const loader = useRecoilValue(isLoading);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -54,6 +56,10 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const gotUrl = (url: string) => {
     props.history.push(url);
   };
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <LayoutContainer>

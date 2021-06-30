@@ -14,3 +14,8 @@ export const menuActiveListID = atom({
   key: "active_lis_ID",
   default: "" as string,
 });
+
+export const isLoading = atom({
+  key: "is_loading",
+  default: false as boolean,
+});

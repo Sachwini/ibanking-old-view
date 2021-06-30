@@ -18,6 +18,8 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { RiUserStarLine, RiBankLine } from "react-icons/ri";
 import { IconStyle } from "styling/common/IconStyling";
 import { Loader } from "pages/static/Loader";
+import { useSetRecoilState } from "recoil";
+import { isLoading } from "state-provider/forPageSetting";
 
 interface selectItem {
   label: string;
@@ -26,13 +28,14 @@ interface selectItem {
 
 export const FundTransfer = () => {
   const accountNumber = GetAccountNumber();
+  const setLoading = useSetRecoilState(isLoading);
+
   const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
   const [fromAccount, setFromAccount] = useState<string>(accountNumber);
   const [toAccount, setToAccount] = useState<string>("");
   const [bankBranchId, setBankBranchId] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
   const [branch, setBranch] = useState<selectItem[]>([]);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -337,137 +340,129 @@ export const FundTransfer = () => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Card className="card_Shadow">
-          <Card.Body>
-            <Form
-              onSubmit={(e) => {
-                openDetailModel(e);
-                accountValidation();
-              }}
-            >
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label className="font-weight-bold">
-                  From Account
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  name="fromAccount"
-                  value={fromAccount}
-                  onChange={(e) => setFromAccount(e.target.value)}
-                >
-                  {!getAccountNumberValueMainCodeKey ? (
-                    <option></option>
-                  ) : (
-                    getAccountNumberValueMainCodeKey?.map((accNum: any) => (
-                      <option value={accNum.AccountNumber} key={accNum}>
-                        {accNum.mainCode}
-                      </option>
-                    ))
-                  )}
-                </Form.Control>
-              </Form.Group>
-              <div className="form-row">
-                <div className="col">
-                  <Form.Group controlId="formGridAddress1">
-                    <Form.Label className="font-weight-bold">
-                      Destination Account
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      autoComplete="off"
-                      placeholder="destination account"
-                      name="toAccount"
-                      value={toAccount}
-                      required
-                      onChange={(e) => setToAccount(e.target.value)}
-                    />
-                    <Form.Text className="text-warning">
-                      Please Insure the account number is correct before
-                      transaction
-                    </Form.Text>
-                  </Form.Group>
-                </div>
-                <div className="pl-4 d-flex align-items-center">
-                  <OverlayTrigger
-                    transition={false}
-                    trigger="click"
-                    placement="bottom"
-                    overlay={UserProfile}
-                    rootClose
-                  >
-                    <IconStyle hover>
-                      <RiUserStarLine size={30} onClick={(e) => favAcc()} />
-                    </IconStyle>
-                  </OverlayTrigger>
-                </div>
+      <Card className="card_Shadow">
+        <Card.Body>
+          <Form
+            onSubmit={(e) => {
+              openDetailModel(e);
+              accountValidation();
+            }}
+          >
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label className="font-weight-bold">From Account</Form.Label>
+              <Form.Control
+                as="select"
+                name="fromAccount"
+                value={fromAccount}
+                onChange={(e) => setFromAccount(e.target.value)}
+              >
+                {!getAccountNumberValueMainCodeKey ? (
+                  <option></option>
+                ) : (
+                  getAccountNumberValueMainCodeKey?.map((accNum: any) => (
+                    <option value={accNum.AccountNumber} key={accNum}>
+                      {accNum.mainCode}
+                    </option>
+                  ))
+                )}
+              </Form.Control>
+            </Form.Group>
+            <div className="form-row">
+              <div className="col">
+                <Form.Group controlId="formGridAddress1">
+                  <Form.Label className="font-weight-bold">
+                    Destination Account
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    autoComplete="off"
+                    placeholder="destination account"
+                    name="toAccount"
+                    value={toAccount}
+                    required
+                    onChange={(e) => setToAccount(e.target.value)}
+                  />
+                  <Form.Text className="text-warning">
+                    Please Insure the account number is correct before
+                    transaction
+                  </Form.Text>
+                </Form.Group>
               </div>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">
-                  Select Destination Bank Branch
-                </Form.Label>
-                <Typeahead
-                  options={branch}
-                  id="my-typeahead-id"
-                  placeholder="Choose destination branch..."
-                  onChange={handleBranchID}
-                />
-                <Form.Text className="text-warning">
-                  {bankBranchId
-                    ? `bankBranchId: ${bankBranchId}`
-                    : "selected none (please select one... )"}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">
-                  Destination AccountHolder Name
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  autoComplete="off"
-                  placeholder="Enter your Destination AccountHolder Name"
-                  name="destinationAccountHolderName"
-                  value={destinationAccountHolderName}
-                  required
-                  onChange={(e) =>
-                    setDestinationAccountHolderName(e.target.value)
-                  }
-                />
-              </Form.Group>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label className="font-weight-bold">Amount</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Amount"
-                  name="amount"
-                  value={amount}
-                  required
-                  autoComplete="off"
-                  min={0}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-              </Form.Group>
-              <Button
-                className="btn btn-warning"
-                variant="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-              <Button
-                className="btn btn-light"
-                style={{ marginLeft: "20px" }}
-                variant="secondary"
-                onClick={handleReset}
-              >
-                Reset
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      )}
+              <div className="pl-4 d-flex align-items-center">
+                <OverlayTrigger
+                  transition={false}
+                  trigger="click"
+                  placement="bottom"
+                  overlay={UserProfile}
+                  rootClose
+                >
+                  <IconStyle hover>
+                    <RiUserStarLine size={30} onClick={(e) => favAcc()} />
+                  </IconStyle>
+                </OverlayTrigger>
+              </div>
+            </div>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">
+                Select Destination Bank Branch
+              </Form.Label>
+              <Typeahead
+                options={branch}
+                id="my-typeahead-id"
+                placeholder="Choose destination branch..."
+                onChange={handleBranchID}
+              />
+              <Form.Text className="text-warning">
+                {bankBranchId
+                  ? `bankBranchId: ${bankBranchId}`
+                  : "selected none (please select one... )"}
+              </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">
+                Destination AccountHolder Name
+              </Form.Label>
+              <Form.Control
+                type="text"
+                autoComplete="off"
+                placeholder="Enter your Destination AccountHolder Name"
+                name="destinationAccountHolderName"
+                value={destinationAccountHolderName}
+                required
+                onChange={(e) =>
+                  setDestinationAccountHolderName(e.target.value)
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label className="font-weight-bold">Amount</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Amount"
+                name="amount"
+                value={amount}
+                required
+                autoComplete="off"
+                min={0}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </Form.Group>
+            <Button className="btn btn-warning" variant="primary" type="submit">
+              Submit
+            </Button>
+            <Button
+              className="btn btn-light"
+              style={{ marginLeft: "20px" }}
+              variant="secondary"
+              onClick={handleReset}
+            >
+              Reset
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+
+      {/* modal controlling is going here  */}
       <DetailModal
         modalShow={detailModalShow}
         handleModalShow={(event: boolean) => setDetailModalShow(event)}

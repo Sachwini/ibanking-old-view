@@ -2,10 +2,10 @@ import { apiResponse } from "models/apiResponse";
 import {
   getBankBranchList_FundTransferType,
   getBranchFundTransferType,
-} from "models/for-pages/fundTransfer_PageModals";
+} from "models/for-pages/fundTransfer_Models";
 import { get } from "services/AjaxService";
 
-export const GetBankBranchList = async (BankId: string) => {
+export const GetBankBranchList = async () => {
   const res = await get<apiResponse<getBranchFundTransferType[]>>(
     `/get/bankbranches?`
   );

@@ -30,11 +30,12 @@ export const GetAccountNumberValueMainCodeKey = () => {
   }));
   return array;
 };
+
+// Get all accounts withs its types
 interface getAllAccNoType {
   accountNumber: string;
   accoutType: string;
 }
-
 export const GetAllAccNoWithType = () => {
   const [{ customerDetails }] = useStateValue();
 
