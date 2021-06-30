@@ -1,4 +1,4 @@
-import { Card, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import styled from "styled-components/macro";
 
 export const LoginContainer = styled(Container)`

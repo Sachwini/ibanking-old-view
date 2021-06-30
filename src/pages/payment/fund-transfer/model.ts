@@ -33,3 +33,13 @@ export interface TransactionLimit {
   monthlyAmountLimit: number;
   remainingMonthlyAmount: number;
 }
+
+export interface fundTransferFormDataType {
+  fromAccount: string;
+  DESTBranchName: string;
+  toAccount: string;
+  destinationAccountHolderName: string;
+  DESTBranchID: string | "null";
+  amount: string;
+}
+

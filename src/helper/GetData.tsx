@@ -83,7 +83,6 @@ export const getBankBranchID = (
   } else return "null";
 };
 
-// Get Transction Charger For BankTransfer
 export const getTransctionCharge = async (
   amount: string,
   destBankId: string

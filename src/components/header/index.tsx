@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Badge, OverlayTrigger, Image, Popover } from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
@@ -22,9 +22,10 @@ import {
 import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
+import { messaging } from "../../init-fcm";
+import { toast, ToastContainer } from "react-toastify";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";
 import { useSetRecoilState } from "recoil";
-import { useEffect } from "react";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -53,6 +54,24 @@ const Header = () => {
   useEffect(() => {
     setMenuClicked(sideMenuShow);
   }, [sideMenuShow]);
+
+  useEffect(() => {
+    messaging
+      .requestPermission()
+      .then(() => {
+        return messaging.getToken();
+      })
+      .then((data: any) => {
+        console.warn("firebase token", data);
+      })
+      .catch(function (err) {
+        console.log("You denied the notification");
+      });
+    navigator.serviceWorker.addEventListener("message", (message) =>
+      console.log(message)
+    );
+    console.log("UseEffect called");
+  });
 
   const UserProfile = (
     <Popover id="popover-basic" style={PopoverStyle}>
@@ -154,6 +173,7 @@ const Header = () => {
         handleModalShow={(e) => setShowLogoutModal(e)}
         confirmModalCancleButton={handleLogout}
       />
+      <ToastContainer autoClose={5000} position="top-center" />
     </>
   );
 };
