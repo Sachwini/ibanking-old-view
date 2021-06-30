@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +23,7 @@ export const FundTransfer = () => {
     getValues,
     setValue,
     watch,
+    reset,
     control,
     formState: { errors },
   } = useForm<fundTransferFormDataType>({
@@ -43,7 +44,6 @@ export const FundTransfer = () => {
   const [responseMessage, setResponseMessage] = useState({
     status: "",
     message: "",
-    // details: "",
   });
   const [
     accountValidationResponseMessage,
@@ -187,10 +187,22 @@ export const FundTransfer = () => {
       toast.error("catch inside changeOTP", error.response.data.message);
     }
   };
+
   const onSubmit = async (data: fundTransferFormDataType) => {
     console.log("form data: ", data);
     accountValidation();
     openDetailModel();
+  };
+
+  const handleReset = () => {
+    reset({
+      fromAccount: "",
+      DESTBranchName: "",
+      toAccount: "",
+      destinationAccountHolderName: "",
+      DESTBranchID: "",
+      amount: "",
+    });
   };
 
   return (
@@ -207,6 +219,14 @@ export const FundTransfer = () => {
               setValue={setValue}
               destBranchId={(id) => setDESTBranchID(id)}
             />
+
+            <Button variant="success" type="submit">
+              Submit
+            </Button>
+
+            <Button className="ml-5" variant="danger" onClick={handleReset}>
+              Reset
+            </Button>
           </Form>
         </Card.Body>
       </Card>

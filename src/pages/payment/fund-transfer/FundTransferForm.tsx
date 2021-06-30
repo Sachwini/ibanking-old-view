@@ -166,14 +166,6 @@ function FundTransferForm(props: Props) {
           {errors.amount?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
-      <Button variant="success" type="submit">
-        Submit
-      </Button>
-
-      <Button className="ml-5" variant="danger" type="reset">
-        Reset
-      </Button>
     </>
   );
 }
