@@ -19,7 +19,10 @@ import {
 } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { getBankAccNo } from "state-provider/globalUserData";
-import { getBankBranchListType, getBankListType } from "./model";
+import {
+  getBankBranchListType,
+  getBankListType,
+} from "models/for-pages/bankTransfer_models";
 import { v4 as uuidv4 } from "uuid";
 
 interface Props {

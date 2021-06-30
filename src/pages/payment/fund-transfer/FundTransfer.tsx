@@ -8,12 +8,13 @@ import DetailModal from "components/modals/fundTransfer/DetailModal";
 import MpinModal from "components/modals/fundTransfer/MpinModal";
 import OtpModal from "components/modals/fundTransfer/OtpModal";
 import SuccessModal from "components/modals/fundTransfer/SuccessModal";
-import { Loader } from "pages/static/Loader";
 import { useForm } from "react-hook-form";
 import { fundTransferFormDataType } from "./model";
 import FundTransferForm from "./FundTransferForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fundTrasferScheme } from "validation-schema/fundTransfer_validation";
+import { useRecoilValue } from "recoil";
+import { isLoading } from "state-provider/forPageSetting";
 
 export const FundTransfer = () => {
   const {
@@ -29,9 +30,10 @@ export const FundTransfer = () => {
     mode: "all",
   });
 
+  const setLoading = useRecoilValue(isLoading);
+
   const [DESTBranchID, setDESTBranchID] = useState<string>("null");
   const [mpin, setMpin] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [validAccount, setValidAccount] = useState<boolean>(false);

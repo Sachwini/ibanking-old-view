@@ -1,3 +1,4 @@
+import { bankTransferFormDataType } from "models/for-pages/bankTransfer_models";
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
@@ -9,12 +10,7 @@ import {
 } from "../../../styling/common/ModalStyling";
 
 export interface Props {
-  fromAccount: string;
-  toAccount: string;
-  DESTBankName: string;
-  DESTAccHolderName: string;
-  DESTBranchName: string;
-  transctionAmount: string;
+  data: bankTransferFormDataType;
   transctionCharge: string | number;
   mpin: string;
   bankTransferResponse: {
@@ -30,12 +26,7 @@ const SuccessModal = (props: Props) => {
     successModalShow,
     successModalShowHandle,
     bankTransferResponse,
-    fromAccount,
-    toAccount,
-    DESTBankName,
-    DESTAccHolderName,
-    DESTBranchName,
-    transctionAmount,
+    data,
     transctionCharge,
     mpin,
   } = props;
@@ -45,12 +36,7 @@ const SuccessModal = (props: Props) => {
     dispatch({
       type: "BANK_TRANSFER_DETAILS",
       bankTransferDetails: {
-        fromAccount,
-        toAccount,
-        DESTBankName,
-        DESTAccHolderName,
-        DESTBranchName,
-        transctionAmount,
+        data,
         transctionCharge,
         mpin,
       },

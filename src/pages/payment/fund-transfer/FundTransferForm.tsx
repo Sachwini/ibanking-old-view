@@ -1,8 +1,8 @@
 import FavAccPopover from "components/FavAccPopover";
 import { getBranchList } from "helper/fun_FundTransfer";
-import { getFundTransferBranchID } from "helper/GetData";
+import { getFundTransferBranchID } from "helper/fun_FundTransfer";
 import { favAccListType } from "models/for-pages/favAcccount_PageModels";
-import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransfer_PageModals";
+import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransfer_Models";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -18,11 +18,6 @@ import {
 import { useRecoilValue } from "recoil";
 import { getBankAccNo } from "state-provider/globalUserData";
 import { v4 as uuidv4 } from "uuid";
-
-interface selectItem {
-  label: string;
-  value: string;
-}
 
 interface Props {
   register: UseFormRegister<any>;
@@ -40,7 +35,6 @@ function FundTransferForm(props: Props) {
   const [branchData, setBranchData] =
     useState<getBankBranchList_FundTransferType>();
   console.log("sdad", branchData);
-  const [DESTBranchID, setDESTBranchID] = useState<string>("");
 
   const handleFavAccDetails = (data: favAccListType) => {
     setValue("toAccount", data.destinationAccountNumber);
@@ -90,7 +84,7 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="toAccountNumber" className="">
+      <Form.Group controlId="toAccount" className="">
         <Form.Label className="font-weight-bold">Account Number</Form.Label>
         <div className="d-flex">
           <Form.Control
@@ -108,13 +102,16 @@ function FundTransferForm(props: Props) {
           </div>
         </div>
 
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback
+          type="invalid"
+          className={errors.toAccount ? "d-block" : ""}
+        >
           {errors.toAccount?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
       {branchData && (
-        <Form.Group controlId="bankTransfer">
+        <Form.Group controlId="DESTBranchName">
           <Form.Label className="font-weight-bold">
             Select Destination Bank Branch
           </Form.Label>
@@ -132,13 +129,16 @@ function FundTransferForm(props: Props) {
               />
             )}
           />
-          <Form.Control.Feedback type="invalid">
+          <Form.Control.Feedback
+            type="invalid"
+            className={errors.DESTBranchName ? "d-block" : ""}
+          >
             {errors.DESTBranchName?.message}
           </Form.Control.Feedback>
         </Form.Group>
       )}
 
-      <Form.Group controlId="formGridAddress1">
+      <Form.Group controlId="destinationAccountHolderName">
         <Form.Label className="font-weight-bold">
           Destination AccountHolder Name
         </Form.Label>
@@ -154,7 +154,7 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formGridAddress1">
+      <Form.Group controlId="amount">
         <Form.Label className="font-weight-bold">Amount</Form.Label>
         <Form.Control
           type="number"

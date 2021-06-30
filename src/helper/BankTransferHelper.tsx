@@ -1,4 +1,4 @@
-import { bankBranchType, BankList } from "pages/payment/fund-transfer/model";
+import { bankBranchType, BankList } from "models/for-pages/bankTransfer_models";
 
 export const getOnlyBankNameList = (banklist: BankList[]) => {
   let onlyBankNameList: string[] = [];
