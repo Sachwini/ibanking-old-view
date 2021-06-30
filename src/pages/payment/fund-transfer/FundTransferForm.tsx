@@ -1,8 +1,10 @@
 import FavAccPopover from "components/FavAccPopover";
-import { GetAccountNumberValueMainCodeKey } from "helper/CustomerData";
+import { getBranchList } from "helper/fun_FundTransfer";
+import { getFundTransferBranchID } from "helper/GetData";
 import { favAccListType } from "models/for-pages/favAcccount_PageModels";
-import React, { useEffect, useState } from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransfer_PageModals";
+import { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import {
   Control,
@@ -14,7 +16,6 @@ import {
   Controller,
 } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { getBankBranches } from "services/BankServices";
 import { getBankAccNo } from "state-provider/globalUserData";
 import { v4 as uuidv4 } from "uuid";
 
@@ -30,50 +31,42 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
-  destBankId: (id: string | "") => void;
   destBranchId: (id: string | "null") => void;
 }
 
 function FundTransferForm(props: Props) {
-  const {
-    register,
-    errors,
-    watch,
-    getValues,
-    setValue,
-    control,
-    destBranchId,
-  } = props;
+  const { register, errors, watch, getValues, setValue, control } = props;
   const bankAcclist = useRecoilValue(getBankAccNo);
-  const [branch, setBranch] = useState<selectItem[]>([]);
+  const [branchData, setBranchData] =
+    useState<getBankBranchList_FundTransferType>();
+  console.log("sdad", branchData);
+  const [DESTBranchID, setDESTBranchID] = useState<string>("");
 
   const handleFavAccDetails = (data: favAccListType) => {
     setValue("toAccount", data.destinationAccountNumber);
-    setValue("destAccountHolderName", data.destinationAccountHolderName);
+    setValue("destinationAccountHolderName", data.destinationAccountHolderName);
   };
 
   useEffect(() => {
     let isSubscribed = true;
-
+    const destinationBranchName = getValues("DESTBranchName");
     const init = async () => {
-      const branch = await getBankBranches();
-      if (isSubscribed) {
-        const branchData: selectItem[] = [];
-        if (branch) {
-          branch.forEach((x: any) =>
-            branchData.push({ label: x.name, value: x.id.toString() })
-          );
-          setBranch(branchData);
-          // setLoading(false);
-        }
+      const allBranch = await getBranchList();
+      if (isSubscribed && allBranch) {
+        setBranchData(allBranch);
+
+        const branchId = getFundTransferBranchID(
+          destinationBranchName,
+          allBranch?.branchList
+        );
+        setValue("DESTBranchID", branchId);
       }
     };
     init();
-    // getAccountNumberValueMainCodeKey();
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [watch("DESTBranchName")]);
 
   return (
     <>
@@ -120,7 +113,7 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      {DESTBranchList && (
+      {branchData && (
         <Form.Group controlId="bankTransfer">
           <Form.Label className="font-weight-bold">
             Select Destination Bank Branch
@@ -131,9 +124,7 @@ function FundTransferForm(props: Props) {
             render={({ field }) => (
               <Typeahead
                 id="DESTBranchName"
-                options={
-                  DESTBranchList ? DESTBranchList.onlyBankBranchNameList : []
-                }
+                options={branchData ? branchData.onlyBranchNameList : []}
                 placeholder="Choose destination branch..."
                 onChange={(e) => field.onChange(e[0])}
                 onBlur={() => field.onBlur()}
@@ -149,23 +140,6 @@ function FundTransferForm(props: Props) {
 
       <Form.Group controlId="formGridAddress1">
         <Form.Label className="font-weight-bold">
-          Select Destination Bank Branch
-        </Form.Label>
-        <Typeahead
-          options={branch}
-          id="my-typeahead-id"
-          placeholder="Choose destination branch..."
-          onChange={handleBranchID}
-        />
-        <Form.Text className="text-warning">
-          {bankBranchId
-            ? `bankBranchId: ${bankBranchId}`
-            : "selected none (please select one... )"}
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group controlId="formGridAddress1">
-        <Form.Label className="font-weight-bold">
           Destination AccountHolder Name
         </Form.Label>
         <Form.Control
@@ -173,12 +147,11 @@ function FundTransferForm(props: Props) {
           autoComplete="off"
           placeholder="Enter your Destination AccountHolder Name"
           {...register("destinationAccountHolderName")}
-          // value={destinationAccountHolderName}
-          // required
-          // onChange={(e) =>
-          //   setDestinationAccountHolderName(e.target.value)
-          // }
+          isInvalid={!!errors.destinationAccountHolderName}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.destinationAccountHolderName?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group controlId="formGridAddress1">
@@ -187,12 +160,11 @@ function FundTransferForm(props: Props) {
           type="number"
           placeholder="Amount"
           {...register("amount")}
-          // value={amount}
-          // required
-          // autoComplete="off"
-          // min={0}
-          // onChange={(e) => setAmount(e.target.value)}
+          isInvalid={!!errors.amount}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.amount?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Button variant="success" type="submit">

@@ -1,4 +1,8 @@
 import { apiResponse } from "models/apiResponse";
+import {
+  getBankBranchList_FundTransferType,
+  getBranchFundTransferType,
+} from "models/for-pages/fundTransfer_PageModals";
 import { userDetailType } from "models/for-pages/userAccount_PageModels";
 import {
   bankBranchType,
@@ -71,6 +75,26 @@ export const getBankBranchID = (
   ) {
     const obj = branchList.find(({ branchName }) => branchName === branchame);
     const id = obj?.branchId;
+    if (id) {
+      return id;
+    } else {
+      return "null";
+    }
+  } else return "null";
+};
+
+export const getFundTransferBranchID = (
+  branchName: string | undefined,
+  branchList: getBranchFundTransferType[] | undefined
+) => {
+  if (
+    branchList &&
+    branchList !== undefined &&
+    branchName !== undefined &&
+    branchName !== ""
+  ) {
+    const obj = branchList.find(({ name }) => name === branchName);
+    const id = obj?.id;
     if (id) {
       return id;
     } else {

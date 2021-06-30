@@ -68,6 +68,15 @@ export interface bankTransferFormDataType {
   remarks: string;
 }
 
+export interface fundTransferFormDataType {
+  fromAccount: string;
+  DESTBranchName: string;
+  toAccount: string;
+  destinationAccountHolderName: string;
+  DESTBranchID: string | "null";
+  amount: string;
+}
+
 export interface getBankListType {
   bankList: BankList[];
   onlyBankNameList: string[];
