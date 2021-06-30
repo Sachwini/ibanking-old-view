@@ -159,6 +159,7 @@ function FundTransferForm(props: Props) {
         <Form.Control
           type="number"
           placeholder="Amount"
+          autoComplete="off"
           {...register("amount")}
           isInvalid={!!errors.amount}
         />
