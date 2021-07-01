@@ -26,7 +26,7 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
-  destBranchId: (id: string | "null") => void;
+  // destBranchId: (id: string | "null") => void;
 }
 
 function FundTransferForm(props: Props) {

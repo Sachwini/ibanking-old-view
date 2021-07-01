@@ -32,7 +32,6 @@ export const FundTransfer = () => {
 
   const setLoading = useRecoilValue(isLoading);
 
-  const [DESTBranchID, setDESTBranchID] = useState<string>("null");
   const [mpin, setMpin] = useState<string>("");
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -84,7 +83,7 @@ export const FundTransfer = () => {
     }
   };
 
-  //for request Otp
+  //check if otp is required or not
   const requestOtp = async () => {
     const req = await get<apiResponse<any>>(
       "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
@@ -95,6 +94,7 @@ export const FundTransfer = () => {
     setDetailModalShow(true);
   };
 
+  //for handlesubmit of whole data
   const handleSubmit1 = async (e: any) => {
     e.preventDefault();
     if (
@@ -158,6 +158,7 @@ export const FundTransfer = () => {
     }
   };
 
+  //to check if otp is required or not
   const handleOtpRequired = (e: any) => {
     e.preventDefault();
     if (parseFloat(getValues("amount")) <= 5000) {
@@ -173,6 +174,7 @@ export const FundTransfer = () => {
     }
   };
 
+  //to request otp ,or request otp again
   const changeOtpStatus = async (e: any) => {
     e.preventDefault();
     try {
@@ -187,6 +189,8 @@ export const FundTransfer = () => {
       toast.error("catch inside changeOTP", error.response.data.message);
     }
   };
+
+  // call account validation and open detail modal
   const onSubmit = async (data: fundTransferFormDataType) => {
     console.log("form data: ", data);
     accountValidation();
@@ -205,7 +209,7 @@ export const FundTransfer = () => {
               watch={watch}
               getValues={getValues}
               setValue={setValue}
-              destBranchId={(id) => setDESTBranchID(id)}
+              // destBranchId={(id) => setDESTBranchID(id)}
             />
           </Form>
         </Card.Body>
