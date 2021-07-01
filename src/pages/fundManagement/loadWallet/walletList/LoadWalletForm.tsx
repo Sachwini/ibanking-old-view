@@ -21,12 +21,21 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
+  reset: UseFormReset<any>;
 }
 
 function LoadWalletForm(props: Props) {
-  const { register, errors, watch, getValues, setValue, control } = props;
+  const { register, errors, reset } = props;
   const bankAcclist = useRecoilValue(getBankAccNo);
   const [{ walletDetails }] = useStateValue();
+
+  const handleReset = (e: any) => {
+    reset({
+      contact: "",
+      amount: "",
+      remarks: "",
+    });
+  };
 
   return (
     <>
@@ -104,7 +113,12 @@ function LoadWalletForm(props: Props) {
         Submit
       </Button>
 
-      <Button className="ml-5" variant="danger" type="reset">
+      <Button
+        className="ml-5"
+        variant="danger"
+        type="reset"
+        onClick={handleReset}
+      >
         Reset
       </Button>
     </>

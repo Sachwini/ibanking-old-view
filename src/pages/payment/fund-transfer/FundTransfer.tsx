@@ -24,6 +24,7 @@ export const FundTransfer = () => {
     setValue,
     watch,
     control,
+    reset,
     formState: { errors },
   } = useForm<fundTransferFormDataType>({
     resolver: yupResolver(fundTrasferScheme),
@@ -209,6 +210,7 @@ export const FundTransfer = () => {
               watch={watch}
               getValues={getValues}
               setValue={setValue}
+              reset={reset}
               // destBranchId={(id) => setDESTBranchID(id)}
             />
           </Form>

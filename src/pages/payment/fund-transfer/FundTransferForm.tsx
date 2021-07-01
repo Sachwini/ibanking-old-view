@@ -6,6 +6,7 @@ import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransfe
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { UseFormReset } from "react-hook-form";
 import {
   Control,
   FieldErrors,
@@ -26,11 +27,13 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
+  reset: UseFormReset<any>;
   // destBranchId: (id: string | "null") => void;
 }
 
 function FundTransferForm(props: Props) {
-  const { register, errors, watch, getValues, setValue, control } = props;
+  const { register, errors, watch, getValues, setValue, control, reset } =
+    props;
   const bankAcclist = useRecoilValue(getBankAccNo);
   const [branchData, setBranchData] =
     useState<getBankBranchList_FundTransferType>();
@@ -61,6 +64,15 @@ function FundTransferForm(props: Props) {
       isSubscribed = false;
     };
   }, [watch("DESTBranchName")]);
+
+  const handleReset = (e: any) => {
+    reset({
+      toAccount: "",
+      DESTBranchID: "",
+      amount: "",
+      DESTBranchName: "",
+    });
+  };
 
   return (
     <>
@@ -171,7 +183,12 @@ function FundTransferForm(props: Props) {
         Submit
       </Button>
 
-      <Button className="ml-5" variant="danger" type="reset">
+      <Button
+        className="ml-5"
+        variant="danger"
+        type="reset"
+        onClick={handleReset}
+      >
         Reset
       </Button>
     </>

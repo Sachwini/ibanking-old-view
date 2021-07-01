@@ -157,6 +157,7 @@ function LoadWallet() {
                   watch={watch}
                   getValues={getValues}
                   setValue={setValue}
+                  reset={reset}
                 />
               </Form>
             </Card.Body>
