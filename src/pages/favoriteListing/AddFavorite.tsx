@@ -32,6 +32,7 @@ const AddFavorite = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     const model: any = {
       reminderType: "OneTime",
       serviceInfoType: "CONNECT_IPS",
@@ -143,7 +144,7 @@ const AddFavorite = () => {
         accountNumber={accountNumber}
         destinationBankName={destinationBankName}
         destinationAccountHolderName={destinationAccountHolderName}
-        confirmModalCancleButton={(event) => setDetailModalShow(false)}
+        confirmModalCancleButton={(event) => setDetailModalShow(event)}
       />
     </Container>
   );

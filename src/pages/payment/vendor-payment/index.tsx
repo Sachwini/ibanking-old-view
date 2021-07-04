@@ -2,7 +2,6 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useState } from "react";
 import { GoSync } from "react-icons/go";
-import { PageTitle } from "components/PageTitle";
 import StaticBar from "components/StaticBar";
 import { forVendorPayment } from "static-data/forBreadCrumb";
 import { vendorPaymentPageTitle } from "static-data/forPageTitle";

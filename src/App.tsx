@@ -33,11 +33,11 @@ function App() {
     () => import("pages/user-account/user-profile")
   );
   const Statement = React.lazy(() => import("pages/user-account/statement"));
+
   /* ----------For Fund Management Import--------------------- */
   const LoadWallet = React.lazy(
     () => import("pages/fundManagement/loadWallet/LoadWallet")
   );
-
   const ListWallet = React.lazy(
     () => import("pages/fundManagement/loadWallet/walletList/ListWallet")
   );
@@ -52,7 +52,6 @@ function App() {
     () =>
       import("components/modals/bank-transfer/BankTransferSuccessConfirmation")
   );
-  const BulkPayment = React.lazy(() => import("pages/payment/bulk-payment"));
   const BrokerPayment = React.lazy(
     () => import("pages/payment/broker-payment/BrokerPayment")
   );
@@ -151,7 +150,6 @@ function App() {
               path="/bank-transfer-success-confirmation"
               component={BankTransferSuccessConfirmation}
             />
-            <Route path="/bulk-payment" component={BulkPayment} />
             <Route path="/vendor-payment" component={VendorPayment} />
             <Route path="/broker-payment" component={BrokerPayment} />
             <Route

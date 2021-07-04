@@ -38,3 +38,9 @@ export interface getBankBranchListType {
   bankBranchList: bankBranchType[];
   onlyBankBranchNameList: string[];
 }
+
+export interface accValidationType {
+  status: string;
+  message: string;
+  matchPercentage: number;
+}

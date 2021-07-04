@@ -4,7 +4,7 @@ import {
   favAccType,
 } from "models/for-pages/favAcccount_PageModels";
 import { useEffect, useState } from "react";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { RiBankLine, RiUserStarLine } from "react-icons/ri";
 import { get } from "services/AjaxService";
 import { PooverContainer } from "styling/common/FavAcc_pooverStyling";
@@ -86,12 +86,20 @@ const FavAccPopover = ({ selectedDetails }: Props) => {
       overlay={UserProfile}
       rootClose
     >
-      <IconStyle hover>
-        <RiUserStarLine
-          size={30}
-          onClick={() => setShowPopover(!showPopover)}
-        />
-      </IconStyle>
+      <OverlayTrigger
+        transition={true}
+        key="favAccount"
+        trigger={["hover", "focus"]}
+        placement="top"
+        overlay={<Tooltip id="favAccount">Your Favourite Accounts</Tooltip>}
+      >
+        <IconStyle hover>
+          <RiUserStarLine
+            size={30}
+            onClick={() => setShowPopover(!showPopover)}
+          />
+        </IconStyle>
+      </OverlayTrigger>
     </OverlayTrigger>
   );
 };

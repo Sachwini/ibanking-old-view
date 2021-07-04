@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
-import { get, post } from "services/AjaxService";
+import { Card, Form } from "react-bootstrap";
+import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
 import MpinModal from "components/modals/bank-transfer/MpinModal";
-import OTPModal from "components/modals/bank-transfer/OTPModal";
+import OTPModal from "components/modals/OTPModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 import { bankTransferFormDataType } from "models/for-pages/bankTransfer_models";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,6 +19,7 @@ import {
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 import { isLoading } from "state-provider/forPageSetting";
+import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
 
 export const BankTransfer = () => {
   const {
@@ -44,6 +45,10 @@ export const BankTransfer = () => {
 
   // For modal handles
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false);
+  const [accValidationStatus, setAccValidationStatus] = useState({
+    status: true as boolean,
+    message: "" as string,
+  });
   const [mpin, setMpin] = useState<string>("");
   const [mPinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
@@ -56,7 +61,10 @@ export const BankTransfer = () => {
   const [OTP, setOTP] = useState<string>("");
   const [OTPModalShow, setOTPModalShow] = useState<boolean>(false);
   const [isOTPRequired, SetIsOTPRequired] = useState<boolean>(false);
-  const [OTPResponse, setOTPResponse] = useState({ status: "", message: "" });
+  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
+    isError: false as boolean,
+    message: "",
+  });
   const [formData, setFormData] = useState<bankTransferFormDataType>({
     fromAccount: "",
     toAccount: "",
@@ -70,7 +78,6 @@ export const BankTransfer = () => {
   });
 
   const onSubmit = async (data: bankTransferFormDataType) => {
-    setLoading(true);
     setFormData(data);
 
     // getting transction charges
@@ -80,41 +87,48 @@ export const BankTransfer = () => {
     );
     if (transctionCharges) {
       setTransctionCharge(transctionCharges);
-      // setValue("transctionCharge", transctionCharges);
     }
 
     // checking is account credentials is valid
     try {
       const isValid = await isAccountValid(data);
-      setLoading(true);
       if (
         isValid &&
         isValid.status === "valid" &&
         isValid.matchPercentage === 100
       ) {
-        // Calling Conformation Modal Dialogue
-        setConfirmModalShow(true);
+        setAccValidationStatus({
+          status: true,
+          message: isValid.message,
+        });
       } else {
-        setLoading(false);
+        setAccValidationStatus({
+          status: false,
+          message: isValid.message,
+        });
         toast.error(isValid.message, {
           autoClose: 12000,
         });
       }
     } catch (error: any) {
       if (error.response) {
-        // setConfirmModalShow(true);
-        setLoading(false);
+        setAccValidationStatus({
+          status: false,
+          message: `${error.response.data.detail.message}`,
+        });
         toast.error(error.response.data.detail.message, {
           autoClose: 12000,
         });
       }
       return;
     }
+
+    setConfirmModalShow(true);
   };
 
   //-------------Conformation Modal Dialouge Handle---------------------//
   const confirmModelSubmitHandle = () => {
-    setConfirmModalShow(!confirmModalShow);
+    setConfirmModalShow(false);
     // Enabling mPin Modal
     setMpinModalShow(true);
   };
@@ -125,91 +139,53 @@ export const BankTransfer = () => {
     // Enabling Mpin Modal Show
     setMpinModalShow(!mPinModalShow);
     // Validating Is otp is Required
-    isOtpRequired();
+    checkingIsOTPRequired();
   };
 
   //-------------OTPFormHandle Modal---------------------//
-  const OTPFormHandle = (e: React.FormEvent) => {
-    e.preventDefault();
+  const OTPFormHandle = () => {
     // Enabling OTP Modal Show
     setOTPModalShow(!OTPModalShow);
+
     //Enabling OTP Require At Transction
-    enableOTPTransction();
+    enableOtpTransction();
   };
 
-  // ReSend OTP Handle
   const resendOTPHandle = async () => {
     // calling OTP Validation
-    const isRequired = await get<apiResponse<any>>(
-      `api/otp/request?serviceInfoType=CONNECT_IPS&amount=${formData?.transctionAmount}`
-    );
-    if (isRequired && isRequired.data.detail.otpRequired === true) {
-      const res = await post<apiResponse<any>>(
-        `api/changeBankTransferOtpStatus?status=true&otp=${OTP}`,
-        {}
-      );
-      if (res) {
-        toast.success(res.data.message);
-      }
+    const isRequired = await isOtpRequired(formData.transctionAmount);
+    if (isRequired && isRequired === true) {
+      return;
     }
-    return;
   };
 
   // Validating This Transction is required OTP or Not?
-  const isOtpRequired = async () => {
-    const res = await get<apiResponse<any>>(
-      `api/otp/request?serviceInfoType=CONNECT_IPS&amount=${formData?.transctionAmount}`
-    );
-    if (res && res.data.detail.otpRequired === true) {
+  const checkingIsOTPRequired = async () => {
+    const res = await isOtpRequired(formData.transctionAmount, true);
+    if (res && res === true) {
       SetIsOTPRequired(true);
-      setOTPResponse({ status: "success", message: res.data.message });
-
-      // To Enabling OTP required at Transction
-      setOTPModalShow(true);
     } else {
-      // calling fund transfer api form here
+      //calling fund transfer api form here
       fundTransferAPI();
     }
   };
 
   // Enabling OTP Required at Transction Time True
-  const enableOTPTransction = async () => {
-    try {
-      const res = await post<apiResponse<any>>(
-        `api/changeBankTransferOtpStatus?status=true&otp=${OTP}`,
-        {}
-      );
-      if (res) {
-        // Calling Fund Transfer API
-        fundTransferAPI();
-      }
-    } catch (error: any) {
-      if (
-        error.response.data.status === "FAILURE" &&
-        error.response.data.status.message ===
-          "OTP Expired Please Request a New One"
-      ) {
-        resendOTPHandle();
-        setOTPResponse({
-          status: "failed",
-          message:
-            "OTP Expire!!! New OTP is send to your Phone. Please Enter New One...",
-        });
-        setOTPModalShow(true);
-      } else if (error.response.data.status === "FAILURE") {
-        setOTPResponse({
-          status: "failed",
-          message: error.response.data.message,
-        });
-        setOTPModalShow(true);
-      }
+  const enableOtpTransction = async () => {
+    const res = await enableOTPTransction(OTP);
+    if (res && res.status === "SUCCCESS") {
+      // Calling Fund Transfer API
+      fundTransferAPI();
+    } else {
+      setIsError_inOTPResponse({
+        isError: true,
+        message: res.message,
+      });
     }
   };
 
   // Fund Transfer API
   const fundTransferAPI = async () => {
-    setLoading(true);
-
     const data = formDataFormat({
       data: formData,
       isOTPRequired: isOTPRequired,
@@ -229,7 +205,6 @@ export const BankTransfer = () => {
           status: "success",
           message: bankTransfer.data.details,
         });
-        // console.log("tansfer response : ", bankTransfer.data);
       }
     } catch (error) {
       if (error.response) {
@@ -242,21 +217,6 @@ export const BankTransfer = () => {
     }
     // calling Fund Transfer Response Modal
     setSuccessModalShow(true);
-    setLoading(false);
-  };
-
-  const resetClicked = () => {
-    reset({
-      fromAccount: "",
-      DESTBankName: "",
-      DESTBankID: "",
-      toAccount: "",
-      destAccountHolderName: "",
-      DESTBranchName: "",
-      DESTBranchID: "",
-      transctionAmount: "",
-      remarks: "",
-    });
   };
 
   return (
@@ -271,21 +231,24 @@ export const BankTransfer = () => {
               watch={watch}
               getValues={getValues}
               setValue={setValue}
+              reset={reset}
               destBankId={(id) => setDESTBankID(id)}
               destBranchId={(id) => setDESTBranchID(id)}
             />
-            <Button variant="success" type="submit">
-              Submit
-            </Button>
-
-            <Button className="ml-5" variant="danger" onClick={resetClicked}>
-              Reset
-            </Button>
           </Form>
         </Card.Body>
       </Card>
 
       {/* Form modals controlling is going from here going here  */}
+      <ConfirmDetailModal
+        confirmModalShow={confirmModalShow}
+        confirmModalSubmitHandle={() => confirmModelSubmitHandle}
+        handleCancle={(e) => setConfirmModalShow(e)}
+        data={formData}
+        transctionCharge={transctionCharge}
+        accValidationStatus={accValidationStatus}
+      />
+
       <MpinModal
         userMpin={(mPin: string) => setMpin(mPin)}
         mPinModalShow={mPinModalShow}
@@ -293,24 +256,13 @@ export const BankTransfer = () => {
         cancleButton={(event: boolean) => setMpinModalShow(event)}
       />
 
-      <ConfirmDetailModal
-        data={formData}
-        transctionCharge={transctionCharge}
-        confirmModalShow={confirmModalShow}
-        confirmModalShowHandle={(e) => {
-          setConfirmModalShow(e);
-          confirmModelSubmitHandle();
-        }}
-        confirmModalCancleButton={(e) => setConfirmModalShow(e)}
-      />
-
       <OTPModal
-        userOTP={(otp) => setOTP(otp)}
-        OTPModalShow={OTPModalShow}
-        OTPResponse={OTPResponse}
-        OTPFormHandle={(e) => OTPFormHandle(e)}
+        setOTP={(otp) => setOTP(otp)}
+        otpModalShow={OTPModalShow}
+        isErrorInOTPResponse={isError_inOTPResponse}
+        otpModalSubmitHandle={() => OTPFormHandle()}
         resendOTPHandle={() => resendOTPHandle()}
-        cancleButton={(event: boolean) => setOTPModalShow(event)}
+        handleCancle={(event: boolean) => setOTPModalShow(event)}
       />
 
       <SuccessModal

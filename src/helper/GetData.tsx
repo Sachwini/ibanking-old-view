@@ -1,6 +1,7 @@
 import { apiResponse } from "models/apiResponse";
 import { userDetailType } from "models/for-pages/userAccount_PageModels";
 import {
+  accValidationType,
   bankBranchType,
   BankList,
   bankTransferFormDataType,
@@ -99,11 +100,11 @@ export const getTransctionCharge = async (
 
 // Validate Account Credentials Of Account holder For BankTransfer
 export const isAccountValid = async (data: bankTransferFormDataType) => {
-  const isValid = await get<apiResponse<any>>(
+  const isValid = await get<apiResponse<accValidationType>>(
     `api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destAccountHolderName}&destinationBranchId=${data.DESTBranchID}&destinationBankId=${data.DESTBankID}`
   );
 
-  return isValid && isValid.data.details;
+  return isValid && (isValid.data.detail as accValidationType);
 };
 
 // managing form data format

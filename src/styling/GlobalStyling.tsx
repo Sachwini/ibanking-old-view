@@ -6,7 +6,6 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
       padding:0;
       margin:0;
       box-sizing:border-box;
-      /* z-index:0 ; */
   }
 
   html, body{
@@ -39,5 +38,16 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   &::-webkit-scrollbar-thumb:hover {    
     background: ${(props) => props.theme.secondary};
     transition: all 0.8s;
+  }
+
+  .form-control{
+    &::placeholder{
+      font-size: 14px;
+      text-transform: capitalize;
+    }
+  &:focus {
+      border-color: ${(props) => props.theme.secondary};
+      box-shadow: 0 0 0.3rem  ${(props) => props.theme.secondary};
+    }
   }
 `;

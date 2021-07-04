@@ -12,6 +12,8 @@ import {
   MiniStatementWrapper,
 } from "styling/for-dashboard/MimiStatementStyling";
 import { PageTitle } from "components/PageTitle";
+import { useSetRecoilState } from "recoil";
+import { isLoading } from "state-provider/forPageSetting";
 
 let oneYearBack = yearBack(new Date());
 
@@ -19,7 +21,7 @@ const Activities = () => {
   const startDate = new Date(`${oneYearBack}`);
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const setLoading = useSetRecoilState(isLoading);
 
   const accountNumber = GetAccountNumber();
   const formatedStartDate = formatDate(startDate);
@@ -51,10 +53,6 @@ const Activities = () => {
     };
   }, [accountNumber]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <>
       <StaticBar
@@ -67,6 +65,7 @@ const Activities = () => {
           subTitle="To See More Transctions Activities Please Go to Statement Page..."
           align="center"
         />
+
         {statementData?.map((data, index) => {
           const amount = data.debit !== null ? data.debit : data.credit;
           const detectColor = data.debit !== null ? "red" : "green";

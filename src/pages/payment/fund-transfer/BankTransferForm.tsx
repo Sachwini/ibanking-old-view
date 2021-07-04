@@ -9,13 +9,15 @@ import { favAccListType } from "models/for-pages/favAcccount_PageModels";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { Controller, UseFormSetValue } from "react-hook-form";
-import { UseFormGetValues } from "react-hook-form";
 import {
   Control,
   FieldErrors,
   UseFormRegister,
   UseFormWatch,
+  UseFormReset,
+  UseFormGetValues,
+  Controller,
+  UseFormSetValue,
 } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { getBankAccNo } from "state-provider/globalUserData";
@@ -32,6 +34,7 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
+  reset: UseFormReset<any>;
   destBankId: (id: string | "") => void;
   destBranchId: (id: string | "null") => void;
 }
@@ -44,6 +47,7 @@ const BankTransferForm = (props: Props) => {
     watch,
     getValues,
     setValue,
+    reset,
     control,
     destBankId,
     destBranchId,
@@ -113,6 +117,20 @@ const BankTransferForm = (props: Props) => {
   const handleFavAccDetails = (data: favAccListType) => {
     setValue("toAccount", data.destinationAccountNumber);
     setValue("destAccountHolderName", data.destinationAccountHolderName);
+  };
+
+  const resetClicked = () => {
+    reset({
+      fromAccount: "",
+      DESTBankName: "",
+      DESTBankID: "",
+      toAccount: "",
+      destAccountHolderName: "",
+      DESTBranchName: "",
+      DESTBranchID: "",
+      transctionAmount: "",
+      remarks: "",
+    });
   };
 
   return (
@@ -259,6 +277,14 @@ const BankTransferForm = (props: Props) => {
           {errors.remarks?.message}
         </Form.Control.Feedback>
       </Form.Group>
+
+      <Button variant="success" type="submit">
+        Submit
+      </Button>
+
+      <Button className="ml-5" variant="danger" onClick={resetClicked}>
+        Reset
+      </Button>
     </>
   );
 };

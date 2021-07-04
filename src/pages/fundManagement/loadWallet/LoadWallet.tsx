@@ -6,13 +6,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiResponse } from "models/apiResponse";
 import { Col } from "react-bootstrap";
-// import { PageTitle } from "components/page-title";
 import { useStateValue } from "state-provider/StateProvider";
 import DetailModal from "components/modals/load-wallet/DetailModal";
 import SuccessModal from "components/modals/load-wallet/SuccessModal";
 import { forLoadWallet } from "static-data/forBreadCrumb";
 import { loadWalletPageTitle } from "static-data/forPageTitle";
 import StaticBar from "components/StaticBar";
+import { useSetRecoilState } from "recoil";
+import { isLoading } from "state-provider/forPageSetting";
 
 function LoadWallet() {
   const accountNumber = GetAccountNumber();
@@ -38,6 +39,8 @@ function LoadWallet() {
     details: "",
   });
 
+  const setLoading = useSetRecoilState(isLoading);
+
   const handleReset = (e: any) => {
     setContact("");
     setAmount("");
@@ -50,6 +53,7 @@ function LoadWallet() {
   };
 
   const walletValidate = async () => {
+    setLoading(true);
     try {
       const res = await get<any>(
         `api/walletvalidate?walletUsername=${contact}&walletId=${walletDetails?.id}&amount=${amount}`
@@ -71,10 +75,13 @@ function LoadWallet() {
     } catch (error) {
       toast.error("error");
     }
+    setLoading(false);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
+
     if (!fromAccount || !contact || !amount || !remarks) {
       toast.error("Incomplete Field");
       return;
@@ -105,6 +112,7 @@ function LoadWallet() {
         toast.error(error.response.data.message);
       }
     }
+    setLoading(false);
   };
 
   return (

@@ -242,14 +242,14 @@ export const FundTransfer = () => {
         amount={getValues("amount")}
         validAccount={validAccount}
         accountValidationResponseMessage={accountValidationResponseMessage}
-        confirmModalCancleButton={(event: boolean) => setDetailModalShow(false)}
+        confirmModalCancleButton={(event: boolean) => setDetailModalShow(event)}
       />
       <MpinModal
         modalShow={mpinModalShow}
         handleModalShow={(event: boolean) => setMpinModalShow(event)}
         mpin={(mpin: string) => setMpin(mpin)}
         modalFormSubmitHandle={handleOtpRequired}
-        cancleButton={(event: boolean) => setMpinModalShow(false)}
+        cancleButton={(event: boolean) => setMpinModalShow(event)}
       />
       <OtpModal
         modalShow={otpRequired}
@@ -257,7 +257,7 @@ export const FundTransfer = () => {
         userOTP={(otp: string) => setOtp(otp)}
         modalFormSubmitHandle={changeOtpStatus}
         resendOtp={() => requestOtp()}
-        cancleButton={(event: boolean) => setOtpRequired(false)}
+        cancleButton={(event: boolean) => setOtpRequired(event)}
       />
       <SuccessModal
         successModalShow={isSuccessMessage}

@@ -23,7 +23,7 @@ import { IconStyle } from "styling/common/IconStyling";
 import LogoutModal from "components/modals/logout/LogoutModal";
 import styled from "styled-components";
 import { messaging } from "../../init-fcm";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";
 import { useSetRecoilState } from "recoil";
 
@@ -70,7 +70,6 @@ const Header = () => {
     navigator.serviceWorker.addEventListener("message", (message) =>
       console.log(message)
     );
-    console.log("UseEffect called");
   });
 
   const UserProfile = (
@@ -116,7 +115,7 @@ const Header = () => {
                 <HeaderCol sm={8} md={10} className="pl-0">
                   <HeaderLink to="/">
                     <Image
-                      src="../../baner.png"
+                      src="/images/baner.png"
                       alt="Company Name"
                       height="45px"
                       style={{ maxWidth: "100%", objectFit: "contain" }}

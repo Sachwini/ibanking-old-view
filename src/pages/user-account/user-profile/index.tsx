@@ -55,7 +55,7 @@ const Profile = () => {
                 src={
                   customerDetails?.imageUrl
                     ? `${baseUrl}`.concat(customerDetails?.imageUrl)
-                    : "./userProfileImg.png"
+                    : "/images/icons/userProfileImg.png"
                 }
                 alt="profile pic"
                 roundedCircle

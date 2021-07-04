@@ -1,232 +1,154 @@
-import { useEffect, useState } from "react";
-import { GetAccountNumberValueMainCodeKey } from "helper/CustomerData";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { GetAccountNumber } from "helper/CustomerData";
-import { Typeahead } from "react-bootstrap-typeahead";
+import { useState } from "react";
+import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getBrokerList } from "services/BrokerServices";
-import { get, post } from "services/AjaxService";
-import { brokerPayment } from "../fund-transfer/model";
-import MpinModal from "components/modals/fundTransfer/MpinModal";
+import MpinModal from "components/modals/MpinModal";
 import BrokerDetailModal from "components/modals/broker-payment/BrokerDetailModal";
-import { Loader } from "pages/static/Loader";
 import SuccessModal from "components/modals/broker-payment/SuccessModal";
-import { apiResponse } from "models/apiResponse";
-import OtpModal from "components/modals/broker-payment/OtpModal";
 import StaticBar from "components/StaticBar";
 import { brokerPaymentPageTitle } from "static-data/forPageTitle";
 import { forBrokerPayment } from "static-data/forBreadCrumb";
-interface selectItem {
-  label: string;
-  value: string;
-}
-
-export interface serviceChargeItem {
-  amount: any;
-  code: any;
-  details: any;
-}
+import { useSetRecoilState } from "recoil";
+import { isLoading } from "state-provider/forPageSetting";
+import { brokerPaymentFormDataType } from "models/for-pages/brokerPayment_PageModels";
+import BrokerPaymentForm from "./BrokerPaymentForm";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { brokerPaymentScheme } from "validation-schema/brokerPayment_validation";
+import { getServiceCharge, payAmount } from "helper/fun_BrokerPayment";
+import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
+import OTPModal from "components/modals/OTPModal";
 
 const BrokerPayment = () => {
-  const accountNumber = GetAccountNumber();
-  const getAccountNumberValueMainCodeKey = GetAccountNumberValueMainCodeKey();
-  const [fromAccount, setFromAccount] = useState<string>(accountNumber);
-  const [amount, setAmount] = useState<string>("");
-  const [clientName, setClientName] = useState<string>("");
-  const [clientId, setClientId] = useState<string>("");
-  const [mobileNumber, setMobileNumber] = useState<string>("");
-  const [remark, setRemark] = useState<string>("");
-  const [broker, setBroker] = useState<selectItem[]>([]);
-  const [brokerCode, setBrokerCode] = useState<string>("");
-  const [brokerName, setBrokerName] = useState<string>("");
-  const [charge, setCharge] = useState<any>(0);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    watch,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<brokerPaymentFormDataType>({
+    resolver: yupResolver(brokerPaymentScheme),
+    mode: "all",
+  });
+
+  const setLoading = useSetRecoilState(isLoading);
+  const [charge, setCharge] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
+  const [isOTPRequired, setIsOTPRequired] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>("");
+  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
+    isError: false as boolean,
+    message: "" as string,
+  });
+
+  // for modals handle
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
-  const [otpRequired, setOtpRequired] = useState<boolean>(false);
-  const [fullDetails, setFullDetails] = useState<boolean>(false);
-  const [otp, setOtp] = useState<string>("");
-  const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
+
+  // for handle response error message
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState({
     status: "",
     message: "",
     details: "",
   });
-  const [loading, setLoading] = useState<boolean>(true);
+  const [formData, setFormData] = useState<brokerPaymentFormDataType>({
+    fromAccount: "",
+    DESTBrokerName: "",
+    clientID: "",
+    clientName: "",
+    mobileNumber: "",
+    transctionAmount: "",
+    remarks: "",
+    brokerCode: "",
+  });
 
-  const getServiceCharges = async () => {
-    if (amount !== "" && brokerCode !== "") {
-      const res = await get<serviceChargeItem>(
-        "/api/broker/charge?amount=" + amount + "&code=" + brokerCode
-      );
-      console.log("Amount", amount, "BrokerCode", brokerCode);
-      return res && setCharge(res.data.details);
-    }
-    return;
-  };
+  const onSubmit = async (data: brokerPaymentFormDataType) => {
+    setFormData(data);
 
-  //for request Otp
-  const requestOtp = async () => {
-    const req = await get<apiResponse<any>>(
-      "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
-        amount
+    // getting service charge
+    const serviceCharge = await getServiceCharge(
+      data.transctionAmount,
+      data.brokerCode
     );
-  };
+    if (serviceCharge) {
+      setCharge(serviceCharge);
+    } else toast.error("here is error occured");
 
-  useEffect(() => {
-    let isSubscribed = true;
-
-    const init = async () => {
-      const broker = await getBrokerList();
-      if (isSubscribed) {
-        const brokerData: selectItem[] = [];
-        if (broker) {
-          broker.forEach((x: any) =>
-            brokerData.push({ label: x.name, value: x.code.toString() })
-          );
-          setBroker(brokerData);
-          setLoading(false);
-        }
-      }
-    };
-    init();
-    console.log("useEffect called");
-    return () => {
-      isSubscribed = false;
-    };
-  }, []);
-
-  const handleBrokerCode = (e: any) => {
-    try {
-      if (e[0].value !== undefined) {
-        setBrokerCode(e[0].value);
-        setBrokerName(e[0].label);
-      } else {
-        setBrokerCode("");
-        setBroker([]);
-      }
-    } catch {}
-  };
-
-  const handleReset = (e: any) => {
-    e.preventDefault();
-    setAmount("");
-    setClientName("");
-    setClientId("");
-    setBrokerCode("");
-    setCharge(0);
-    setMobileNumber("");
-    setRemark("");
-    setMpin("");
-  };
-
-  const openDetailModel = (e: any) => {
-    e.preventDefault();
     setDetailModalShow(true);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    if (
-      !fromAccount ||
-      !amount ||
-      !clientName ||
-      !clientId ||
-      !mobileNumber ||
-      !brokerCode
-    ) {
-      toast.error("Incomplete field");
+  const detailModalSubmitHandle = () => {
+    setDetailModalShow(false);
+    setMpinModalShow(true);
+  };
+
+  const mpinModalSubmitHandle = async () => {
+    // checking is otp is required or not
+    setMpinModalShow(false);
+    const isotprequired = await isOtpRequired(formData.transctionAmount);
+    if (isotprequired) {
+      setIsOTPRequired(isotprequired);
+    } else setIsSuccess(true);
+  };
+
+  const reSendOTP = async () => {
+    const isotprequired = await isOtpRequired(formData.transctionAmount);
+    if (isotprequired) {
       return;
-    }
-
-    const model: brokerPayment = {
-      accountNumber: fromAccount,
-      amount: amount,
-      charge: charge,
-      brokerCode: brokerCode,
-      clientName: clientName,
-      clientId: clientId,
-      mobileNumber: mobileNumber,
-      remarks: remark,
-    };
-
-    let url = "";
-    if (parseFloat(amount) > 5000) {
-      url = "/api/broker/payment?mPin=" + mpin + "&otp=" + otp;
     } else {
-      url = "/api/broker/payment?mPin=" + mpin;
+      setIsOTPRequired(false);
+      setIsSuccess(true);
     }
+  };
+
+  const otpModalSubmitHandle = async () => {
+    const isEnabled = await enableOTPTransction(otp);
+    if (isEnabled && isEnabled.status.toString() === "SUCCCESS") {
+      // Calling Broker payment API
+      doPayment();
+    } else {
+      setIsError_inOTPResponse({
+        isError: true,
+        message: isEnabled.message,
+      });
+    }
+  };
+
+  // const handleSucessModal = () => {
+  //   // handeling broker payment
+  // };
+
+  const doPayment = async () => {
     try {
-      const res = await post<any>(url, model);
-      if (res) {
-        setIsSuccessMessage(true);
+      const res = await payAmount(formData, isOTPRequired, mpin, otp, charge);
+      if (res && res.status === "Success" && res.details.status == "Complete") {
         setResponseMessage({
           status: "success",
-          message: res.data.message,
-          details: res.data.details,
+          message: res.message,
+          details: `${res.details.status} ${res.details.transactionIdentifier}`,
         });
-        toast.success(res.data.details);
-        console.log(res.data);
+        toast.success(
+          `${res.details.status} ${res.details.transactionIdentifier}`
+        );
+        setIsSuccess(true);
       }
     } catch (error) {
       if (error.response) {
-        setIsSuccessMessage(true);
         setResponseMessage({
           status: "failure",
           message: error.response.data.message,
           details: error.response.data.details,
         });
         toast.error(error.response.data.message);
+        // setIsSuccess(true);
+        return;
       }
     }
   };
 
-  const handleOtpRequired = (e: any) => {
-    if (parseFloat(amount) <= 5000) {
-      {
-        setOtpRequired(false);
-        handleSubmit(e);
-      }
-    } else if (parseFloat(amount) > 5000) {
-      setOtpRequired(true);
-      requestOtp();
-    }
-  };
-
-  const changeOtpStatus = async (e: any) => {
-    e.preventDefault();
-    try {
-      const res = await post<any>(
-        "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
-        {}
-      );
-      if (res) {
-        handleSubmit(e);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  };
-
-  const hasInfo = () => {
-    if (
-      !fromAccount ||
-      !amount ||
-      !clientName ||
-      !clientId ||
-      !mobileNumber ||
-      !brokerCode
-    ) {
-      setFullDetails(false);
-    } else {
-      setFullDetails(true);
-    }
-  };
-
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <Container>
       <StaticBar
@@ -237,144 +159,16 @@ const BrokerPayment = () => {
         <Col sm={12} md={6}>
           <Card className="card_Shadow" style={{ marginTop: "2rem" }}>
             <Card.Body>
-              <Form
-                onSubmit={(e) => {
-                  openDetailModel(e);
-                  hasInfo();
-                  getServiceCharges();
-                }}
-              >
-                <Form.Group controlId="exampleForm.ControlSelect1">
-                  <Form.Label className="font-weight-bold">
-                    From Account
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="fromAccount"
-                    value={fromAccount}
-                    onChange={(e) => setFromAccount(e.target.value)}
-                  >
-                    {!getAccountNumberValueMainCodeKey ? (
-                      <option></option>
-                    ) : (
-                      getAccountNumberValueMainCodeKey?.map((accNum: any) => (
-                        <option value={accNum.AccountNumber} key={accNum}>
-                          {accNum.mainCode}
-                        </option>
-                      ))
-                    )}
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Select Broker
-                  </Form.Label>
-                  <Typeahead
-                    options={broker}
-                    id="my-typeahead-id"
-                    placeholder="Choose your broker..."
-                    onChange={handleBrokerCode}
-                  />
-                  <Form.Text className="text-warning">
-                    {brokerCode
-                      ? `Broker Id: ${brokerCode}`
-                      : "selected none (please select one... )"}
-                  </Form.Text>
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Client Id
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your clientId"
-                    name="clientId"
-                    value={clientId}
-                    required
-                    autoComplete="off"
-                    onChange={(e) => setClientId(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Client Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your clientName"
-                    name="clientName"
-                    value={clientName}
-                    required
-                    autoComplete="off"
-                    onChange={(e) => setClientName(e.target.value)}
-                  />
-                </Form.Group>
-                <div className="form-row">
-                  <div className="col">
-                    <Form.Group controlId="formGridAddress1">
-                      <Form.Label className="font-weight-bold">
-                        Mobile Number
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter your mobileNumber"
-                        name="mobileNumber"
-                        value={mobileNumber}
-                        required
-                        autoComplete="off"
-                        onChange={(e) => setMobileNumber(e.target.value)}
-                      />
-                    </Form.Group>
-                  </div>
-                  <div className="col">
-                    <Form.Group controlId="formGridAddress1">
-                      <Form.Label className="font-weight-bold">
-                        Amount
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Enter your Amount"
-                        name="amount"
-                        value={amount}
-                        required
-                        min={0}
-                        autoComplete="off"
-                        onChange={(e) => setAmount(e.target.value)}
-                      />
-                    </Form.Group>
-                  </div>
-                </div>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">Remark</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your remark"
-                    name="remark"
-                    value={remark}
-                    required
-                    autoComplete="off"
-                    onChange={(e) => setRemark(e.target.value)}
-                  />
-                </Form.Group>
-                <Button
-                  className="btn btn-warning"
-                  variant="primary"
-                  type="submit"
-                >
-                  Transfer
-                </Button>
-                <Button
-                  className="btn btn-secondary"
-                  style={{ marginLeft: "20px" }}
-                  variant="secondary"
-                  type="submit"
-                  onClick={handleReset}
-                >
-                  Reset
-                </Button>
-                <ToastContainer autoClose={5000} position="top-center" />
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <BrokerPaymentForm
+                  register={register}
+                  control={control}
+                  errors={errors}
+                  watch={watch}
+                  getValues={getValues}
+                  setValue={setValue}
+                  reset={reset}
+                />
               </Form>
             </Card.Body>
           </Card>
@@ -383,34 +177,28 @@ const BrokerPayment = () => {
 
       <BrokerDetailModal
         modalShow={detailModalShow}
-        handleModalShow={(event: boolean) => setDetailModalShow(event)}
-        modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
-        fromAccount={fromAccount}
-        toAccount={broker ? brokerName : ""}
-        amount={amount}
-        charge={charge}
-        clientName={clientName}
-        clientId={clientId}
-        mobileNumber={mobileNumber}
-        validDetails={fullDetails}
-        confirmModalCancleButton={(event: boolean) => setDetailModalShow(false)}
+        data={formData}
+        transctionCharge={charge}
+        handleCancle={(event: boolean) => setDetailModalShow(event)}
+        detailModalSubmitHandle={detailModalSubmitHandle}
       />
       <MpinModal
-        modalShow={mpinModalShow}
-        handleModalShow={(event: boolean) => setMpinModalShow(event)}
-        mpin={(mpin: string) => setMpin(mpin)}
-        modalFormSubmitHandle={handleOtpRequired}
-        cancleButton={(event: boolean) => setMpinModalShow(false)}
+        mpinModalShow={mpinModalShow}
+        setMpin={(mpin: string) => setMpin(mpin)}
+        mpinModalSubmitHandle={mpinModalSubmitHandle}
+        handleCancle={(event: boolean) => setMpinModalShow(event)}
       />
-      <OtpModal
-        modalShow={otpRequired}
-        handleModalShow={(event: boolean) => setOtpRequired(event)}
-        userOTP={(otp: string) => setOtp(otp)}
-        modalFormSubmitHandle={changeOtpStatus}
-        resendOtp={() => requestOtp}
+      <OTPModal
+        otpModalShow={isOTPRequired}
+        setOTP={(otp: string) => setOtp(otp)}
+        otpModalSubmitHandle={otpModalSubmitHandle}
+        resendOTPHandle={reSendOTP}
+        isErrorInOTPResponse={isError_inOTPResponse}
+        handleCancle={(e) => setIsOTPRequired(e)}
       />
-      <SuccessModal
-        successModalShow={isSuccessMessage}
+
+      {/* <SuccessModal
+        successModalShow={isSuccess}
         handleModalShow={(e) => setIsSuccessMessage(e)}
         responseMessage={responseMessage}
         fromAccount={fromAccount}
@@ -421,8 +209,10 @@ const BrokerPayment = () => {
         clientName={clientName}
         mobileNumber={mobileNumber}
         mpin={mpin}
-      />
+      /> */}
+      <ToastContainer autoClose={5000} position="top-right" />
     </Container>
   );
 };
+
 export default BrokerPayment;

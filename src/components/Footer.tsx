@@ -7,11 +7,11 @@ const Footer = () => {
   return (
     <FooterContainer fluid>
       <LogoWrapper>
-        <Image src="../ibankLogo.png" alt="iBank" className="logo_image" />
+        <Image src="/images/ibankLogo.png" alt="iBank" className="logo_image" />
       </LogoWrapper>
 
       <LogoWrapper>
-        <Image src="../logo.png" alt="logo" className="logo_image" />
+        <Image src="/images/logo.png" alt="logo" className="logo_image" />
         <p className="power_by">
           &copy; All Rights Reserved @{date}
           <span className="px-1">
@@ -24,7 +24,7 @@ const Footer = () => {
       <LogoWrapper>
         <p className="power_by">Powered By:</p>
         <Image
-          src="../mBankLogo.png"
+          src="/images/mBankLogo.png"
           alt="mBank Technology"
           className="logo_image"
         />
