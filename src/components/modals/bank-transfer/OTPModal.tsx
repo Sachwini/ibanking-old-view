@@ -36,6 +36,7 @@ const OTPModal = (props: Props) => {
     }
     return () => {
       isSubscribed = false;
+      clearTimeout();
     };
   }, [buttonDisabled]);
 

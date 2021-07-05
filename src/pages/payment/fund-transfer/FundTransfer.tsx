@@ -84,13 +84,15 @@ export const FundTransfer = () => {
     }
   };
 
-  //check if otp is required or not
+  //check if otp is required or not-> throws otp to device if required
   const requestOtp = async () => {
     const req = await get<apiResponse<any>>(
       "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
         getValues("amount")
     );
   };
+
+  //open Detail
   const openDetailModel = () => {
     setDetailModalShow(true);
   };
@@ -175,7 +177,7 @@ export const FundTransfer = () => {
     }
   };
 
-  //to request otp ,or request otp again
+  //checks the otp is valid or not from connectIps
   const changeOtpStatus = async (e: any) => {
     e.preventDefault();
     try {
@@ -187,7 +189,7 @@ export const FundTransfer = () => {
         handleSubmit1(e);
       }
     } catch (error) {
-      toast.error("catch inside changeOTP", error.response.data.message);
+      toast.error("Error in OTP", error.response.data.message);
     }
   };
 
@@ -239,10 +241,10 @@ export const FundTransfer = () => {
       />
       <OtpModal
         modalShow={otpRequired}
+        resendOtp={() => requestOtp()}
         handleModalShow={(event: boolean) => setOtpRequired(event)}
         userOTP={(otp: string) => setOtp(otp)}
         modalFormSubmitHandle={changeOtpStatus}
-        resendOtp={() => requestOtp()}
         cancleButton={(event: boolean) => setOtpRequired(false)}
       />
       <SuccessModal
