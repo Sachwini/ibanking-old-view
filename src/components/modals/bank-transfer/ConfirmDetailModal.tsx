@@ -23,8 +23,6 @@ export interface Props {
 }
 
 const ConfirmDetailModal = (props: Props) => {
-  console.log(props.confirmModalShow);
-
   return (
     <CustomModal
       show={props.confirmModalShow}
@@ -118,13 +116,18 @@ const ConfirmDetailModal = (props: Props) => {
           {props.accValidationStatus.status ? (
             <span>
               <strong className="pr-2 text-bold">CONGRATULATIONS!!!</strong>
-              provided details match with your credentials. Validation Message:
+              <span className="pr-2">
+                All credentials is Valid with Message:
+              </span>
               {props.accValidationStatus.message}
+              <span className="pl-2">Now you can Processed</span>
             </span>
           ) : (
             <span>
               <strong className="pr-2 text-bold">SORRY!!!</strong> Provided
-              Details Does Not Match with Credentials. Validation Message:{" "}
+              <span className="pr-2">
+                Details Does Not Match with Credentials. Validation Message:
+              </span>
               {props.accValidationStatus.message}
             </span>
           )}
@@ -140,6 +143,7 @@ const ConfirmDetailModal = (props: Props) => {
           </Button>
           <Button
             variant="outline-success"
+            disabled={!props.accValidationStatus.status}
             onClick={props.confirmModalSubmitHandle}
           >
             Confirm

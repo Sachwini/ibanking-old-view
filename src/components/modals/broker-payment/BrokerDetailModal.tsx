@@ -21,8 +21,6 @@ function BrokerDetailModal(props: Props) {
     handleCancle,
   } = props;
 
-  console.log("is modal on : ", modalShow);
-
   return (
     <Modal
       show={modalShow}

@@ -13,14 +13,15 @@ import { otpScheme } from "validation-schema/modal_validation";
 interface formProps {
   otp: string;
 }
+interface errorType {
+  isError: boolean;
+  message: string;
+}
 
 export interface Props {
   setOTP: (otp: string) => void;
   otpModalShow: boolean;
-  isErrorInOTPResponse: {
-    isError: boolean;
-    message: string;
-  };
+  isErrorInOTPResponse: errorType;
   otpModalSubmitHandle: () => void;
   resendOTPHandle: () => void;
   handleCancle: (show: boolean) => void;
@@ -38,23 +39,44 @@ const OTPModal = (props: Props) => {
   const {
     register,
     handleSubmit,
+    getValues,
+    watch,
     formState: { errors },
   } = useForm<formProps>({
     resolver: yupResolver(otpScheme),
     mode: "all",
   });
   const [OTPInputShow, setOTPInputShow] = useState<boolean>(true);
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const [isOTPResendClicked, setIsOTPResendClicked] = useState<boolean>(false);
+  const [seconds, setSeconds] = useState<number>(60);
 
   useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed) {
-      setTimeout(() => setButtonDisabled(false), 60000);
-    }
+    let suscribed = true;
+    let myInterval = setInterval(() => {
+      if (suscribed && seconds > 0) {
+        setSeconds(seconds - 1);
+      } else if (suscribed && isOTPResendClicked && seconds <= 1) {
+        setIsOTPResendClicked(false);
+        setSeconds(60);
+      }
+    }, 1000);
+
     return () => {
-      isSubscribed = false;
+      suscribed = false;
+      clearInterval(myInterval);
     };
-  }, [buttonDisabled]);
+  }, [seconds, isOTPResendClicked]);
+
+  useEffect(() => {
+    const changeOtp = getValues("otp");
+
+    setOTP(changeOtp);
+  }, [watch("otp")]);
+
+  const handleResendOTPButtonClick = () => {
+    setIsOTPResendClicked(true);
+    resendOTPHandle();
+  };
 
   const onSubmit = (data: formProps) => {
     setOTP(data.otp);
@@ -76,24 +98,22 @@ const OTPModal = (props: Props) => {
       </Modal.Header>
 
       <Modal.Body className="modal_body">
-        <div className="timer">
-          <p>
+        <div className="timer_wrapper">
+          <p className="timer_info">
             OTP Resend Option is Enabled In
-            <span className="font-weight-bold px-2">12</span> seconds
+            <strong className="second_counter">
+              {`0 : ${seconds} seconds`}
+            </strong>
           </p>
-          <Button
-            variant="outline-primary"
-            size="sm"
-            disabled={buttonDisabled}
-            onClick={() => {
-              {
-                resendOTPHandle();
-                setButtonDisabled(true);
-              }
-            }}
-          >
-            Resend
-          </Button>
+          <div className={`${seconds >= 1 ? "d-none" : "d-block"}`}>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={handleResendOTPButtonClick}
+            >
+              Resend
+            </Button>
+          </div>
         </div>
 
         <ImageIconWrapper>
@@ -139,7 +159,12 @@ const OTPModal = (props: Props) => {
               Cancel
             </Button>
 
-            <Button variant="outline-success" type="submit" className="ml-4">
+            <Button
+              variant="outline-success"
+              type="submit"
+              className="ml-4"
+              disabled={errors.otp ? true : false}
+            >
               Submit
             </Button>
           </div>

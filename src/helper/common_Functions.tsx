@@ -18,12 +18,27 @@ export const isOtpRequired = async (amount: string, skip?: boolean) => {
 };
 
 export const enableOTPTransction = async (otp: string) => {
-  const res = await post<apiResponse<any>>(
-    `api/changeBankTransferOtpStatus?status=true&otp=${otp}`,
-    {}
-  );
-  return {
-    status: res.data.status as string,
-    message: res.data.message as string,
-  };
+  try {
+    const res = await post<apiResponse<any>>(
+      `api/changeBankTransferOtpStatus?status=true&otp=${otp}`,
+      {}
+    );
+    if (res && res.data.status === "SUCCCESS") {
+      return {
+        status: true as boolean,
+        message: res.data.message as string,
+      };
+    } else
+      return {
+        status: false as boolean,
+        message: res.data.message as string,
+      };
+  } catch (error) {
+    if (error.response) {
+      return {
+        status: false as boolean,
+        message: error.response.data.message as string,
+      };
+    }
+  }
 };

@@ -23,7 +23,7 @@ export interface bankTransferFormDataType {
   DESTBankID: string | "null";
   toAccount: string;
   destAccountHolderName: string;
-  DESTBranchName: string;
+  DESTBranchName: string | "null";
   DESTBranchID: string | "null";
   transctionAmount: string;
   remarks: string;

@@ -74,7 +74,6 @@ export async function get<TResponse>(url: string) {
 export async function post<TResponse>(
   url: string,
   body: {},
-  onError?: false | (() => void)
 ) {
   const res = await instance.post<TResponse>(url, body);
   return res && res;

@@ -20,20 +20,10 @@ export const CustomModal = styled(Modal)<modalProps>`
       color: #056d34e8;
       font-weight: bold;
     }
-
-    button {
-      font-size: 30px;
-      &:hover {
-        color: red;
-        font-weight: bold;
-        transition: color 0.4s;
-      }
-    }
   }
 
   .modal_body {
     padding: 1rem 2rem 1rem;
-    /* width: ${(props) => (props.width ? props.width : "")}; */
   }
 
   .modal_footer {
@@ -49,19 +39,100 @@ export const MyModal = styled(CustomModal)`
 `;
 
 export const MyOTPModal = styled(MyModal)`
-  .timer {
+  .timer_wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #fafafa;
     padding: 0.5rem 1rem;
+  }
+  .timer_info {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.8;
+    text-transform: capitalize;
+  }
 
-    p {
+  .second_counter {
+    text-transform: capitalize;
+    font-weight: bold;
+    padding: 0 0.5rem;
+  }
+`;
+
+export const MySuccessModal = styled(CustomModal)`
+  .modal_header {
+    padding: 0;
+    padding-bottom: 0.25rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+  }
+  .message_wrapper {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 40px;
+    margin: 0;
+    color: white;
+    font-weight: bolder;
+    text-transform: uppercase;
+  }
+
+  .modal_footer {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .download_wrapper {
+    padding: 0.4rem 1rem;
+    padding-left: 0.6rem;
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.4s;
+
+    .icon_wrapper {
+      color: #be5e5e;
       margin: 0;
-      font-size: 13px;
-      opacity: 0.8;
-      text-transform: capitalize;
     }
+    .download_text {
+      margin: 0;
+      font-weight: bold;
+      text-transform: capitalize;
+      padding-left: 0.7rem;
+    }
+
+    &:hover {
+      background: #e7e7e7;
+
+      .icon_wrapper {
+        color: #cc1212;
+      }
+
+      .download_text {
+        font-weight: bolder;
+      }
+    }
+  }
+`;
+
+// success Modal header styling going here
+interface successHeaderProps {
+  color: string;
+}
+export const MySuccessModalHeader = styled.div<successHeaderProps>`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.color};
+  padding: 2rem;
+
+  .icon_wrapper {
+    color: white;
+    font-weight: bolder;
+    margin-right: 2rem;
   }
 `;
 
@@ -127,6 +198,7 @@ export const AccountView = styled.div`
     .acc_no {
       margin: 0;
       font-weight: bold;
+      text-transform: capitalize;
     }
     .name {
       opacity: 0.6;
@@ -144,34 +216,58 @@ export const DetaildView = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  .detail_wrapper {
-    display: block;
-    padding: 0.5rem 2rem;
+  .detail_heading {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0d022b;
+    text-transform: capitalize;
+    border-bottom: 2px solid #b9b9b9;
+    margin: 0;
+    margin-top: 4rem;
+    padding-left: 0.5rem;
 
     &:first-child {
-      padding-left: 0;
+      margin-top: 2rem;
     }
-    &:last-child {
-      padding-right: 0;
-    }
+  }
+
+  .detail_wrapper {
+    display: block;
+    padding: 0.7rem 1rem;
 
     .detail_title,
     .detail_text {
       margin: 0;
+      text-transform: capitalize;
     }
 
     .detail_title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: bold;
       margin-bottom: 0.1rem;
       opacity: 0.8;
     }
 
     .detail_text {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: bold;
       opacity: 0.7;
+      padding-left: 2px;
+      color: #222379;
     }
+  }
+`;
+
+export const SuccessDetailView = styled(DetaildView)`
+  display: block;
+  text-align: start;
+  margin: 0.5rem 0;
+
+  .detail_viewWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
   }
 `;
 
@@ -183,10 +279,12 @@ interface validationProps {
 }
 
 export const ValidationInfo = styled.div<validationProps>`
-  font-size: 11px;
-  font-weight: bold;
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
   text-transform: capitalize;
   color: ${(props) => props.color};
   text-align: ${(props) => (props.align ? props.align : "start")};
   padding: ${(props) => (props.padding ? props.padding : "2rem 0.5rem 0.5rem")};
+  letter-spacing: 1px;
 `;

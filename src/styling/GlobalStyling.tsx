@@ -50,4 +50,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
       box-shadow: 0 0 0.3rem  ${(props) => props.theme.secondary};
     }
   }
+
+  button:disabled{
+    cursor: not-allowed;
+  }
 `;

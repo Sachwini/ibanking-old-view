@@ -7,7 +7,7 @@ export interface Props {
   modalFormSubmitHandle: (show: boolean) => void;
   accountNumber: string;
   destinationBankName: string;
-  destinationAccountHolderName: string; 
+  destinationAccountHolderName: string;
   confirmModalCancleButton: (show: boolean) => void;
 }
 
@@ -35,7 +35,6 @@ function ConfirmModal(props: Props) {
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{ zIndex: 1400 }}
     >
       <Modal.Header closeButton className="modal_header">
         <Modal.Title as="h6">Details of your Favorite Account</Modal.Title>

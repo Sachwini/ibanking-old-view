@@ -1,4 +1,4 @@
-import { apiResponse } from "models/apiResponse";
+import { apiResponse, transctionHistoryType } from "models/apiResponse";
 import { userDetailType } from "models/for-pages/userAccount_PageModels";
 import {
   accValidationType,
@@ -134,4 +134,38 @@ export const formDataFormat = (props: formDataFormatType) => {
     formData.append("otp", props.OTP);
   }
   return formData;
+};
+
+export const formData_DefaultValue = {
+  fromAccount: "",
+  toAccount: "",
+  DESTBankName: "",
+  DESTBankID: "null",
+  DESTBranchName: "",
+  DESTBranchID: "null",
+  destAccountHolderName: "",
+  transctionAmount: "",
+  remarks: "",
+};
+
+export const getTransctionHistory = async (pageNo?: number) => {
+  const res = await get<apiResponse<transctionHistoryType>>(
+    `api/transactionhistory?mPin=10368&page_no=${pageNo ? pageNo : 1}`
+  );
+
+  return res && res.data.details;
+};
+
+export const generatePDF = async (identifier: string) => {
+  const res = await get<apiResponse<any>>(
+    `/api/gettransactionreceiptpdf?transactionId=${identifier}`
+  );
+  if (res && res.data.detail === null) {
+    return { status: false, message: res.data.message, url: "" };
+  } else
+    return {
+      status: true,
+      message: res.data.message,
+      url: res.data.detail.URL,
+    };
 };

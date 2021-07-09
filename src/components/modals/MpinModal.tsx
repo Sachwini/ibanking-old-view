@@ -92,7 +92,12 @@ const MpinModal = (props: Props) => {
               Cancel
             </Button>
 
-            <Button variant="outline-success" type="submit" className="ml-4">
+            <Button
+              variant="outline-success"
+              type="submit"
+              className="ml-4"
+              disabled={errors.mpin ? true : false}
+            >
               Submit
             </Button>
           </div>

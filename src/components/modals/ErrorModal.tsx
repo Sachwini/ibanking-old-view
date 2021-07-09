@@ -1,14 +1,10 @@
-import { generatePDF, getTransctionHistory } from "helper/GetData";
 import { transactionListType } from "models/apiResponse";
 import { tHistoryDefaultData } from "models/payment_ModalType";
-import { useEffect, useState } from "react";
-import { Button, Modal, Image } from "react-bootstrap";
-import { AiOutlineFilePdf } from "react-icons/ai";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
-import { GiCheckMark } from "react-icons/gi";
 import { ImArrowRight } from "react-icons/im";
 import { VscError } from "react-icons/vsc";
-import { baseUrl } from "services/BaseUrl";
 import { formatLakh } from "services/numberService";
 import {
   AccountView,
@@ -19,45 +15,24 @@ import {
 } from "styling/for-modal/PaymentModalStyling";
 
 export interface Props {
-  transctionIdentifier: string;
-  successMessage: string;
-  successModalShow: boolean;
+  errorInfoData: {
+    fromAccNo: string;
+    toAccNo: string;
+    destAccHolderName: string;
+    destBankName: string;
+    destBranchName: string;
+    transctionAmount: string;
+    transctionCharge: string;
+  };
+  errorMessage: string;
+  errorModalShow: boolean;
   handleCancle: (show: boolean) => void;
 }
 
 const SuccessModal = (props: Props) => {
-  const [tHistoryData, setTHistoryData] =
-    useState<transactionListType>(tHistoryDefaultData);
-
-  useEffect(() => {
-    let isSubscribed = true;
-    const getData = async () => {
-      const res = await getTransctionHistory();
-      if (isSubscribed && res) {
-        const data = res.transactionList[0];
-        setTHistoryData(data);
-      }
-    };
-
-    getData();
-
-    return () => {
-      isSubscribed = false;
-    };
-  }, []);
-
-  const handleDownload = async () => {
-    const res = await generatePDF(props.transctionIdentifier);
-    if (res.status === true) {
-      window.open(`${baseUrl}${res.url}`);
-    } else {
-      console.log("pdf message error: ", res);
-    }
-  };
-
   return (
     <MySuccessModal
-      show={props.successModalShow}
+      show={props.errorModalShow}
       backdrop="static"
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
@@ -65,11 +40,11 @@ const SuccessModal = (props: Props) => {
       size="lg"
     >
       <Modal.Header className="modal_header">
-        <MySuccessModalHeader color="green">
+        <MySuccessModalHeader color="red">
           <div className="icon_wrapper">
-            <GiCheckMark size={50} />
+            <VscError size={50} />
           </div>
-          <p className="message_wrapper">Success</p>
+          <p className="message_wrapper">Failed</p>
         </MySuccessModalHeader>
       </Modal.Header>
 
@@ -82,7 +57,7 @@ const SuccessModal = (props: Props) => {
 
             <div className="acc">
               <p className="name">Your Account</p>
-              <p className="acc_no">{tHistoryData.accountNumber}</p>
+              <p className="acc_no">{props.errorInfoData.fromAccNo}</p>
             </div>
           </div>
 
@@ -91,26 +66,13 @@ const SuccessModal = (props: Props) => {
           </div>
 
           <div className="toAcc_wrapper">
-            {tHistoryData.iconUrl ? (
-              <Image
-                src={`${baseUrl}/${tHistoryData.iconUrl}`}
-                roundedCircle
-                height="50px"
-                width="50px"
-              />
-            ) : (
-              <div className="icon_wrapper">
-                <FiUser size={40} className="from_acc" />
-              </div>
-            )}
+            <div className="icon_wrapper">
+              <FiUser size={40} className="from_acc" />
+            </div>
 
             <div className="acc">
-              <p className="name">
-                {tHistoryData.requestDetail.destinationAccountName}
-              </p>
-              <p className="acc_no">
-                {tHistoryData.requestDetail.destinationAccountNumber}
-              </p>
+              <p className="name">{props.errorInfoData.destAccHolderName}</p>
+              <p className="acc_no">{props.errorInfoData.toAccNo}</p>
             </div>
           </div>
         </AccountView>
@@ -120,17 +82,14 @@ const SuccessModal = (props: Props) => {
           <div className="detail_viewWrapper">
             <div className="detail_wrapper">
               <p className="detail_title">Destination Bank</p>
-              <p className="detail_text">
-                {tHistoryData.requestDetail.destinationBankName}
-              </p>
+              <p className="detail_text">{props.errorInfoData.destBankName}</p>
             </div>
 
             <div className="detail_wrapper">
               <p className="detail_title">Destination Bank Branch</p>
               <p className="detail_text">
-                {tHistoryData.requestDetail.destinationBranchName !== "null" &&
-                tHistoryData.requestDetail.destinationBranchName !== undefined
-                  ? tHistoryData.requestDetail.destinationBranchName
+                {props.errorInfoData.destBranchName !== undefined
+                  ? props.errorInfoData.destBranchName
                   : "DeFault Branch"}
               </p>
             </div>
@@ -138,7 +97,9 @@ const SuccessModal = (props: Props) => {
             <div className="detail_wrapper">
               <p className="detail_title">Destination Bank Account No.</p>
               <p className="detail_text">
-                {tHistoryData.requestDetail.destinationAccountNumber}
+                {props.errorInfoData.toAccNo
+                  ? props.errorInfoData.toAccNo
+                  : "master Account"}
               </p>
             </div>
           </div>
@@ -149,27 +110,10 @@ const SuccessModal = (props: Props) => {
 
           <div className="detail_viewWrapper">
             <div className="detail_wrapper">
-              <p className="detail_title">Transctions Identifier</p>
-              <p className="detail_text">
-                {tHistoryData.transactionIdentifier}
-              </p>
-            </div>
-
-            <div className="detail_wrapper">
-              <p className="detail_title">service type</p>
-              <p className="detail_text">{tHistoryData?.service}</p>
-            </div>
-
-            <div className="detail_wrapper">
-              <p className="detail_title">Transction date & Time </p>
-              <p className="detail_text">{tHistoryData?.date}</p>
-            </div>
-
-            <div className="detail_wrapper">
               <p className="detail_title">Transction Amount</p>
               <p className="detail_text">
                 <strong>NPR. </strong>
-                {formatLakh(tHistoryData.amount - tHistoryData.charge)}
+                {formatLakh(parseInt(props.errorInfoData.transctionAmount))}
               </p>
             </div>
 
@@ -177,7 +121,7 @@ const SuccessModal = (props: Props) => {
               <p className="detail_title">Transction Charge</p>
               <p className="detail_text">
                 <strong>NPR. </strong>
-                {tHistoryData.charge}
+                {props.errorInfoData.transctionCharge}
               </p>
             </div>
 
@@ -185,35 +129,31 @@ const SuccessModal = (props: Props) => {
               <p className="detail_title">Total Amount</p>
               <p className="detail_text">
                 <strong>NPR. </strong>
-                {formatLakh(tHistoryData.amount)}
+                {formatLakh(
+                  parseInt(props.errorInfoData.transctionAmount) +
+                    parseInt(props.errorInfoData.transctionCharge)
+                )}
               </p>
             </div>
 
             <div className="detail_wrapper">
               <p className="detail_title">transction Status</p>
               <ValidationInfo
-                color="green"
+                color="red"
                 padding="0 0 0 2px"
                 className="d-inline"
               >
-                {tHistoryData.responseDetail.status}
+                Failed
               </ValidationInfo>
-              <p className="detail_text d-inline pl-1">{tHistoryData.status}</p>
             </div>
           </div>
         </SuccessDetailView>
 
-        <ValidationInfo color="green">
-          <strong className="pr-2 text-bold">{props.successMessage}</strong>
+        <ValidationInfo color="red">
+          <strong className="pr-2 text-bold">{props.errorMessage}</strong>
         </ValidationInfo>
 
         <Modal.Footer className="modal_footer">
-          <div className="download_wrapper" onClick={handleDownload}>
-            <p className="icon_wrapper">
-              <AiOutlineFilePdf size={30} />
-            </p>
-            <p className="download_text">Download Details</p>
-          </div>
           <Button
             variant="outline-primary"
             className="px-5"

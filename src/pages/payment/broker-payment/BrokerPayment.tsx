@@ -106,13 +106,13 @@ const BrokerPayment = () => {
 
   const otpModalSubmitHandle = async () => {
     const isEnabled = await enableOTPTransction(otp);
-    if (isEnabled && isEnabled.status.toString() === "SUCCCESS") {
+    if (isEnabled && isEnabled.status === true) {
       // Calling Broker payment API
       doPayment();
     } else {
       setIsError_inOTPResponse({
         isError: true,
-        message: isEnabled.message,
+        message: isEnabled ? isEnabled.message : "",
       });
     }
   };

@@ -32,7 +32,6 @@ function DetailModal(props: Props) {
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{ zIndex: 1400 }}
     >
       <Modal.Header className="modal_header">
         <Modal.Title as="h6">Details of your Transaction</Modal.Title>
