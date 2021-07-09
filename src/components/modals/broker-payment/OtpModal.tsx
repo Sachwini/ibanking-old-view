@@ -23,6 +23,7 @@ const OtpModal = (props: Props) => {
     }
     return () => {
       isSubscribed = false;
+      clearTimeout();
     };
   }, [buttonDisabled]);
 

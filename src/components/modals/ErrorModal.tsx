@@ -141,7 +141,6 @@ const SuccessModal = (props: Props) => {
 
         <ValidationInfo color="red">
           <strong className="pr-2 text-bold">
-            {" "}
             your transction has been failed Because of: {props.errorMessage}
           </strong>
         </ValidationInfo>

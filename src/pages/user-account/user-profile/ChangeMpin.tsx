@@ -6,11 +6,24 @@ import { toast, ToastContainer } from "react-toastify";
 import StaticBar from "components/StaticBar";
 import { ChangeMpinPageTitle } from "static-data/forPageTitle";
 import { forChangeMpin } from "static-data/forBreadCrumb";
+import { changeMpinType } from "pages/payment/fund-transfer/model";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import ChangeMpinForm from "./ChangeMpinForm";
+import { mpinChangeSchema } from "validation-schema/mpinChange_validation";
 
 function ChangeMpin() {
-  const [currentMpin, setCurrentMpin] = useState<string>("");
-  const [newMpin, setNewMpin] = useState<string>("");
-  const [confirmMpin, setConfirmMpin] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    formState: { errors },
+  } = useForm<changeMpinType>({
+    resolver: yupResolver(mpinChangeSchema),
+    mode: "all",
+  });
+
   const [errorResponse, setErrorResponse] = useState({
     message: "",
     password: "",
@@ -18,28 +31,16 @@ function ChangeMpin() {
     oldPassword: "",
   });
 
-  const handleReset = () => {
-    setCurrentMpin("");
-    setNewMpin("");
-    setConfirmMpin("");
-    setErrorResponse({
-      message: "",
-      password: "",
-      repassword: "",
-      oldPassword: "",
-    });
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     try {
       const res = await post<apiResponse<any>>(
-        `api/changepin?newmPin=${newMpin}&remPin=${confirmMpin}&oldmPin=${currentMpin}`,
+        `api/changepin?newmPin=${getValues("newMpin")}&remPin=${getValues(
+          "confirmMpin"
+        )}&oldmPin=${getValues("currentMpin")}`,
         ""
       );
       if (res) {
         toast.success("Your Mpin Changed Successfully");
-        handleReset();
       }
     } catch (error) {
       setErrorResponse({
@@ -65,93 +66,13 @@ function ChangeMpin() {
               className="card_Shadow"
             >
               <Card.Body>
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Label className="font-weight-bold">
-                      Current mpin
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="current mpin"
-                      name="currentMpin"
-                      value={currentMpin}
-                      required
-                      onChange={(e) => setCurrentMpin(e.target.value)}
-                      autoComplete="off"
-                    />
-                    {errorResponse?.oldPassword ? (
-                      <Form.Text className="text-danger">
-                        {errorResponse?.oldPassword}
-                      </Form.Text>
-                    ) : (
-                      ""
-                    )}
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Label className="font-weight-bold">
-                      New mpin
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="new mpin"
-                      name="newMpin"
-                      value={newMpin}
-                      onChange={(e) => setNewMpin(e.target.value)}
-                      autoComplete="off"
-                    />
-                    {errorResponse?.password ? (
-                      <Form.Text className="text-danger">
-                        {errorResponse?.password}
-                      </Form.Text>
-                    ) : (
-                      ""
-                    )}
-                    {!errorResponse?.password ? (
-                      <Form.Text className="text-warning">
-                        Pin number Should Be At least 4 digit
-                      </Form.Text>
-                    ) : (
-                      ""
-                    )}
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Label className="font-weight-bold">
-                      Confirm mpin
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="confirm mpin"
-                      name="confirmMpin"
-                      value={confirmMpin}
-                      onChange={(e) => setConfirmMpin(e.target.value)}
-                      autoComplete="off"
-                    />
-                    {errorResponse?.repassword ? (
-                      <Form.Text className="text-danger">
-                        {errorResponse?.repassword}
-                      </Form.Text>
-                    ) : (
-                      ""
-                    )}
-                  </Form.Group>
-
-                  <Button
-                    className="btn btn-warning"
-                    variant="primary"
-                    type="submit"
-                  >
-                    Confirm
-                  </Button>
-                  <Button
-                    className="btn btn-light"
-                    style={{ marginLeft: "20px" }}
-                    variant="secondary"
-                    onClick={handleReset}
-                  >
-                    Cancel
-                  </Button>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <ChangeMpinForm
+                    register={register}
+                    errors={errors}
+                    reset={reset}
+                    errorResponse={errorResponse}
+                  />
                 </Form>
               </Card.Body>
             </Card>

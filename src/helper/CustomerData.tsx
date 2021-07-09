@@ -1,5 +1,4 @@
 import { userAccount } from "pages/user-account/user-profile/model";
-import { useState } from "react";
 import { useStateValue } from "state-provider/StateProvider";
 
 export const GetAccountNumber = () => {

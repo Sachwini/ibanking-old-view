@@ -248,11 +248,11 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="transctionAmount">
+      <Form.Group controlId="transactionAmount">
         <Form.Label className="font-weight-bold">Amount</Form.Label>
         <Form.Control
           type="number"
-          placeholder="transction Amount..."
+          placeholder="transaction Amount..."
           autoComplete="off"
           {...register("transctionAmount")}
           minLength={3}

@@ -1,4 +1,3 @@
-import { PageTitle } from "components/PageTitle";
 import { Loader } from "pages/static/Loader";
 import { Col, Container, Image, Row, Form, Tab } from "react-bootstrap";
 import Tabs from "react-bootstrap/Tabs";

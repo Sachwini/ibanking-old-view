@@ -22,6 +22,28 @@ const OtpModal = (props: Props) => {
   } = props;
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(59);
+
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  }, [seconds]);
+
   useEffect(() => {
     let isSubscribed = true;
     if (isSubscribed) {
@@ -30,6 +52,7 @@ const OtpModal = (props: Props) => {
     }
     return () => {
       isSubscribed = false;
+      clearTimeout();
     };
   }, [buttonDisabled]);
 
@@ -73,11 +96,18 @@ const OtpModal = (props: Props) => {
                 onClick={() => {
                   {
                     resendOtp();
+                    setSeconds(59);
                     setButtonDisabled(true);
                   }
                 }}
               >
                 Resend
+                {minutes === 0 && seconds === 0 ? null : (
+                  <span>
+                    {" "}
+                    {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                  </span>
+                )}
               </Button>
 
               <Button

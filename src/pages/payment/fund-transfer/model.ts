@@ -43,3 +43,22 @@ export interface fundTransferFormDataType {
   amount: string;
 }
 
+export interface loadWalletFormDataType {
+  fromAccount: string;
+  contact: string;
+  amount: string;
+  remarks: string;
+}
+
+export interface changeMpinType {
+  currentMpin: string;
+  newMpin: string;
+  confirmMpin: string;
+}
+
+export interface changeMpinErrorType {
+  message: string;
+  password: string;
+  repassword: string;
+  oldPassword: string;
+}

@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button, Container } from "react-bootstrap";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
-import { StatementDataType } from "./model";
+import { Sdetails, StatementDataType } from "./model";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
 import { GetAllAccountNumber } from "helper/CustomerData";
 import StatementView from "./StatementView";
@@ -19,12 +19,15 @@ const Statement = () => {
   const [startDate, setStartDate] = useState(new Date(`${threeMonthBackDate}`));
   const [endDate, setEndDate] = useState(new Date());
   const [statementData, setStatementData] = useState<StatementDataType>();
+  const [filteredStatementData, setFilteredStatementData] =
+    useState<Sdetails[]>();
   const [errorMessage, setErrorMessage] = useState({
     errorOccured: true,
     message:
       "Select date range and click on show button to view your statement",
   });
   const [{ switchAccount }] = useStateValue();
+  const [selectOption, setSelectOption] = useState<string>("");
 
   //Use state for Pagination
   const [loading, setLoading] = useState<boolean>(false);
@@ -51,6 +54,8 @@ const Statement = () => {
         setStatementData(undefined);
         setStatementData(res.data.details);
         setLoading(false);
+        handleFilter(selectOption);
+        console.log("selectOption", selectOption);
         setErrorMessage({ errorOccured: false, message: "" });
       }
       if (res.data.details.accountStatementDtos.length === 0) {
@@ -66,6 +71,30 @@ const Statement = () => {
         message: "Something Going Wrong...",
       });
     }
+  };
+
+  const handleFilter = (filterby: string) => {
+    console.log("filerrBY", filterby);
+    let currentPageStatementFilter = statementData?.accountStatementDtos;
+
+    if (filterby === "debit") {
+      currentPageStatementFilter = statementData?.accountStatementDtos.filter(
+        (row) => row.debit !== null
+      );
+
+      console.log("filterby debit", currentPageStatementFilter);
+    }
+    if (filterby === "credit") {
+      currentPageStatementFilter = statementData?.accountStatementDtos.filter(
+        (row) => row.credit !== null
+      );
+      console.log("filterby credit", currentPageStatementFilter);
+    }
+    if (filterby === "debit/credit" || undefined) {
+      currentPageStatementFilter = statementData?.accountStatementDtos;
+      console.log("filterby non", currentPageStatementFilter);
+    }
+    setFilteredStatementData(currentPageStatementFilter);
   };
 
   return (
@@ -124,13 +153,40 @@ const Statement = () => {
               className="statement_datePicker"
             />
           </div>
-          <Button variant="info" onClick={handleShow}>
+          <Button
+            variant="info"
+            onClick={() => {
+              handleShow();
+            }}
+          >
             Show
           </Button>
+
+          <span
+            style={{
+              paddingRight: "5px",
+              fontWeight: "bold",
+              verticalAlign: "middle",
+              marginLeft: "auto",
+            }}
+          >
+            filter by:
+          </span>
+          <select
+            onChange={(e: any) => {
+              handleFilter(e.target.value);
+              setSelectOption(e.target.value);
+            }}
+          >
+            <option value="debit/credit">debit/credit</option>
+            <option value="debit">debit</option>
+            <option value="credit">credit</option>
+          </select>
         </div>
         <div>
           <StatementView
             statementData={statementData}
+            filteredStatementData={filteredStatementData}
             errorMessage={errorMessage}
           />
         </div>
