@@ -84,7 +84,7 @@ const Login = (props: RouteComponentProps<{}>) => {
         <Card style={{ width: "30rem", border: "none" }}>
           <Card.Header className="image_wrapper">
             <Image
-              src="./logo.png"
+              src="/images/logo.png"
               alt="logo"
               roundedCircle
               className="login_logo"

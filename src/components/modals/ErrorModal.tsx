@@ -1,6 +1,4 @@
-import { transactionListType } from "models/apiResponse";
-import { tHistoryDefaultData } from "models/payment_ModalType";
-import { useState } from "react";
+import { errorModalDataType } from "models/payment_ModalType";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import { ImArrowRight } from "react-icons/im";
@@ -14,16 +12,8 @@ import {
   ValidationInfo,
 } from "styling/for-modal/PaymentModalStyling";
 
-export interface Props {
-  errorInfoData: {
-    fromAccNo: string;
-    toAccNo: string;
-    destAccHolderName: string;
-    destBankName: string;
-    destBranchName: string;
-    transctionAmount: string;
-    transctionCharge: string;
-  };
+interface Props {
+  errorInfoData: errorModalDataType;
   errorMessage: string;
   errorModalShow: boolean;
   handleCancle: (show: boolean) => void;
@@ -150,7 +140,10 @@ const SuccessModal = (props: Props) => {
         </SuccessDetailView>
 
         <ValidationInfo color="red">
-          <strong className="pr-2 text-bold">{props.errorMessage}</strong>
+          <strong className="pr-2 text-bold">
+            {" "}
+            your transction has been failed Because of: {props.errorMessage}
+          </strong>
         </ValidationInfo>
 
         <Modal.Footer className="modal_footer">

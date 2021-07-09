@@ -193,7 +193,6 @@ const BrokerPayment = () => {
         setOTP={(otp: string) => setOtp(otp)}
         otpModalSubmitHandle={otpModalSubmitHandle}
         resendOTPHandle={reSendOTP}
-        isErrorInOTPResponse={isError_inOTPResponse}
         handleCancle={(e) => setIsOTPRequired(e)}
       />
 

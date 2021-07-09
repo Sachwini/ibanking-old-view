@@ -9,6 +9,7 @@ import {
   getBankListType,
 } from "models/for-pages/bankTransfer_models";
 import { get, post } from "services/AjaxService";
+import { errorModalDataType } from "models/payment_ModalType";
 
 export const loadUserDetails = async () => {
   const res = await get<apiResponse<userDetailType>>(
@@ -168,4 +169,19 @@ export const generatePDF = async (identifier: string) => {
       message: res.data.message,
       url: res.data.detail.URL,
     };
+};
+
+export const getDataForErrorModal = (
+  data: bankTransferFormDataType,
+  transctionCharge: string
+) => {
+  return {
+    fromAccNo: data.fromAccount,
+    toAccNo: data.toAccount,
+    destAccHolderName: data.destAccountHolderName,
+    destBankName: data.DESTBankName,
+    destBranchName: data.DESTBranchName,
+    transctionAmount: data.transctionAmount,
+    transctionCharge: transctionCharge,
+  };
 };

@@ -13,15 +13,10 @@ import { otpScheme } from "validation-schema/modal_validation";
 interface formProps {
   otp: string;
 }
-interface errorType {
-  isError: boolean;
-  message: string;
-}
 
 export interface Props {
   setOTP: (otp: string) => void;
   otpModalShow: boolean;
-  isErrorInOTPResponse: errorType;
   otpModalSubmitHandle: () => void;
   resendOTPHandle: () => void;
   handleCancle: (show: boolean) => void;
@@ -31,7 +26,6 @@ const OTPModal = (props: Props) => {
   const {
     setOTP,
     otpModalShow,
-    isErrorInOTPResponse,
     otpModalSubmitHandle,
     resendOTPHandle,
     handleCancle,
@@ -140,14 +134,10 @@ const OTPModal = (props: Props) => {
             </InputGroup>
 
             <Form.Control.Feedback
-              className={`${
-                errors.otp || isErrorInOTPResponse.isError === true
-                  ? "d-block pl-1 text-capitalize"
-                  : ""
-              }`}
+              className={`${errors.otp ? "d-block pl-1 text-capitalize" : ""}`}
               type="invalid"
             >
-              {errors.otp?.message} {isErrorInOTPResponse.message}
+              {errors.otp?.message}
             </Form.Control.Feedback>
           </Form.Group>
 

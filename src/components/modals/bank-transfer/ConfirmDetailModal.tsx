@@ -115,12 +115,11 @@ const ConfirmDetailModal = (props: Props) => {
         >
           {props.accValidationStatus.status ? (
             <span>
-              <strong className="pr-2 text-bold">CONGRATULATIONS!!!</strong>
               <span className="pr-2">
                 All credentials is Valid with Message:
               </span>
-              {props.accValidationStatus.message}
-              <span className="pl-2">Now you can Processed</span>
+              "{props.accValidationStatus.message}"
+              <span className="pl-2">you can Processed Now</span>
             </span>
           ) : (
             <span>

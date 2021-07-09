@@ -5,6 +5,7 @@ import { apiResponse } from "models/apiResponse";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
 import MpinModal from "components/modals/MpinModal";
 import OTPModal from "components/modals/OTPModal";
+import ErrorModal from "components/modals/ErrorModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
 import { bankTransferFormDataType } from "models/for-pages/bankTransfer_models";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,12 +15,17 @@ import { useForm } from "react-hook-form";
 import {
   formDataFormat,
   formData_DefaultValue,
+  getDataForErrorModal,
   getTransctionCharge,
   isAccountValid,
 } from "helper/GetData";
 import { toast } from "react-toastify";
 import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
 import { Loader } from "pages/static/Loader";
+import {
+  errorModalDataType,
+  errorModalDefaultData,
+} from "models/payment_ModalType";
 
 export const BankTransfer = () => {
   const {
@@ -56,7 +62,7 @@ export const BankTransfer = () => {
   const [successMessage, setSuccessMessage] = useState(
     "Your Transction is SuccessFully Completed"
   );
-  const [errorModalShow, setErroeModalShow] = useState<boolean>(false);
+  const [errorModalShow, setErrorModalShow] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState(
     "Something Went Wrong Please Try Again Later"
   );
@@ -72,6 +78,8 @@ export const BankTransfer = () => {
     formData_DefaultValue
   );
   const [transctionIdentifier, setTransctionIdentifier] = useState<string>("");
+  const [dataForErrorModal, setDataForErrorModal] =
+    useState<errorModalDataType>(errorModalDefaultData);
 
   const onSubmit = async (data: bankTransferFormDataType) => {
     setFormData(data);
@@ -119,6 +127,8 @@ export const BankTransfer = () => {
       }
     }
 
+    setDataForErrorModal(getDataForErrorModal(data, transctionCharge));
+
     // const confirmModalData =
     setLoading(false);
 
@@ -152,16 +162,16 @@ export const BankTransfer = () => {
     // Enabling OTP Required at Transction Time True
     const isEnabled = await enableOTPTransction(OTP);
     if (isEnabled && isEnabled.status === true) {
-      setIsOTPRequired(false);
-
-      // Calling Fund Transfer API
-      fundTransferAPI();
     } else {
       setIsError_inOTPResponse({
         isError: true,
         message: isEnabled ? isEnabled.message : "",
       });
     }
+    setIsOTPRequired(false);
+
+    // Calling Fund Transfer API
+    fundTransferAPI();
   };
 
   const resendOTPHandle = async () => {
@@ -198,7 +208,7 @@ export const BankTransfer = () => {
       if (error.response) {
         setErrorMessage(error.response.data.message);
         console.log("bank transfer error: ", error.response.data);
-        setErroeModalShow(true);
+        setErrorModalShow(true);
       }
     }
   };
@@ -247,7 +257,6 @@ export const BankTransfer = () => {
       <OTPModal
         otpModalShow={isOTPRequired}
         setOTP={(otp) => setOTP(otp)}
-        isErrorInOTPResponse={isError_inOTPResponse}
         otpModalSubmitHandle={otpModalSubmitHandle}
         resendOTPHandle={resendOTPHandle}
         handleCancle={(event: boolean) => setIsOTPRequired(event)}
@@ -258,6 +267,13 @@ export const BankTransfer = () => {
         successMessage={successMessage}
         transctionIdentifier={transctionIdentifier}
         handleCancle={(event: boolean) => setSuccessModalShow(event)}
+      />
+
+      <ErrorModal
+        errorModalShow={errorModalShow}
+        errorMessage={errorMessage}
+        errorInfoData={dataForErrorModal}
+        handleCancle={(event: boolean) => setErrorModalShow(event)}
       />
     </>
   );

@@ -9,12 +9,12 @@ const PoweredBySection = () => {
       <p className="text_wrapper underline">Powered By</p>
       <LogoWrapper className="pt-3">
         <Image
-          src="../ibankLogo.png"
+          src="/images/ibankLogo.png"
           alt="iBanking System"
           className="logo_image pr-5"
         />
         <Image
-          src="../mBankLogo.png"
+          src="/images/mBankLogo.png"
           alt="iBanking System"
           className="logo_image"
         />

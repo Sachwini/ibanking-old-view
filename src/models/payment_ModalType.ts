@@ -39,3 +39,23 @@ export const tHistoryDefaultData = {
   },
   iconUrl: "",
 };
+
+export interface errorModalDataType {
+  fromAccNo: string;
+  toAccNo: string;
+  destAccHolderName: string;
+  destBankName: string;
+  destBranchName: string;
+  transctionAmount: string;
+  transctionCharge: string;
+}
+
+export const errorModalDefaultData = {
+  fromAccNo: "",
+  toAccNo: "",
+  destAccHolderName: "",
+  destBankName: "",
+  destBranchName: "",
+  transctionAmount: "",
+  transctionCharge: "",
+};
