@@ -267,6 +267,7 @@ export const BankTransfer = () => {
         successMessage={successMessage}
         transctionIdentifier={transctionIdentifier}
         handleCancle={(event: boolean) => setSuccessModalShow(event)}
+        mpin={mpin}
       />
 
       <ErrorModal

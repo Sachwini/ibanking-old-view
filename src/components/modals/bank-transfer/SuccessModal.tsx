@@ -23,16 +23,18 @@ export interface Props {
   successMessage: string;
   successModalShow: boolean;
   handleCancle: (show: boolean) => void;
+  mpin: string;
 }
 
 const SuccessModal = (props: Props) => {
   const [tHistoryData, setTHistoryData] =
     useState<transactionListType>(tHistoryDefaultData);
+  console.log("ASdasd", tHistoryData);
 
   useEffect(() => {
     let isSubscribed = true;
     const getData = async () => {
-      const res = await getTransctionHistory();
+      const res = await getTransctionHistory(props.mpin);
       if (isSubscribed && res) {
         const data = res.transactionList[0];
         setTHistoryData(data);

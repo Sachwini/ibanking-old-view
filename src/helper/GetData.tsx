@@ -10,6 +10,7 @@ import {
 } from "models/for-pages/bankTransfer_models";
 import { get, post } from "services/AjaxService";
 import { errorModalDataType } from "models/payment_ModalType";
+import { fundTransferFormDataType } from "pages/payment/fund-transfer/model";
 
 export const loadUserDetails = async () => {
   const res = await get<apiResponse<userDetailType>>(
@@ -149,9 +150,18 @@ export const formData_DefaultValue = {
   remarks: "",
 };
 
-export const getTransctionHistory = async (pageNo?: number) => {
+export const fundTransfer_formData_DefaultValue = {
+  fromAccount: "",
+  DESTBranchName: "",
+  toAccount: "",
+  destinationAccountHolderName: "",
+  DESTBranchID: "null",
+  amount: "",
+};
+
+export const getTransctionHistory = async (mpin?: string) => {
   const res = await get<apiResponse<transctionHistoryType>>(
-    `api/transactionhistory?mPin=10368&page_no=${pageNo ? pageNo : 1}`
+    `api/transactionhistory?mPin=${mpin}&page_no=1`
   );
 
   return res && res.data.details;
@@ -183,5 +193,18 @@ export const getDataForErrorModal = (
     destBranchName: data.DESTBranchName,
     transctionAmount: data.transctionAmount,
     transctionCharge: transctionCharge,
+  };
+};
+
+export const fundTransfer_getDataForErrorModal = (
+  data: fundTransferFormDataType
+) => {
+  return {
+    fromAccount: data.fromAccount,
+    DESTBranchName: data.DESTBranchName,
+    toAccount: data.toAccount,
+    destinationAccountHolderName: data.destinationAccountHolderName,
+    DESTBranchID: data.DESTBranchID,
+    amount: data.amount,
   };
 };
