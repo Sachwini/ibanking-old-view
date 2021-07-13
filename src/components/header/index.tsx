@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { Badge, OverlayTrigger, Image, Popover } from "react-bootstrap";
+import {
+  Badge,
+  OverlayTrigger,
+  Image,
+  Popover,
+  ListGroup,
+  Card,
+} from "react-bootstrap";
 import { BsBell } from "react-icons/bs";
-import { notification } from "./HeaderDropDown";
 import HeaderSearch from "./HeaderSearch";
 import { FiUser } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -26,6 +32,7 @@ import { messaging } from "../../init-fcm";
 import { ToastContainer } from "react-toastify";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";
 import { useSetRecoilState } from "recoil";
+import { CardStyle, ListStyle } from "./HeaderDropDown";
 
 const PopoverStyle = {
   minWidth: "10rem",
@@ -50,10 +57,32 @@ const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
   const history = useHistory();
   const setMenuClicked = useSetRecoilState(isMenuButtonClicked);
+  const [notificationMessage, setNotificationMessage] = useState<any[]>([]);
+  console.log("NotificationMessage", notificationMessage);
 
   useEffect(() => {
     setMenuClicked(sideMenuShow);
   }, [sideMenuShow]);
+
+  const notification = (
+    <Popover id="popover-basic" style={PopoverStyle}>
+      <Popover.Content>
+        <Card style={CardStyle}>
+          <ListGroup variant="flush">
+            {notificationMessage.length > 0
+              ? notificationMessage?.map((notificationItem, index) => {
+                  return (
+                    <ListGroup.Item style={ListStyle} key={index}>
+                      {notificationItem?.body}
+                    </ListGroup.Item>
+                  );
+                })
+              : "No Notification to show"}
+          </ListGroup>
+        </Card>
+      </Popover.Content>
+    </Popover>
+  );
 
   useEffect(() => {
     messaging
@@ -67,8 +96,18 @@ const Header = () => {
       .catch(function (err) {
         console.log("You denied the notification");
       });
-    navigator.serviceWorker.addEventListener("message", (message) =>
-      console.log(message)
+    // navigator.serviceWorker.addEventListener("message", (message) =>
+    //   // console.log(message)
+    //   setNotificationMessage(message.data)
+    // );
+    messaging.onMessage((payload) =>
+      setNotificationMessage([
+        ...notificationMessage,
+        {
+          title: payload.notification.title,
+          body: payload.notification.body,
+        },
+      ])
     );
   });
 
@@ -143,7 +182,11 @@ const Header = () => {
                         <IconStyle hover>
                           <BsBell size="25px" className="bell_ctrl" />
                         </IconStyle>
-                        <Badge className="badge_ctrl">0</Badge>
+                        <Badge className="badge_ctrl">
+                          {notificationMessage
+                            ? notificationMessage?.length
+                            : 0}
+                        </Badge>
                       </Hnotification>
                     </OverlayTrigger>
                   </div>

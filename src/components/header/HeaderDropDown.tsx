@@ -1,11 +1,11 @@
 import { Card, ListGroup, Popover } from "react-bootstrap";
 
-const ListStyle = {
+export const ListStyle = {
   paddingLeft: "0",
   paddingBottom: "3px",
 };
 
-const CardStyle = {
+export const CardStyle = {
   border: "none",
   paddingLeft: "0.7rem",
   paddingRight: "0.7rem",
@@ -15,23 +15,27 @@ const PopoverStyle = {
   marginTop: "1rem",
 };
 
-export const notification = (
-  <Popover id="popover-basic" style={PopoverStyle}>
-    <Popover.Content>
-      <Card style={CardStyle}>
-        <ListGroup variant="flush">
-          <ListGroup.Item style={ListStyle}>you got the amount</ListGroup.Item>
-          <ListGroup.Item style={ListStyle}>
-            roshan send you payment request
-          </ListGroup.Item>
-          <ListGroup.Item style={ListStyle}>
-            Happy birthday to you bro
-          </ListGroup.Item>
-        </ListGroup>
-      </Card>
-    </Popover.Content>
-  </Popover>
-);
+export const notification = (props: any) => {
+  return (
+    <Popover id="popover-basic" style={PopoverStyle}>
+      <Popover.Content>
+        <Card style={CardStyle}>
+          <ListGroup variant="flush">
+            <ListGroup.Item style={ListStyle}>
+              send you an amount
+            </ListGroup.Item>
+            <ListGroup.Item style={ListStyle}>
+              roshan send you payment request
+            </ListGroup.Item>
+            <ListGroup.Item style={ListStyle}>
+              Happy birthday to you bro
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Popover.Content>
+    </Popover>
+  );
+};
 
 export const userProfile = (
   <Popover id="popover-basic" style={PopoverStyle}>
