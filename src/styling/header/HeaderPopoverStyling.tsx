@@ -6,6 +6,7 @@ interface popoverProps {
 }
 export const CustomPopover = styled(Popover)<popoverProps>`
   width: ${(props) => (props.width ? props.width : "max-content")};
+  box-shadow: 1px 10px 30px 1px #00000048;
 
   .popover_header {
     padding: 0.25rem;

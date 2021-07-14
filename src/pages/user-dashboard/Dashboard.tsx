@@ -1,7 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import LineChart from "pages/user-dashboard/LineChart";
 import ProfileCard from "pages/user-dashboard/UserProfileCard";
-import { useStateValue } from "state-provider/StateProvider";
 import StaticBar from "components/StaticBar";
 import { UserDetect } from "styling/common/PageTitleStyling";
 import { forDashboard } from "static-data/forBreadCrumb";

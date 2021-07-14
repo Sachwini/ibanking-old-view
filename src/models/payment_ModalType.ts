@@ -50,6 +50,15 @@ export interface errorModalDataType {
   transctionCharge: string;
 }
 
+export interface fundTransfer_errorModalDataType {
+  fromAccount: string;
+  DESTBranchName: string;
+  toAccount: string;
+  destinationAccountHolderName: string;
+  DESTBranchID: string;
+  amount: string;
+}
+
 export const errorModalDefaultData = {
   fromAccNo: "",
   toAccNo: "",
@@ -58,4 +67,13 @@ export const errorModalDefaultData = {
   destBranchName: "",
   transctionAmount: "",
   transctionCharge: "",
+};
+
+export const fundTransfer_errorModalDefaultData = {
+  fromAccount: "",
+  DESTBranchName: "",
+  toAccount: "",
+  destinationAccountHolderName: "",
+  DESTBranchID: "",
+  amount: "",
 };

@@ -11,8 +11,6 @@ import SuccessModal from "components/modals/load-wallet/SuccessModal";
 import { forLoadWallet } from "static-data/forBreadCrumb";
 import { loadWalletPageTitle } from "static-data/forPageTitle";
 import StaticBar from "components/StaticBar";
-import { useSetRecoilState } from "recoil";
-import { isLoading } from "state-provider/forPageSetting";
 import { loadWalletFormDataType } from "pages/payment/fund-transfer/model";
 import { useForm } from "react-hook-form";
 import LoadWalletForm from "./walletList/LoadWalletForm";
@@ -50,8 +48,6 @@ function LoadWallet() {
     details: "",
   });
 
-  const setLoading = useSetRecoilState(isLoading);
-
   const handleReset = (e: any) => {
     reset({
       contact: "",
@@ -65,7 +61,6 @@ function LoadWallet() {
   };
 
   const walletValidate = async () => {
-    setLoading(true);
     try {
       const res = await get<any>(
         `api/walletvalidate?walletUsername=${getValues("contact")}&walletId=${
@@ -89,7 +84,6 @@ function LoadWallet() {
     } catch (error) {
       toast.error("error");
     }
-    setLoading(false);
   };
 
   const handleSubmit1 = async (e: any) => {
@@ -137,7 +131,6 @@ function LoadWallet() {
         toast.error(error.response.data.message);
       }
     }
-    setLoading(false);
   };
 
   const onSubmit = async (data: loadWalletFormDataType) => {

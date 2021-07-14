@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Container } from "react-bootstrap";
@@ -44,34 +44,43 @@ const Statement = () => {
       break;
   }
 
-  const handleShow = async () => {
+  useEffect(() => {
+    let isSubscribed = true;
     setLoading(true);
-    try {
-      const res = await get<apiResponse<StatementDataType>>(
-        `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
-      );
-      if (res) {
-        setStatementData(undefined);
-        setStatementData(res.data.details);
+
+    const handleShow = async () => {
+      setLoading(true);
+      try {
+        const res = await get<apiResponse<StatementDataType>>(
+          `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
+        );
+        if (res) {
+          setStatementData(undefined);
+          setStatementData(res.data.details);
+          setLoading(false);
+          handleFilter(selectOption);
+          console.log("selectOption", selectOption);
+          setErrorMessage({ errorOccured: false, message: "" });
+        }
+        if (res.data.details.accountStatementDtos.length === 0) {
+          setErrorMessage({
+            errorOccured: true,
+            message: "No statement Available ... for this selected date range",
+          });
+        }
+      } catch (error: any) {
         setLoading(false);
-        handleFilter(selectOption);
-        console.log("selectOption", selectOption);
-        setErrorMessage({ errorOccured: false, message: "" });
-      }
-      if (res.data.details.accountStatementDtos.length === 0) {
         setErrorMessage({
           errorOccured: true,
-          message: "No statement Available ... for this selected date range",
+          message: "Something Going Wrong...",
         });
       }
-    } catch (error: any) {
-      setLoading(false);
-      setErrorMessage({
-        errorOccured: true,
-        message: "Something Going Wrong...",
-      });
-    }
-  };
+    };
+    handleShow();
+    return () => {
+      isSubscribed = false;
+    };
+  }, [formatedStartDate, formatedEndDate, actualAccountNumber]);
 
   const handleFilter = (filterby: string) => {
     console.log("filerrBY", filterby);
@@ -153,14 +162,14 @@ const Statement = () => {
               className="statement_datePicker"
             />
           </div>
-          <Button
+          {/* <Button
             variant="info"
             onClick={() => {
               handleShow();
             }}
           >
             Show
-          </Button>
+          </Button> */}
 
           <span
             style={{

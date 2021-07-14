@@ -44,10 +44,7 @@ function App() {
 
   /* ----------For Payment Import--------------------- */
   const Transfer = React.lazy(() => import("pages/payment/fund-transfer"));
-  const FundTransferSuccessConfirmation = React.lazy(
-    () =>
-      import("components/modals/fundTransfer/FundTransferSuccessConfirmation")
-  );
+
   const BrokerPayment = React.lazy(
     () => import("pages/payment/broker-payment/BrokerPayment")
   );
@@ -133,10 +130,6 @@ function App() {
 
             {/* ---------- For Payment Routing--------------------- */}
             <Route path="/fund-transfer" component={Transfer} />
-            <Route
-              path="/fund-transfer-success-confirmation"
-              component={FundTransferSuccessConfirmation}
-            />
             <Route path="/vendor-payment" component={VendorPayment} />
             <Route path="/broker-payment" component={BrokerPayment} />
 

@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Card, Form } from "react-bootstrap";
 import { get, post } from "services/AjaxService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { apiResponse } from "models/apiResponse";
-import DetailModal from "components/modals/fundTransfer/DetailModal";
-import MpinModal from "components/modals/fundTransfer/MpinModal";
-import OtpModal from "components/modals/fundTransfer/OtpModal";
-import SuccessModal from "components/modals/fundTransfer/SuccessModal";
+import { transactionListType } from "models/apiResponse";
 import { useForm } from "react-hook-form";
 import { fundTransferFormDataType } from "./model";
 import FundTransferForm from "./FundTransferForm";
@@ -15,6 +11,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { fundTrasferScheme } from "validation-schema/fundTransfer_validation";
 import { useRecoilValue } from "recoil";
 import { isLoading } from "state-provider/forPageSetting";
+import {
+  fundTransfer_formData_DefaultValue,
+  fundTransfer_getDataForErrorModal,
+  getTransctionHistory,
+} from "helper/GetData";
+import ConfirmDetailModal from "components/modals/fundTransfer/ConfirmDetailModal";
+import MpinModal from "components/modals/MpinModal";
+import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
+import OTPModal from "components/modals/OTPModal";
+import ErrorModal from "components/modals/fundTransfer/ErrorModal";
+import {
+  fundTransfer_errorModalDataType,
+  fundTransfer_errorModalDefaultData,
+  tHistoryDefaultData,
+} from "models/payment_ModalType";
+import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 
 export const FundTransfer = () => {
   const {
@@ -36,21 +48,34 @@ export const FundTransfer = () => {
   const [mpin, setMpin] = useState<string>("");
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
-  const [validAccount, setValidAccount] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
-  const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
+  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
+    isError: false as boolean,
     message: "",
   });
-  const [
-    accountValidationResponseMessage,
-    setAccountValidationResponseMessage,
-  ] = useState({
-    message: "",
-    matchPercentage: "",
+  const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
+  const [accValidationStatus, setAccValidationStatus] = useState({
+    status: true as boolean,
+    message: "" as string,
   });
+
+  const [formData, setFormData] = useState<fundTransferFormDataType>(
+    fundTransfer_formData_DefaultValue
+  );
+  const [errorModalShow, setErrorModalShow] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState(
+    "Something Went Wrong Please Try Again Later"
+  );
+  const [successMessage, setSuccessMessage] = useState(
+    "Your Transction is SuccessFully Completed"
+  );
+  const [dataForErrorModal, setDataForErrorModal] =
+    useState<fundTransfer_errorModalDataType>(
+      fundTransfer_errorModalDefaultData
+    );
+  const [tHistoryData, setTHistoryData] =
+    useState<transactionListType<any>>(tHistoryDefaultData);
 
   //For account Validation
   const accountValidation = async () => {
@@ -68,27 +93,17 @@ export const FundTransfer = () => {
             "&destinationBranchId=" +
             getValues("DESTBranchID")
         );
-        setAccountValidationResponseMessage({
+        setAccValidationStatus({
+          status: true,
           message: res.data.detail.message,
-          matchPercentage: res.data.detail.matchPercentage,
         });
-        return res && setValidAccount(true);
       }
     } catch (error) {
-      setValidAccount(false);
-      setAccountValidationResponseMessage({
+      setAccValidationStatus({
+        status: false,
         message: error.response.data.detail.message,
-        matchPercentage: error.response.data.detail.matchPercentage,
       });
     }
-  };
-
-  //check if otp is required or not-> throws otp to device if required
-  const requestOtp = async () => {
-    const req = await get<apiResponse<any>>(
-      "api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=" +
-        getValues("amount")
-    );
   };
 
   //open Detail
@@ -96,9 +111,8 @@ export const FundTransfer = () => {
     setDetailModalShow(true);
   };
 
-  //for handlesubmit of whole data
-  const handleSubmit1 = async (e: any) => {
-    e.preventDefault();
+  //for handle fund transfer of whole data
+  const handleTransfer = async () => {
     if (
       !getValues("fromAccount") ||
       !getValues("toAccount") ||
@@ -111,7 +125,7 @@ export const FundTransfer = () => {
     }
 
     let url = "";
-    if (parseFloat(getValues("amount")) > 5000) {
+    if (otpRequired) {
       url =
         "api/fundtransfer?from_account_number=" +
         getValues("fromAccount") +
@@ -141,62 +155,78 @@ export const FundTransfer = () => {
     try {
       const res = await post<any>(url, "");
       if (res) {
-        setIsSuccessMessage(true);
-        setResponseMessage({
-          status: "success",
-          message: res.data.message,
-        });
+        getTransactionData();
+        setSuccessMessage(res.data.message);
+        setSuccessModalShow(true);
       }
     } catch (error) {
       if (error.response) {
-        toast.error("Error");
-        setIsSuccessMessage(true);
-        setResponseMessage({
-          status: "failure",
-          message: error.response.data.message,
-        });
-        console.log("ERROR message", error.response.data.message);
+        setSuccessMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message);
+        setErrorModalShow(true);
       }
     }
   };
 
-  //to check if otp is required or not
-  const handleOtpRequired = (e: any) => {
-    e.preventDefault();
-    if (parseFloat(getValues("amount")) <= 5000) {
-      {
-        {
-          setOtpRequired(false);
-          handleSubmit1(e);
-        }
-      }
-    } else if (parseFloat(getValues("amount")) > 5000) {
+  //-------------Handle Mpin Form Modal---------------------//
+  const mpinModalSubmitHandle = async () => {
+    setMpinModalShow(false);
+
+    // Validating Is otp is Required
+    const res = await isOtpRequired(formData.amount, true);
+    if (res && res === true) {
       setOtpRequired(true);
-      requestOtp();
+    } else {
+      //calling fund transfer api form here
+      handleTransfer();
     }
   };
 
-  //checks the otp is valid or not from connectIps
-  const changeOtpStatus = async (e: any) => {
-    e.preventDefault();
-    try {
-      const res = await post<any>(
-        "api/changeBankTransferOtpStatus?status=true&otp=" + otp,
-        {}
-      );
-      if (res) {
-        handleSubmit1(e);
-      }
-    } catch (error) {
-      toast.error("Error in OTP", error.response.data.message);
+  const otpModalSubmitHandle = async () => {
+    // Enabling OTP Required at Transction Time True
+    const isEnabled = await enableOTPTransction(otp);
+    if (isEnabled && isEnabled.status === true) {
+    } else {
+      setIsError_inOTPResponse({
+        isError: true,
+        message: isEnabled ? isEnabled.message : "",
+      });
     }
+    setOtpRequired(false);
+
+    // Calling Fund Transfer API
+    handleTransfer();
+  };
+
+  const resendOTPHandle = async () => {
+    // calling OTP Validation
+    const isRequired = await isOtpRequired(formData.amount);
+    if (isRequired && isRequired === true) {
+      return;
+    }
+  };
+
+  //get first index(latest transaction) of transaction history
+  const getTransactionData = async () => {
+    const res = await getTransctionHistory(mpin);
+    const data = res.transactionList[0];
+    setTHistoryData(data);
   };
 
   // call account validation and open detail modal
   const onSubmit = async (data: fundTransferFormDataType) => {
-    console.log("form data: ", data);
+    setFormData(data);
+    setDataForErrorModal(fundTransfer_getDataForErrorModal(data));
     accountValidation();
     openDetailModel();
+  };
+
+  //after detail modal shown
+  const confirmModelSubmitHandle = () => {
+    setDetailModalShow(false);
+
+    // Enabling mPin Modal
+    setMpinModalShow(true);
   };
 
   return (
@@ -217,44 +247,42 @@ export const FundTransfer = () => {
         </Card.Body>
       </Card>
 
-      <DetailModal
-        modalShow={detailModalShow}
-        handleModalShow={(event: boolean) => setDetailModalShow(event)}
-        modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
-        fromAccount={getValues("fromAccount")}
-        toAccount={getValues("toAccount")}
-        destinationAccountHolderName={getValues("destinationAccountHolderName")}
-        branch={getValues("DESTBranchName")}
-        amount={getValues("amount")}
-        validAccount={validAccount}
-        accountValidationResponseMessage={accountValidationResponseMessage}
-        confirmModalCancleButton={(event: boolean) => setDetailModalShow(event)}
+      <ConfirmDetailModal
+        confirmModalShow={detailModalShow}
+        data={formData}
+        accValidationStatus={accValidationStatus}
+        confirmModalSubmitHandle={confirmModelSubmitHandle}
+        handleCancle={(e) => setDetailModalShow(e)}
       />
+
       <MpinModal
-        modalShow={mpinModalShow}
-        handleModalShow={(event: boolean) => setMpinModalShow(event)}
-        mpin={(mpin: string) => setMpin(mpin)}
-        modalFormSubmitHandle={handleOtpRequired}
-        cancleButton={(event: boolean) => setMpinModalShow(event)}
+        setMpin={(mPin: string) => setMpin(mPin)}
+        mpinModalShow={mpinModalShow}
+        mpinModalSubmitHandle={mpinModalSubmitHandle}
+        handleCancle={(event: boolean) => setMpinModalShow(event)}
       />
-      <OtpModal
-        modalShow={otpRequired}
-        handleModalShow={(event: boolean) => setOtpRequired(event)}
-        userOTP={(otp: string) => setOtp(otp)}
-        modalFormSubmitHandle={changeOtpStatus}
-        resendOtp={() => requestOtp}
-        cancleButton={(event: boolean) => setOtpRequired(event)}
+
+      <OTPModal
+        otpModalShow={otpRequired}
+        setOTP={(otp: string) => setOtp(otp)}
+        otpModalSubmitHandle={otpModalSubmitHandle}
+        resendOTPHandle={resendOTPHandle}
+        handleCancle={(event: boolean) => setOtpRequired(event)}
       />
+
       <SuccessModal
-        successModalShow={isSuccessMessage}
-        handleModalShow={(e) => setIsSuccessMessage(e)}
-        fromAccount={getValues("fromAccount")}
-        branch={getValues("DESTBranchName")}
-        toAccount={getValues("toAccount")}
-        destinationAccountHolderName={getValues("destinationAccountHolderName")}
-        amount={getValues("amount")}
-        responseMessage={responseMessage}
+        successModalShow={successModalShow}
+        successMessage={successMessage}
+        handleCancle={(event: boolean) => setSuccessModalShow(event)}
         mpin={mpin}
+        tHistoryData={tHistoryData}
+      />
+
+      <ErrorModal
+        errorModalShow={errorModalShow}
+        errorMessage={errorMessage}
+        errorInfoData={dataForErrorModal}
+        handleCancle={(event: boolean) => setErrorModalShow(event)}
       />
     </>
   );

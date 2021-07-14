@@ -18,6 +18,8 @@ import Notification from "./NotificationPopover";
 const Header = () => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(false);
   const setMenuClicked = useSetRecoilState(isMenuButtonClicked);
+  const [notificationMessage, setNotificationMessage] = useState<any[]>([]);
+  console.log("NotificationMessage", notificationMessage);
 
   useEffect(() => {
     setMenuClicked(sideMenuShow);
@@ -35,8 +37,18 @@ const Header = () => {
       .catch(function (err) {
         console.log("You denied the notification");
       });
-    navigator.serviceWorker.addEventListener("message", (message) =>
-      console.log(message)
+    // navigator.serviceWorker.addEventListener("message", (message) =>
+    //   // console.log(message)
+    //   setNotificationMessage(message.data)
+    // );
+    messaging.onMessage((payload) =>
+      setNotificationMessage([
+        ...notificationMessage,
+        {
+          title: payload.notification.title,
+          body: payload.notification.body,
+        },
+      ])
     );
   });
 

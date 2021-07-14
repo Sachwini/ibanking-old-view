@@ -32,23 +32,23 @@ const messaging = firebase.messaging();
 //   return promiseChain;
 // });
 
-messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/logo.png",
-  };
+// messaging.onBackgroundMessage((payload) => {
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
+//   // Customize notification here
+//   const notificationTitle = "Background Message Title";
+//   const notificationOptions = {
+//     body: "Background Message body.",
+//     icon: "/logo.png",
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
 
 self.addEventListener("notificationclick", function (event) {
   // console.log("[Service Worker] Notification click Received.");
   // event.notification.close();
-  // event.waitUntil(clients.openWindow(`${baseUrl}`));
+  event.waitUntil(clients.openWindow(`${baseUrl}`));
 });

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { BiBlock } from "react-icons/bi";
 import { localDate } from "helper/DateConfig";
 import DetailModal from "components/modals/cheque-request/blockChequeBook/DetailModal";
-import MpinModal from "components/modals/fundTransfer/MpinModal";
+import MpinModal from "components/modals/MpinModal";
 import SuccessModal from "components/modals/cheque-request/blockChequeBook/SuccessModal";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
@@ -43,11 +43,6 @@ function BlockChequeBook() {
     message: "",
     details: "",
   });
-
-  const openDetailModel = (e: any) => {
-    e.preventDefault();
-    setDetailModalShow(true);
-  };
 
   const handleReset = (e: any) => {
     e.preventDefault();
@@ -90,6 +85,12 @@ function BlockChequeBook() {
         toast.error(error.response.data.message);
       }
     }
+    setDetailModalShow(true);
+  };
+
+  const handleMpinSubmit = () => {
+    setMpinModalShow(false);
+    setIsSucessMessage(true);
   };
 
   return (
@@ -107,7 +108,7 @@ function BlockChequeBook() {
           <h6 className="mt-4 text-muted">I would like to block my cheque</h6>
           <hr style={ActiveStyle} />
 
-          <Form onSubmit={(e) => openDetailModel(e)}>
+          <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group
               as={Row}
               controlId="exampleForm.ControlSelect1"
@@ -182,11 +183,10 @@ function BlockChequeBook() {
         cancleButton={(event: boolean) => setDetailModalShow(false)}
       />
       <MpinModal
-        modalShow={mpinModalShow}
-        handleModalShow={(event: boolean) => setMpinModalShow(event)}
-        mpin={(mpin: string) => setMpin(mpin)}
-        modalFormSubmitHandle={handleSubmit}
-        cancleButton={(event: boolean) => setMpinModalShow(false)}
+        mpinModalShow={mpinModalShow}
+        setMpin={(mpin) => setMpin(mpin)}
+        mpinModalSubmitHandle={handleMpinSubmit}
+        handleCancle={(e) => setMpinModalShow(e)}
       />
       <SuccessModal
         successModalShow={isSuccessMessage}

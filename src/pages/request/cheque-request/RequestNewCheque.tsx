@@ -8,7 +8,7 @@ import { post } from "services/AjaxService";
 import { toast } from "react-toastify";
 import { apiResponse } from "models/apiResponse";
 import DetailModal from "components/modals/cheque-request/requestNewCheque/DetailModal";
-import MpinModal from "components/modals/fundTransfer/MpinModal";
+import MpinModal from "components/modals/MpinModal";
 import SuccessModal from "components/modals/cheque-request/requestNewCheque/SuccessModal";
 
 const ChequeReqHeader = styled.div`
@@ -51,6 +51,8 @@ function RequestNewCheque() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setDetailModalShow(true);
+
     if (!fromAccount || !mpin) {
       toast.error("No mpin");
       return;
@@ -173,11 +175,10 @@ function RequestNewCheque() {
         cancleButton={(event: boolean) => setDetailModalShow(false)}
       />
       <MpinModal
-        modalShow={mpinModalShow}
-        handleModalShow={(event: boolean) => setMpinModalShow(event)}
-        mpin={(mpin: string) => setMpin(mpin)}
-        modalFormSubmitHandle={handleSubmit}
-        cancleButton={(event: boolean) => setMpinModalShow(false)}
+        mpinModalShow={mpinModalShow}
+        setMpin={(mpin) => setMpin(mpin)}
+        mpinModalSubmitHandle={() => setIsSucessMessage(true)}
+        handleCancle={(e) => setMpinModalShow(e)}
       />
       <SuccessModal
         successModalShow={isSuccessMessage}

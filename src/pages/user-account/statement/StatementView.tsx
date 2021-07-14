@@ -27,6 +27,10 @@ const StatementView = (props: {
   // get current StatementData in Pagination
   const indexOfLastStatement = currentPage * statementPerPage;
   const indexOfFirstStatement = indexOfLastStatement - statementPerPage;
+  const defaultPageStatement = statementData?.accountStatementDtos.slice(
+    indexOfFirstStatement,
+    indexOfLastStatement
+  );
   const currentPageStatement = filteredStatementData?.slice(
     indexOfFirstStatement,
     indexOfLastStatement
@@ -84,23 +88,43 @@ const StatementView = (props: {
             <th>Balance</th>
           </tr>
         </thead>
-        <tbody>
-          {currentPageStatement?.map((item, index) => (
-            <tr key={index}>
-              <td>{item.transactionDate}</td>
-              <td>{item.remarks}</td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item?.debit || 0)}
-              </td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item.credit || 0)}
-              </td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item.balance || 0)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        {!currentPageStatement ? (
+          <tbody>
+            {defaultPageStatement?.map((item, index) => (
+              <tr key={index}>
+                <td>{item.transactionDate}</td>
+                <td>{item.remarks}</td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item?.debit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.credit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.balance || 0)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody>
+            {currentPageStatement?.map((item, index) => (
+              <tr key={index}>
+                <td>{item.transactionDate}</td>
+                <td>{item.remarks}</td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item?.debit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.credit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.balance || 0)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        )}
       </Table>
       <Card.Footer>
         {statementData ? (
