@@ -75,7 +75,7 @@ const UserDropDown = () => {
     <>
       <OverlayTrigger
         transition={true}
-        trigger="hover"
+        trigger={["focus", "hover"]}
         placement="bottom"
         overlay={userProfile}
         show={popoverShow}
