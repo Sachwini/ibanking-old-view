@@ -1,5 +1,5 @@
 import { useStateValue } from "state-provider/StateProvider";
-import { MenuList, MenuListItem } from "styling/sidebar/SidebarStyling";
+import { MenuList, MenuListItem } from "styling/SidebarStyling";
 import React, { useState } from "react";
 import menuData from "./MenuData";
 import { useRecoilState } from "recoil";

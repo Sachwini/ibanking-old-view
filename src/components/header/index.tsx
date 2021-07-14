@@ -8,7 +8,7 @@ import {
   HeaderCol,
   MenuIcon,
   HeaderLink,
-} from "styling/header/HeaderStyling";
+} from "styling/for-header/HeaderStyling";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";
 import { useSetRecoilState } from "recoil";
 import UserDropDown from "./UserPopover";

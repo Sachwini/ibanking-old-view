@@ -1,5 +1,5 @@
 import { useStateValue } from "state-provider/StateProvider";
-import { MenuContainer } from "styling/sidebar/SidebarStyling";
+import { MenuContainer } from "styling/SidebarStyling";
 import React, { ReactFragment, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { ChevronDown, ChevronUp } from "react-bootstrap-icons";

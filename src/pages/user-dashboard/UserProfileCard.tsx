@@ -29,10 +29,8 @@ const ProfileCard = () => {
   if (switchAccountModalShow) {
     return (
       <SwitchAccountModal
-        switchAccountModalShow={switchAccountModalShow}
-        switchAccountModalShowHandle={(value) =>
-          setSwitchAccountModalShow(value)
-        }
+        modalShow={switchAccountModalShow}
+        handleModalShow={(value) => setSwitchAccountModalShow(value)}
       />
     );
   }
@@ -57,7 +55,7 @@ const ProfileCard = () => {
                 NPR. <strong>{handleShowDetails("availableBalance")}</strong>
               </p>
               <p className="text_wrapper">
-                <span className="text_title">Acc NO.</span>
+                <span className="text_title">Acc No.</span>
                 {handleShowDetails("mainCode")}
               </p>
             </div>

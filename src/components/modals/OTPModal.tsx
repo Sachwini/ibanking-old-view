@@ -7,7 +7,7 @@ import {
   ImageIconWrapper,
   MyOTPModal,
 } from "styling/for-modal/PaymentModalStyling";
-import { EyeContainer } from "styling/login/LoginStyling";
+import { EyeContainer } from "styling/LoginStyling";
 import { otpScheme } from "validation-schema/modal_validation";
 
 interface formProps {

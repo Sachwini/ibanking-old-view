@@ -3,7 +3,7 @@ import { Form, InputGroup } from "react-bootstrap";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { IconStyle } from "styling/common/IconStyling";
-import { EyeContainer } from "styling/login/LoginStyling";
+import { EyeContainer } from "styling/LoginStyling";
 
 interface Props {
   register: UseFormRegister<any>;

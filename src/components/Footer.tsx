@@ -1,6 +1,6 @@
 import { Image } from "react-bootstrap";
 import { FaHeartbeat } from "react-icons/fa";
-import { FooterContainer, LogoWrapper } from "styling/layout/FooterStyling";
+import { FooterContainer, LogoWrapper } from "styling/for-layout/FooterStyling";
 
 const Footer = () => {
   const date = new Date().getFullYear();

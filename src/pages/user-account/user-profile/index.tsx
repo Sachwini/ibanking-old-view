@@ -3,7 +3,7 @@ import { Col, Container, Image, Row, Form, Tab } from "react-bootstrap";
 import Tabs from "react-bootstrap/Tabs";
 import { FcOldTimeCamera } from "react-icons/fc";
 import { useStateValue } from "state-provider/StateProvider";
-import { UserDetailsContainer } from "styling/userDetails/UserDetailsStyling";
+import { UserDetailsContainer } from "styling/UserDetailsStyling";
 import { baseUrl } from "services/BaseUrl";
 import "./index.css";
 import { useState } from "react";

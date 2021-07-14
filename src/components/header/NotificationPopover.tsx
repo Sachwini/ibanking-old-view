@@ -4,8 +4,8 @@ import { BsBell } from "react-icons/bs";
 import { useRecoilValue } from "recoil";
 import { getName_Salutation } from "state-provider/globalUserData";
 import { IconStyle } from "styling/common/IconStyling";
-import { H_Notification } from "styling/header/HeaderStyling";
-import { NotificationPopover } from "styling/header/HeaderPopoverStyling";
+import { H_Notification } from "styling/for-header/HeaderStyling";
+import { NotificationPopover } from "styling/for-header/HeaderPopoverStyling";
 import { messaging } from "init-fcm";
 import { v4 as uuidv4 } from "uuid";
 

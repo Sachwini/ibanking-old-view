@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "react-bootstrap";
-import { LogoWrapper } from "styling/layout/FooterStyling";
-import { PoweredBy } from "styling/login/LoginStyling";
+import { LogoWrapper } from "styling/for-layout/FooterStyling";
+import { PoweredBy } from "styling/LoginStyling";
 
 const PoweredBySection = () => {
   return (

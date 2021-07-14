@@ -10,7 +10,7 @@ import {
   MiniMenuIconHandle,
   SidebarContainer,
   SideBarMenuControl,
-} from "styling/sidebar/SidebarStyling";
+} from "styling/SidebarStyling";
 import MenuHandle from "./MenuHandle";
 import { useRecoilState } from "recoil";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";

@@ -10,7 +10,7 @@ import {
 } from "services/AuthService";
 import { getName_Salutation } from "state-provider/globalUserData";
 import { IconStyle } from "styling/common/IconStyling";
-import { UserPopover } from "styling/header/HeaderPopoverStyling";
+import { UserPopover } from "styling/for-header/HeaderPopoverStyling";
 import { v4 as uuidv4 } from "uuid";
 
 const menuList = [

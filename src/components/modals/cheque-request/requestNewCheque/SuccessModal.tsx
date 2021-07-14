@@ -1,10 +1,10 @@
-import {
-  ErrorModalHeader,
-  SuccessModalHeader,
-} from "styling/common/ModalStyling";
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
+import {
+  ErrorModalHeader,
+  SuccessModalHeader,
+} from "styling/for-modal/SwitchAccountModalStyling";
 
 export interface Props {
   successModalShow: boolean;

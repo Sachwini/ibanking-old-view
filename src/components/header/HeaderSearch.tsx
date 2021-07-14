@@ -2,7 +2,7 @@ import { IconStyle } from "styling/common/IconStyling";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { HeaderSearchContainer } from "styling/header/HeaderStyling";
+import { HeaderSearchContainer } from "styling/for-header/HeaderStyling";
 
 const HeaderSearch = () => {
   const [searchItem, setSearchItem] = useState<string[]>([

@@ -7,7 +7,7 @@ import {
   ImageIconWrapper,
   MyModal,
 } from "styling/for-modal/PaymentModalStyling";
-import { EyeContainer } from "styling/login/LoginStyling";
+import { EyeContainer } from "styling/LoginStyling";
 import { mpinScheme } from "validation-schema/modal_validation";
 
 interface formProps {

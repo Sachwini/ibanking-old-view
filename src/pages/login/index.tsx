@@ -3,7 +3,7 @@ import { Card, Form, Image } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import { setBearerToken, setRefreshToken } from "services/AuthService";
 import axios from "axios";
-import { LoginContainer, LoginWrapper } from "styling/login/LoginStyling";
+import { LoginContainer, LoginWrapper } from "styling/LoginStyling";
 import { MyButton } from "styling/common/ButtonStyling";
 import PoweredBySection from "./PoweredBySection";
 import RememberMe from "./RememberMe";
@@ -32,15 +32,6 @@ const Login = (props: RouteComponentProps<{}>) => {
     resolver: yupResolver(loginFormScheme),
     mode: "all",
   });
-
-  //   const fieldValueWatch = watch(["otp", "password", "userName"]);
-  //   if (
-  //     fieldValueWatch[0] === "" ||
-  //     fieldValueWatch[1] === "" ||
-  //     fieldValueWatch[2] === ""
-  //   ) {
-  //     setIsErrorsOccured(false);
-  //   }
 
   const handleLogin = async (formData: loginDetailsType) => {
     const url = LoginUrl({

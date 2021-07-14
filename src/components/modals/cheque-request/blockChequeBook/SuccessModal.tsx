@@ -1,10 +1,10 @@
-import {
-  ErrorModalHeader,
-  SuccessModalHeader,
-} from "styling/common/ModalStyling";
 import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
+import {
+  ErrorModalHeader,
+  SuccessModalHeader,
+} from "styling/for-modal/SwitchAccountModalStyling";
 
 export interface Props {
   successModalShow: boolean;
@@ -25,7 +25,6 @@ const SuccessModal = (props: Props) => {
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{ zIndex: 1400 }}
     >
       <Modal.Header className="justify-content-center p-0">
         {responseMessage?.status === "success" ? (

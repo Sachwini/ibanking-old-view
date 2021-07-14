@@ -8,7 +8,7 @@ import {
   LayoutSidebar,
   LayoutContentField,
   FooterWrapper,
-} from "styling/layout/LayoutStyling";
+} from "styling/for-layout/LayoutStyling";
 import { useEffect } from "react";
 import Footer from "components/Footer";
 import { useRecoilValue, useSetRecoilState } from "recoil";

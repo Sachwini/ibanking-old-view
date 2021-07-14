@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import { useStateValue } from "state-provider/StateProvider";
-import { ModalHeader, ModalFooter } from "styling/common/ModalStyling";
+import {
+  ModalHeader,
+  ModalFooter,
+} from "styling/for-modal/SwitchAccountModalStyling";
 import {
   AccountInfoWrapper,
   AccountWrapper,
@@ -11,12 +14,12 @@ import {
 } from "styling/for-modal/AccountSwitchStyling";
 
 export interface Props {
-  switchAccountModalShow: boolean;
-  switchAccountModalShowHandle: (show: boolean) => void;
+  modalShow: boolean;
+  handleModalShow: (show: boolean) => void;
 }
 
 const SwitchAccountModal = (props: Props) => {
-  const { switchAccountModalShow, switchAccountModalShowHandle } = props;
+  const { modalShow, handleModalShow } = props;
   const [{ customerDetails }, dispatch] = useStateValue();
   const [accountIndex, setAccountIndex] = useState<number>(0);
   const accountNoWithType = GetAllAccNoWithType();
@@ -33,12 +36,12 @@ const SwitchAccountModal = (props: Props) => {
       type: "SWITCH_ACCOUNT",
       value: accountIndex,
     });
-    switchAccountModalShowHandle(false);
+    handleModalShow(false);
   };
 
   return (
     <Modal
-      show={switchAccountModalShow}
+      show={modalShow}
       onHide={handleSubmit}
       backdrop="static"
       keyboard={false}
