@@ -48,19 +48,10 @@ function App() {
     () =>
       import("components/modals/fundTransfer/FundTransferSuccessConfirmation")
   );
-  const BankTransferSuccessConfirmation = React.lazy(
-    () =>
-      import("components/modals/bank-transfer/BankTransferSuccessConfirmation")
-  );
   const BrokerPayment = React.lazy(
     () => import("pages/payment/broker-payment/BrokerPayment")
   );
-  const BrokerPaymentSuccessConfirmation = React.lazy(
-    () =>
-      import(
-        "components/modals/broker-payment/BrokerPaymentSuccessConfirmation"
-      )
-  );
+
   const QuickPay = React.lazy(() => import("pages/payment/quick-pay"));
   const VendorPayment = React.lazy(
     () => import("pages/payment/vendor-payment")
@@ -146,16 +137,9 @@ function App() {
               path="/fund-transfer-success-confirmation"
               component={FundTransferSuccessConfirmation}
             />
-            <Route
-              path="/bank-transfer-success-confirmation"
-              component={BankTransferSuccessConfirmation}
-            />
             <Route path="/vendor-payment" component={VendorPayment} />
             <Route path="/broker-payment" component={BrokerPayment} />
-            <Route
-              path="/broker-payment-success-confirmation"
-              component={BrokerPaymentSuccessConfirmation}
-            />
+
             <Route path="/quick-payment" component={QuickPay} />
 
             {/* ---------- For Request Routing--------------------- */}

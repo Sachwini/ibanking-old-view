@@ -1,5 +1,4 @@
 import { Card, Table } from "react-bootstrap";
-import "./index.css";
 
 function FundTranfCharge() {
   return (

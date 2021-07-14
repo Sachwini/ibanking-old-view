@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleEye } from "helper/fun_modals";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal, Image } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import {
@@ -24,6 +24,8 @@ export interface Props {
 const MpinModal = (props: Props) => {
   const {
     register,
+    getValues,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<formProps>({
@@ -32,6 +34,12 @@ const MpinModal = (props: Props) => {
   });
   const { setMpin, mpinModalShow, mpinModalSubmitHandle, handleCancle } = props;
   const [mPinInputShow, setMpinInputShow] = useState<boolean>(true);
+
+  useEffect(() => {
+    const changempin = getValues("mpin");
+
+    setMpin(changempin);
+  }, [watch("mpin")]);
 
   const onSubmit = (data: formProps) => {
     setMpin(data.mpin);
@@ -43,7 +51,7 @@ const MpinModal = (props: Props) => {
       show={mpinModalShow}
       backdrop="static"
       keyboard={false}
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby="mpin-modal"
       centered
     >
       <Modal.Header className="modal_header">
@@ -64,7 +72,7 @@ const MpinModal = (props: Props) => {
         </ImageIconWrapper>
 
         <Form onSubmit={handleSubmit(onSubmit)} className="px-2 pb-2">
-          <Form.Group controlId="OTPForm" className="py-3 px-3">
+          <Form.Group controlId="mpinform" className="py-3 px-3">
             <InputGroup>
               <Form.Control
                 type={`${mPinInputShow ? "password" : "text"}`}

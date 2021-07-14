@@ -93,3 +93,16 @@ export const getBankAccNo = selector({
     return accountList;
   },
 });
+
+export const getName_Salutation = selector({
+  key: "get_user_salutation",
+  get: ({ get }) => {
+    const userDetailsData = get(userDetails);
+
+    if (userDetailsData.gender.toLowerCase() === "male") {
+      return { salutation: "Mr.", name: userDetailsData.fullName };
+    } else if (userDetailsData.gender.toLowerCase() === "female") {
+      return { salutation: "Mis.", name: userDetailsData.fullName };
+    } else return { salutation: "", name: userDetailsData.fullName };
+  },
+});

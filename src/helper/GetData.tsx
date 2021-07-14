@@ -1,4 +1,9 @@
-import { apiResponse, transctionHistoryType } from "models/apiResponse";
+import {
+  apiResponse,
+  transactionListType,
+  transctionHistoryType,
+  transferRequestDetailType,
+} from "models/apiResponse";
 import { userDetailType } from "models/for-pages/userAccount_PageModels";
 import {
   accValidationType,
@@ -149,10 +154,12 @@ export const formData_DefaultValue = {
   remarks: "",
 };
 
-export const getTransctionHistory = async (pageNo?: number) => {
-  const res = await get<apiResponse<transctionHistoryType>>(
-    `api/transactionhistory?mPin=10368&page_no=${pageNo ? pageNo : 1}`
-  );
+export const getTransctionHistory = async (mpin: string, pageNo?: number) => {
+  const res = await get<
+    apiResponse<
+      transctionHistoryType<transactionListType<transferRequestDetailType>>
+    >
+  >(`api/transactionhistory?mPin=${mpin}&page_no=${pageNo ? pageNo : 1}`);
 
   return res && res.data.details;
 };

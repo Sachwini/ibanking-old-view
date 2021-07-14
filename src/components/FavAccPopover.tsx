@@ -3,7 +3,7 @@ import {
   favAccListType,
   favAccType,
 } from "models/for-pages/favAcccount_PageModels";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { RiBankLine, RiUserStarLine } from "react-icons/ri";
 import { get } from "services/AjaxService";
@@ -18,6 +18,7 @@ interface Props {
 const FavAccPopover = ({ selectedDetails }: Props) => {
   const [showPopover, setShowPopover] = useState<boolean>(false);
   const [favAccList, setFavAccList] = useState<favAccListType[]>([]);
+  const target = useRef();
 
   useEffect(() => {
     let isSubscribed = true;

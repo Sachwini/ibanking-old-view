@@ -1,4 +1,9 @@
-import { apiResponse } from "models/apiResponse";
+import {
+  apiResponse,
+  brokerRequestDetailType,
+  transactionListType,
+  transctionHistoryType,
+} from "models/apiResponse";
 import {
   brokerDataType,
   brokerListType,
@@ -41,11 +46,6 @@ export const getServiceCharge = async (amount: string, brokerCode: string) => {
   return "";
 };
 
-// is otpp required is going here
-interface isOTPRequiredType {
-  otpRequired: boolean;
-}
-
 // Broker payment going here
 interface payAmountResponseType {
   transactionIdentifier: string;
@@ -81,7 +81,59 @@ export const payAmount = async (
       `/api/broker/payment?mPin=${mpin}`,
       modal
     );
-
     return response && response.data;
   }
+};
+
+export const getBrokerPaymentTHistory = async (
+  mpin: string,
+  pageNo?: number
+) => {
+  const res = await get<
+    apiResponse<
+      transctionHistoryType<transactionListType<brokerRequestDetailType>>
+    >
+  >(`api/transactionhistory?mPin=${mpin}&page_no=${pageNo ? pageNo : 1}`);
+
+  return res && res.data.details;
+};
+
+export const brokerFormDefaultValue = {
+  fromAccount: "",
+  DESTBrokerName: "",
+  clientID: "",
+  clientName: "",
+  mobileNumber: "",
+  transctionAmount: "",
+  remarks: "",
+  brokerCode: "",
+};
+
+export const brokerDefaultTHistoryData = {
+  amount: 0,
+  service: "",
+  serviceTo: "",
+  accountNumber: "",
+  transactionIdentifier: "",
+  date: "",
+  status: "",
+  airlinesPdfUrl: "any",
+  sessionId: "any",
+  id: 0,
+  createdDate: "",
+  destination: "",
+  charge: 0,
+  requestDetail: {
+    customer_address: "",
+    amount: "",
+    mobile_number: "",
+    serviceId: "",
+    serviceTo: "",
+  },
+  responseDetail: {
+    "Result Message": "",
+    RefStan: "",
+    status: "",
+  },
+  iconUrl: "",
 };

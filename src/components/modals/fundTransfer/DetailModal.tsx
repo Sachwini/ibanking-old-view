@@ -1,6 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
 import { formatLakh } from "services/numberService";
-import "../../modals/index.css";
 
 export interface Props {
   modalShow: boolean;

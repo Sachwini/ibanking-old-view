@@ -6,19 +6,19 @@ import StaticBar from "components/StaticBar";
 import { UserDetect } from "styling/common/PageTitleStyling";
 import { forDashboard } from "static-data/forBreadCrumb";
 import MiniStatementCard from "./MiniStatementCard";
+import { useRecoilValue } from "recoil";
+import { getName_Salutation } from "state-provider/globalUserData";
 
 const Dashboard = () => {
-  const [{ customerDetails }] = useStateValue();
+  const getSalutation = useRecoilValue(getName_Salutation);
 
   const pageTitle = {
     title: "Dashboard",
     subTitle: (
       <span>
         Welcome
-        <span className="pl-1">
-          {customerDetails?.gender?.toLowerCase() === "male" ? "Mr." : "Mrs."}
-        </span>
-        <UserDetect>{customerDetails.fullName}</UserDetect>
+        <span className="pl-1">{getSalutation.salutation}</span>
+        <UserDetect>{getSalutation.name}</UserDetect>
         in mBank i-Banking System
       </span>
     ),

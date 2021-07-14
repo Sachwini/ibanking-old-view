@@ -6,7 +6,7 @@ import { FundTransfer } from "./FundTransfer";
 import { BankTransfer } from "./BankTransfer";
 import { FundTransferLimit } from "./FundTransferLimit";
 import { ToastContainer } from "react-toastify";
-import "./index.css";
+
 import StaticBar from "components/StaticBar";
 import { fundTransferPageTitle } from "static-data/forPageTitle";
 import { forFundTransfer } from "static-data/forBreadCrumb";

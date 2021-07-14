@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
@@ -70,16 +70,13 @@ export const BankTransfer = () => {
   // For OTP Validation And Handle
   const [OTP, setOTP] = useState<string>("");
   const [isOTPRequired, setIsOTPRequired] = useState<boolean>(false);
-  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
-    isError: false as boolean,
-    message: "",
-  });
   const [formData, setFormData] = useState<bankTransferFormDataType>(
     formData_DefaultValue
   );
   const [transctionIdentifier, setTransctionIdentifier] = useState<string>("");
   const [dataForErrorModal, setDataForErrorModal] =
     useState<errorModalDataType>(errorModalDefaultData);
+  console.log("mpin :", mpin);
 
   const onSubmit = async (data: bankTransferFormDataType) => {
     setFormData(data);
@@ -160,16 +157,9 @@ export const BankTransfer = () => {
   //-------------otpModalSubmitHandle Modal---------------------//
   const otpModalSubmitHandle = async () => {
     // Enabling OTP Required at Transction Time True
-    const isEnabled = await enableOTPTransction(OTP);
-    if (isEnabled && isEnabled.status === true) {
-    } else {
-      setIsError_inOTPResponse({
-        isError: true,
-        message: isEnabled ? isEnabled.message : "",
-      });
-    }
-    setIsOTPRequired(false);
+    await enableOTPTransction(OTP);
 
+    setIsOTPRequired(false);
     // Calling Fund Transfer API
     fundTransferAPI();
   };
@@ -248,7 +238,7 @@ export const BankTransfer = () => {
       />
 
       <MpinModal
-        setMpin={(mPin: string) => setMpin(mPin)}
+        setMpin={(value) => setMpin(value)}
         mpinModalShow={mPinModalShow}
         mpinModalSubmitHandle={mpinModalSubmitHandle}
         handleCancle={(event: boolean) => setMpinModalShow(event)}
@@ -263,6 +253,7 @@ export const BankTransfer = () => {
       />
 
       <SuccessModal
+        mpin={mpin}
         successModalShow={successModalShow}
         successMessage={successMessage}
         transctionIdentifier={transctionIdentifier}

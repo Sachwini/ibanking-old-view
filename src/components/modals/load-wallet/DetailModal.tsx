@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import "../../modals/index.css";
 
 export interface Props {
   modalShow: boolean;

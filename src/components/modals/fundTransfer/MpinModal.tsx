@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import "../../modals/index.css";
 
 export interface Props {
   mpin: (mpin: string) => void;

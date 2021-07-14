@@ -6,13 +6,13 @@ export interface apiResponse<T> {
   detail: any;
 }
 
-export interface transctionHistoryType {
+export interface transctionHistoryType<tList> {
   lastPage: number;
-  transactionList: transactionListType[];
+  transactionList: tList[];
   currentPage: number;
 }
 
-export interface transactionListType {
+export interface transactionListType<r> {
   amount: number;
   service: string;
   serviceTo: string;
@@ -26,20 +26,28 @@ export interface transactionListType {
   createdDate: string;
   destination: string;
   charge: number;
-  requestDetail: requestDetailType;
+  requestDetail: r;
   responseDetail: responseDetailType;
   iconUrl: string;
-}
-
-export interface requestDetailType {
-  destinationBranchName: string;
-  destinationAccountNumber: string;
-  destinationBankName: string;
-  destinationAccountName: string;
 }
 
 export interface responseDetailType {
   "Result Message": string;
   RefStan: string;
   status: string;
+}
+
+export interface transferRequestDetailType {
+  destinationBranchName: string;
+  destinationAccountNumber: string;
+  destinationBankName: string;
+  destinationAccountName: string;
+}
+
+export interface brokerRequestDetailType {
+  customer_address: string;
+  amount: string;
+  mobile_number: string;
+  serviceId: string;
+  serviceTo: string;
 }

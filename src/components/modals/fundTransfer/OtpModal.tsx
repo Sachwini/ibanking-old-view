@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import "../../modals/index.css";
 
 export interface Props {
   userOTP: (otp: string) => void;

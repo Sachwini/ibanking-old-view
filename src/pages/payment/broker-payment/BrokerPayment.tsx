@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { Card, Col, Container, Form, Row } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
 import MpinModal from "components/modals/MpinModal";
 import BrokerDetailModal from "components/modals/broker-payment/BrokerDetailModal";
-import SuccessModal from "components/modals/broker-payment/SuccessModal";
 import StaticBar from "components/StaticBar";
 import { brokerPaymentPageTitle } from "static-data/forPageTitle";
 import { forBrokerPayment } from "static-data/forBreadCrumb";
-import { useSetRecoilState } from "recoil";
-import { isLoading } from "state-provider/forPageSetting";
 import { brokerPaymentFormDataType } from "models/for-pages/brokerPayment_PageModels";
 import BrokerPaymentForm from "./BrokerPaymentForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { brokerPaymentScheme } from "validation-schema/brokerPayment_validation";
-import { getServiceCharge, payAmount } from "helper/fun_BrokerPayment";
+import {
+  brokerFormDefaultValue,
+  getServiceCharge,
+  payAmount,
+} from "helper/fun_BrokerPayment";
 import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
 import OTPModal from "components/modals/OTPModal";
+import BrokerSuccessModal from "components/modals/broker-payment/SuccessModal";
+import BrokerErrorModal from "components/modals/broker-payment/BrokerErrorModal";
+import { Loader } from "pages/static/Loader";
 
 const BrokerPayment = () => {
   const {
@@ -33,40 +36,28 @@ const BrokerPayment = () => {
     mode: "all",
   });
 
-  const setLoading = useSetRecoilState(isLoading);
   const [charge, setCharge] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
   const [isOTPRequired, setIsOTPRequired] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
-  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
-    isError: false as boolean,
-    message: "" as string,
-  });
 
   // for modals handle
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
+  const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
+  const [successMessage, setSuccessMesage] = useState<string>("");
+  const [errorMoalShow, setErrorModalShow] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [transctionIdentifier, setTransctionIdentifier] = useState("");
+  const [formData, setFormData] = useState<brokerPaymentFormDataType>(
+    brokerFormDefaultValue
+  );
 
-  // for handle response error message
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-    details: "",
-  });
-  const [formData, setFormData] = useState<brokerPaymentFormDataType>({
-    fromAccount: "",
-    DESTBrokerName: "",
-    clientID: "",
-    clientName: "",
-    mobileNumber: "",
-    transctionAmount: "",
-    remarks: "",
-    brokerCode: "",
-  });
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: brokerPaymentFormDataType) => {
     setFormData(data);
+    setLoading(true);
 
     // getting service charge
     const serviceCharge = await getServiceCharge(
@@ -75,7 +66,8 @@ const BrokerPayment = () => {
     );
     if (serviceCharge) {
       setCharge(serviceCharge);
-    } else toast.error("here is error occured");
+    }
+    setLoading(false);
 
     setDetailModalShow(true);
   };
@@ -91,7 +83,7 @@ const BrokerPayment = () => {
     const isotprequired = await isOtpRequired(formData.transctionAmount);
     if (isotprequired) {
       setIsOTPRequired(isotprequired);
-    } else setIsSuccess(true);
+    } else doPayment();
   };
 
   const reSendOTP = async () => {
@@ -100,54 +92,42 @@ const BrokerPayment = () => {
       return;
     } else {
       setIsOTPRequired(false);
-      setIsSuccess(true);
+      doPayment();
     }
   };
 
   const otpModalSubmitHandle = async () => {
-    const isEnabled = await enableOTPTransction(otp);
-    if (isEnabled && isEnabled.status === true) {
-      // Calling Broker payment API
-    } else {
-      setIsError_inOTPResponse({
-        isError: true,
-        message: isEnabled ? isEnabled.message : "",
-      });
-    }
+    await enableOTPTransction(otp);
+    setIsOTPRequired(false);
     doPayment();
   };
 
-  // const handleSucessModal = () => {
-  //   // handeling broker payment
-  // };
-
   const doPayment = async () => {
+    // setLoading(true);
     try {
       const res = await payAmount(formData, isOTPRequired, mpin, otp, charge);
-      if (res && res.status === "Success" && res.details.status == "Complete") {
-        setResponseMessage({
-          status: "success",
-          message: res.message,
-          details: `${res.details.status} ${res.details.transactionIdentifier}`,
-        });
-        toast.success(
-          `${res.details.status} ${res.details.transactionIdentifier}`
-        );
-        setIsSuccess(true);
+      if (
+        res &&
+        res.status.toLowerCase() === "success" &&
+        res.detail.status.toLowerCase() == "complete"
+      ) {
+        // setLoading(false);
+        setSuccessMesage(res.message);
+        setTransctionIdentifier(res.detail.transactionIdentifier);
+        setSuccessModalShow(true);
       }
     } catch (error) {
       if (error.response) {
-        setResponseMessage({
-          status: "failure",
-          message: error.response.data.message,
-          details: error.response.data.details,
-        });
-        toast.error(error.response.data.message);
-        // setIsSuccess(true);
-        return;
+        // setLoading(false);
+        setErrorMessage(error.response.data.message);
+        setErrorModalShow(true);
       }
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Container>
@@ -196,20 +176,21 @@ const BrokerPayment = () => {
         handleCancle={(e) => setIsOTPRequired(e)}
       />
 
-      {/* <SuccessModal
-        successModalShow={isSuccess}
-        handleModalShow={(e) => setIsSuccessMessage(e)}
-        responseMessage={responseMessage}
-        fromAccount={fromAccount}
-        toAccount={broker ? brokerName : ""}
-        amount={amount}
-        charge={charge}
-        clientId={clientId}
-        clientName={clientName}
-        mobileNumber={mobileNumber}
+      <BrokerSuccessModal
+        successModalShow={successModalShow}
         mpin={mpin}
-      /> */}
-      <ToastContainer autoClose={5000} position="top-right" />
+        transctionIdentifier={transctionIdentifier}
+        successMessage={successMessage}
+        handleCancle={(e) => setSuccessModalShow(e)}
+      />
+
+      <BrokerErrorModal
+        errorModalShow={errorMoalShow}
+        errorInfoData={formData}
+        errorMessage={errorMessage}
+        transctionCharge={charge}
+        handleCancle={(e) => setErrorModalShow(e)}
+      />
     </Container>
   );
 };

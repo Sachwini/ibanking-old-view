@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
 import { get } from "services/AjaxService";
 import { formatLakh } from "services/numberService";
-import "./index.css";
+
 import { TransactionLimit } from "./model";
 
 export const FundTransferLimit = () => {

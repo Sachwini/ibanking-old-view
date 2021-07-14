@@ -1,5 +1,8 @@
 import { generatePDF, getTransctionHistory } from "helper/GetData";
-import { transactionListType } from "models/apiResponse";
+import {
+  transactionListType,
+  transferRequestDetailType,
+} from "models/apiResponse";
 import { tHistoryDefaultData } from "models/payment_ModalType";
 import { useEffect, useState } from "react";
 import { Button, Modal, Image } from "react-bootstrap";
@@ -7,9 +10,10 @@ import { AiOutlineFilePdf } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
 import { GiCheckMark } from "react-icons/gi";
 import { ImArrowRight } from "react-icons/im";
-import { VscError } from "react-icons/vsc";
+import { useSetRecoilState } from "recoil";
 import { baseUrl } from "services/BaseUrl";
 import { formatLakh } from "services/numberService";
+import { isLoading } from "state-provider/forPageSetting";
 import {
   AccountView,
   MySuccessModal,
@@ -19,6 +23,7 @@ import {
 } from "styling/for-modal/PaymentModalStyling";
 
 export interface Props {
+  mpin: string;
   transctionIdentifier: string;
   successMessage: string;
   successModalShow: boolean;
@@ -27,24 +32,31 @@ export interface Props {
 
 const SuccessModal = (props: Props) => {
   const [tHistoryData, setTHistoryData] =
-    useState<transactionListType>(tHistoryDefaultData);
+    useState<transactionListType<transferRequestDetailType>>(
+      tHistoryDefaultData
+    );
+  const setLoading = useSetRecoilState(isLoading);
 
   useEffect(() => {
     let isSubscribed = true;
+    setLoading(true);
     const getData = async () => {
-      const res = await getTransctionHistory();
-      if (isSubscribed && res) {
-        const data = res.transactionList[0];
-        setTHistoryData(data);
+      if (props.successModalShow) {
+        const res = await getTransctionHistory(props.mpin);
+        if (isSubscribed && res) {
+          const data = res.transactionList[0];
+          setTHistoryData(data);
+        }
       }
     };
 
     getData();
+    setLoading(false);
 
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [props.successModalShow]);
 
   const handleDownload = async () => {
     const res = await generatePDF(props.transctionIdentifier);
@@ -60,7 +72,7 @@ const SuccessModal = (props: Props) => {
       show={props.successModalShow}
       backdrop="static"
       keyboard={false}
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby="bank-transfer-success-modal"
       centered
       size="lg"
     >

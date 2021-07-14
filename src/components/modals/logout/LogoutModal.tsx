@@ -1,11 +1,10 @@
-import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import styled from "styled-components";
 
 export interface Props {
   LogoutModalShow: boolean;
-  handleModalShow: (show: boolean) => void;
-  confirmModalCancleButton: (e: React.FormEvent) => void;
+  logoutModalSubmitHandle: () => void;
+  handleCancle: (e: boolean) => void;
 }
 
 const ModalStyle = styled.div`
@@ -25,7 +24,7 @@ const ModalStyle = styled.div`
   }
 `;
 function LogoutModal(props: Props) {
-  const { LogoutModalShow, handleModalShow, confirmModalCancleButton } = props;
+  const { LogoutModalShow, logoutModalSubmitHandle, handleCancle } = props;
   return (
     <Modal
       show={LogoutModalShow}
@@ -33,7 +32,6 @@ function LogoutModal(props: Props) {
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{ zIndex: 1400 }}
       size="sm"
     >
       <ModalStyle>
@@ -48,14 +46,11 @@ function LogoutModal(props: Props) {
             <Button
               variant="secondary"
               className="modal_cancel"
-              onClick={() => handleModalShow(false)}
+              onClick={() => handleCancle(false)}
             >
               Cancel
             </Button>
-            <Button
-              className="modal_ok"
-              onClick={(e) => confirmModalCancleButton(e)}
-            >
+            <Button className="modal_ok" onClick={logoutModalSubmitHandle}>
               OK
             </Button>
           </div>

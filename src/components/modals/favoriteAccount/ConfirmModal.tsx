@@ -1,5 +1,4 @@
 import { Button, Modal, ListGroup } from "react-bootstrap";
-import "../../modals/index.css";
 
 export interface Props {
   modalShow: boolean;

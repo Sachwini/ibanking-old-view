@@ -82,7 +82,7 @@ const OTPModal = (props: Props) => {
       show={otpModalShow}
       backdrop="static"
       keyboard={false}
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby="otp-modal"
       centered
     >
       <Modal.Header className="modal_header">
