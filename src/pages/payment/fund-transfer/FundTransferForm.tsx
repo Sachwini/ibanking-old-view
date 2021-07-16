@@ -1,8 +1,8 @@
 import FavAccPopover from "components/FavAccPopover";
 import { getBranchList } from "helper/fun_FundTransfer";
 import { getFundTransferBranchID } from "helper/fun_FundTransfer";
-import { favAccListType } from "models/for-pages/favAcccount_PageModels";
-import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransfer_Models";
+import { favAccListType } from "models/for-pages/favAcccountModels";
+import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransferModels";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";

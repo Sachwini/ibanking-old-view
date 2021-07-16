@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sdetails } from "pages/user-account/statement/model";
-import { GetAccountNumber } from "helper/CustomerData";
 import { formatDate, yearBack } from "helper/DateConfig";
-import { getStatement } from "services/BankServices";
-import { Loader } from "pages/static/Loader";
 import StaticBar from "components/StaticBar";
 import { activityLogPageTitle } from "static-data/forPageTitle";
 import { forActivityLog } from "static-data/forBreadCrumb";
@@ -12,8 +8,11 @@ import {
   MiniStatementWrapper,
 } from "styling/for-dashboard/MimiStatementStyling";
 import { PageTitle } from "components/PageTitle";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isLoading } from "state-provider/forPageSetting";
+import { Sdetails } from "models/StatementModels";
+import { getSelectedAcc } from "state-provider/globalUserData";
+import { getStatement } from "helper/GetData";
 
 let oneYearBack = yearBack(new Date());
 
@@ -22,8 +21,8 @@ const Activities = () => {
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
   const setLoading = useSetRecoilState(isLoading);
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
 
-  const accountNumber = GetAccountNumber();
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
 
@@ -31,16 +30,14 @@ const Activities = () => {
     let isSubscribed = true;
     const init = async () => {
       try {
-        if (accountNumber !== "") {
-          const res = await getStatement(
-            accountNumber,
-            formatedStartDate,
-            formatedEndDate
-          );
-          if (res || isSubscribed) {
-            setStatementData(res.slice(0, 19));
-            setLoading(false);
-          }
+        const res = await getStatement(
+          selectedAccountDetails.accountNumber,
+          formatedStartDate,
+          formatedEndDate
+        );
+        if (res || isSubscribed) {
+          setStatementData(res.slice(0, 19));
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -51,7 +48,7 @@ const Activities = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [accountNumber]);
+  }, [selectedAccountDetails.accountNumber]);
 
   return (
     <>

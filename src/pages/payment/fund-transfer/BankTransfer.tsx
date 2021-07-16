@@ -7,7 +7,7 @@ import MpinModal from "components/modals/MpinModal";
 import OTPModal from "components/modals/OTPModal";
 import ErrorModal from "components/modals/ErrorModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
-import { bankTransferFormDataType } from "models/for-pages/bankTransfer_models";
+import { bankTransferFormDataType } from "models/for-pages/bankTransferModels";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { bankTransferScheme } from "validation-schema/bankTransfer_validation";
 import BankTransferForm from "./BankTransferForm";
@@ -15,10 +15,10 @@ import { useForm } from "react-hook-form";
 import {
   formDataFormat,
   formData_DefaultValue,
-  getDataForErrorModal,
+  getDataFor_BankTransferErrorModal,
   getTransctionCharge,
   isAccountValid,
-} from "helper/GetData";
+} from "helper/fun_BankTransfer";
 import { toast } from "react-toastify";
 import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
 import { Loader } from "pages/static/Loader";
@@ -124,7 +124,9 @@ export const BankTransfer = () => {
       }
     }
 
-    setDataForErrorModal(getDataForErrorModal(data, transctionCharge));
+    setDataForErrorModal(
+      getDataFor_BankTransferErrorModal(data, transctionCharge)
+    );
 
     // const confirmModalData =
     setLoading(false);

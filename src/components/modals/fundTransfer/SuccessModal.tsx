@@ -1,4 +1,4 @@
-import { generatePDF } from "helper/GetData";
+import { generatePDF } from "helper/common_Functions";
 import { transactionListType } from "models/apiResponse";
 import { Button, Modal, Image } from "react-bootstrap";
 import { AiOutlineFilePdf } from "react-icons/ai";

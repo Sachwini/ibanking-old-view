@@ -1,4 +1,4 @@
-import { fundTransferFormDataType } from "pages/payment/fund-transfer/model";
+import { fundTransferFormDataType } from "models/for-pages/fundTransferModels";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import { ImArrowRight } from "react-icons/im";

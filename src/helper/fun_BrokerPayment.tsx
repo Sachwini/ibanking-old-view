@@ -8,7 +8,7 @@ import {
   brokerDataType,
   brokerListType,
   brokerPaymentFormDataType,
-} from "models/for-pages/brokerPayment_PageModels";
+} from "models/for-pages/brokerPaymentModels";
 import { get, post } from "services/AjaxService";
 
 export const getBrokerList = async () => {

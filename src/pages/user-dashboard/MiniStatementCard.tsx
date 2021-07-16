@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sdetails } from "pages/user-account/statement/model";
-import { GetAccountNumber } from "helper/CustomerData";
 import { formatDate, yearBack } from "helper/DateConfig";
-import { getStatement } from "services/BankServices";
 import {
   MiniStatementContainer,
   MiniStatementWrapper,
@@ -12,6 +9,10 @@ import { ButtonWrapper } from "styling/common/ButtonStyling";
 import { PageTitle } from "components/PageTitle";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { getStatement } from "helper/GetData";
+import { Sdetails } from "models/StatementModels";
+import { useRecoilValue } from "recoil";
+import { getSelectedAcc } from "state-provider/globalUserData";
 
 let oneYearBack = yearBack(new Date());
 
@@ -19,9 +20,8 @@ const MiniStatementCard = () => {
   const startDate = new Date(`${oneYearBack}`);
   const endDate = new Date();
   const [statementData, setStatementData] = useState<Sdetails[]>([]);
-  // const [color, setColor] = useState<string>("green")
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
 
-  const accountNumber = GetAccountNumber();
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
 
@@ -29,15 +29,13 @@ const MiniStatementCard = () => {
     let isSubscribed = true;
     const init = async () => {
       try {
-        if (accountNumber !== "") {
-          const res = await getStatement(
-            accountNumber,
-            formatedStartDate,
-            formatedEndDate
-          );
-          if (res || isSubscribed) {
-            setStatementData(res.slice(0, 6));
-          }
+        const res = await getStatement(
+          selectedAccountDetails.accountNumber,
+          formatedStartDate,
+          formatedEndDate
+        );
+        if (res || isSubscribed) {
+          setStatementData(res.slice(0, 6));
         }
       } catch (error) {
         console.log(error);
@@ -48,7 +46,7 @@ const MiniStatementCard = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [accountNumber]);
+  }, [selectedAccountDetails.accountNumber]);
 
   return (
     <MiniStatementContainer>

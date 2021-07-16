@@ -2,7 +2,7 @@ import {
   brokerDefaultTHistoryData,
   getBrokerPaymentTHistory,
 } from "helper/fun_BrokerPayment";
-import { generatePDF } from "helper/GetData";
+import { generatePDF } from "helper/common_Functions";
 import {
   brokerRequestDetailType,
   transactionListType,

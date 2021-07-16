@@ -1,4 +1,4 @@
-import { generatePDF, getTransctionHistory } from "helper/GetData";
+import { generatePDF, getTransctionHistory } from "helper/common_Functions";
 import {
   transactionListType,
   transferRequestDetailType,

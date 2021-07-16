@@ -1,4 +1,3 @@
-import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
 import { useState } from "react";
 import { Card, Col, Row, Button, Form } from "react-bootstrap";
 import { BsPencilSquare } from "react-icons/bs";
@@ -10,6 +9,9 @@ import { apiResponse } from "models/apiResponse";
 import DetailModal from "components/modals/cheque-request/requestNewCheque/DetailModal";
 import MpinModal from "components/modals/MpinModal";
 import SuccessModal from "components/modals/cheque-request/requestNewCheque/SuccessModal";
+import { useRecoilValue } from "recoil";
+import { getBankAccNo } from "state-provider/globalUserData";
+import { v4 as uuidv4 } from "uuid";
 
 const ChequeReqHeader = styled.div`
   display: flex;
@@ -24,9 +26,8 @@ const ChequeReqHeader = styled.div`
 `;
 
 function RequestNewCheque() {
-  const accountNumber = GetAccountNumber();
-  const getAllAccountNumber = GetAllAccountNumber();
-  const [fromAccount, setFromAccount] = useState<string>(accountNumber);
+  const getAllAccountNumber = useRecoilValue(getBankAccNo);
+  const [fromAccount, setFromAccount] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
   const [chequeLeaves, setChequeLeaves] = useState<string>("10");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -118,15 +119,13 @@ function RequestNewCheque() {
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                 >
-                  {!getAllAccountNumber ? (
-                    <option></option>
-                  ) : (
-                    getAllAccountNumber?.map((accNum: any) => (
-                      <option value={accNum} key={accNum}>
-                        {accNum}
+                  {getAllAccountNumber.map((accNum) => {
+                    return (
+                      <option value={accNum.accNo} key={uuidv4()}>
+                        {accNum.mainCode}
                       </option>
-                    ))
-                  )}
+                    );
+                  })}
                 </Form.Control>
               </Col>
             </Form.Group>

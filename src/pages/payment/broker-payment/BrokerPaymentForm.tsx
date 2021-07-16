@@ -7,7 +7,7 @@ import { isLoading } from "state-provider/forPageSetting";
 import {
   brokerDataType,
   brokerFormPropsType,
-} from "models/for-pages/brokerPayment_PageModels";
+} from "models/for-pages/brokerPaymentModels";
 import { getBrokerCode, getBrokerList } from "helper/fun_BrokerPayment";
 import { getBankAccNo } from "state-provider/globalUserData";
 import { v4 as uuidv4 } from "uuid";

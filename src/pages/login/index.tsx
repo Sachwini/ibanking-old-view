@@ -8,7 +8,7 @@ import { MyButton } from "styling/common/ButtonStyling";
 import PoweredBySection from "./PoweredBySection";
 import RememberMe from "./RememberMe";
 import { useForm } from "react-hook-form";
-import { loginDetailsType } from "models/for-pages/login_PageModels";
+import { loginDetailsType } from "models/for-pages/loginModels";
 import OTPLoginForm from "./OTPLoginForm";
 import LoginForm from "./LoginForm";
 import { LoginUrl } from "helper/LoginUrlManage";

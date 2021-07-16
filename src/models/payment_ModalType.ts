@@ -1,4 +1,4 @@
-import { bankTransferFormDataType } from "./for-pages/bankTransfer_models";
+import { bankTransferFormDataType } from "./for-pages/bankTransferModels";
 
 export interface modalProps {
   data: bankTransferFormDataType;

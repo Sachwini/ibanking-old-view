@@ -1,4 +1,4 @@
-export interface userDetail {
+export interface userDetailType {
   fullName: string;
   firstName: string;
   middleName: string;
@@ -24,7 +24,7 @@ export interface userDetail {
   appVerification: boolean;
   beneficiaryFlag: boolean;
   deviceToken: string;
-  accountDetail: userAccount[];
+  accountDetail: userAccountType[];
   oauthTokenCount: number;
   firebaseToken: boolean;
 
@@ -33,7 +33,7 @@ export interface userDetail {
   registered: boolean;
 }
 
-export interface userAccount {
+export interface userAccountType {
   interestRate: string;
   accountType: string;
   branchName: string;
@@ -49,4 +49,36 @@ export interface userAccount {
   sms: string;
   id: string;
   primary: string;
+}
+
+export const activeAccDefaultValue = {
+  interestRate: "",
+  accountType: "",
+  branchName: "",
+  accruedInterest: "",
+  accountNumber: "",
+  accountHolderName: "",
+  availableBalance: "",
+  branchCode: "",
+  mainCode: "",
+  minimumBalance: "",
+  clientCode: "",
+  mobileBanking: "",
+  sms: "",
+  id: "",
+  primary: "",
+};
+
+// change mpin type
+export interface changeMpinType {
+  currentMpin: string;
+  newMpin: string;
+  confirmMpin: string;
+}
+
+export interface changeMpinErrorType {
+  message: string;
+  password: string;
+  repassword: string;
+  oldPassword: string;
 }

@@ -1,8 +1,5 @@
 import { apiResponse } from "models/apiResponse";
-import {
-  favAccListType,
-  favAccType,
-} from "models/for-pages/favAcccount_PageModels";
+import { favAccListType, favAccType } from "models/for-pages/favAcccountModels";
 import { useEffect, useRef, useState } from "react";
 import { OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { RiBankLine, RiUserStarLine } from "react-icons/ri";

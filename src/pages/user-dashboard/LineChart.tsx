@@ -1,35 +1,25 @@
+import { getGraph } from "helper/GetData";
 import { useEffect, useState } from "react";
-import { GetAllAccountNumber } from "helper/CustomerData";
 import { Card } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import { getGraph } from "services/BankServices";
-import { useStateValue } from "state-provider/StateProvider";
+import { useRecoilValue } from "recoil";
+import { getSelectedAcc } from "state-provider/globalUserData";
 
 function LineChart() {
-  const [{ switchAccount }] = useStateValue();
-  const accountNumber = GetAllAccountNumber();
   const [days, setDays] = useState<string[]>([]);
   const [balance, setBalance] = useState<any>([]);
-
-  let actualAccountNumber = "";
-  switch (switchAccount) {
-    case switchAccount:
-      actualAccountNumber = accountNumber[switchAccount];
-      break;
-  }
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
 
   const loadDays: string[] = [];
   const loadBalance: number[] = [];
   const getChartData = async () => {
     try {
-      if (actualAccountNumber !== "") {
-        const graphData = await getGraph(actualAccountNumber);
-        if (graphData) {
-          graphData.forEach((x: any) => loadDays.push(x.day));
-          graphData.forEach((x: any) => loadBalance.push(x.balance));
-          setDays(loadDays);
-          setBalance(loadBalance);
-        }
+      const graphData = await getGraph(selectedAccountDetails.accountNumber);
+      if (graphData) {
+        graphData.forEach((x: any) => loadDays.push(x.day));
+        graphData.forEach((x: any) => loadBalance.push(x.balance));
+        setDays(loadDays);
+        setBalance(loadBalance);
       }
     } catch (error) {
       console.log(error);

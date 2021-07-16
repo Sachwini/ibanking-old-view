@@ -1,10 +1,10 @@
 import { apiResponse } from "models/apiResponse";
+import { QpayService } from "models/for-pages/quickPayModels";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Route, Switch, useRouteMatch } from "react-router";
 import { get } from "services/AjaxService";
 import GeneralMerchant from "./GeneralMerchant";
-import { QpayService } from "./model";
 import Test from "./Test";
 
 const QuickPay = () => {

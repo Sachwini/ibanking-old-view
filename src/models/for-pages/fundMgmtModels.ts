@@ -1,4 +1,5 @@
-export interface WalletList {
+// load wallet page types
+export interface walletListType {
   id: number;
   name: string;
   descOneFieldName: string;
@@ -21,7 +22,7 @@ export interface WalletList {
   status: string;
 }
 
-export interface LoadFundWallet {
+export interface loadFundWalletType {
   account_number: string;
   amount: string;
   desc_one: string;
@@ -29,4 +30,11 @@ export interface LoadFundWallet {
   wallet_id: string;
   validationIdentifier: string;
   skipValidation: boolean;
+}
+
+export interface loadWalletFormDataType {
+  fromAccount: string;
+  contact: string;
+  amount: string;
+  remarks: string;
 }

@@ -1,4 +1,3 @@
-import { GetAccountNumber, GetAllAccountNumber } from "helper/CustomerData";
 import { useState } from "react";
 import { Card, Col, Row, Button, Form } from "react-bootstrap";
 import styled from "styled-components";
@@ -10,6 +9,9 @@ import SuccessModal from "components/modals/cheque-request/blockChequeBook/Succe
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 import { toast } from "react-toastify";
+import { useRecoilValue } from "recoil";
+import { getBankAccNo } from "state-provider/globalUserData";
+import { v4 as uuidv4 } from "uuid";
 
 const ActiveStyle = {
   color: "red",
@@ -30,9 +32,8 @@ const ChequeBlockHeader = styled.div`
 `;
 
 function BlockChequeBook() {
-  const accountNumber = GetAccountNumber();
-  const getAllAccountNumber = GetAllAccountNumber();
-  const [fromAccount, setFromAccount] = useState<string>(accountNumber);
+  const getAllAccountNumber = useRecoilValue(getBankAccNo);
+  const [fromAccount, setFromAccount] = useState<string>("");
   const [chequeNumber, setChequeNumber] = useState<string>("");
   const [mpin, setMpin] = useState<string>("");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
@@ -102,8 +103,8 @@ function BlockChequeBook() {
             <h4 className="text-muted">Block Cheque Book</h4>
           </ChequeBlockHeader>
         </Card.Header>
+
         <Card.Body>
-          {/* <h3 className="mb-3">Input Details</h3> */}
           <span className="text-muted">{localDate()}</span>
           <h6 className="mt-4 text-muted">I would like to block my cheque</h6>
           <hr style={ActiveStyle} />
@@ -124,15 +125,13 @@ function BlockChequeBook() {
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                 >
-                  {!getAllAccountNumber ? (
-                    <option></option>
-                  ) : (
-                    getAllAccountNumber?.map((accNum: any) => (
-                      <option value={accNum} key={accNum}>
-                        {accNum}
+                  {getAllAccountNumber.map((accNum) => {
+                    return (
+                      <option value={accNum.accNo} key={uuidv4()}>
+                        {accNum.mainCode}
                       </option>
-                    ))
-                  )}
+                    );
+                  })}
                 </Form.Control>
               </Col>
             </Form.Group>
@@ -174,6 +173,7 @@ function BlockChequeBook() {
           </Form>
         </Card.Body>
       </Card>
+
       <DetailModal
         modalShow={detailModalShow}
         handleModalShow={(event: boolean) => setDetailModalShow(event)}

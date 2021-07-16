@@ -1,8 +1,6 @@
-import { GetAllAccNoWithType } from "helper/CustomerData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
-import { useStateValue } from "state-provider/StateProvider";
 import {
   ModalHeader,
   ModalFooter,
@@ -12,6 +10,16 @@ import {
   AccountWrapper,
   IconWrapper,
 } from "styling/for-modal/AccountSwitchStyling";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  allAccListDetail,
+  getSelectedAcc,
+  setSelectedAccDetail,
+} from "state-provider/globalUserData";
+import {
+  activeAccDefaultValue,
+  userAccountType,
+} from "models/for-pages/userAccountModels";
 
 export interface Props {
   modalShow: boolean;
@@ -20,22 +28,29 @@ export interface Props {
 
 const SwitchAccountModal = (props: Props) => {
   const { modalShow, handleModalShow } = props;
-  const [{ customerDetails }, dispatch] = useStateValue();
-  const [accountIndex, setAccountIndex] = useState<number>(0);
-  const accountNoWithType = GetAllAccNoWithType();
+  const [activeAcc, setActiveAcc] = useState<userAccountType>(
+    activeAccDefaultValue
+  );
+  const selectedAcc = useRecoilValue(getSelectedAcc);
+  const [accountIndex, setAccountIndex] = useState<string>(selectedAcc.id);
 
-  const handleActive = (index: number) => {
+  const setSelectedAccount = useSetRecoilState(setSelectedAccDetail);
+  const allAccountListDetail = useRecoilValue(allAccListDetail);
+
+  const handleActive = (index: string) => {
     if (index === accountIndex) {
       return "yes";
     }
     return "no";
   };
 
+  const handleSelection = (data: userAccountType) => {
+    setAccountIndex(data.id);
+    setActiveAcc(data);
+  };
+
   const handleSubmit = () => {
-    dispatch({
-      type: "SWITCH_ACCOUNT",
-      value: accountIndex,
-    });
+    setSelectedAccount({ isSelected: true, selectedAccDetails: activeAcc });
     handleModalShow(false);
   };
 
@@ -51,22 +66,22 @@ const SwitchAccountModal = (props: Props) => {
     >
       <ModalHeader closeButton>Switch Account</ModalHeader>
       <Modal.Body>
-        {accountNoWithType.map((items, index) => {
+        {allAccountListDetail.map((items) => {
           return (
             <AccountWrapper
-              onClick={() => setAccountIndex(index)}
-              key={index}
-              active={handleActive(index)}
+              onClick={() => handleSelection(items)}
+              key={items.id}
+              active={handleActive(items.id)}
             >
-              <IconWrapper active={handleActive(index)}>
+              <IconWrapper active={handleActive(items.id)}>
                 <FiUser size={30} />
               </IconWrapper>
 
               <span className="active_span" />
 
               <AccountInfoWrapper>
-                <p className="account_number"> {items.accountNumber} </p>
-                <p className="account_type">{items.accoutType}</p>
+                <p className="account_number"> {items.mainCode} </p>
+                <p className="account_type">{items.accountType}</p>
               </AccountInfoWrapper>
             </AccountWrapper>
           );

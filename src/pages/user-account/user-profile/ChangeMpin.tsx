@@ -1,4 +1,4 @@
-import { Button, Card, Form, Container, Col, Row } from "react-bootstrap";
+import { Card, Form, Container, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
@@ -6,11 +6,11 @@ import { toast, ToastContainer } from "react-toastify";
 import StaticBar from "components/StaticBar";
 import { ChangeMpinPageTitle } from "static-data/forPageTitle";
 import { forChangeMpin } from "static-data/forBreadCrumb";
-import { changeMpinType } from "pages/payment/fund-transfer/model";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ChangeMpinForm from "./ChangeMpinForm";
 import { mpinChangeSchema } from "validation-schema/mpinChange_validation";
+import { changeMpinType } from "models/for-pages/userAccountModels";
 
 function ChangeMpin() {
   const {

@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { transactionListType } from "models/apiResponse";
 import { useForm } from "react-hook-form";
-import { fundTransferFormDataType } from "./model";
 import FundTransferForm from "./FundTransferForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fundTrasferScheme } from "validation-schema/fundTransfer_validation";
@@ -13,12 +12,15 @@ import { useRecoilValue } from "recoil";
 import { isLoading } from "state-provider/forPageSetting";
 import {
   fundTransfer_formData_DefaultValue,
-  fundTransfer_getDataForErrorModal,
-  getTransctionHistory,
-} from "helper/GetData";
+  getDataFor_FundTransferErrorModal,
+} from "helper/fun_FundTransfer";
 import ConfirmDetailModal from "components/modals/fundTransfer/ConfirmDetailModal";
 import MpinModal from "components/modals/MpinModal";
-import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
+import {
+  enableOTPTransction,
+  getTransctionHistory,
+  isOtpRequired,
+} from "helper/common_Functions";
 import OTPModal from "components/modals/OTPModal";
 import ErrorModal from "components/modals/fundTransfer/ErrorModal";
 import {
@@ -27,6 +29,7 @@ import {
   tHistoryDefaultData,
 } from "models/payment_ModalType";
 import SuccessModal from "components/modals/fundTransfer/SuccessModal";
+import { fundTransferFormDataType } from "models/for-pages/fundTransferModels";
 
 export const FundTransfer = () => {
   const {
@@ -216,7 +219,7 @@ export const FundTransfer = () => {
   // call account validation and open detail modal
   const onSubmit = async (data: fundTransferFormDataType) => {
     setFormData(data);
-    setDataForErrorModal(fundTransfer_getDataForErrorModal(data));
+    setDataForErrorModal(getDataFor_FundTransferErrorModal(data));
     accountValidation();
     openDetailModel();
   };

@@ -1,8 +1,9 @@
 import { apiResponse } from "models/apiResponse";
 import {
+  fundTransferFormDataType,
   getBankBranchList_FundTransferType,
   getBranchFundTransferType,
-} from "models/for-pages/fundTransfer_Models";
+} from "models/for-pages/fundTransferModels";
 import { get } from "services/AjaxService";
 
 export const getBranchList = async () => {
@@ -38,4 +39,26 @@ export const getFundTransferBranchID = (
       return "null";
     }
   } else return "null";
+};
+
+export const getDataFor_FundTransferErrorModal = (
+  data: fundTransferFormDataType
+) => {
+  return {
+    fromAccount: data.fromAccount,
+    DESTBranchName: data.DESTBranchName,
+    toAccount: data.toAccount,
+    destinationAccountHolderName: data.destinationAccountHolderName,
+    DESTBranchID: data.DESTBranchID,
+    amount: data.amount,
+  };
+};
+
+export const fundTransfer_formData_DefaultValue = {
+  fromAccount: "",
+  DESTBranchName: "",
+  toAccount: "",
+  destinationAccountHolderName: "",
+  DESTBranchID: "null",
+  amount: "",
 };

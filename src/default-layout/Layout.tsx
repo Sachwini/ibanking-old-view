@@ -14,7 +14,7 @@ import Footer from "components/Footer";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isLoading, isMenuButtonClicked } from "state-provider/forPageSetting";
 import { userDetails } from "state-provider/globalUserData";
-import { userDetailType } from "models/for-pages/userAccount_PageModels";
+import { userDetailType } from "models/for-pages/userAccountModels";
 import { loadUserDetails } from "helper/GetData";
 import { Loader } from "pages/static/Loader";
 

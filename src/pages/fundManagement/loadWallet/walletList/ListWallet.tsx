@@ -1,5 +1,6 @@
 import StaticBar from "components/StaticBar";
 import { apiResponse } from "models/apiResponse";
+import { walletListType } from "models/for-pages/fundMgmtModels";
 import { Loader } from "pages/static/Loader";
 import { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
@@ -11,18 +12,19 @@ import { useStateValue } from "state-provider/StateProvider";
 import { forLoadWallet } from "static-data/forBreadCrumb";
 import { loadWalletPageTitle } from "static-data/forPageTitle";
 import "./ListWallet.css";
-import { WalletList } from "./model";
 
 function ListWallet() {
   const [{}, dispatch] = useStateValue();
-  const [wallets, setWallets] = useState<WalletList[]>([]);
+  const [wallets, setWallets] = useState<walletListType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isSubscribed = true;
     const getListOfWallet = async () => {
       try {
-        const res = await get<apiResponse<WalletList[]>>("/api/wallet/list");
+        const res = await get<apiResponse<walletListType[]>>(
+          "/api/wallet/list"
+        );
 
         if (res) {
           if (isSubscribed) {
@@ -52,48 +54,46 @@ function ListWallet() {
     });
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Container className="justify-content-center">
-          <StaticBar
-            pageTitle={loadWalletPageTitle}
-            breadCrumbData={forLoadWallet}
-          />
-          <div className="d-flex flex-wrap mt-1">
-            {wallets?.map((wallet, index) => {
-              return (
-                <Link
-                  onClick={() => {
-                    handleInfo(index);
-                  }}
-                  to="/list-wallet/load-wallet"
-                  key={index}
-                  style={{ color: "inherit", textDecoration: "inherit" }}
-                >
-                  <Card className="card__ctrl" key={index}>
-                    <Card.Body className="cardBody__ctrl">
-                      <Card.Title>
-                        <Image
-                          width="70px"
-                          height="70px"
-                          src={`${baseUrl}/mbank/serviceIcon/${wallet.icon}`}
-                          alt={wallet?.name}
-                          className="wallet__icon"
-                        />
-                      </Card.Title>
-                      <Card.Text className="cardText">{wallet?.name}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              );
-            })}
-          </div>
-        </Container>
-      )}
-    </>
+    <Container className="justify-content-center">
+      <StaticBar
+        pageTitle={loadWalletPageTitle}
+        breadCrumbData={forLoadWallet}
+      />
+      <div className="d-flex flex-wrap mt-1">
+        {wallets?.map((wallet, index) => {
+          return (
+            <Link
+              onClick={() => {
+                handleInfo(index);
+              }}
+              to="/list-wallet/load-wallet"
+              key={index}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Card className="card__ctrl" key={index}>
+                <Card.Body className="cardBody__ctrl">
+                  <Card.Title>
+                    <Image
+                      width="70px"
+                      height="70px"
+                      src={`${baseUrl}/mbank/serviceIcon/${wallet.icon}`}
+                      alt={wallet?.name}
+                      className="wallet__icon"
+                    />
+                  </Card.Title>
+                  <Card.Text className="cardText">{wallet?.name}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    </Container>
   );
 }
 

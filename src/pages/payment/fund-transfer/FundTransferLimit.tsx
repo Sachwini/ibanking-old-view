@@ -1,14 +1,14 @@
-import { GetAccountNumber } from "helper/CustomerData";
 import { apiResponse } from "models/apiResponse";
+import { TransactionLimit } from "models/transctionLimit_Models";
 import { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
+import { useRecoilValue } from "recoil";
 import { get } from "services/AjaxService";
 import { formatLakh } from "services/numberService";
-
-import { TransactionLimit } from "./model";
+import { getSelectedAcc } from "state-provider/globalUserData";
 
 export const FundTransferLimit = () => {
-  const accountNumber = GetAccountNumber();
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
   const profileType = "CustomerProfile";
   const [transactionLimitDetails, setTransactionLimitDetails] =
     useState<TransactionLimit>();
@@ -20,7 +20,7 @@ export const FundTransferLimit = () => {
         "api/limit?profileType=" +
           profileType +
           "&accountNumber=" +
-          accountNumber
+          selectedAccountDetails.accountNumber
       );
       if (isSubscribed) {
         setTransactionLimitDetails(res.data.detail);

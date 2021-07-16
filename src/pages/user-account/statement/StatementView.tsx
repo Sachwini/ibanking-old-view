@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import { formatLakh } from "services/numberService";
-import { Sdetails, StatementDataType } from "./model";
 import OurPagination from "./OurPagination";
 import { GrDownload } from "react-icons/gr";
 import { baseUrl } from "services/BaseUrl";
 import { toast } from "react-toastify";
+import { Sdetails, StatementDataType } from "models/StatementModels";
 
 interface errorType {
   errorOccured: boolean;
@@ -81,7 +81,6 @@ const StatementView = (props: {
         <thead>
           <tr>
             <th>Date</th>
-            {/* <th>Date AD</th> */}
             <th>Statement Reference</th>
             <th>Withdraw</th>
             <th>Deposit</th>

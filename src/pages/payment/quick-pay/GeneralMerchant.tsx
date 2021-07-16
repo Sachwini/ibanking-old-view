@@ -1,5 +1,5 @@
-import { PageTitle } from "components/PageTitle";
 import StaticBar from "components/StaticBar";
+import { QpayService } from "models/for-pages/quickPayModels";
 import { Container, Image } from "react-bootstrap";
 import {
   Link,
@@ -11,7 +11,6 @@ import {
 import { baseUrl } from "services/BaseUrl";
 import { forQuickPay } from "static-data/forBreadCrumb";
 import { quickPayPageTitle } from "static-data/forPageTitle";
-import { QpayService } from "./model";
 import Test2 from "./Test2";
 
 interface paramProps {

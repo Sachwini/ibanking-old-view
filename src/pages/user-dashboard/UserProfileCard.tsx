@@ -9,28 +9,22 @@ import {
 } from "react-icons/ai";
 import { FcSynchronize } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { useStateValue } from "state-provider/StateProvider";
+import { useRecoilValue } from "recoil";
+import { getSelectedAcc, userDetails } from "state-provider/globalUserData";
 import { ButtonWrapper } from "styling/common/ButtonStyling";
 import { UserProfileCardContainer } from "styling/for-dashboard/UserProfileCardStyling";
 
 const ProfileCard = () => {
-  const [{ customerDetails, switchAccount }] = useStateValue();
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [switchAccountModalShow, setSwitchAccountModalShow] =
-    useState<boolean>(false);
+  const [switchAccModalShow, setSwitchAccModalShow] = useState<boolean>(false);
+  const userDetail = useRecoilValue(userDetails);
+  const activeAccontDetails = useRecoilValue(getSelectedAcc);
 
-  const handleShowDetails = (title: string) => {
-    if (showDetails) {
-      return customerDetails?.accountDetail[switchAccount][title];
-    }
-    return "xxx-xxx-xxx";
-  };
-
-  if (switchAccountModalShow) {
+  if (switchAccModalShow) {
     return (
       <SwitchAccountModal
-        modalShow={switchAccountModalShow}
-        handleModalShow={(value) => setSwitchAccountModalShow(value)}
+        modalShow={switchAccModalShow}
+        handleModalShow={(value) => setSwitchAccModalShow(value)}
       />
     );
   }
@@ -48,15 +42,20 @@ const ProfileCard = () => {
             <div className="base_info">
               <p className="text_wrapper">
                 <span className="text_title">Account Type</span>
-                {handleShowDetails("accountType")}
+                {showDetails ? activeAccontDetails.accountType : "XXX-XXX-XXX"}
               </p>
               <p className="text_wrapper">
                 <span className="text_title">Balance</span>
-                NPR. <strong>{handleShowDetails("availableBalance")}</strong>
+                NPR.
+                <strong>
+                  {showDetails
+                    ? activeAccontDetails.availableBalance
+                    : "XXX-XXX-XXX"}
+                </strong>
               </p>
               <p className="text_wrapper">
                 <span className="text_title">Acc No.</span>
-                {handleShowDetails("mainCode")}
+                {showDetails ? activeAccontDetails.mainCode : "XXX-XXX-XXX"}
               </p>
             </div>
           </Col>
@@ -76,16 +75,16 @@ const ProfileCard = () => {
           <p className="text_heading">Short Info</p>
           <p className="text_wrapper">
             <span className="text_title">Name</span>
-            {customerDetails?.fullName}
+            {userDetail.fullName}
           </p>
 
           <p className="text_wrapper">
             <span className="text_title">Phone No.</span>
-            {customerDetails?.mobileNumber}
+            {userDetail.mobileNumber}
           </p>
           <p className="text_wrapper">
             <span className="text_title">Email</span>
-            {customerDetails?.email}
+            {userDetail.email}
           </p>
         </div>
       </Card.Body>
@@ -104,7 +103,7 @@ const ProfileCard = () => {
             <ButtonWrapper padding="0">
               <Button
                 variant="light"
-                onClick={() => setSwitchAccountModalShow(true)}
+                onClick={() => setSwitchAccModalShow(true)}
                 className="btn_ctrl"
               >
                 Switch Account <FcSynchronize size={24} />

@@ -1,4 +1,4 @@
-import { brokerPaymentFormDataType } from "models/for-pages/brokerPayment_PageModels";
+import { brokerPaymentFormDataType } from "models/for-pages/brokerPaymentModels";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import { ImArrowRight } from "react-icons/im";

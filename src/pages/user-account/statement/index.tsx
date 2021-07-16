@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { apiResponse } from "models/apiResponse";
 import { get } from "services/AjaxService";
-import { Sdetails, StatementDataType } from "./model";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
-import { GetAllAccountNumber } from "helper/CustomerData";
 import StatementView from "./StatementView";
-import { useStateValue } from "state-provider/StateProvider";
 import StaticBar from "components/StaticBar";
 import { statementPageTitle } from "static-data/forPageTitle";
 import { forStatement } from "static-data/forBreadCrumb";
+import { Sdetails, StatementDataType } from "models/StatementModels";
+import { useRecoilValue } from "recoil";
+import { getSelectedAcc } from "state-provider/globalUserData";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -26,23 +26,13 @@ const Statement = () => {
     message:
       "Select date range and click on show button to view your statement",
   });
-  const [{ switchAccount }] = useStateValue();
   const [selectOption, setSelectOption] = useState<string>("");
-
-  //Use state for Pagination
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
   const [loading, setLoading] = useState<boolean>(false);
 
   // Getting Required Data From Helper
-  const accountNumber = GetAllAccountNumber();
   const formatedStartDate = formatDate(startDate);
   const formatedEndDate = formatDate(endDate);
-
-  let actualAccountNumber = "";
-  switch (switchAccount) {
-    case switchAccount:
-      actualAccountNumber = accountNumber[switchAccount];
-      break;
-  }
 
   useEffect(() => {
     let isSubscribed = true;
@@ -52,9 +42,9 @@ const Statement = () => {
       setLoading(true);
       try {
         const res = await get<apiResponse<StatementDataType>>(
-          `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${actualAccountNumber}&toDate=${formatedEndDate}&pdf=true`
+          `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${selectedAccountDetails.accountNumber}&toDate=${formatedEndDate}&pdf=true`
         );
-        if (res) {
+        if (isSubscribed && res) {
           setStatementData(undefined);
           setStatementData(res.data.details);
           setLoading(false);
@@ -80,7 +70,11 @@ const Statement = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [formatedStartDate, formatedEndDate, actualAccountNumber]);
+  }, [
+    formatedStartDate,
+    formatedEndDate,
+    selectedAccountDetails.accountNumber,
+  ]);
 
   const handleFilter = (filterby: string) => {
     console.log("filerrBY", filterby);

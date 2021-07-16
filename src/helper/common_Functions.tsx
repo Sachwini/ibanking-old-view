@@ -1,22 +1,25 @@
-import { apiResponse } from "models/apiResponse";
+import {
+  apiResponse,
+  transactionListType,
+  transctionHistoryType,
+  transferRequestDetailType,
+} from "models/apiResponse";
 import { get, post } from "services/AjaxService";
 
+// checking is OTP required for transctions
 interface isOTPRequiredType {
   otpRequired: boolean;
 }
 export const isOtpRequired = async (amount: string, skip?: boolean) => {
-  //   if (skip === true || parseFloat(amount) >= 5000) {
-  {
-    const res = await get<apiResponse<isOTPRequiredType>>(
-      `api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=${amount}`
-    );
-    if (res && res.data.detail.otpRequired === true) {
-      return true as boolean;
-    } else return false as boolean;
-  }
-  //   } else return false;
+  const res = await get<apiResponse<isOTPRequiredType>>(
+    `api/otp/request?serviceInfoType=CONNECT_IPS&associatedId&amount=${amount}`
+  );
+  if (res && res.data.detail.otpRequired === true) {
+    return true as boolean;
+  } else return false as boolean;
 };
 
+// Enabling OTP Transction for all transctions
 export const enableOTPTransction = async (otp: string) => {
   try {
     const res = await post<apiResponse<any>>(
@@ -41,4 +44,30 @@ export const enableOTPTransction = async (otp: string) => {
       };
     }
   }
+};
+
+// get transction history for bank transfer and fund transfer
+export const getTransctionHistory = async (mpin: string, pageNo?: number) => {
+  const res = await get<
+    apiResponse<
+      transctionHistoryType<transactionListType<transferRequestDetailType>>
+    >
+  >(`api/transactionhistory?mPin=${mpin}&page_no=${pageNo ? pageNo : 1}`);
+
+  return res && res.data.details;
+};
+
+// generate pdf file for recent transction
+export const generatePDF = async (identifier: string) => {
+  const res = await get<apiResponse<any>>(
+    `/api/gettransactionreceiptpdf?transactionId=${identifier}`
+  );
+  if (res && res.data.detail === null) {
+    return { status: false, message: res.data.message, url: "" };
+  } else
+    return {
+      status: true,
+      message: res.data.message,
+      url: res.data.detail.URL,
+    };
 };

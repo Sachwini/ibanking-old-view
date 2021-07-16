@@ -4,8 +4,8 @@ import {
   GetBankBranchList,
   GetBankList,
   getDESTBankID,
-} from "helper/GetData";
-import { favAccListType } from "models/for-pages/favAcccount_PageModels";
+} from "helper/fun_BankTransfer";
+import { favAccListType } from "models/for-pages/favAcccountModels";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -24,7 +24,7 @@ import { getBankAccNo } from "state-provider/globalUserData";
 import {
   getBankBranchListType,
   getBankListType,
-} from "models/for-pages/bankTransfer_models";
+} from "models/for-pages/bankTransferModels";
 import { v4 as uuidv4 } from "uuid";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { changeMpinErrorType } from "pages/payment/fund-transfer/model";
+import { changeMpinErrorType } from "models/for-pages/userAccountModels";
 import { useState } from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { FieldErrors, UseFormRegister, UseFormReset } from "react-hook-form";

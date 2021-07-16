@@ -1,11 +1,10 @@
-import { PageTitle } from "components/PageTitle";
 import StaticBar from "components/StaticBar";
+import { QpayService } from "models/for-pages/quickPayModels";
 import { Container, Image } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { baseUrl } from "services/BaseUrl";
 import { forQuickPay } from "static-data/forBreadCrumb";
 import { quickPayPageTitle } from "static-data/forPageTitle";
-import { QpayService } from "./model";
 
 const Test = (props: { data?: QpayService[] }) => {
   const data = props.data;

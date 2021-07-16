@@ -1,4 +1,7 @@
-import { userDetailType } from "models/for-pages/userAccount_PageModels";
+import {
+  userAccountType,
+  userDetailType,
+} from "models/for-pages/userAccountModels";
 import { atom, selector } from "recoil";
 import { getBearerToken } from "services/AuthService";
 
@@ -74,7 +77,6 @@ interface bankAccountType {
 export const getBankAccNo = selector({
   key: "get_bank_acc_no",
   get: ({ get }) => {
-    // const accountList: bankAccountType = { mainCode: [], accNo: [] };
     let collection = new Map();
     const userDetailsData = get(userDetails);
 
@@ -91,6 +93,45 @@ export const getBankAccNo = selector({
     );
 
     return accountList;
+  },
+});
+
+export const allAccListDetail = selector({
+  key: "all_acc_list_detail",
+  get: ({ get }) => {
+    const userDetailsData = get(userDetails);
+    return userDetailsData.accountDetail;
+  },
+});
+
+export const setSelectedAccDetail = atom({
+  key: "selected_account_details",
+  default: {
+    isSelected: false,
+    selectedAccDetails: {},
+  } as {
+    isSelected: boolean;
+    selectedAccDetails: userAccountType;
+  },
+});
+
+export const getSelectedAcc = selector({
+  key: "account_list",
+  get: ({ get }) => {
+    const userDetailsData = get(allAccListDetail);
+    const selectedAccount = get(setSelectedAccDetail);
+
+    const primaryAccountObj = userDetailsData.find(
+      ({ primary }) => primary.toLowerCase() === "true"
+    );
+    const activeAccount = primaryAccountObj ? primaryAccountObj : {};
+    // const activeAccount = userDetailsData[0];
+
+    if (selectedAccount.isSelected) {
+      return selectedAccount.selectedAccDetails as userAccountType;
+    } else {
+      return activeAccount as userAccountType;
+    }
   },
 });
 

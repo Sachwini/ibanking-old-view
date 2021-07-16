@@ -11,11 +11,11 @@ import SuccessModal from "components/modals/load-wallet/SuccessModal";
 import { forLoadWallet } from "static-data/forBreadCrumb";
 import { loadWalletPageTitle } from "static-data/forPageTitle";
 import StaticBar from "components/StaticBar";
-import { loadWalletFormDataType } from "pages/payment/fund-transfer/model";
 import { useForm } from "react-hook-form";
 import LoadWalletForm from "./walletList/LoadWalletForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loadWalletScheme } from "validation-schema/loadWallet_validation";
+import { loadWalletFormDataType } from "models/for-pages/fundMgmtModels";
 
 function LoadWallet() {
   const {

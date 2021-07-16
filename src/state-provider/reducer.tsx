@@ -1,4 +1,4 @@
-import { StatementDataType } from "pages/user-account/statement/model";
+import { StatementDataType } from "models/StatementModels";
 import { getBearerToken } from "services/AuthService";
 
 const token = getBearerToken();

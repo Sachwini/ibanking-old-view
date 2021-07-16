@@ -5,7 +5,7 @@ import BrokerDetailModal from "components/modals/broker-payment/BrokerDetailModa
 import StaticBar from "components/StaticBar";
 import { brokerPaymentPageTitle } from "static-data/forPageTitle";
 import { forBrokerPayment } from "static-data/forBreadCrumb";
-import { brokerPaymentFormDataType } from "models/for-pages/brokerPayment_PageModels";
+import { brokerPaymentFormDataType } from "models/for-pages/brokerPaymentModels";
 import BrokerPaymentForm from "./BrokerPaymentForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
