@@ -49,7 +49,7 @@ const MiniStatementCard = () => {
   }, [selectedAccountDetails.accountNumber]);
 
   return (
-    <MiniStatementContainer>
+    <MiniStatementContainer className="card_Shadow">
       <PageTitle
         title="Recent Activity"
         subTitle="Your Recent Account Activities...."

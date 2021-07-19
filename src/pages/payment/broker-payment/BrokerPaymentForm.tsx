@@ -18,7 +18,6 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
   watch,
   getValues,
   setValue,
-  reset,
   control,
 }) => {
   const [brokerData, setBrokerData] = useState<brokerDataType>();
@@ -56,23 +55,9 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
     }
   }, [watch("DESTBrokerName")]);
 
-  const resetClicked = () => {
-    // reset({
-    //   fromAccount: "",
-    //   DESTBankName: "",
-    //   DESTBankID: "",
-    //   toAccount: "",
-    //   destAccountHolderName: "",
-    //   DESTBranchName: "",
-    //   DESTBranchID: "",
-    //   transctionAmount: "",
-    //   remarks: "",
-    // });
-  };
-
   return (
     <>
-      <Form.Group controlId="fromAccount">
+      <Form.Group controlId="fromAccount" className="form_group">
         <Form.Label className="font-weight-bold">From Account</Form.Label>
         <Form.Control
           as="select"
@@ -92,7 +77,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="DESTBrokerName" aria-required>
+      <Form.Group controlId="DESTBrokerName" className="form_group">
         <Form.Label className="font-weight-bold">Select Broker</Form.Label>
         <Controller
           control={control}
@@ -116,7 +101,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="clientID">
+      <Form.Group controlId="clientID" className="form_group">
         <Form.Label className="font-weight-bold">Client Id</Form.Label>
         <Form.Control
           type="text"
@@ -130,7 +115,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="clientName">
+      <Form.Group controlId="clientName" className="form_group">
         <Form.Label className="font-weight-bold">Client Name</Form.Label>
         <Form.Control
           type="text"
@@ -144,7 +129,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="mobileNumber">
+      <Form.Group controlId="mobileNumber" className="form_group">
         <Form.Label className="font-weight-bold">Mobile No.</Form.Label>
         <Form.Control
           type="number"
@@ -159,7 +144,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="transctionAmount">
+      <Form.Group controlId="transctionAmount" className="form_group">
         <Form.Label className="font-weight-bold">Amount</Form.Label>
         <Form.Control
           type="number"
@@ -175,7 +160,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="remarks">
+      <Form.Group controlId="remarks" className="form_group">
         <Form.Label className="font-weight-bold">Remarks</Form.Label>
         <Form.Control
           type="text"
@@ -193,7 +178,7 @@ const BrokerPaymentForm: React.FC<brokerFormPropsType> = ({
         Transfer
       </Button>
 
-      <Button className="ml-5" variant="danger" onClick={resetClicked}>
+      <Button className="ml-5" variant="danger" type="reset">
         Reset
       </Button>
     </>

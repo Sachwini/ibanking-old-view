@@ -1,12 +1,14 @@
 import FavAccPopover from "components/FavAccPopover";
 import { getBranchList } from "helper/fun_FundTransfer";
-import { getFundTransferBranchID } from "helper/fun_FundTransfer";
+import { getBranchDetail } from "helper/fun_FundTransfer";
 import { favAccListType } from "models/for-pages/favAcccountModels";
-import { getBankBranchList_FundTransferType } from "models/for-pages/fundTransferModels";
+import {
+  branchDataDefaultValue,
+  getBankBranchData_FundTransferType,
+} from "models/for-pages/fundTransferModels";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { UseFormReset } from "react-hook-form";
 import {
   Control,
   FieldErrors,
@@ -27,17 +29,13 @@ interface Props {
   control: Control<any>;
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
-  reset: UseFormReset<any>;
-  // destBranchId: (id: string | "null") => void;
 }
 
 function FundTransferForm(props: Props) {
-  const { register, errors, watch, getValues, setValue, control, reset } =
-    props;
+  const { register, errors, watch, getValues, setValue, control } = props;
   const bankAcclist = useRecoilValue(getBankAccNo);
   const [branchData, setBranchData] =
-    useState<getBankBranchList_FundTransferType>();
-  console.log("sdad", branchData);
+    useState<getBankBranchData_FundTransferType>(branchDataDefaultValue);
 
   const handleFavAccDetails = (data: favAccListType) => {
     setValue("toAccount", data.destinationAccountNumber);
@@ -47,37 +45,32 @@ function FundTransferForm(props: Props) {
   useEffect(() => {
     let isSubscribed = true;
     const destinationBranchName = getValues("DESTBranchName");
+
     const init = async () => {
       const allBranch = await getBranchList();
       if (isSubscribed && allBranch) {
         setBranchData(allBranch);
+        console.log("branch list data: ", allBranch);
 
-        const branchId = getFundTransferBranchID(
+        const branchDetail = getBranchDetail(
           destinationBranchName,
           allBranch?.branchList
         );
-        setValue("DESTBranchID", branchId);
+        setValue("DESTBranchID", branchDetail?.branchId);
+        setValue("DESTBranchCode", branchDetail?.branchCode);
       }
     };
+
     init();
     return () => {
       isSubscribed = false;
     };
   }, [watch("DESTBranchName")]);
 
-  const handleReset = (e: any) => {
-    reset({
-      toAccount: "",
-      DESTBranchID: "",
-      amount: "",
-      DESTBranchName: "",
-    });
-  };
-
   return (
     <>
-      <Form.Group controlId="fromAccount">
-        <Form.Label className="font-weight-bold">From Account</Form.Label>
+      <Form.Group controlId="fromAccount" className="form_group">
+        <Form.Label>From Account</Form.Label>
         <Form.Control
           as="select"
           {...register("fromAccount")}
@@ -96,8 +89,8 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="toAccount" className="">
-        <Form.Label className="font-weight-bold">Account Number</Form.Label>
+      <Form.Group controlId="toAccount" className="form_group">
+        <Form.Label>Account Number</Form.Label>
         <div className="d-flex">
           <Form.Control
             className="flex-grow-1"
@@ -123,10 +116,8 @@ function FundTransferForm(props: Props) {
       </Form.Group>
 
       {branchData && (
-        <Form.Group controlId="DESTBranchName">
-          <Form.Label className="font-weight-bold">
-            Select Destination Bank Branch
-          </Form.Label>
+        <Form.Group controlId="DESTBranchName" className="form_group">
+          <Form.Label>Select Destination Bank Branch</Form.Label>
           <Controller
             control={control}
             name="DESTBranchName"
@@ -150,14 +141,12 @@ function FundTransferForm(props: Props) {
         </Form.Group>
       )}
 
-      <Form.Group controlId="destinationAccountHolderName">
-        <Form.Label className="font-weight-bold">
-          Destination AccountHolder Name
-        </Form.Label>
+      <Form.Group controlId="destAccountHolderName" className="form_group">
+        <Form.Label>Destination AccountHolder Name</Form.Label>
         <Form.Control
           type="text"
           autoComplete="off"
-          placeholder="Enter your Destination AccountHolder Name"
+          placeholder="AccountHolder Name..."
           {...register("destinationAccountHolderName")}
           isInvalid={!!errors.destinationAccountHolderName}
         />
@@ -166,8 +155,8 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="amount">
-        <Form.Label className="font-weight-bold">Amount</Form.Label>
+      <Form.Group controlId="amount" className="form_group">
+        <Form.Label>Amount</Form.Label>
         <Form.Control
           type="number"
           placeholder="Amount"
@@ -180,16 +169,25 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
+      <Form.Group controlId="remarks" className="form_group">
+        <Form.Label>Amount</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="remarks"
+          autoComplete="off"
+          {...register("remarks")}
+          isInvalid={!!errors.remarks}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.remarks?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
       <Button variant="outline-success" type="submit">
         Submit
       </Button>
 
-      <Button
-        className="ml-5"
-        variant="outline-danger"
-        type="reset"
-        onClick={handleReset}
-      >
+      <Button className="ml-5" variant="outline-danger" type="reset">
         Reset
       </Button>
     </>

@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Card, Form } from "react-bootstrap";
-import { get, post } from "services/AjaxService";
-import { toast } from "react-toastify";
+import { Card } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 import { transactionListType } from "models/apiResponse";
 import { useForm } from "react-hook-form";
@@ -11,6 +9,8 @@ import { fundTrasferScheme } from "validation-schema/fundTransfer_validation";
 import { useRecoilValue } from "recoil";
 import { isLoading } from "state-provider/forPageSetting";
 import {
+  accountValidation,
+  fundTransfer,
   fundTransfer_formData_DefaultValue,
   getDataFor_FundTransferErrorModal,
 } from "helper/fun_FundTransfer";
@@ -30,6 +30,8 @@ import {
 } from "models/payment_ModalType";
 import SuccessModal from "components/modals/fundTransfer/SuccessModal";
 import { fundTransferFormDataType } from "models/for-pages/fundTransferModels";
+import { CustomForm } from "styling/common/FormStyling";
+import { accValidationDefaultValue } from "models/for-pages/bankTransferModels";
 
 export const FundTransfer = () => {
   const {
@@ -38,7 +40,6 @@ export const FundTransfer = () => {
     getValues,
     setValue,
     watch,
-    reset,
     control,
     formState: { errors },
   } = useForm<fundTransferFormDataType>({
@@ -46,22 +47,15 @@ export const FundTransfer = () => {
     mode: "all",
   });
 
-  const setLoading = useRecoilValue(isLoading);
-
   const [mpin, setMpin] = useState<string>("");
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
   const [otpRequired, setOtpRequired] = useState<boolean>(false);
-  const [isError_inOTPResponse, setIsError_inOTPResponse] = useState({
-    isError: false as boolean,
-    message: "",
-  });
   const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
-  const [accValidationStatus, setAccValidationStatus] = useState({
-    status: true as boolean,
-    message: "" as string,
-  });
+  const [accValidationStatus, setAccValidationStatus] = useState(
+    accValidationDefaultValue
+  );
 
   const [formData, setFormData] = useState<fundTransferFormDataType>(
     fundTransfer_formData_DefaultValue
@@ -80,98 +74,27 @@ export const FundTransfer = () => {
   const [tHistoryData, setTHistoryData] =
     useState<transactionListType<any>>(tHistoryDefaultData);
 
-  //For account Validation
-  const accountValidation = async () => {
-    try {
-      if (
-        getValues("toAccount") !== "" &&
-        getValues("destinationAccountHolderName") !== "" &&
-        getValues("DESTBranchID") !== ""
-      ) {
-        const res = await get<any>(
-          "api/account/validation?destinationAccountNumber=" +
-            getValues("toAccount") +
-            "&destinationAccountName=" +
-            getValues("destinationAccountHolderName") +
-            "&destinationBranchId=" +
-            getValues("DESTBranchID")
-        );
-        setAccValidationStatus({
-          status: true,
-          message: res.data.detail.message,
-        });
-      }
-    } catch (error) {
-      setAccValidationStatus({
-        status: false,
-        message: error.response.data.detail.message,
-      });
-    }
-  };
+  // call account validation and open detail modal
+  const onSubmit = async (data: fundTransferFormDataType) => {
+    setFormData(data);
 
-  //open Detail
-  const openDetailModel = () => {
+    const validationData = await accountValidation(formData);
+    if (validationData) {
+      setAccValidationStatus(validationData);
+    }
+
+    setDataForErrorModal(getDataFor_FundTransferErrorModal(data));
+
     setDetailModalShow(true);
   };
 
-  //for handle fund transfer of whole data
-  const handleTransfer = async () => {
-    if (
-      !getValues("fromAccount") ||
-      !getValues("toAccount") ||
-      !getValues("DESTBranchID") ||
-      !getValues("amount") ||
-      !mpin
-    ) {
-      toast.error("Incomplete field");
-      return;
-    }
+  const confirmModelSubmitHandle = () => {
+    setDetailModalShow(false);
 
-    let url = "";
-    if (otpRequired) {
-      url =
-        "api/fundtransfer?from_account_number=" +
-        getValues("fromAccount") +
-        "&to_account_number=" +
-        getValues("toAccount") +
-        "&bank_branch_id=" +
-        getValues("DESTBranchID") +
-        "&amount=" +
-        getValues("amount") +
-        "&mPin=" +
-        mpin +
-        "&otp=" +
-        otp;
-    } else {
-      url =
-        "api/fundtransfer?from_account_number=" +
-        getValues("fromAccount") +
-        "&to_account_number=" +
-        getValues("toAccount") +
-        "&bank_branch_id=" +
-        getValues("DESTBranchID") +
-        "&amount=" +
-        getValues("amount") +
-        "&mPin=" +
-        mpin;
-    }
-    try {
-      const res = await post<any>(url, "");
-      if (res) {
-        getTransactionData();
-        setSuccessMessage(res.data.message);
-        setSuccessModalShow(true);
-      }
-    } catch (error) {
-      if (error.response) {
-        setSuccessMessage(error.response.data.message);
-        setErrorMessage(error.response.data.message);
-        setErrorModalShow(true);
-      }
-    }
+    // Enabling mPin Modal
+    setMpinModalShow(true);
   };
 
-  //-------------Handle Mpin Form Modal---------------------//
   const mpinModalSubmitHandle = async () => {
     setMpinModalShow(false);
 
@@ -186,19 +109,12 @@ export const FundTransfer = () => {
   };
 
   const otpModalSubmitHandle = async () => {
-    // Enabling OTP Required at Transction Time True
-    const isEnabled = await enableOTPTransction(otp);
-    if (isEnabled && isEnabled.status === true) {
-    } else {
-      setIsError_inOTPResponse({
-        isError: true,
-        message: isEnabled ? isEnabled.message : "",
-      });
-    }
-    setOtpRequired(false);
+    await enableOTPTransction(otp);
 
     // Calling Fund Transfer API
     handleTransfer();
+
+    setOtpRequired(false);
   };
 
   const resendOTPHandle = async () => {
@@ -209,6 +125,23 @@ export const FundTransfer = () => {
     }
   };
 
+  //for handle fund transfer of whole data
+  const handleTransfer = async () => {
+    try {
+      const transfer = await fundTransfer(formData, otpRequired, otp, mpin);
+      if (transfer) {
+        getTransactionData();
+        setSuccessMessage(transfer.message);
+        setSuccessModalShow(true);
+      }
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+        setErrorModalShow(true);
+      }
+    }
+  };
+
   //get first index(latest transaction) of transaction history
   const getTransactionData = async () => {
     const res = await getTransctionHistory(mpin);
@@ -216,27 +149,11 @@ export const FundTransfer = () => {
     setTHistoryData(data);
   };
 
-  // call account validation and open detail modal
-  const onSubmit = async (data: fundTransferFormDataType) => {
-    setFormData(data);
-    setDataForErrorModal(getDataFor_FundTransferErrorModal(data));
-    accountValidation();
-    openDetailModel();
-  };
-
-  //after detail modal shown
-  const confirmModelSubmitHandle = () => {
-    setDetailModalShow(false);
-
-    // Enabling mPin Modal
-    setMpinModalShow(true);
-  };
-
   return (
     <>
       <Card className="card_Shadow">
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FundTransferForm
               register={register}
               control={control}
@@ -244,9 +161,8 @@ export const FundTransfer = () => {
               watch={watch}
               getValues={getValues}
               setValue={setValue}
-              reset={reset}
             />
-          </Form>
+          </CustomForm>
         </Card.Body>
       </Card>
 

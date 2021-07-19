@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Form } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { post } from "services/AjaxService";
 import { apiResponse } from "models/apiResponse";
 import ConfirmDetailModal from "components/modals/bank-transfer/ConfirmDetailModal";
@@ -7,7 +7,10 @@ import MpinModal from "components/modals/MpinModal";
 import OTPModal from "components/modals/OTPModal";
 import ErrorModal from "components/modals/ErrorModal";
 import SuccessModal from "components/modals/bank-transfer/SuccessModal";
-import { bankTransferFormDataType } from "models/for-pages/bankTransferModels";
+import {
+  accValidationDefaultValue,
+  bankTransferFormDataType,
+} from "models/for-pages/bankTransferModels";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { bankTransferScheme } from "validation-schema/bankTransfer_validation";
 import BankTransferForm from "./BankTransferForm";
@@ -19,13 +22,13 @@ import {
   getTransctionCharge,
   isAccountValid,
 } from "helper/fun_BankTransfer";
-import { toast } from "react-toastify";
 import { enableOTPTransction, isOtpRequired } from "helper/common_Functions";
 import { Loader } from "pages/static/Loader";
 import {
   errorModalDataType,
   errorModalDefaultData,
 } from "models/payment_ModalType";
+import { CustomForm } from "styling/common/FormStyling";
 
 export const BankTransfer = () => {
   const {
@@ -52,10 +55,9 @@ export const BankTransfer = () => {
 
   // For modal handles
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false);
-  const [accValidationStatus, setAccValidationStatus] = useState({
-    status: true as boolean,
-    message: "" as string,
-  });
+  const [accValidationStatus, setAccValidationStatus] = useState(
+    accValidationDefaultValue
+  );
   const [mpin, setMpin] = useState<string>("");
   const [mPinModalShow, setMpinModalShow] = useState<boolean>(false);
   const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
@@ -76,11 +78,12 @@ export const BankTransfer = () => {
   const [transctionIdentifier, setTransctionIdentifier] = useState<string>("");
   const [dataForErrorModal, setDataForErrorModal] =
     useState<errorModalDataType>(errorModalDefaultData);
-  console.log("mpin :", mpin);
 
+  // handle submit
   const onSubmit = async (data: bankTransferFormDataType) => {
     setFormData(data);
     setLoading(true);
+    console.log("bank transfer form data: ", data);
 
     // getting transction charges
     const transctionCharges = await getTransctionCharge(
@@ -92,44 +95,16 @@ export const BankTransfer = () => {
     }
 
     // checking is account credentials is valid
-    try {
-      const isValid = await isAccountValid(data);
-      if (
-        isValid &&
-        isValid.status === "valid" &&
-        isValid.matchPercentage === 100
-      ) {
-        setAccValidationStatus({
-          status: true,
-          message: isValid.message,
-        });
-      } else {
-        setAccValidationStatus({
-          status: false,
-          message: isValid.message,
-        });
-        toast.error(isValid.message, {
-          autoClose: 12000,
-        });
-      }
-    } catch (error: any) {
-      if (error.response) {
-        setAccValidationStatus({
-          status: false,
-          message: `${error.response.data.detail.message}`,
-        });
-        toast.error(error.response.data.detail.message, {
-          autoClose: 12000,
-        });
-      }
+    const validationData = await isAccountValid(data);
+    if (validationData) {
+      setAccValidationStatus(validationData);
     }
-
-    setDataForErrorModal(
-      getDataFor_BankTransferErrorModal(data, transctionCharge)
-    );
 
     // const confirmModalData =
     setLoading(false);
+    setDataForErrorModal(
+      getDataFor_BankTransferErrorModal(data, transctionCharge)
+    );
 
     setConfirmModalShow(true);
   };
@@ -152,7 +127,7 @@ export const BankTransfer = () => {
       setIsOTPRequired(true);
     } else {
       //calling fund transfer api form here
-      fundTransferAPI();
+      bankTransferAPI();
     }
   };
 
@@ -162,8 +137,9 @@ export const BankTransfer = () => {
     await enableOTPTransction(OTP);
 
     setIsOTPRequired(false);
+
     // Calling Fund Transfer API
-    fundTransferAPI();
+    bankTransferAPI();
   };
 
   const resendOTPHandle = async () => {
@@ -175,7 +151,7 @@ export const BankTransfer = () => {
   };
 
   // Fund Transfer API
-  const fundTransferAPI = async () => {
+  const bankTransferAPI = async () => {
     const data = formDataFormat({
       data: formData,
       isOTPRequired: isOTPRequired,
@@ -213,7 +189,7 @@ export const BankTransfer = () => {
     <>
       <Card className="card_Shadow">
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <BankTransferForm
               register={register}
               control={control}
@@ -225,7 +201,7 @@ export const BankTransfer = () => {
               destBankId={(id) => setDESTBankID(id)}
               destBranchId={(id) => setDESTBranchID(id)}
             />
-          </Form>
+          </CustomForm>
         </Card.Body>
       </Card>
 

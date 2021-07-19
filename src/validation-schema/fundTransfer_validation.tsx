@@ -18,4 +18,6 @@ export const fundTrasferScheme = yup.object().shape({
     .string()
     .required("Transaction amount is required")
     .min(3, "minimumm transaction amount is Rs.100"),
+
+  remarks: yup.string().required("remarks is required"),
 });

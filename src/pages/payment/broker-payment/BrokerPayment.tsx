@@ -20,6 +20,7 @@ import OTPModal from "components/modals/OTPModal";
 import BrokerSuccessModal from "components/modals/broker-payment/SuccessModal";
 import BrokerErrorModal from "components/modals/broker-payment/BrokerErrorModal";
 import { Loader } from "pages/static/Loader";
+import { CustomForm } from "styling/common/FormStyling";
 
 const BrokerPayment = () => {
   const {
@@ -135,25 +136,27 @@ const BrokerPayment = () => {
         pageTitle={brokerPaymentPageTitle}
         breadCrumbData={forBrokerPayment}
       />
-      <Row>
-        <Col sm={12} md={6}>
-          <Card className="card_Shadow" style={{ marginTop: "2rem" }}>
-            <Card.Body>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <BrokerPaymentForm
-                  register={register}
-                  control={control}
-                  errors={errors}
-                  watch={watch}
-                  getValues={getValues}
-                  setValue={setValue}
-                  reset={reset}
-                />
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <Card
+        className="card_Shadow"
+        style={{
+          marginTop: "0.8rem",
+          width: "60%",
+        }}
+      >
+        <Card.Body>
+          <CustomForm onSubmit={handleSubmit(onSubmit)}>
+            <BrokerPaymentForm
+              register={register}
+              control={control}
+              errors={errors}
+              watch={watch}
+              getValues={getValues}
+              setValue={setValue}
+              reset={reset}
+            />
+          </CustomForm>
+        </Card.Body>
+      </Card>
 
       <BrokerDetailModal
         modalShow={detailModalShow}

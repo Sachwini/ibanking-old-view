@@ -119,7 +119,7 @@ const ConfirmDetailModal = (props: Props) => {
                 All credentials is Valid with Message:
               </span>
               "{props.accValidationStatus.message}"
-              <span className="pl-2">you can Processed Now</span>
+              <span className="pl-2">Do You Want To Continue?</span>
             </span>
           ) : (
             <span>

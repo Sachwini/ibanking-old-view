@@ -22,7 +22,9 @@ import {
 import { useRecoilValue } from "recoil";
 import { getBankAccNo } from "state-provider/globalUserData";
 import {
-  getBankBranchListType,
+  getBankBranchDataDefaultValue,
+  getBankBranchDataType,
+  getBankListDefaultValue,
   getBankListType,
 } from "models/for-pages/bankTransferModels";
 import { v4 as uuidv4 } from "uuid";
@@ -53,12 +55,17 @@ const BankTransferForm = (props: Props) => {
     destBranchId,
   } = props;
   const bankAcclist = useRecoilValue(getBankAccNo);
+
   // For Bank Handle
-  const [DESTBankList, setDESTBankList] = useState<getBankListType>();
+  const [bankListData, setBankListData] = useState<getBankListType>(
+    getBankListDefaultValue
+  );
   const [DESTBankID, setDESTBankID] = useState<string>("");
 
   // For Branch Handle
-  const [DESTBranchList, setDESTBranchList] = useState<getBankBranchListType>();
+  const [DESTBranchData, setDESTBranchData] = useState<getBankBranchDataType>(
+    getBankBranchDataDefaultValue
+  );
 
   useEffect(() => {
     let isSubscribed = true;
@@ -67,7 +74,7 @@ const BankTransferForm = (props: Props) => {
     const loadBankList = async () => {
       const res = await GetBankList();
       if (res && isSubscribed) {
-        setDESTBankList(res);
+        setBankListData(res);
 
         // gettting selected bank id
         const id = getDESTBankID(destBankName, res?.bankList);
@@ -83,7 +90,7 @@ const BankTransferForm = (props: Props) => {
       if (DESTBankID) {
         const res = await GetBankBranchList(DESTBankID);
         if (res && isSubscribed) {
-          setDESTBranchList(res);
+          setDESTBranchData(res);
         }
       }
     };
@@ -102,7 +109,7 @@ const BankTransferForm = (props: Props) => {
     const destBankBranchName = getValues("DESTBranchName");
     const branchId = getBankBranchID(
       destBankBranchName,
-      DESTBranchList?.bankBranchList
+      DESTBranchData.bankBranchList
     );
     if (isSusbrided && branchId) {
       destBranchId(branchId);
@@ -119,24 +126,24 @@ const BankTransferForm = (props: Props) => {
     setValue("destAccountHolderName", data.destinationAccountHolderName);
   };
 
-  const resetClicked = () => {
-    reset({
-      fromAccount: "",
-      DESTBankName: "",
-      DESTBankID: "",
-      toAccount: "",
-      destAccountHolderName: "",
-      DESTBranchName: "",
-      DESTBranchID: "",
-      transctionAmount: "",
-      remarks: "",
-    });
-  };
+  // const resetClicked = () => {
+  //   reset({
+  //     fromAccount: "",
+  //     DESTBankName: "",
+  //     DESTBankID: "",
+  //     toAccount: "",
+  //     destAccountHolderName: "",
+  //     DESTBranchName: "",
+  //     DESTBranchID: "",
+  //     transctionAmount: "",
+  //     remarks: "",
+  //   });
+  // };
 
   return (
     <>
-      <Form.Group controlId="fromAccount">
-        <Form.Label className="font-weight-bold">From Account</Form.Label>
+      <Form.Group controlId="fromAccount" className="form_group">
+        <Form.Label>From Account</Form.Label>
         <Form.Control
           as="select"
           {...register("fromAccount")}
@@ -155,15 +162,15 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="DESTBankName" aria-required>
-        <Form.Label className="font-weight-bold">Select Bank</Form.Label>
+      <Form.Group controlId="DESTBankName" className="form_group">
+        <Form.Label>Select Bank</Form.Label>
         <Controller
           control={control}
           name="DESTBankName"
           render={({ field }) => (
             <Typeahead
               id="DESTBankName"
-              options={DESTBankList ? DESTBankList.onlyBankNameList : []}
+              options={bankListData.onlyBankNameList}
               placeholder="Select Destination Bank... "
               onChange={(e) => field.onChange(e[0])}
               onBlur={() => field.onBlur()}
@@ -179,20 +186,16 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      {DESTBranchList && (
-        <Form.Group controlId="DESTBranchName">
-          <Form.Label className="font-weight-bold">
-            Select Destination Bank Branch
-          </Form.Label>
+      {DESTBranchData.onlyBankBranchNameList.length !== 0 && (
+        <Form.Group controlId="DESTBranchName" className="form_group">
+          <Form.Label>Select Destination Bank Branch</Form.Label>
           <Controller
             control={control}
             name="DESTBranchName"
             render={({ field }) => (
               <Typeahead
                 id="DESTBranchName"
-                options={
-                  DESTBranchList ? DESTBranchList.onlyBankBranchNameList : []
-                }
+                options={DESTBranchData.onlyBankBranchNameList}
                 placeholder="Choose destination branch..."
                 onChange={(e) => field.onChange(e[0])}
                 onBlur={() => field.onBlur()}
@@ -206,8 +209,8 @@ const BankTransferForm = (props: Props) => {
         </Form.Group>
       )}
 
-      <Form.Group controlId="toAccount">
-        <Form.Label className="font-weight-bold">Account Number</Form.Label>
+      <Form.Group controlId="toAccount" className="form_group">
+        <Form.Label>Account Number</Form.Label>
         <div className="d-flex">
           <Form.Control
             className="flex-grow-1"
@@ -232,10 +235,8 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="destAccountHolderName">
-        <Form.Label className="font-weight-bold">
-          Account Holder Name
-        </Form.Label>
+      <Form.Group controlId="destAccountHolderName" className="form_group">
+        <Form.Label>Account Holder Name</Form.Label>
         <Form.Control
           type="text"
           {...register("destAccountHolderName")}
@@ -248,8 +249,8 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="transactionAmount">
-        <Form.Label className="font-weight-bold">Amount</Form.Label>
+      <Form.Group controlId="transactionAmount" className="form_group">
+        <Form.Label>Amount</Form.Label>
         <Form.Control
           type="number"
           placeholder="transaction Amount..."
@@ -264,8 +265,8 @@ const BankTransferForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="remarks">
-        <Form.Label className="font-weight-bold">Remarks</Form.Label>
+      <Form.Group controlId="remarks" className="form_group">
+        <Form.Label>Remarks</Form.Label>
         <Form.Control
           type="text"
           {...register("remarks")}
@@ -282,7 +283,7 @@ const BankTransferForm = (props: Props) => {
         Submit
       </Button>
 
-      <Button className="ml-5" variant="danger" onClick={resetClicked}>
+      <Button className="ml-5" variant="danger" type="reset">
         Reset
       </Button>
     </>

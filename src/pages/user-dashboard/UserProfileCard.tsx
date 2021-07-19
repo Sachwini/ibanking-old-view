@@ -30,7 +30,7 @@ const ProfileCard = () => {
   }
 
   return (
-    <UserProfileCardContainer>
+    <UserProfileCardContainer className="card_Shadow">
       <Card.Header className="card_header">
         <Row className="w-100 m-0">
           <Col sm={4} md={2} className="d-flex align-items-center w-100 pl-0">

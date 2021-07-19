@@ -20,7 +20,7 @@ export interface getBranchFundTransferType {
   branchManager: string;
 }
 
-export interface getBankBranchList_FundTransferType {
+export interface getBankBranchData_FundTransferType {
   branchList: getBranchFundTransferType[];
   onlyBranchNameList: string[];
 }
@@ -31,5 +31,35 @@ export interface fundTransferFormDataType {
   toAccount: string;
   destinationAccountHolderName: string;
   DESTBranchID: string | "null";
+  DESTBranchCode: string;
   amount: string;
+  remarks: string;
 }
+
+export const branchDataDefaultValue = {
+  branchList: [
+    {
+      id: 0,
+      name: "",
+      address: "",
+      branchCode: "",
+      bank: "",
+      city: "",
+      checker: false,
+      maker: false,
+      state: "",
+      bankId: 0,
+      bankCode: "",
+      email: "",
+      branchId: "",
+      latitude: "",
+      longitude: "",
+      nchl: "",
+      fax: "",
+      telephoneNumber: "",
+      branchManager: "",
+    },
+  ],
+
+  onlyBranchNameList: [],
+};

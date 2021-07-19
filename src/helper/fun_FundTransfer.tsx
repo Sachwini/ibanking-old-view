@@ -1,10 +1,11 @@
 import { apiResponse } from "models/apiResponse";
+import { accValidationType } from "models/for-pages/bankTransferModels";
 import {
   fundTransferFormDataType,
-  getBankBranchList_FundTransferType,
+  getBankBranchData_FundTransferType,
   getBranchFundTransferType,
 } from "models/for-pages/fundTransferModels";
-import { get } from "services/AjaxService";
+import { get, post } from "services/AjaxService";
 
 export const getBranchList = async () => {
   const res = await get<apiResponse<getBranchFundTransferType[]>>(
@@ -18,10 +19,10 @@ export const getBranchList = async () => {
       res.data.details.map((item) => {
         return item.name;
       }),
-  } as getBankBranchList_FundTransferType;
+  } as getBankBranchData_FundTransferType;
 };
 
-export const getFundTransferBranchID = (
+export const getBranchDetail = (
   branchName: string | undefined,
   branchList: getBranchFundTransferType[] | undefined
 ) => {
@@ -33,12 +34,82 @@ export const getFundTransferBranchID = (
   ) {
     const obj = branchList.find(({ name }) => name === branchName);
     const id = obj?.id;
-    if (id) {
-      return id;
-    } else {
-      return "null";
+    const branchCode = obj?.branchCode;
+
+    if (id && branchCode) {
+      return {
+        branchId: id,
+        branchCode: branchCode,
+      };
     }
-  } else return "null";
+  } else
+    return {
+      branchId: "null",
+      branchCode: "",
+    };
+};
+
+export const accountValidation = async (data: fundTransferFormDataType) => {
+  try {
+    const res = await get<accValidationType>(
+      `/api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destinationAccountHolderName}&destinationBranchId=${data.DESTBranchID}`
+    );
+
+    if (res && res.data.detail.status.toLowerCase() === "valid") {
+      return {
+        status: true,
+        message: res.data.detail.message,
+      };
+    } else {
+      return {
+        status: false,
+        message: res.data.detail.message,
+      };
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error.response.data.message,
+    };
+  }
+};
+
+export const fundTransfer = async (
+  data: fundTransferFormDataType,
+  isotpRequired: boolean,
+  otp: string,
+  mpin: string
+) => {
+  if (isotpRequired) {
+    const res = await post<apiResponse<any>>(
+      `/api/fundtransfer?from_account_number=${
+        data.fromAccount
+      }&to_account_number=${
+        data.DESTBranchCode + data.toAccount
+      }&bank_branch_id=${data.DESTBranchID}&amount=${
+        data.amount
+      }&mPin=${mpin}}&remarks=${data.remarks}&otp=${otp}`,
+      {}
+    );
+
+    if (res) {
+      return res && res.data;
+    }
+  } else {
+    const res = await post<apiResponse<any>>(
+      `/api/fundtransfer?from_account_number=${
+        data.fromAccount
+      }&to_account_number=${
+        data.DESTBranchCode + data.toAccount
+      }&bank_branch_id=${data.DESTBranchID}&amount=${
+        data.amount
+      }&mPin=${mpin}}&remarks=${data.remarks}`,
+      {}
+    );
+    if (res) {
+      return res && res.data;
+    }
+  }
 };
 
 export const getDataFor_FundTransferErrorModal = (
@@ -60,5 +131,7 @@ export const fundTransfer_formData_DefaultValue = {
   toAccount: "",
   destinationAccountHolderName: "",
   DESTBranchID: "null",
+  DESTBranchCode: "",
   amount: "",
+  remarks: "",
 };

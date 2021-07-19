@@ -4,7 +4,7 @@ import {
   bankBranchType,
   BankList,
   bankTransferFormDataType,
-  getBankBranchListType,
+  getBankBranchDataType,
   getBankListType,
 } from "models/for-pages/bankTransferModels";
 import { get, post } from "services/AjaxService";
@@ -34,7 +34,7 @@ export const GetBankBranchList = async (BankId: string) => {
       res.data.details.map((item) => {
         return item.branchName;
       }),
-  } as getBankBranchListType;
+  } as getBankBranchDataType;
 };
 
 // Get destination Bank  id for BankTransfer
@@ -90,11 +90,28 @@ export const getTransctionCharge = async (
 
 // Validate Account Credentials Of Account holder For BankTransfer
 export const isAccountValid = async (data: bankTransferFormDataType) => {
-  const isValid = await get<apiResponse<accValidationType>>(
-    `api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destAccountHolderName}&destinationBranchId=${data.DESTBranchID}&destinationBankId=${data.DESTBankID}`
-  );
+  try {
+    const res = await get<accValidationType>(
+      `api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destAccountHolderName}&destinationBankId=${data.DESTBankID}&destinationBranchId=${data.DESTBranchID}`
+    );
 
-  return isValid && (isValid.data.detail as accValidationType);
+    if (res && res.data.detail.status.toLowerCase() === "valid") {
+      return {
+        status: true,
+        message: res.data.detail.message,
+      };
+    } else {
+      return {
+        status: false,
+        message: res.data.detail.message,
+      };
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: error.response.data.message,
+    };
+  }
 };
 
 // managing form data format
@@ -114,7 +131,10 @@ export const formDataFormat = (props: formDataFormatType) => {
   formData.append("destination_bank_id", props.data.DESTBankID);
   formData.append("destination_bank_name", props.data.DESTBankName);
   formData.append("destination_branch_id", props.data.DESTBranchID);
-  formData.append("destination_branch_name", props.data.DESTBranchName);
+  formData.append(
+    "destination_branch_name",
+    props.data.DESTBranchName === undefined ? "null" : props.data.DESTBranchName
+  );
   formData.append("destination_name", props.data.destAccountHolderName);
   formData.append("destination_account_number", props.data.toAccount);
   formData.append("remarks", props.data.remarks);
@@ -131,7 +151,7 @@ export const formData_DefaultValue = {
   toAccount: "",
   DESTBankName: "",
   DESTBankID: "null",
-  DESTBranchName: "",
+  DESTBranchName: "null",
   DESTBranchID: "null",
   destAccountHolderName: "",
   transctionAmount: "",

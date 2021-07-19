@@ -1,46 +1,48 @@
 import { getGraph } from "helper/GetData";
+import {
+  balanceDetailDefaultValue,
+  balanceDetailType,
+} from "models/ChartModdels";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { useRecoilValue } from "recoil";
+import { formatLakh } from "services/numberService";
 import { getSelectedAcc } from "state-provider/globalUserData";
+import { ChartCard } from "styling/for-dashboard/LineChartStyling";
 
 function LineChart() {
-  const [days, setDays] = useState<string[]>([]);
-  const [balance, setBalance] = useState<any>([]);
+  const [days, setDays] = useState<number[]>([]);
+  const [balance, setBalance] = useState<number[]>([]);
+  const [balanceDetails, setBalanceDetails] = useState<balanceDetailType>(
+    balanceDetailDefaultValue
+  );
   const selectedAccountDetails = useRecoilValue(getSelectedAcc);
-
-  const loadDays: string[] = [];
-  const loadBalance: number[] = [];
-  const getChartData = async () => {
-    try {
-      const graphData = await getGraph(selectedAccountDetails.accountNumber);
-      if (graphData) {
-        graphData.forEach((x: any) => loadDays.push(x.day));
-        graphData.forEach((x: any) => loadBalance.push(x.balance));
-        setDays(loadDays);
-        setBalance(loadBalance);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     let isSubscribed = true;
-    if (isSubscribed) {
-      getChartData();
-    }
+
+    const getChartData = async () => {
+      const graphData = await getGraph(selectedAccountDetails.accountNumber);
+      if (isSubscribed && graphData) {
+        setDays(graphData.dayList);
+        setBalance(graphData.balanceList);
+        setBalanceDetails(graphData.balanceDetail);
+      }
+    };
+
+    getChartData();
+
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [selectedAccountDetails.accountNumber]);
 
   const data = {
     labels: days,
     datasets: [
       {
-        label: "Balance / Last 30 day",
+        label: "Balance",
         data: balance,
         fill: false,
         borderColor: "#22c42a",
@@ -51,7 +53,9 @@ function LineChart() {
   const options = {
     title: {
       display: true,
-      text: "Account Activities",
+      text: "Transction Summary of Last 30 Days",
+      fontSize: 16,
+      fontWeight: "bold",
     },
 
     scales: {
@@ -75,11 +79,21 @@ function LineChart() {
   };
 
   return (
-    <Card className="card_Shadow">
-      <Card.Body>
-        {!days ? "" : <Line data={data} options={options} />}
+    <ChartCard className="card_Shadow">
+      <Card.Body className="card_body">
+        {!days ? "" : <Line data={data} options={options} redraw />}
       </Card.Body>
-    </Card>
+      <Card.Footer className="card_footer">
+        <p className="balance_style">
+          <span>Opening Balance</span> NPR.
+          {formatLakh(balanceDetails.openingBalance)}
+        </p>
+        <p className="balance_style">
+          <span>Closing Balance</span> NPR.
+          {formatLakh(balanceDetails.closingBalance)}
+        </p>
+      </Card.Footer>
+    </ChartCard>
   );
 }
 

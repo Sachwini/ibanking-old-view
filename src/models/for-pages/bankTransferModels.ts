@@ -34,13 +34,53 @@ export interface getBankListType {
   onlyBankNameList: string[];
 }
 
-export interface getBankBranchListType {
+export interface getBankBranchDataType {
   bankBranchList: bankBranchType[];
   onlyBankBranchNameList: string[];
 }
 
 export interface accValidationType {
   status: string;
+  code: string;
   message: string;
-  matchPercentage: number;
+  details: any;
+  detail: {
+    status: string;
+    message: string;
+    matchPercentage: number;
+  };
 }
+
+export const getBankListDefaultValue = {
+  bankList: [
+    {
+      bankId: "",
+      refBankId: "",
+      bankName: "",
+      enabled: "",
+      lastModifiedOn: "",
+      swiftCode: "",
+    },
+  ],
+  onlyBankNameList: [],
+};
+
+export const getBankBranchDataDefaultValue = {
+  bankBranchList: [
+    {
+      id: "",
+      branchId: "",
+      bankId: "",
+      refBranchId: "",
+      branchName: "",
+      enabled: "",
+      lastModifiedOn: "",
+    },
+  ],
+  onlyBankBranchNameList: [],
+};
+
+export const accValidationDefaultValue = {
+  status: false,
+  message: "Something Going Wrong, Please Try Again. Thank You...",
+};
