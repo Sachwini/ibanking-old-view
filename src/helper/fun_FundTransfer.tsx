@@ -50,6 +50,7 @@ export const getBranchDetail = (
 };
 
 export const accountValidation = async (data: fundTransferFormDataType) => {
+  console.log("data getting? ", data);
   try {
     const res = await get<accValidationType>(
       `/api/account/validation?destinationAccountNumber=${data.toAccount}&destinationAccountName=${data.destinationAccountHolderName}&destinationBranchId=${data.DESTBranchID}`
@@ -88,7 +89,7 @@ export const fundTransfer = async (
         data.DESTBranchCode + data.toAccount
       }&bank_branch_id=${data.DESTBranchID}&amount=${
         data.amount
-      }&mPin=${mpin}}&remarks=${data.remarks}&otp=${otp}`,
+      }&mPin=${mpin}&remarks=${data.remarks}&otp=${otp}`,
       {}
     );
 
@@ -103,7 +104,7 @@ export const fundTransfer = async (
         data.DESTBranchCode + data.toAccount
       }&bank_branch_id=${data.DESTBranchID}&amount=${
         data.amount
-      }&mPin=${mpin}}&remarks=${data.remarks}`,
+      }&mPin=${mpin}&remarks=${data.remarks}`,
       {}
     );
     if (res) {

@@ -183,13 +183,15 @@ function FundTransferForm(props: Props) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Button variant="outline-success" type="submit">
-        Submit
-      </Button>
+      <div className="text-right mr-3">
+        <Button variant="outline-success" type="submit" className="px-4">
+          Submit
+        </Button>
 
-      <Button className="ml-5" variant="outline-danger" type="reset">
-        Reset
-      </Button>
+        <Button className="ml-5 px-4" variant="outline-danger" type="reset">
+          Reset
+        </Button>
+      </div>
     </>
   );
 }

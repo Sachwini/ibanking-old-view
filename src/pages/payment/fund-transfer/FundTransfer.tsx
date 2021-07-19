@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form";
 import FundTransferForm from "./FundTransferForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fundTrasferScheme } from "validation-schema/fundTransfer_validation";
-import { useRecoilValue } from "recoil";
-import { isLoading } from "state-provider/forPageSetting";
 import {
   accountValidation,
   fundTransfer,
@@ -77,8 +75,9 @@ export const FundTransfer = () => {
   // call account validation and open detail modal
   const onSubmit = async (data: fundTransferFormDataType) => {
     setFormData(data);
+    // console.log("fund transfer form data: ", data);
 
-    const validationData = await accountValidation(formData);
+    const validationData = await accountValidation(data);
     if (validationData) {
       setAccValidationStatus(validationData);
     }
