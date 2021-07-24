@@ -42,8 +42,8 @@ const DemoPaginate = (props: Props) => {
     indexOfLastItem
   );
 
-  const handleClick = (event: any) => {
-    setCurrentPage(Number(event.target.id));
+  const handleClick = (id: number) => {
+    setCurrentPage(id);
   };
 
   const handleNextBtn = () => {
@@ -98,8 +98,7 @@ const DemoPaginate = (props: Props) => {
       return (
         <PageNumberList
           key={number}
-          id={number.toString()}
-          onClick={handleClick}
+          onClick={() => handleClick(number)}
           active={currentPage === number ? true : false}
         >
           {number}
