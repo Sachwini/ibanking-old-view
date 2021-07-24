@@ -11,7 +11,7 @@ export const CustomTabs = styled(Tabs)<customeTabsProps>`
   padding: ${(props) => (props.padding ? props.padding : "")};
 
   a {
-    font-size: 18px;
+    font-size: 16.5px;
     text-transform: capitalize;
     font-weight: 550;
   }

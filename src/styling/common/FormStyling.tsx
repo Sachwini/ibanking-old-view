@@ -9,4 +9,9 @@ export const CustomForm = styled(Form)`
   label {
     font-weight: bold;
   }
+
+  .button_wrapper {
+    float: right;
+    margin-right: 1rem;
+  }
 `;

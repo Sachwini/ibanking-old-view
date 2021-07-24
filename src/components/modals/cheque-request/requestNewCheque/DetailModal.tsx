@@ -1,71 +1,70 @@
-import { Button, Modal } from "react-bootstrap";
+import { localDate } from "helper/DateConfig";
+import { Button, Image } from "react-bootstrap";
+import { ChequeModalContainer } from "styling/ChequeStyling";
+import {
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "styling/common/ModalStyling";
 
 export interface Props {
   modalShow: boolean;
-  handleModalShow: (show: boolean) => void;
-  modalFormSubmitHandle: (show: boolean) => void;
   fromAccount: string;
   chequeLeaves: string;
-  cancleButton: (show: boolean) => void;
+
+  modalSubmitHandle: () => void;
+  handleCancle: (show: boolean) => void;
 }
 
 function DetailModal(props: Props) {
-  const {
-    modalShow,
-    handleModalShow,
-    modalFormSubmitHandle,
-    fromAccount,
-    chequeLeaves,
-    cancleButton,
-  } = props;
-
-  const handleSubmit = (e: any) => {
-    modalFormSubmitHandle(e);
-    handleModalShow(false);
-  };
-
   return (
-    <Modal
-      show={modalShow}
-      onHide={() => handleModalShow(false)}
+    <ChequeModalContainer
+      show={props.modalShow}
+      onHide={() => props.handleCancle(false)}
       backdrop="static"
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{ zIndex: 1400 }}
     >
-      <Modal.Header className="modal_header">
-        <Modal.Title as="h6">Details of your Cheque Request</Modal.Title>
-      </Modal.Header>
-      <Modal.Body style={{ padding: "1em" }} className="modal_body">
-        <strong className="d-block mb-2">Input Details</strong>
-        <div className="d-flex justify-content-between mb-2">
-          <span>Account Number: </span>
-          <span className="text-muted">{fromAccount}</span>
+      <ModalHeader padding="1.5rem 1.5rem 0" closeButton>
+        <div>
+          <Image
+            src="/images/baner.png"
+            alt="baner image"
+            height="50px"
+            width="80%"
+          />
+          <p className="success_headerText">New CheckBook Request</p>
+          <p className="date">{localDate()}</p>
         </div>
-        <div className="d-flex justify-content-between mb-2">
-          <span>Cheque Leaves: </span>
-          <span className="text-muted">{chequeLeaves}</span>
+      </ModalHeader>
+
+      <ModalBody padding="1.5rem 2rem 1.5rem">
+        <strong className="d-block mb-2">
+          New Check Book Request Details:
+        </strong>
+
+        <div className="detail_wrapper">
+          <span className="label">Account Number: </span>
+          <span className="value">{props.fromAccount}</span>
         </div>
-        <div className="float-right">
-          <Button
-            variant="secondary"
-            onClick={() => cancleButton(false)}
-            style={{ padding: "7px 12px", marginRight: "1em" }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            style={{ padding: "7px 12px" }}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
+
+        <div className="detail_wrapper">
+          <span className="label">Cheque Leaves: </span>
+          <span className="value">{props.chequeLeaves}</span>
         </div>
-      </Modal.Body>
-    </Modal>
+      </ModalBody>
+
+      <ModalFooter padding="0.5 1rem">
+        <Button
+          variant="outline-success"
+          onClick={props.modalSubmitHandle}
+          className="px-4 mr-2"
+        >
+          Processed
+        </Button>
+      </ModalFooter>
+    </ChequeModalContainer>
   );
 }
 

@@ -1,152 +1,145 @@
 import ConfirmModal from "components/modals/favoriteAccount/ConfirmModal";
-import StaticBar from "components/StaticBar";
+import { addFavAccount } from "helper/GetData";
 import { useState } from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { FaHeart } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { post } from "services/AjaxService";
-import { forFavouriteAccount } from "static-data/forBreadCrumb";
+import { Button, Card, Form } from "react-bootstrap";
+import { useSetRecoilState } from "recoil";
+import { isFavAccAdded, tosterSetting } from "state-provider/forPageSetting";
+import { CardBody, CardHeader, CustomCard } from "styling/common/CardStyling";
+import { CustomForm } from "styling/common/FormStyling";
 
 const AddFavorite = () => {
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [destinationBankName, setDestinationBankName] = useState<string>("");
-  const [destinationAccountHolderName, setDestinationAccountHolderName] =
-    useState<string>("");
+  const [DESTAccHolderName, setDESTAccHolderName] = useState<string>("");
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
+  const [validated, setValidated] = useState(false);
 
-  const pageTitle = {
-    title: "Your Favourate Account",
-    subTitle: (
-      <span>
-        Add or Remove your Favourite Accounts <FaHeart color="red" size={18} />
-      </span>
-    ),
-  };
-
-  const handleReset = (e: any) => {
-    setAccountNumber("");
-    setDestinationBankName("");
-    setDestinationAccountHolderName("");
-  };
+  const setTosterData = useSetRecoilState(tosterSetting);
+  const isFavAccountAdded = useSetRecoilState(isFavAccAdded);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const model: any = {
-      reminderType: "OneTime",
-      serviceInfoType: "CONNECT_IPS",
-      data: {
-        destinationAccountNumber: accountNumber,
-        destinationBankName: destinationBankName,
-        destinationAccountHolderName: destinationAccountHolderName,
-      },
-    };
-    if (!accountNumber || !destinationBankName || !destinationAccountHolderName)
-      return;
-    try {
-      const res = await post<any>("/api/saveuserpayment", model);
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      setValidated(true);
+
+      const res = await addFavAccount(
+        accountNumber,
+        destinationBankName,
+        DESTAccHolderName
+      );
+
       if (res) {
-        toast.success(res.data.message);
-        handleReset(e);
+        setTosterData({
+          isTost: true,
+          state: res.state,
+          message: (
+            <div>
+              <strong className="message_title">{res.messageTitle}</strong>
+              <p className="message_text">{res.message}</p>
+            </div>
+          ),
+        });
+        isFavAccountAdded(true);
       }
-    } catch (error) {
-      toast.error(error.response.data.message);
     }
+    // resetValue();
+  };
+
+  const resetValue = () => {
+    setAccountNumber("");
+    setDestinationBankName("");
+    setDESTAccHolderName("");
   };
 
   return (
-    <Container>
-      <StaticBar pageTitle={pageTitle} breadCrumbData={forFavouriteAccount} />
-      <Row>
-        <Col sm={12} md={6}>
-          <Card className="card_Shadow">
-            <Card.Body>
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setDetailModalShow(true);
-                }}
-              >
-                <Form.Group controlId="exampleForm.ControlSelect1">
-                  <Form.Label className="font-weight-bold">
-                    Account Number
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your favorite account number"
-                    name="accountNumber"
-                    value={accountNumber}
-                    required
-                    autoComplete="off"
-                    onChange={(e) => setAccountNumber(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Destination Account Holder Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Destination Account Holder Name"
-                    name="destinationAccountHolderName"
-                    value={destinationAccountHolderName}
-                    required
-                    autoComplete="off"
-                    onChange={(e) =>
-                      setDestinationAccountHolderName(e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label className="font-weight-bold">
-                    Destination Bank Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Destination Bank Name"
-                    name="destinationBankName"
-                    value={destinationBankName}
-                    required
-                    autoComplete="off"
-                    onChange={(e) => setDestinationBankName(e.target.value)}
-                  />
-                </Form.Group>
-                <hr />
-                <div className="mt-2">
-                  <Button
-                    className="btn btn-warning"
-                    variant="primary"
-                    type="submit"
-                  >
-                    Add
-                  </Button>
-                  <Button
-                    className="btn btn-secondary"
-                    style={{ marginLeft: "20px" }}
-                    variant="secondary"
-                    type="submit"
-                    onClick={handleReset}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-                <ToastContainer autoClose={5000} position="top-center" />
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+    <>
+      <CustomCard className="card_Shadow">
+        <CardHeader padding="2rem 2rem 1rem" borderColor="#f0f0f0">
+          <Card.Title className="card_title">
+            Add new favourite account
+          </Card.Title>
+
+          <Card.Subtitle className="card_subtitle">
+            you can ad or remove your Favourite bank accounts which are mostly
+            used by you for transctions
+          </Card.Subtitle>
+        </CardHeader>
+
+        <CardBody padding="2rem">
+          <CustomForm noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form.Group controlId="accountNumber" className="form_group">
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="account number..."
+                name="accountNumber"
+                value={accountNumber}
+                required
+                autoComplete="off"
+                onChange={(e) => setAccountNumber(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                account number is required
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="accountHoldername" className="form_group">
+              <Form.Label>Account Holder Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Account Holder Name..."
+                name="DESTAccHolderName"
+                value={DESTAccHolderName}
+                required
+                autoComplete="off"
+                onChange={(e) => setDESTAccHolderName(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                account holder name is required
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label>Bank Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bank Name..."
+                name="destinationBankName"
+                value={destinationBankName}
+                required
+                autoComplete="off"
+                onChange={(e) => setDestinationBankName(e.target.value)}
+              />
+
+              <Form.Control.Feedback type="invalid">
+                bank name is required
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <div className="submit_buttonWrapper">
+              <Button className="px-5" variant="outline-success" type="submit">
+                Add New One
+              </Button>
+            </div>
+          </CustomForm>
+        </CardBody>
+      </CustomCard>
+
       <ConfirmModal
         modalShow={detailModalShow}
         handleModalShow={(event) => setDetailModalShow(event)}
         modalFormSubmitHandle={handleSubmit}
         accountNumber={accountNumber}
         destinationBankName={destinationBankName}
-        destinationAccountHolderName={destinationAccountHolderName}
+        destinationAccountHolderName={DESTAccHolderName}
         confirmModalCancleButton={(event) => setDetailModalShow(event)}
       />
-    </Container>
+    </>
   );
 };
 

@@ -1,4 +1,17 @@
+import { Modal } from "react-bootstrap";
 import styled, { css } from "styled-components/macro";
+
+export const SwitchAccModalContainer = styled(Modal)`
+  .myFooter {
+    button {
+      width: 100%;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      font-size: 18px;
+      transition: all 0.4s;
+    }
+  }
+`;
 
 // Account Wrapper styling going form here
 interface accountWrapperProps {

@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { Card, Col, Row, Button, Form } from "react-bootstrap";
+import { FormEvent, useState } from "react";
+import { Col, Row, Button, Form } from "react-bootstrap";
 import { BsPencilSquare } from "react-icons/bs";
-import styled from "styled-components";
 import { localDate } from "helper/DateConfig";
 import { post } from "services/AjaxService";
 import { toast } from "react-toastify";
@@ -12,104 +11,93 @@ import SuccessModal from "components/modals/cheque-request/requestNewCheque/Succ
 import { useRecoilValue } from "recoil";
 import { getBankAccNo } from "state-provider/globalUserData";
 import { v4 as uuidv4 } from "uuid";
-
-const ChequeReqHeader = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: row;
-  color: green;
-
-  .space_item {
-    margin-right: 20px;
-  }
-`;
+import { CardBody, CardHeader, CustomCard } from "styling/common/CardStyling";
+import { ChequeRequestContainer } from "styling/ChequeStyling";
+import { CustomForm } from "styling/common/FormStyling";
 
 function RequestNewCheque() {
   const getAllAccountNumber = useRecoilValue(getBankAccNo);
   const [fromAccount, setFromAccount] = useState<string>("");
-  const [mpin, setMpin] = useState<string>("");
   const [chequeLeaves, setChequeLeaves] = useState<string>("10");
+  const [mpin, setMpin] = useState<string>("");
+
   const [detailModalShow, setDetailModalShow] = useState<boolean>(false);
   const [mpinModalShow, setMpinModalShow] = useState<boolean>(false);
-  const [isSuccessMessage, setIsSucessMessage] = useState<boolean>(false);
+  const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-    details: "",
+    status: false as boolean,
+    message: "" as string,
   });
 
-  const ActiveStyle = {
-    color: "green",
-    borderBottom: "3px solid green",
-    letterSpacing: "1px",
-  };
-
-  const openDetailModel = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    setDetailModalShow(true);
-  };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setDetailModalShow(true);
-
-    if (!fromAccount || !mpin) {
-      toast.error("No mpin");
+    if (!fromAccount || !chequeLeaves) {
       return;
-    }
+    } else setDetailModalShow(true);
+  };
+
+  const detailModalSubmitHandle = () => {
+    setDetailModalShow(false);
+    setMpinModalShow(true);
+  };
+
+  const mpinModalSubmitHandle = () => {
+    setMpinModalShow(false);
+    requestCheque();
+  };
+
+  const requestCheque = async () => {
     const formData = new FormData();
     formData.append("accountNumber", fromAccount);
     formData.append("chequeLeaves", chequeLeaves);
     formData.append("mPin", mpin);
+
     try {
-      const res = await post<apiResponse<any>>("/api/chequerequest", formData);
-      if (res) {
-        setIsSucessMessage(true);
+      const res = await post<apiResponse<string>>(
+        "/api/chequerequest",
+        formData
+      );
+      if (res && res.data.status.toLowerCase() === "success") {
+        setSuccessModalShow(true);
         setResponseMessage({
-          status: "success",
-          message: res.data.message,
-          details: res.data.details,
+          status: true,
+          message: res.data.details,
         });
-        toast.success(res.data.message);
-        console.log(res.data);
+      } else {
+        setSuccessModalShow(true);
+        setResponseMessage({
+          status: false,
+          message: res.data.message,
+        });
       }
     } catch (error) {
       if (error.response) {
-        setIsSucessMessage(true);
+        setSuccessModalShow(true);
         setResponseMessage({
-          status: "failure",
+          status: false,
           message: error.response.data.message,
-          details: error.response.data.details,
         });
-        toast.error(error.response.data.message);
       }
     }
   };
-  return (
-    <>
-      <Card className="card_Shadow">
-        <Card.Header>
-          <ChequeReqHeader>
-            <BsPencilSquare size={30} className="space_item" />
-            <h4 className="text-muted">Request Cheque Book</h4>
-          </ChequeReqHeader>
-        </Card.Header>
-        <Card.Body>
-          {/* <h3 className="mb-3">Input Details</h3> */}
-          <span className="text-muted">{localDate()}</span>
-          <h6 className="mt-4 text-muted">
-            I would like to request cheque book
-          </h6>
-          <hr style={ActiveStyle} />
 
-          <Form onSubmit={(e) => openDetailModel(e)}>
-            <Form.Group
-              as={Row}
-              controlId="exampleForm.ControlSelect1"
-              className="mb-4"
-            >
-              <Form.Label className="font-weight-bold" column sm="4">
+  return (
+    <ChequeRequestContainer>
+      <CustomCard className="card_Shadow">
+        <CardHeader borderColor="rgba(0,0,0, 0.125)" padding="0">
+          <div className="chequeRequest_upperHeaderWrapper">
+            <h4>Request Cheque Book</h4>
+            <BsPencilSquare size={30} color="white" />
+          </div>
+
+          <p className="date">{localDate()}</p>
+        </CardHeader>
+
+        <CardBody padding="2rem 2rem 1.5rem">
+          <CustomForm onSubmit={handleSubmit}>
+            <Form.Group as={Row} controlId="fromAccount" className="mb-4">
+              <Form.Label column sm="4">
                 From Account
               </Form.Label>
               <Col>
@@ -128,6 +116,14 @@ function RequestNewCheque() {
                   })}
                 </Form.Control>
               </Col>
+              <Form.Control.Feedback
+                type="invalid"
+                className={`${
+                  fromAccount === "" ? "text-center d-block" : "d-none"
+                }`}
+              >
+                account number is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group
               as={Row}
@@ -151,40 +147,37 @@ function RequestNewCheque() {
                 </Form.Control>
               </Col>
             </Form.Group>
-            <Button className="btn btn-light" variant="secondary">
-              Cancel
-            </Button>
-            <Button
-              className="btn btn-warning"
-              style={{ marginLeft: "20px" }}
-              variant="primary"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+
+            <div className="button_wrapper mt-4">
+              <Button className="px-4" variant="outline-success" type="submit">
+                Request
+              </Button>
+            </div>
+          </CustomForm>
+        </CardBody>
+      </CustomCard>
+
       <DetailModal
         modalShow={detailModalShow}
-        handleModalShow={(event: boolean) => setDetailModalShow(event)}
-        modalFormSubmitHandle={(event: boolean) => setMpinModalShow(true)}
+        modalSubmitHandle={detailModalSubmitHandle}
         fromAccount={fromAccount}
         chequeLeaves={chequeLeaves}
-        cancleButton={(event: boolean) => setDetailModalShow(false)}
+        handleCancle={(e) => setDetailModalShow(e)}
       />
+
       <MpinModal
         mpinModalShow={mpinModalShow}
         setMpin={(mpin) => setMpin(mpin)}
-        mpinModalSubmitHandle={() => setIsSucessMessage(true)}
+        mpinModalSubmitHandle={mpinModalSubmitHandle}
         handleCancle={(e) => setMpinModalShow(e)}
       />
+
       <SuccessModal
-        successModalShow={isSuccessMessage}
-        handleModalShow={(e) => setIsSucessMessage(e)}
+        successModalShow={successModalShow}
+        handleModalShow={(e) => setSuccessModalShow(e)}
         responseMessage={responseMessage}
       />
-    </>
+    </ChequeRequestContainer>
   );
 }
 

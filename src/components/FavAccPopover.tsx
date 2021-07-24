@@ -1,9 +1,9 @@
+import { getFavAccDetails } from "helper/GetData";
 import { apiResponse } from "models/apiResponse";
 import { favAccListType, favAccType } from "models/for-pages/favAcccountModels";
 import { useEffect, useRef, useState } from "react";
 import { OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { RiBankLine, RiUserStarLine } from "react-icons/ri";
-import { get } from "services/AjaxService";
 import { PooverContainer } from "styling/common/FavAcc_pooverStyling";
 import { IconStyle } from "styling/common/IconStyling";
 import { v4 as uuidv4 } from "uuid";
@@ -21,17 +21,11 @@ const FavAccPopover = ({ selectedDetails }: Props) => {
     let isSubscribed = true;
 
     const getFavAccData = async () => {
-      try {
-        const res = await get<apiResponse<favAccType[]>>(
-          "/api/userSavedPayment?serviceInfoType=CONNECT_IPS"
-        );
-        if (isSubscribed && res) {
-          const resData: favAccListType[] = [];
-          res.data.details.forEach((items) => resData.push(items.data));
-          setFavAccList(resData);
-        }
-      } catch (error) {
-        console.log(error);
+      const data = await getFavAccDetails();
+      if (isSubscribed && data) {
+        const resData: favAccListType[] = [];
+        data.forEach((items) => resData.push(items.data));
+        setFavAccList(resData);
       }
     };
 

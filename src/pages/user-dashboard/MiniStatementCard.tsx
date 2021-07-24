@@ -28,17 +28,13 @@ const MiniStatementCard = () => {
   useEffect(() => {
     let isSubscribed = true;
     const init = async () => {
-      try {
-        const res = await getStatement(
-          selectedAccountDetails.accountNumber,
-          formatedStartDate,
-          formatedEndDate
-        );
-        if (res || isSubscribed) {
-          setStatementData(res.slice(0, 6));
-        }
-      } catch (error) {
-        console.log(error);
+      const res = await getStatement(
+        selectedAccountDetails.accountNumber,
+        formatedStartDate,
+        formatedEndDate
+      );
+      if (isSubscribed && res) {
+        setStatementData(res.accountStatementDtos.slice(0, 6));
       }
     };
 

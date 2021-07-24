@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { atom } from "recoil";
 
 export const isMenuButtonClicked = atom({
@@ -17,5 +18,26 @@ export const menuActiveListID = atom({
 
 export const isLoading = atom({
   key: "is_loading",
+  default: false as boolean,
+});
+
+// toaster setting is here
+export interface tosterType {
+  isTost: boolean;
+  state: string;
+  message: string | ReactNode;
+}
+
+export const tosterSetting = atom({
+  key: "toaster_settings",
+  default: {
+    isTost: false,
+    state: "",
+    message: "Thank You for being with us 🙂",
+  } as tosterType,
+});
+
+export const isFavAccAdded = atom({
+  key: "is_favAcc_added",
   default: false as boolean,
 });

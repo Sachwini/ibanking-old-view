@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
-import {
-  ModalHeader,
-  ModalFooter,
-} from "styling/for-modal/SwitchAccountModalStyling";
+import { ModalHeader, ModalFooter } from "styling/common/ModalStyling";
 import {
   AccountInfoWrapper,
   AccountWrapper,
   IconWrapper,
+  SwitchAccModalContainer,
 } from "styling/for-modal/AccountSwitchStyling";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -55,7 +53,7 @@ const SwitchAccountModal = (props: Props) => {
   };
 
   return (
-    <Modal
+    <SwitchAccModalContainer
       show={modalShow}
       onHide={handleSubmit}
       backdrop="static"
@@ -64,7 +62,14 @@ const SwitchAccountModal = (props: Props) => {
       centered
       animation={true}
     >
-      <ModalHeader closeButton>Switch Account</ModalHeader>
+      <ModalHeader
+        textTransform="uppercase"
+        color="green"
+        fs="20px"
+        closeButton
+      >
+        <span className="flex-grow-1 text-center pt-1">Switch Account</span>
+      </ModalHeader>
       <Modal.Body>
         {allAccountListDetail.map((items) => {
           return (
@@ -88,12 +93,12 @@ const SwitchAccountModal = (props: Props) => {
         })}
       </Modal.Body>
 
-      <ModalFooter>
-        <Button onClick={handleSubmit} variant="success">
+      <ModalFooter className="myFooter">
+        <Button onClick={handleSubmit} variant="outline-success">
           Switch
         </Button>
       </ModalFooter>
-    </Modal>
+    </SwitchAccModalContainer>
   );
 };
 

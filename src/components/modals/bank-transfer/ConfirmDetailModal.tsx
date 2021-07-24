@@ -5,10 +5,10 @@ import { ImArrowRight } from "react-icons/im";
 import { formatLakh } from "services/numberService";
 import {
   AccountView,
-  CustomModal,
   DetaildView,
   ValidationInfo,
 } from "styling/for-modal/PaymentModalStyling";
+import { CustomModal } from "styling/common/ModalStyling";
 
 export interface Props {
   data: bankTransferFormDataType;

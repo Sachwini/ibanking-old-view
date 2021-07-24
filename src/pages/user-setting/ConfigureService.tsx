@@ -10,26 +10,21 @@ import { BsShieldLock } from "react-icons/bs";
 import { GrDocumentTime } from "react-icons/gr";
 import { FcQuestions, FcMoneyTransfer } from "react-icons/fc";
 import { FaPiggyBank } from "react-icons/fa";
-import "./ConfigureService.css";
 import { Link } from "react-router-dom";
 import StaticBar from "components/StaticBar";
 import { userServiceSettingPageTitle } from "static-data/forPageTitle";
 import { forUserServiceSetting } from "static-data/forBreadCrumb";
+import { SettingCardContainer } from "styling/UserSettingStyling";
 
-const linkStyle = {
-  color: "inherit",
-  textDecoration: "inherit",
-};
-
-function ConfigureService() {
+const ConfigureService = () => {
   return (
     <Container className="justify-content-center">
       <StaticBar
         pageTitle={userServiceSettingPageTitle}
         breadCrumbData={forUserServiceSetting}
       />
-      <div className="d-flex flex-wrap mt-1">
-        <Link to="/change-mpin" style={linkStyle}>
+      <SettingCardContainer>
+        <Link to="/change-mpin">
           <Card className="card__ctrl">
             <Card.Body className="cardBody__ctrl">
               <Card.Title>
@@ -49,14 +44,16 @@ function ConfigureService() {
           </Card.Body>
         </Card>
 
+        {/* <Link to="/logs"> */}
         <Card className="card__ctrl">
           <Card.Body className="cardBody__ctrl">
             <Card.Title>
               <FiUserPlus size="40px" />
             </Card.Title>
-            <Card.Text className="cardText">New Account Activate</Card.Text>
+            <Card.Text className="cardText">Account Activate</Card.Text>
           </Card.Body>
         </Card>
+        {/* </Link> */}
 
         <Card className="card__ctrl">
           <Card.Body className="cardBody__ctrl">
@@ -76,23 +73,27 @@ function ConfigureService() {
           </Card.Body>
         </Card>
 
-        <Card className="card__ctrl">
-          <Card.Body className="cardBody__ctrl">
-            <Card.Title>
-              <RiStarSmileLine size="40px" />
-            </Card.Title>
-            <Card.Text className="cardText">Favorite Account</Card.Text>
-          </Card.Body>
-        </Card>
+        <Link to="/add-favorite">
+          <Card className="card__ctrl">
+            <Card.Body className="cardBody__ctrl">
+              <Card.Title>
+                <RiStarSmileLine size="40px" />
+              </Card.Title>
+              <Card.Text className="cardText">Favorite Account</Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
 
-        <Card className="card__ctrl">
-          <Card.Body className="cardBody__ctrl">
-            <Card.Title>
-              <GrDocumentTime size="40px" />
-            </Card.Title>
-            <Card.Text className="cardText">Schedule Transfer</Card.Text>
-          </Card.Body>
-        </Card>
+        <Link to="/statement">
+          <Card className="card__ctrl">
+            <Card.Body className="cardBody__ctrl">
+              <Card.Title>
+                <GrDocumentTime size="40px" />
+              </Card.Title>
+              <Card.Text className="cardText">View Statement</Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
 
         <Card className="card__ctrl">
           <Card.Body className="cardBody__ctrl">
@@ -120,9 +121,9 @@ function ConfigureService() {
             <Card.Text className="cardText">Fixed Deposit</Card.Text>
           </Card.Body>
         </Card>
-      </div>
+      </SettingCardContainer>
     </Container>
   );
-}
+};
 
 export default ConfigureService;

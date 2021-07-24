@@ -73,9 +73,7 @@ function App() {
 
   /* ----------For History Log Import--------------------- */
   const Activities = React.lazy(() => import("pages/activities"));
-  const AddFavorite = React.lazy(
-    () => import("pages/favoriteListing/AddFavorite")
-  );
+  const FavouriteAccount = React.lazy(() => import("pages/favoriteListing"));
 
   const isLoginPage = window.location.pathname.startsWith("/login");
 
@@ -142,7 +140,7 @@ function App() {
             <Route path="/change-mpin" component={ChangeMpin} />
             <Route path="/configure-theme" component={ThemeSetting} />
 
-            <Route path="/add-favorite" component={AddFavorite} />
+            <Route path="/add-favorite" component={FavouriteAccount} />
 
             {/* ---------- For history Logs Routing--------------------- */}
             <Route path="/logs" component={Activities} />

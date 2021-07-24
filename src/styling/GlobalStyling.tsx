@@ -2,6 +2,9 @@ import { createGlobalStyle } from "styled-components";
 import { ThemeType } from "./ThemeControl";
 
 export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
   *{
       padding:0;
       margin:0;

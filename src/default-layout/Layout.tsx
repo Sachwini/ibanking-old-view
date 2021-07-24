@@ -17,6 +17,7 @@ import { userDetails } from "state-provider/globalUserData";
 import { userDetailType } from "models/for-pages/userAccountModels";
 import { loadUserDetails } from "helper/GetData";
 import { Loader } from "pages/static/Loader";
+import Toster from "./Toster";
 
 const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
   const [{ menuHeaderId }, dispatch] = useStateValue();
@@ -63,6 +64,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
 
   return (
     <LayoutContainer>
+      <Toster />
       <Header />
 
       <LayoutBodyWrapper>

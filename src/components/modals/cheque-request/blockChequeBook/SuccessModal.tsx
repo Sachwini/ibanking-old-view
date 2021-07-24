@@ -2,56 +2,65 @@ import { Button, Modal } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { VscError } from "react-icons/vsc";
 import {
-  ErrorModalHeader,
+  ModalBody,
+  ModalFooter,
   SuccessModalHeader,
-} from "styling/for-modal/SwitchAccountModalStyling";
+} from "styling/common/ModalStyling";
+import { MySuccessModal } from "styling/for-modal/PaymentModalStyling";
 
 export interface Props {
   successModalShow: boolean;
   handleModalShow: (show: boolean) => void;
   responseMessage: {
-    status: string;
+    status: boolean;
     message: string;
-    details: string;
   };
 }
 
 const SuccessModal = (props: Props) => {
   const { successModalShow, handleModalShow, responseMessage } = props;
   return (
-    <Modal
+    <MySuccessModal
       show={successModalShow}
       backdrop="static"
       keyboard={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header className="justify-content-center p-0">
-        {responseMessage?.status === "success" ? (
-          <SuccessModalHeader>
-            <GiCheckMark color="white" size={60} />
-            <h4>Success</h4>
+      <Modal.Header className="modal_header">
+        {responseMessage?.status === true ? (
+          <SuccessModalHeader color="green">
+            <div className="icon_wrapper">
+              <GiCheckMark size={50} />
+            </div>
+            <p className="message_wrapper">Success</p>
           </SuccessModalHeader>
         ) : (
-          <ErrorModalHeader>
-            <VscError color="white" size={60} />
-            <h4>Oops !!!</h4>
-          </ErrorModalHeader>
+          <SuccessModalHeader color="red">
+            <div className="icon_wrapper">
+              <VscError size={50} />
+            </div>
+            <p className="message_wrapper">Failed</p>
+          </SuccessModalHeader>
         )}
       </Modal.Header>
-      <Modal.Body style={{ padding: "2em" }}>
-        <div className="mb-4">{responseMessage?.message}kk</div>
-        <div className="mb-4">{responseMessage?.details}</div>
+
+      <ModalBody padding="2rem">
+        <div className="mb-4">{responseMessage?.message}</div>
+      </ModalBody>
+
+      <ModalFooter padding="0.5rem 1rem 1rem">
         <Button
           onClick={() => {
             handleModalShow(false);
           }}
-          style={{ float: "right", padding: "8px 1.8em" }}
+          className="px-5 mr-2 text-uppercase fw-700"
+          variant="outline-primary"
         >
-          OK
+          Dismiss
         </Button>
-      </Modal.Body>
-    </Modal>
+      </ModalFooter>
+    </MySuccessModal>
   );
 };
 

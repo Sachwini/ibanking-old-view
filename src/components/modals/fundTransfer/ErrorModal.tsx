@@ -7,10 +7,10 @@ import { formatLakh } from "services/numberService";
 import {
   AccountView,
   MySuccessModal,
-  MySuccessModalHeader,
   SuccessDetailView,
   ValidationInfo,
 } from "styling/for-modal/PaymentModalStyling";
+import { SuccessModalHeader } from "styling/common/ModalStyling";
 
 interface Props {
   errorInfoData: fundTransfer_errorModalDataType;
@@ -30,12 +30,12 @@ const SuccessModal = (props: Props) => {
       size="lg"
     >
       <Modal.Header className="modal_header">
-        <MySuccessModalHeader color="red">
+        <SuccessModalHeader color="red">
           <div className="icon_wrapper">
             <VscError size={50} />
           </div>
           <p className="message_wrapper">Failed</p>
-        </MySuccessModalHeader>
+        </SuccessModalHeader>
       </Modal.Header>
 
       <Modal.Body className="modal_body">

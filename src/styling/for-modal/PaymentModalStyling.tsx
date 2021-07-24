@@ -1,34 +1,6 @@
 import { Modal } from "react-bootstrap";
 import styled from "styled-components/macro";
-
-// modal props
-interface modalProps {
-  width?: string;
-}
-
-export const CustomModal = styled(Modal)<modalProps>`
-  .modal_header {
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 0.7rem;
-    padding-top: 2rem;
-
-    .modal_title {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      text-transform: uppercase;
-      font-size: 18px;
-      color: #056d34e8;
-      font-weight: bold;
-    }
-  }
-
-  .modal_body {
-    padding: 1rem 2rem 1rem;
-  }
-
-  .modal_footer {
-  }
-`;
+import { CustomModal } from "styling/common/ModalStyling";
 
 export const MyModal = styled(CustomModal)`
   input {
@@ -114,25 +86,6 @@ export const MySuccessModal = styled(CustomModal)`
         font-weight: bolder;
       }
     }
-  }
-`;
-
-// success Modal header styling going here
-interface successHeaderProps {
-  color: string;
-}
-export const MySuccessModalHeader = styled.div<successHeaderProps>`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${(props) => props.color};
-  padding: 2rem;
-
-  .icon_wrapper {
-    color: white;
-    font-weight: bolder;
-    margin-right: 2rem;
   }
 `;
 

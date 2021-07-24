@@ -17,10 +17,10 @@ import { isLoading } from "state-provider/forPageSetting";
 import {
   AccountView,
   MySuccessModal,
-  MySuccessModalHeader,
   SuccessDetailView,
   ValidationInfo,
 } from "styling/for-modal/PaymentModalStyling";
+import { SuccessModalHeader } from "styling/common/ModalStyling";
 
 export interface Props {
   mpin: string;
@@ -77,12 +77,12 @@ const SuccessModal = (props: Props) => {
       size="lg"
     >
       <Modal.Header className="modal_header">
-        <MySuccessModalHeader color="green">
+        <SuccessModalHeader color="green">
           <div className="icon_wrapper">
             <GiCheckMark size={50} />
           </div>
           <p className="message_wrapper">Success</p>
-        </MySuccessModalHeader>
+        </SuccessModalHeader>
       </Modal.Header>
 
       <Modal.Body className="modal_body">

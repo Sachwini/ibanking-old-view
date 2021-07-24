@@ -12,6 +12,7 @@ import { forStatement } from "static-data/forBreadCrumb";
 import { Sdetails, StatementDataType } from "models/StatementModels";
 import { useRecoilValue } from "recoil";
 import { getSelectedAcc } from "state-provider/globalUserData";
+import Demo from "./demo";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -193,6 +194,10 @@ const Statement = () => {
             errorMessage={errorMessage}
           />
         </div>
+      </div>
+
+      <div className="pt-5">
+        <Demo />
       </div>
     </Container>
   );

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const MenuHandle: React.FC<Props> = ({ goto, menuHeader, menuHeaderIcon }) => {
-  const [changeDropIcon, setChangeDropIcon] = useState<boolean>(true);
+  const [changeDropIcon, setChangeDropIcon] = useState<boolean>(false);
   const [menuActiveID, setMenuActiveID] = useRecoilState(menuActiveHeaderID);
 
   return (
