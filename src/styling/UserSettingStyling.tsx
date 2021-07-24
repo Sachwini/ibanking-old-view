@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 export const SettingCardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   margin-top: 1rem;
