@@ -18,6 +18,14 @@ export interface Sdetails {
   balance: number | null;
 }
 
+export const sDetailsDefaultValue = {
+  transactionDate: "",
+  remarks: "",
+  debit: 0,
+  credit: 0,
+  balance: 0,
+};
+
 export const statementDefaultValue = {
   openingBalance: 0,
   closingBalance: 0,
@@ -27,7 +35,5 @@ export const statementDefaultValue = {
   accountType: "string",
   address: "string",
   pdfUrl: "",
-  accountStatementDtos: [
-    { transactionDate: "", remarks: "", debit: 0, credit: 0, balance: 0 },
-  ],
+  accountStatementDtos: [sDetailsDefaultValue],
 };

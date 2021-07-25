@@ -30,11 +30,14 @@ interface pageNumberProps {
   activeColor?: string;
   activeBg?: string;
   color?: string;
+  padding?: string;
+  margin?: string;
+  btnPadding?: string;
 }
 
 export const PageNumberList = styled.li<pageNumberProps>`
-  margin: 0 2px;
-  padding: 0.3rem 0.8rem;
+  margin: ${(props) => (props.margin ? props.margin : "0 2px")};
+  padding: ${(props) => (props.padding ? props.padding : "0.3rem 0.8rem")};
   cursor: pointer;
   background: transparent;
   font-weight: 500;
@@ -79,7 +82,8 @@ export const PageNumberList = styled.li<pageNumberProps>`
   }
 
   button {
-    padding: -0.3rem -0.8rem;
+    padding: ${(props) =>
+      props.btnPadding ? props.btnPadding : "0.3rem 0.8rem"};
     border: none;
     background: transparent;
     transition: all 0.2s;
