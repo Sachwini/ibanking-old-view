@@ -126,7 +126,7 @@ const Paginate = (props: Props) => {
 
   return (
     <PageNumberContainer align="flex-end">
-      <PageNumberListContainer>
+      <PageNumberListContainer margin="0" bg="white">
         <PageNumberList active={false} padding="0">
           <button
             onClick={handleFirstBtn}

@@ -45,3 +45,16 @@ export const CardBody = styled(Card.Body)<cardBodyProps>`
   background: ${(props) => (props.bg ? props.bg : "white")};
   padding: ${(props) => (props.padding ? props.padding : "0.5rem")};
 `;
+
+export const CardFooter = styled(Card.Footer)<cardHeaderProps>`
+  background: ${(props) => (props.bg ? props.bg : "white")};
+
+  padding: ${(props) => (props.padding ? props.padding : "0.5rem")};
+  border-top-color: ${(props) =>
+    props.borderColor ? props.borderColor : "transparent"};
+
+  text-align: ${(props) => (props.align ? props.align : "start")};
+
+  text-transform: capitalize;
+  font-weight: bold;
+`;

@@ -25,14 +25,6 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
 
   ul{list-style-type: none}
 
-  .statement_datePicker {
-  margin-right: 10px;
-  text-align: center;
-  padding: 2px;
-  color: green;
-  cursor: pointer;
-}
-
 .card_Shadow{
  background-color: #fffefd;
  box-shadow: 0px 0px 30px 2px #00000017;

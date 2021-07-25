@@ -162,17 +162,28 @@ export const AccountView = styled.div`
   }
 `;
 
-export const DetaildView = styled.div`
+// payment details styling going from here
+interface detailViewProps {
+  bg?: string;
+  padding?: string;
+  hColor?: string;
+  tColor?: string;
+}
+export const DetaildView = styled.div<detailViewProps>`
+  background: ${(props) => (props.bg ? props.bg : "white")};
+  padding: ${(props) => (props.padding ? props.padding : "0.5")};
+
   color: black;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+  text-transform: capitalize;
 
   .detail_heading {
     font-size: 20px;
     font-weight: bold;
-    color: #0d022b;
+    color: ${(props) => (props.hColor ? props.hColor : "#0d022b")};
     text-transform: capitalize;
     border-bottom: 2px solid #b9b9b9;
     margin: 0;
@@ -206,7 +217,10 @@ export const DetaildView = styled.div`
       font-weight: bold;
       opacity: 0.7;
       padding-left: 2px;
-      color: #222379;
+      color: ${(props) => (props.tColor ? props.tColor : "#222379")};
+    }
+    &:first-child {
+      padding-left: 0;
     }
   }
 `;
