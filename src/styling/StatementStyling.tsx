@@ -22,6 +22,20 @@ export const StatementContainer = styled(Container)`
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      background: #f7f7f7ce;
+
+      border-radius: 5px;
+      /* min-height: 3.6rem;   */
+      padding: 0.2rem 1rem;
+
+      .btn_ctrl {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        padding: 0.3rem 0.8rem;
+        text-transform: uppercase;
+        margin-left: 1rem;
+      }
       .date,
       .to {
         font-weight: bold;
@@ -37,12 +51,14 @@ export const StatementContainer = styled(Container)`
         input {
           width: 6rem;
           border: none;
-          border-bottom: 2px dashed #427effc7;
+          /* border-bottom: 2px dashed #427effc7; */
+          border: 1px solid #427eff99;
+          padding: 0.3rem;
 
           &:focus {
             outline: none;
             /* font-weight: bold; */
-            border-bottom: 2px solid #427eff83;
+            border: 1px dashed #427eff83;
             color: #427eff;
           }
         }
@@ -52,19 +68,25 @@ export const StatementContainer = styled(Container)`
     .showPerPage_Wrapper {
       margin: 0 1rem;
       width: 30%;
+      background: #f7f7f7ce;
+      padding: 0.7rem 1rem;
+      border-radius: 5px;
 
       select {
         padding: 0.2rem 0.4rem;
         margin: 0 0.5rem;
+        background: #fefefe;
       }
     }
   }
 
-  .reght_controlWrapper {
+  .right_controlWrapper {
     margin: 0 1rem;
+    background: #f7f7f7ce;
+    padding: 0.7rem 1rem;
 
     .sort_by {
-      font-size: 17px;
+      font-size: 15.5px;
       font-weight: 700;
       text-transform: uppercase;
       font-family: "Times New Roman", Times, serif;
@@ -76,6 +98,7 @@ export const StatementContainer = styled(Container)`
       outline: none;
       border: none;
       border-bottom: 2px solid #427effc7;
+      background: #fefefe;
 
       &:focus {
         outline: none;

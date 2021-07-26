@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { getSelectedAcc } from "state-provider/globalUserData";
 import Paginate from "components/Paginate";
-import { v4 as uuidv4 } from "uuid";
 import UserInfo from "./userInfo";
 import {
   CardBody,
@@ -20,6 +19,7 @@ import {
 } from "styling/common/CardStyling";
 import { StatementContainer } from "styling/StatementStyling";
 import StatementCardHeader from "./statementCardHeader";
+import StatementView2 from "./StatementView2";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
@@ -56,7 +56,12 @@ const Demo = () => {
         formatedEndDate
       );
       if (isSuscribed && data) {
-        setStatementData(data);
+        let reverseData = data;
+        const reverseSDetails = data.accountStatementDtos.reverse();
+
+        reverseData = { ...reverseData, accountStatementDtos: reverseSDetails };
+        setStatementData(reverseData);
+        setSortedData(reverseSDetails);
       }
     };
 
@@ -65,33 +70,32 @@ const Demo = () => {
     return () => {
       isSuscribed = false;
     };
-  }, [selectedAccountDetails.accountNumber]);
+  }, [
+    selectedAccountDetails.accountNumber,
+    formatedStartDate,
+    formatedEndDate,
+  ]);
 
-  useEffect(() => {
-    let isSuscribed = true;
-
-    if (isSuscribed && sortBy === "debit") {
+  const handleSortBy = (sortName: string) => {
+    if (sortName === "debit") {
       const data = statementData.accountStatementDtos.filter(
         (row) => row.debit !== null
       );
       setSortedData(data);
-    } else if (isSuscribed && sortBy === "credit") {
+      setSortBy("default");
+    }
+    if (sortName === "credit") {
       const data = statementData.accountStatementDtos.filter(
         (row) => row.credit !== null
       );
       setSortedData(data);
-    } else setSortedData(statementData.accountStatementDtos);
-
-    return () => {
-      isSuscribed = false;
-    };
-  }, [statementData, filteredData, sortBy]);
-
-  console.log("items per page  items: ", itemsPerPage);
-  console.log("sort by: ", sortBy);
-  console.log("sort data: ", sortedData);
-  console.log("formatted start date : ", formatedStartDate);
-  console.log("formatted end date: ", formatedEndDate);
+      setSortBy("default");
+    }
+    if (sortName === "all") {
+      setSortedData(statementData.accountStatementDtos);
+      setSortBy("default");
+    }
+  };
 
   return (
     <StatementContainer fluid>
@@ -101,26 +105,25 @@ const Demo = () => {
         <CardHeader className="statement_cardHeader" bg="#fdfdfd">
           <StatementCardHeader
             setItemsPerPage={(item) => setItemsPerPage(item)}
-            setSortBy={(by) => setSortBy(by)}
-            fStartDate={(date) => setFormatedStartDate(date)}
-            fEndDate={(date) => setFormatedEndDate(date)}
+            setSortBy={(by) => handleSortBy(by)}
+            // fStartDate={(date) => setFormatedStartDate(date)}
+            // fEndDate={(date) => setFormatedEndDate(date)}
             sortedDataLength={sortedData.length}
+            handleSearchButton={(fStartDate, fEndtDate) => {
+              setFormatedStartDate(fStartDate);
+              setFormatedEndDate(fEndtDate);
+            }}
           />
         </CardHeader>
 
-        <CardBody padding="0.5rem 1.5rem">
-          <ul>
-            {filteredData.map((items) => {
-              return (
-                <li key={uuidv4()}>
-                  <span>Debit: {items.debit}</span>
-                  <span className="px-3">Credit: {items.credit}</span>
-                  <span className="px-3">Remarks: {items.remarks}</span>
-                  <span>Transction Date: {items.transactionDate}</span>
-                </li>
-              );
-            })}
-          </ul>
+        <CardBody
+          padding="0.5rem 1.5rem"
+          // style={{ maxHeight: "600px", overflowY: {itemsPerPage >= 20 ? "scroll" : "inherit"} }}
+        >
+          <StatementView2
+            data={filteredData}
+            openingBalance={statementData.openingBalance}
+          />
         </CardBody>
 
         <CardFooter padding="1rem 0.5rem 0.5rem" bg="#fdfdfd">
