@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Table } from "react-bootstrap";
 import { useState } from "react";
 
-const StatementView2 = (props: {
+const StatementTable = (props: {
   data: Sdetails[];
   openingBalance: number;
 }) => {
@@ -55,4 +55,4 @@ const StatementView2 = (props: {
   );
 };
 
-export default StatementView2;
+export default StatementTable;

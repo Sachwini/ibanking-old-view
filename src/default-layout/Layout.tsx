@@ -38,6 +38,7 @@ const DefaultLayout: React.FC<RouteComponentProps<{}>> = (props) => {
             customerDetail: res as userDetailType,
           });
         }
+        console.log("my details: ", res);
       } catch {
         window.location.href = `/login`;
       }

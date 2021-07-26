@@ -105,12 +105,12 @@ const StatementCardHeader = (props: Props) => {
           </div>
 
           <Button
-            variant="outline-success"
+            variant="light"
             className="btn_ctrl"
             size="sm"
             onClick={handleSearchButtonHere}
           >
-            <BsSearch size={18} />
+            <BsSearch size={16} className="search_icon" />
           </Button>
         </div>
 

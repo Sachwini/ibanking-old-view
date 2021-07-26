@@ -31,6 +31,8 @@ export interface userDetailType {
   otpString: string;
   bankTransferOtp: boolean;
   registered: boolean;
+
+  imageUrl: string;
 }
 
 export interface userAccountType {
@@ -38,6 +40,7 @@ export interface userAccountType {
   accountType: string;
   branchName: string;
   accruedInterest: string;
+  actualBalance: string;
   accountNumber: string;
   accountHolderName: string;
   availableBalance: string;
@@ -56,6 +59,7 @@ export const activeAccDefaultValue = {
   accountType: "",
   branchName: "",
   accruedInterest: "",
+  actualBalance: "",
   accountNumber: "",
   accountHolderName: "",
   availableBalance: "",

@@ -1,29 +1,32 @@
-import { AccountName } from "components/PageTitle";
 import StaticBar from "components/StaticBar";
-import { Container } from "react-bootstrap";
-import { useStateValue } from "state-provider/StateProvider";
+import { useState } from "react";
+import { Container, Tab, Tabs } from "react-bootstrap";
 import { forUserAccountDetails } from "static-data/forBreadCrumb";
 import { accountDetailsPageTitle } from "static-data/forPageTitle";
-import AccountView from "./AccountView";
+import PersonalDetailCard from "./PersonalDetailCard";
+import UserAccountDetailCard from "./UserAccountDetailCard";
+import UserBankDetailCard from "./UserBankDetailCard";
 
 const Account = () => {
-  const [{ customerDetails, switchAccount }] = useStateValue();
+  const [key, setKey] = useState("personal_details");
   return (
     <Container>
       <StaticBar
         pageTitle={accountDetailsPageTitle}
         breadCrumbData={forUserAccountDetails}
       />
-      <AccountName
-        name={customerDetails?.fullName}
-        accountCode={
-          !customerDetails?.accountDetail
-            ? ""
-            : customerDetails?.accountDetail[switchAccount]["clientCode"]
-        }
-      />
 
-      <AccountView />
+      <Tabs id="user-profile" activeKey={key} onSelect={(k: any) => setKey(k)}>
+        <Tab eventKey="personal_details" title="Personal Details">
+          <PersonalDetailCard />
+        </Tab>
+        <Tab eventKey="bak_details" title="Bank Details">
+          <UserBankDetailCard />
+        </Tab>
+        <Tab eventKey="account_details" title="Account Details">
+          <UserAccountDetailCard />
+        </Tab>
+      </Tabs>
     </Container>
   );
 };

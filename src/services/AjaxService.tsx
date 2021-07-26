@@ -31,7 +31,6 @@ instance.interceptors.response.use(
   },
   function (error: any) {
     if (error.response && error.response.status === 4010) {
-      //"401 was preventing from showing error model in fund trasfer so I put random(4010)"
       toast.error("unAuthorized client");
     } else {
       return Promise.reject(error);
@@ -71,10 +70,7 @@ export async function get<TResponse>(url: string) {
   return instance.get<TResponse>(url);
 }
 
-export async function post<TResponse>(
-  url: string,
-  body: {},
-) {
+export async function post<TResponse>(url: string, body: {}) {
   const res = await instance.post<TResponse>(url, body);
   return res && res;
 }

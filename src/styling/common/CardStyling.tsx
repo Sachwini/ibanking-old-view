@@ -7,10 +7,12 @@ interface cardProps {
   padding?: string;
   margin?: string;
   width?: string;
+  borderColor?: string;
 }
 export const CustomCard = styled(Card)<cardProps>`
-  margin: ${(props) => (props.width ? props.width : "100%")};
-
+  width: ${(props) => (props.width ? props.width : "100%")};
+  border-color: ${(props) =>
+    props.borderColor ? props.borderColor : "transparent"};
   background: ${(props) => (props.bg ? props.bg : "white")};
   padding: ${(props) => (props.padding ? props.padding : "initial")};
   margin: ${(props) => (props.margin ? props.margin : "initial")};

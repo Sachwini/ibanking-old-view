@@ -1,205 +1,162 @@
-import { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Container } from "react-bootstrap";
-import { apiResponse } from "models/apiResponse";
-import { get } from "services/AjaxService";
 import { formatDate, ThreeMonthsBack } from "helper/DateConfig";
-import StatementView from "./StatementView";
+import { getStatement } from "helper/GetData";
+import {
+  Sdetails,
+  sDetailsDefaultValue,
+  StatementDataType,
+  statementDefaultValue,
+} from "models/StatementModels";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { getSelectedAcc } from "state-provider/globalUserData";
+import Paginate from "components/Paginate";
+import UserInfo from "./userInfo";
+import {
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CustomCard,
+} from "styling/common/CardStyling";
+import { StatementContainer } from "styling/StatementStyling";
+import StatementCardHeader from "./statementCardHeader";
+import { Button } from "react-bootstrap";
+import { baseUrl } from "services/BaseUrl";
+import { AiOutlineFilePdf } from "react-icons/ai";
+import StatementTable from "./StatementTable";
 import StaticBar from "components/StaticBar";
 import { statementPageTitle } from "static-data/forPageTitle";
 import { forStatement } from "static-data/forBreadCrumb";
-import { Sdetails, StatementDataType } from "models/StatementModels";
-import { useRecoilValue } from "recoil";
-import { getSelectedAcc } from "state-provider/globalUserData";
-import Demo from "./demo";
 
 let threeMonthBackDate = ThreeMonthsBack(new Date());
 
 const Statement = () => {
-  const [startDate, setStartDate] = useState(new Date(`${threeMonthBackDate}`));
-  const [endDate, setEndDate] = useState(new Date());
-  const [statementData, setStatementData] = useState<StatementDataType>();
-  const [filteredStatementData, setFilteredStatementData] =
-    useState<Sdetails[]>();
-  const [errorMessage, setErrorMessage] = useState({
-    errorOccured: true,
-    message:
-      "Select date range and click on show button to view your statement",
-  });
-  const [selectOption, setSelectOption] = useState<string>("");
-  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [formatedStartDate, setFormatedStartDate] = useState(
+    formatDate(new Date(`${threeMonthBackDate}`))
+  );
+  const [formatedEndDate, setFormatedEndDate] = useState(
+    formatDate(new Date())
+  );
+  const [statementData, setStatementData] = useState<StatementDataType>(
+    statementDefaultValue
+  );
 
-  // Getting Required Data From Helper
-  const formatedStartDate = formatDate(startDate);
-  const formatedEndDate = formatDate(endDate);
-
-  useEffect(() => {
-    let isSubscribed = true;
-    setLoading(true);
-
-    const handleShow = async () => {
-      setLoading(true);
-      try {
-        const res = await get<apiResponse<StatementDataType>>(
-          `api/accountStatement?fromDate=${formatedStartDate}&accountNumber=${selectedAccountDetails.accountNumber}&toDate=${formatedEndDate}&pdf=true`
-        );
-        if (isSubscribed && res) {
-          setStatementData(undefined);
-          setStatementData(res.data.details);
-          setLoading(false);
-          handleFilter(selectOption);
-          console.log("selectOption", selectOption);
-          setErrorMessage({ errorOccured: false, message: "" });
-        }
-        if (res.data.details.accountStatementDtos.length === 0) {
-          setErrorMessage({
-            errorOccured: true,
-            message: "No statement Available ... for this selected date range",
-          });
-        }
-      } catch (error: any) {
-        setLoading(false);
-        setErrorMessage({
-          errorOccured: true,
-          message: "Something Going Wrong...",
-        });
-      }
-    };
-    handleShow();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [
-    formatedStartDate,
-    formatedEndDate,
-    selectedAccountDetails.accountNumber,
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortBy, setSortBy] = useState("all");
+  const [sortedData, setSortedData] = useState<Sdetails[]>([
+    sDetailsDefaultValue,
   ]);
 
-  const handleFilter = (filterby: string) => {
-    console.log("filerrBY", filterby);
-    let currentPageStatementFilter = statementData?.accountStatementDtos;
+  const [filteredData, setFilteredData] = useState<Sdetails[]>([
+    sDetailsDefaultValue,
+  ]);
 
-    if (filterby === "debit") {
-      currentPageStatementFilter = statementData?.accountStatementDtos.filter(
+  const selectedAccountDetails = useRecoilValue(getSelectedAcc);
+
+  useEffect(() => {
+    let isSuscribed = true;
+
+    const loadData = async () => {
+      const data = await getStatement(
+        selectedAccountDetails.accountNumber,
+        formatedStartDate,
+        formatedEndDate
+      );
+      if (isSuscribed && data) {
+        let reverseData = data;
+        const reverseSDetails = data.accountStatementDtos.reverse();
+
+        reverseData = { ...reverseData, accountStatementDtos: reverseSDetails };
+        setStatementData(reverseData);
+        setSortedData(reverseSDetails);
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isSuscribed = false;
+    };
+  }, [
+    selectedAccountDetails.accountNumber,
+    formatedStartDate,
+    formatedEndDate,
+  ]);
+
+  const handleSortBy = (sortName: string) => {
+    if (sortName === "debit") {
+      const data = statementData.accountStatementDtos.filter(
         (row) => row.debit !== null
       );
-
-      console.log("filterby debit", currentPageStatementFilter);
+      setSortedData(data);
+      setSortBy("default");
     }
-    if (filterby === "credit") {
-      currentPageStatementFilter = statementData?.accountStatementDtos.filter(
+    if (sortName === "credit") {
+      const data = statementData.accountStatementDtos.filter(
         (row) => row.credit !== null
       );
-      console.log("filterby credit", currentPageStatementFilter);
+      setSortedData(data);
+      setSortBy("default");
     }
-    if (filterby === "debit/credit" || undefined) {
-      currentPageStatementFilter = statementData?.accountStatementDtos;
-      console.log("filterby non", currentPageStatementFilter);
+    if (sortName === "all") {
+      setSortedData(statementData.accountStatementDtos);
+      setSortBy("default");
     }
-    setFilteredStatementData(currentPageStatementFilter);
+  };
+
+  const handleDownload = async () => {
+    console.log("download called");
+    if (statementData.pdfUrl) {
+      window.open(`${baseUrl}`.concat(`${statementData.pdfUrl}`));
+    } else alert("Download not available");
   };
 
   return (
-    <Container>
+    <StatementContainer>
       <StaticBar pageTitle={statementPageTitle} breadCrumbData={forStatement} />
-      <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            padding: "10px",
-            marginBottom: "10px",
-          }}
-        >
-          <p style={{ paddingRight: "2em", margin: "0" }}>
-            Select Date Range to View Statement
-          </p>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span
-              style={{
-                paddingRight: "5px",
-                fontWeight: "bold",
-                verticalAlign: "middle",
-              }}
-            >
-              From:
-            </span>
-            <DatePicker
-              selected={startDate}
-              onChange={(date: Date) => setStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-              closeOnScroll
-              className="statement_datePicker"
-            />
-            <span
-              style={{
-                paddingRight: "5px",
-                fontWeight: "bold",
-                verticalAlign: "middle",
-              }}
-            >
-              To:
-            </span>
-            <DatePicker
-              selected={endDate}
-              onChange={(date: Date) => setEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              maxDate={new Date()}
-              closeOnScroll
-              className="statement_datePicker"
-            />
-          </div>
-          {/* <Button
-            variant="info"
-            onClick={() => {
-              handleShow();
-            }}
-          >
-            Show
-          </Button> */}
+      <UserInfo />
 
-          <span
-            style={{
-              paddingRight: "5px",
-              fontWeight: "bold",
-              verticalAlign: "middle",
-              marginLeft: "auto",
+      <CustomCard margin="1rem 0">
+        <CardHeader className="statement_cardHeader" bg="#fbfbfbcc">
+          <StatementCardHeader
+            setItemsPerPage={(item) => setItemsPerPage(item)}
+            setSortBy={(by) => handleSortBy(by)}
+            sortedDataLength={sortedData.length}
+            handleSearchButton={(fStartDate, fEndtDate) => {
+              setFormatedStartDate(fStartDate);
+              setFormatedEndDate(fEndtDate);
             }}
-          >
-            filter by:
-          </span>
-          <select
-            onChange={(e: any) => {
-              handleFilter(e.target.value);
-              setSelectOption(e.target.value);
-            }}
-          >
-            <option value="debit/credit">debit/credit</option>
-            <option value="debit">debit</option>
-            <option value="credit">credit</option>
-          </select>
-        </div>
-        <div>
-          <StatementView
-            statementData={statementData}
-            filteredStatementData={filteredStatementData}
-            errorMessage={errorMessage}
           />
-        </div>
-      </div>
+        </CardHeader>
 
-      <div className="pt-5">
-        <Demo />
-      </div>
-    </Container>
+        <CardBody padding="0.5rem 1.5rem" className="card_body isScroll">
+          <StatementTable
+            data={filteredData}
+            openingBalance={statementData.openingBalance}
+          />
+        </CardBody>
+
+        <CardFooter
+          padding="1rem 0.5rem 0.5rem"
+          bg="#fbfbfbcc"
+          className="my_cardFooter"
+        >
+          <Button
+            variant="light"
+            onClick={handleDownload}
+            className="download_pdf"
+          >
+            <AiOutlineFilePdf size={30} className="mr-2 pdf_icon" />
+            <span>Download</span>
+          </Button>
+          <Paginate
+            rawData={sortedData}
+            pageNumberLimit={7}
+            itemsPerPage={itemsPerPage}
+            filteredData={(data) => setFilteredData(data)}
+          />
+        </CardFooter>
+      </CustomCard>
+    </StatementContainer>
   );
 };
 

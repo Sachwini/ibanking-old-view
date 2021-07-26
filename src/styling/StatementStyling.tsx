@@ -2,6 +2,8 @@ import { Container } from "react-bootstrap";
 import styled from "styled-components/macro";
 
 export const StatementContainer = styled(Container)`
+  padding-right: 2.5rem;
+
   .statement_cardHeader {
     display: flex;
     justify-content: space-between;
@@ -22,7 +24,8 @@ export const StatementContainer = styled(Container)`
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      background: #f7f7f7ce;
+      background: #ffff;
+      border: 1px solid #f0f0f0e6;
 
       border-radius: 5px;
       /* min-height: 3.6rem;   */
@@ -32,9 +35,16 @@ export const StatementContainer = styled(Container)`
         font-size: 13px;
         font-weight: 700;
         letter-spacing: 1.2px;
-        padding: 0.3rem 0.8rem;
+        padding: 0.3rem 0.9rem;
         text-transform: uppercase;
         margin-left: 1rem;
+        vertical-align: middle;
+        font-weight: bold;
+
+        &:hover,
+        &:focus {
+          color: #06b46c;
+        }
       }
       .date,
       .to {
@@ -51,13 +61,11 @@ export const StatementContainer = styled(Container)`
         input {
           width: 6rem;
           border: none;
-          /* border-bottom: 2px dashed #427effc7; */
           border: 1px solid #427eff99;
           padding: 0.3rem;
 
           &:focus {
             outline: none;
-            /* font-weight: bold; */
             border: 1px dashed #427eff83;
             color: #427eff;
           }
@@ -68,9 +76,10 @@ export const StatementContainer = styled(Container)`
     .showPerPage_Wrapper {
       margin: 0 1rem;
       width: 30%;
-      background: #f7f7f7ce;
+      background: #ffff;
       padding: 0.7rem 1rem;
       border-radius: 5px;
+      border: 1px solid #f0f0f0e6;
 
       select {
         padding: 0.2rem 0.4rem;
@@ -82,8 +91,9 @@ export const StatementContainer = styled(Container)`
 
   .right_controlWrapper {
     margin: 0 1rem;
-    background: #f7f7f7ce;
+    background: #ffff;
     padding: 0.7rem 1rem;
+    border: 1px solid #f0f0f0e6;
 
     .sort_by {
       font-size: 15.5px;
@@ -105,6 +115,46 @@ export const StatementContainer = styled(Container)`
         border-bottom: 2px dashed #427eff83;
       }
     }
+  }
+
+  .card_body {
+    padding: 1rem 0.8rem;
+  }
+
+  .isScroll {
+    max-height: 600px;
+    overflow: auto;
+  }
+
+  .my_cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .download_pdf {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-left: 1rem;
+
+    .pdf_icon {
+      color: #c930309e;
+    }
+
+    &:hover {
+      color: #118fe4;
+
+      .pdf_icon {
+        color: #c93030eb;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    padding: arem 2rem;
   }
 `;
 

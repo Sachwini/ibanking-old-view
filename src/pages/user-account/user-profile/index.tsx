@@ -3,7 +3,6 @@ import { Col, Container, Image, Row, Form, Tab } from "react-bootstrap";
 import Tabs from "react-bootstrap/Tabs";
 import { FcOldTimeCamera } from "react-icons/fc";
 import { useStateValue } from "state-provider/StateProvider";
-import { UserDetailsContainer } from "styling/UserDetailsStyling";
 import { baseUrl } from "services/BaseUrl";
 import "./index.css";
 import { useState } from "react";
@@ -12,11 +11,11 @@ import { apiResponse } from "models/apiResponse";
 import StaticBar from "components/StaticBar";
 import { userProfilePageTitle } from "static-data/forPageTitle";
 import { forUserProfile } from "static-data/forBreadCrumb";
+import { UserDetailsContainer } from "styling/for-userDetails/UserDetailsStyling";
 
 const Profile = () => {
   const [{ customerDetails, switchAccount }] = useStateValue();
   const [image, setImage] = useState<string>("");
-  console.log("from profile", customerDetails);
 
   const ActiveStyle = {
     color: "#f58228",
