@@ -2,8 +2,7 @@ import { Form } from "react-bootstrap";
 import { AiOutlineMobile } from "react-icons/ai";
 import { BsCodeSlash, BsPencilSquare } from "react-icons/bs";
 import { FiDatabase, FiUser } from "react-icons/fi";
-import { GiTakeMyMoney, GiWallet } from "react-icons/gi";
-import { GrMoney } from "react-icons/gr";
+import { GiTakeMyMoney } from "react-icons/gi";
 import { IoGitBranchOutline, IoWalletOutline } from "react-icons/io5";
 import { MdMergeType } from "react-icons/md";
 import {
@@ -11,7 +10,6 @@ import {
   RiMailCheckLine,
   RiMiniProgramLine,
   RiMoneyCnyBoxLine,
-  RiUser3Line,
 } from "react-icons/ri";
 import { useRecoilValue } from "recoil";
 import { userDetails } from "state-provider/globalUserData";
@@ -58,7 +56,7 @@ const UserAccountDetailCard = () => {
               margin="1.5rem 1rem"
               hTextTransform="capitalize"
               hBorderColor="#d1d1d1"
-              bg="#fafafa"
+              bg="#f0f0f0"
               padding="2rem 2rem 0.5rem"
               key={item.id}
             >

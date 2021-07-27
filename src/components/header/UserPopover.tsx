@@ -14,7 +14,7 @@ import { UserPopover } from "styling/for-header/HeaderPopoverStyling";
 import { v4 as uuidv4 } from "uuid";
 
 const menuList = [
-  { title: "Profile", url: "/user-profile" },
+  { title: "Profile", url: "account-details" },
   { title: "setting", url: "/configure-service" },
   { title: "change password", url: "/change-mpin" },
   { title: "cheque request", url: "/cheque-request" },

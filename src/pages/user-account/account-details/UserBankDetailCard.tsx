@@ -11,7 +11,7 @@ const UserBankDetailCard = () => {
 
   return (
     <CustomCard borderColor="#e7e7e7" margin="1rem 0 0">
-      <CardBody padding="2rem" bg="#fafafa">
+      <CardBody padding="2rem" bg="#f0f0f0">
         <DetailedInfoCard>
           <div className="header">Bank Information</div>
 

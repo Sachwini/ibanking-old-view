@@ -115,8 +115,8 @@ const Statement = () => {
       <StaticBar pageTitle={statementPageTitle} breadCrumbData={forStatement} />
       <UserInfo />
 
-      <CustomCard margin="1rem 0">
-        <CardHeader className="statement_cardHeader" bg="#fbfbfbcc">
+      <CustomCard margin="1rem 0" borderColor="#ebebeb">
+        <CardHeader className="statement_cardHeader" bg="#f5f5f5e2">
           <StatementCardHeader
             setItemsPerPage={(item) => setItemsPerPage(item)}
             setSortBy={(by) => handleSortBy(by)}
@@ -137,7 +137,7 @@ const Statement = () => {
 
         <CardFooter
           padding="1rem 0.5rem 0.5rem"
-          bg="#fbfbfbcc"
+          bg="#f5f5f5e2"
           className="my_cardFooter"
         >
           <Button

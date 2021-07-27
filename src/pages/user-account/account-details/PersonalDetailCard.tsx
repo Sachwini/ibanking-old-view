@@ -86,7 +86,7 @@ const PersonalDetailCard = () => {
               margin="0.5rem 1rem 0"
               hTextTransform="capitalize"
               hBorderColor="#d1d1d1"
-              bg="#fafafa"
+              bg="#f0f0f0"
               padding="2rem 2rem 0.5rem"
             >
               <p className="header header_control ">Address Information</p>
