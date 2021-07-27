@@ -47,7 +47,6 @@ export const ButtonWrapper = styled.div<buttonWrapperProps>`
   .btn_ctrl {
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 14px;
     border: 1px solid ${(props) => props.theme.secondary};
 
     &:hover {

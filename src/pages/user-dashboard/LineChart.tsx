@@ -54,7 +54,7 @@ function LineChart() {
     title: {
       display: true,
       text: "Transction Summary of Last 30 Days",
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: "bold",
     },
 
@@ -86,11 +86,15 @@ function LineChart() {
       <Card.Footer className="card_footer">
         <p className="balance_style">
           <span>Opening Balance</span> NPR.
-          {formatLakh(balanceDetails.openingBalance)}
+          {balanceDetails.openingBalance
+            ? formatLakh(balanceDetails.openingBalance)
+            : "xx-xx"}
         </p>
         <p className="balance_style">
           <span>Closing Balance</span> NPR.
-          {formatLakh(balanceDetails.closingBalance)}
+          {balanceDetails.closingBalance
+            ? formatLakh(balanceDetails.closingBalance)
+            : "xx-xx"}
         </p>
       </Card.Footer>
     </ChartCard>

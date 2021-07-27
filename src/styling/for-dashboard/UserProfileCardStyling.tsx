@@ -7,9 +7,10 @@ export const UserProfileCardContainer = styled(Card)`
   margin-bottom: 1rem;
 
   .card_header {
-    background-color: #bcecff;
+    background-color: #64a082;
     border: none;
     padding: 0.5rem 1rem;
+    color: white;
   }
 
   .text_heading {
@@ -26,6 +27,12 @@ export const UserProfileCardContainer = styled(Card)`
     border-bottom-color: ${(props) => props.theme.secondary};
   }
 
+  .userImage {
+    height: 60px;
+    object-fit: cover;
+    padding: 0.4rem;
+    border: 1px dotted #fafafa;
+  }
   .eye_icon {
     cursor: pointer;
     font-size: 24px;
@@ -33,18 +40,16 @@ export const UserProfileCardContainer = styled(Card)`
 
   .base_info {
     padding-top: 0.3rem;
-
-    color: #444444bc;
+    color: #000000;
     width: 100%;
 
     .text_wrapper {
       margin: 0;
-      font-size: 14px;
     }
 
     .text_title {
       font-weight: bold;
-      color: black;
+      color: #2b2b2b;
       text-transform: capitalize;
 
       &::after {
@@ -54,15 +59,10 @@ export const UserProfileCardContainer = styled(Card)`
     }
   }
 
-  .card_body {
-    padding: 0.5rem 1rem 2rem;
-    border: none;
-  }
-
-  .card_footer {
-    padding: 0.8rem 0.8rem 0.5rem;
-    border: none;
-    border-top: 1px solid #f1f1f1;
-    background: transparent;
+  .myfooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
   }
 `;

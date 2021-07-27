@@ -1,6 +1,6 @@
 import SwitchAccountModal from "components/modals/SwitchAccountModal";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import { Card, Row, Col } from "react-bootstrap";
 import {
   AiOutlineEye,
@@ -10,8 +10,10 @@ import {
 import { FcSynchronize } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { baseUrl } from "services/BaseUrl";
 import { getSelectedAcc, userDetails } from "state-provider/globalUserData";
 import { ButtonWrapper } from "styling/common/ButtonStyling";
+import { CardBody, CardFooter } from "styling/common/CardStyling";
 import { UserProfileCardContainer } from "styling/for-dashboard/UserProfileCardStyling";
 
 const ProfileCard = () => {
@@ -34,16 +36,30 @@ const ProfileCard = () => {
       <Card.Header className="card_header">
         <Row className="w-100 m-0">
           <Col sm={4} md={2} className="d-flex align-items-center w-100 pl-0">
-            <div>
-              <AiOutlineUser size={50} className="user_icon" />
-            </div>
+            {userDetail.imageUrl ? (
+              <Image
+                src={`${baseUrl}/${userDetail.imageUrl}`}
+                alt="user image"
+                roundedCircle
+                className="user_icon userImage"
+              />
+            ) : (
+              <div>
+                <AiOutlineUser size={50} className="user_icon" />
+              </div>
+            )}
           </Col>
           <Col sm={6} md={9} className="pl-0">
             <div className="base_info">
               <p className="text_wrapper">
                 <span className="text_title">Account Type</span>
-                {showDetails ? activeAccontDetails.accountType : "XXX-XXX-XXX"}
+                <span className="">
+                  {showDetails
+                    ? activeAccontDetails.accountType
+                    : "XXX-XXX-XXX"}
+                </span>
               </p>
+
               <p className="text_wrapper">
                 <span className="text_title">Balance</span>
                 NPR.
@@ -70,7 +86,8 @@ const ProfileCard = () => {
           </Col>
         </Row>
       </Card.Header>
-      <Card.Body className="card_body">
+
+      <CardBody padding="1.5rem 2rem">
         <div className="base_info">
           <p className="text_heading">Short Info</p>
           <p className="text_wrapper">
@@ -87,31 +104,27 @@ const ProfileCard = () => {
             {userDetail.email}
           </p>
         </div>
-      </Card.Body>
-      <Card.Footer className="card_footer">
-        <Row className="w-100 m-0">
-          <Col sm={6} className="pl-0">
-            <ButtonWrapper padding="0">
-              <Link to="/user-profile">
-                <Button variant="light" className="btn_ctrl">
-                  View Profile
-                </Button>
-              </Link>
-            </ButtonWrapper>
-          </Col>
-          <Col sm={6} className="pr-0 d-flex justify-content-end">
-            <ButtonWrapper padding="0">
-              <Button
-                variant="light"
-                onClick={() => setSwitchAccModalShow(true)}
-                className="btn_ctrl"
-              >
-                Switch Account <FcSynchronize size={24} />
-              </Button>
-            </ButtonWrapper>
-          </Col>
-        </Row>
-      </Card.Footer>
+      </CardBody>
+
+      <CardFooter padding="1.5rem" borderColor="#cececeba" className="myfooter">
+        <ButtonWrapper padding="0">
+          <Link to="/user-profile">
+            <Button variant="light" className="btn_ctrl">
+              View Profile
+            </Button>
+          </Link>
+        </ButtonWrapper>
+
+        <ButtonWrapper padding="0">
+          <Button
+            variant="light"
+            onClick={() => setSwitchAccModalShow(true)}
+            className="btn_ctrl"
+          >
+            Switch Account <FcSynchronize size={18} />
+          </Button>
+        </ButtonWrapper>
+      </CardFooter>
     </UserProfileCardContainer>
   );
 };

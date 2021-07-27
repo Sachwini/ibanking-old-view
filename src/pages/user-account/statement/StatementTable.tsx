@@ -20,6 +20,9 @@ const StatementTable = (props: {
     }
   };
 
+  if (props.data.length <= 0) {
+  }
+
   return (
     <Table bordered hover>
       <thead>
@@ -33,23 +36,29 @@ const StatementTable = (props: {
       </thead>
 
       <tbody>
-        {props.data.map((item) => {
-          return (
-            <tr key={uuidv4()}>
-              <td>{item.transactionDate}</td>
-              <td>{item.remarks}</td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item.debit || 0)}
-              </td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item.credit || 0)}
-              </td>
-              <td style={{ textAlign: "right" }}>
-                {formatLakh(item.balance || 0)}
-              </td>
-            </tr>
-          );
-        })}
+        {props.data.length <= 0 ? (
+          <p className="py-4 d-flex justify-content-center align-content-center text-dark">
+            No Statement data Found of Your Account Number...
+          </p>
+        ) : (
+          props.data.map((item) => {
+            return (
+              <tr key={uuidv4()}>
+                <td>{item.transactionDate}</td>
+                <td>{item.remarks}</td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.debit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.credit || 0)}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  {formatLakh(item.balance || 0)}
+                </td>
+              </tr>
+            );
+          })
+        )}
       </tbody>
     </Table>
   );

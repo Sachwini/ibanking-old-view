@@ -1,6 +1,8 @@
 import LogoutModal from "components/modals/logout/LogoutModal";
+import SwitchAccountModal from "components/modals/SwitchAccountModal";
 import { useState } from "react";
 import { Image, OverlayTrigger, Popover } from "react-bootstrap";
+import { FaUserTie } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import { Link, useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -8,7 +10,8 @@ import {
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
 } from "services/AuthService";
-import { getName_Salutation } from "state-provider/globalUserData";
+import { baseUrl } from "services/BaseUrl";
+import { getName_Salutation, userDetails } from "state-provider/globalUserData";
 import { IconStyle } from "styling/common/IconStyling";
 import { UserPopover } from "styling/for-header/HeaderPopoverStyling";
 import { v4 as uuidv4 } from "uuid";
@@ -24,7 +27,9 @@ const UserDropDown = () => {
   const salutation = useRecoilValue(getName_Salutation);
   const [popoverShow, setPopoverShow] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
+  const [switchAccModalShow, setSwitchAccModalShow] = useState<boolean>(false);
   const history = useHistory();
+  const userDetail = useRecoilValue(userDetails);
 
   const handleLogout = () => {
     localStorage.removeItem(localStorageAuthTokenKey);
@@ -33,11 +38,27 @@ const UserDropDown = () => {
     window.location.reload(true);
   };
 
+  const handleSwitchAccount = () => {
+    setPopoverShow(!popoverShow);
+    setSwitchAccModalShow(true);
+  };
+
   const userProfile = (
     <UserPopover id="user-dropdown" style={{ marginTop: "1.5rem" }}>
       <div className="userinfo_wrapper">
         <div className="image_container">
-          <Image src="images/ibankLogo.png" alt="" className="user_image" />
+          {userDetail.imageUrl ? (
+            <Image
+              src={`${baseUrl}/${userDetail.imageUrl}`}
+              alt="user image"
+              roundedCircle
+              className="user_image"
+            />
+          ) : (
+            <div>
+              <FaUserTie size={40} />
+            </div>
+          )}
         </div>
         <div className="uerInfo">
           <p className="greeting">Welcome 🙂</p>
@@ -57,6 +78,10 @@ const UserDropDown = () => {
               </li>
             );
           })}
+
+          <li className="pl-4" onClick={handleSwitchAccount}>
+            Switch Account
+          </li>
         </ul>
         <div
           className="log_out"
@@ -90,6 +115,11 @@ const UserDropDown = () => {
         LogoutModalShow={showLogoutModal}
         logoutModalSubmitHandle={handleLogout}
         handleCancle={(e) => setShowLogoutModal(e)}
+      />
+
+      <SwitchAccountModal
+        modalShow={switchAccModalShow}
+        handleModalShow={(value) => setSwitchAccModalShow(value)}
       />
     </>
   );

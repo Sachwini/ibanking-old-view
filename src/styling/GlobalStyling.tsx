@@ -16,7 +16,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
    color: ${(props) => props.theme.primary};
-   font-size: 15px;
+   font-size: 13px;
+   font-size-adjust: 0.58;
   }
 
   a{

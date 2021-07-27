@@ -15,14 +15,13 @@ export const ChartCard = styled(Card)`
     .balance_style {
       margin: 0;
       font-family: "Times New Roman", Times, serif;
-      font-size: 14px;
       font-weight: 500;
 
       span {
         padding-right: 0.5rem;
         opacity: 1;
-        font-size: 18px;
         font-weight: bold;
+        font-size: 14px;
 
         &::after {
           content: ":";

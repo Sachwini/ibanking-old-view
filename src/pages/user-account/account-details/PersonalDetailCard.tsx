@@ -24,10 +24,16 @@ const PersonalDetailCard = () => {
         <Row>
           <Col sm={4} md={3} lg={2} className="text-center">
             <div className="user_imageContainer">
-              <Image
-                src={`${baseUrl}/${userDetailsData.imageUrl}`}
-                alt="user image"
-              />
+              {userDetailsData.imageUrl ? (
+                <Image
+                  src={`${baseUrl}/${userDetailsData.imageUrl}`}
+                  alt="user image"
+                />
+              ) : (
+                <span className="d-flex justify-content-center align-items-center">
+                  <RiUser3Line size={50} />
+                </span>
+              )}
             </div>
             <Button variant="outline-success" className="mt-3 text-center">
               Change
