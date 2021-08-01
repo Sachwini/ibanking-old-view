@@ -75,7 +75,7 @@ export const FundTransfer = () => {
   // call account validation and open detail modal
   const onSubmit = async (data: fundTransferFormDataType) => {
     setFormData(data);
-    // console.log("fund transfer form data: ", data);
+    console.log("fund transfer form data: ", data);
 
     const validationData = await accountValidation(data);
     if (validationData) {
