@@ -12,10 +12,14 @@ export const LoaderContainer = styled.div`
   -webkit-backface-visibility: visible;
 `;
 
-export const SpinnerContainer = styled.div`
+// spinner container styling is going from here
+interface spinnerContainerProps {
+  logoUrl: any;
+}
+export const SpinnerContainer = styled.div<spinnerContainerProps>`
   height: 50px;
   width: 50px;
-  background-image: url("/images/logo.png");
+  background-image: url(${(props) => props.logoUrl});
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

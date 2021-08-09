@@ -13,22 +13,49 @@ import {
   getRememberMe,
   localStorageAuthTokenKey,
   localStorageRefreshTokenKey,
+  setClientID,
+  setClientSecret,
 } from "services/AuthService";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isUserLoggedIN } from "state-provider/globalUserData";
+import { get } from "services/AjaxService";
+import {
+  apiResponse,
+  apiResponseInDetail,
+  configDataType,
+} from "models/apiResponse";
+import { clientCofigData } from "state-provider/globalClientData";
 
 function App() {
   const RememberMe = getRememberMe();
   const isUserLoggedin = useRecoilValue(isUserLoggedIN);
+  const setClientDetails = useSetRecoilState(clientCofigData);
+
+  useEffect(() => {
+    let isSubscribe = true;
+    const getConfigDetails = async () => {
+      const config = await get<apiResponseInDetail<configDataType>>(
+        `get/ibanking/config`
+      );
+      if (isSubscribe && config) {
+        setClientDetails(config.data.detail);
+        setClientID(config.data.detail.clientID);
+        setClientSecret(config.data.detail.clientSecret);
+      }
+    };
+
+    getConfigDetails();
+
+    return () => {
+      isSubscribe = false;
+    };
+  });
 
   /* ----------For Default Dashboard Import------------------- */
   const Login = React.lazy(() => import("pages/login"));
   const Dashboard = React.lazy(() => import("pages/user-dashboard/Dashboard"));
 
   /* ----------For Account Import--------------------- */
-  const Account = React.lazy(
-    () => import("pages/user-account/account-details")
-  );
   const UserProfile = React.lazy(
     () => import("pages/user-account/user-profile")
   );
@@ -119,7 +146,6 @@ function App() {
 
             {/* ---------- For Account Routing--------------------- */}
             <Route path="/user-profile" component={UserProfile} />
-            <Route path="/account-details" component={Account} />
             <Route path="/statement" component={Statement} />
 
             {/* ---------- For Fund Management Routing--------------------- */}

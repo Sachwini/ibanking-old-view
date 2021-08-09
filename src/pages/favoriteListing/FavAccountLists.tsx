@@ -42,27 +42,33 @@ const FavAccountLists = () => {
       </CardHeader>
 
       <CardBody padding="1rem 0.5rem" className="my_cardBody">
-        {favAccData.map((item) => {
-          return (
-            <FavAccListWrapper key={item.id}>
-              <IconStyle hover>
-                <RiBankLine size={50} />
-              </IconStyle>
+        {favAccData.length >= 1 ? (
+          favAccData.map((item) => {
+            return (
+              <FavAccListWrapper key={item.id}>
+                <IconStyle hover>
+                  <RiBankLine size={40} />
+                </IconStyle>
 
-              <div className="accInfo_wrapper">
-                <p className="heading">{item.data.destinationBankName}</p>
-                <div className="normal">
-                  <p>{item.data.destinationAccountNumber}</p>
-                  <p>{item.data.destinationAccountHolderName}</p>
+                <div className="accInfo_wrapper">
+                  <p className="heading">{item.data.destinationBankName}</p>
+                  <div className="normal">
+                    <p>{item.data.destinationAccountNumber}</p>
+                    <p>{item.data.destinationAccountHolderName}</p>
+                  </div>
+
+                  <p className="date">
+                    <span>Added on :</span> {item.created}
+                  </p>
                 </div>
-
-                <p className="date">
-                  <span>Added on :</span> {item.created}
-                </p>
-              </div>
-            </FavAccListWrapper>
-          );
-        })}
+              </FavAccListWrapper>
+            );
+          })
+        ) : (
+          <p className="p-5 text-dark text-center">
+            No Favourite Accounts found...
+          </p>
+        )}
       </CardBody>
     </CustomCard>
   );

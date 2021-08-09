@@ -6,6 +6,30 @@ export interface apiResponse<T> {
   detail: any;
 }
 
+export interface apiResponseInDetail<T> {
+  status: string;
+  code: string;
+  message: string;
+  details: any;
+  detail: T;
+}
+
+export interface configDataType {
+  name: string;
+  themeColorPrimary: string;
+  themeColorSecondary: string;
+  bannerUrl: string;
+  logoUrl: string;
+  clientID: string;
+  clientSecret: string;
+  address: string;
+  contactNumber: string;
+  facebookUrl: string;
+  registerUrl: string;
+  email: string;
+  websiteUrl: string;
+}
+
 export interface transctionHistoryType<tList> {
   lastPage: number;
   transactionList: tList[];

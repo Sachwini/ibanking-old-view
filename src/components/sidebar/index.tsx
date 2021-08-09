@@ -50,10 +50,10 @@ const SideBar: React.FC<Props> = ({ goto }) => {
     return (
       <SidebarContainer customWidth={sidbarWidth} style={{ zIndex: 0 }}>
         <SideBarMenuControl>
-          <Accordion defaultActiveKey="account">
+          <Accordion defaultActiveKey="User Account">
             <MenuHandle
               goto={goto}
-              menuHeader="account"
+              menuHeader="User Account"
               menuHeaderIcon={<HouseDoor size={iconsize} />}
             />
 

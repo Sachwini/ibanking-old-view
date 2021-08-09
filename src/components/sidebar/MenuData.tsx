@@ -1,8 +1,8 @@
 const menuData = [
   {
     id: 1,
-    title: "account",
-    subMenuTitle: ["Account Details", "Statement"],
+    title: "User Account",
+    subMenuTitle: ["User Profile", "Statement"],
   },
   {
     id: 2,

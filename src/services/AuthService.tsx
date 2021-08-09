@@ -4,7 +4,24 @@ export const localStrorageIdentityKey = "identity";
 export const localStroragePasswordKey = "password";
 export const localStorageDeviceUID = "DeviceUID";
 export const localStorageRememberMe = "rememberMe";
+export const localStorageClientID = "clientID";
+export const localStorageClientSecret = "clientSecret";
 
+// for clients details
+export function getClientID() {
+  return localStorage.getItem(localStorageClientID);
+}
+export function getClientSecret() {
+  return localStorage.getItem(localStorageClientSecret);
+}
+export function setClientID(clientID: string) {
+  localStorage.setItem(localStorageClientID, clientID);
+}
+export function setClientSecret(clientSecret: string) {
+  localStorage.setItem(localStorageClientSecret, clientSecret);
+}
+
+// for login and other details config
 export function getDeviceUID() {
   return localStorage.getItem(localStorageDeviceUID);
 }

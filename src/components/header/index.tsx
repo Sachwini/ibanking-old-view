@@ -10,13 +10,16 @@ import {
   HeaderLink,
 } from "styling/for-header/HeaderStyling";
 import { isMenuButtonClicked } from "state-provider/forPageSetting";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import UserDropDown from "./UserPopover";
 import Notification from "./NotificationPopover";
+import { clientCofigData } from "state-provider/globalClientData";
+import { baseUrl } from "services/BaseUrl";
 
 const Header = () => {
   const [sideMenuShow, setSideMenuShow] = useState<boolean>(false);
   const setMenuClicked = useSetRecoilState(isMenuButtonClicked);
+  const clientData = useRecoilValue(clientCofigData);
 
   useEffect(() => {
     setMenuClicked(sideMenuShow);
@@ -37,8 +40,8 @@ const Header = () => {
               <HeaderCol sm={8} md={10} className="pl-0">
                 <HeaderLink to="/">
                   <Image
-                    src="/images/baner.png"
-                    alt="Company Name"
+                    src={`${baseUrl}/${clientData.bannerUrl}`}
+                    alt={clientData.name}
                     height="45px"
                     style={{ maxWidth: "100%", objectFit: "contain" }}
                   />

@@ -33,7 +33,7 @@ export const FavAccContainer = styled(Container)`
   }
 
   .my_cardBody {
-    max-height: 415px;
+    height: 370px;
     overflow-y: scroll;
   }
 `;
@@ -41,7 +41,7 @@ export const FavAccContainer = styled(Container)`
 export const FavAccListWrapper = styled.div`
   display: flex;
   justify-content: start;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   margin: 0.9rem 0;
 
@@ -69,12 +69,12 @@ export const FavAccListWrapper = styled.div`
       letter-spacing: 1px;
       word-spacing: 3px;
       margin-bottom: 5px;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .normal {
       margin: 0;
-      font-size: 13.5px;
+      font-size: 12px;
       opacity: 0.6;
       transition: all 0.4s;
     }

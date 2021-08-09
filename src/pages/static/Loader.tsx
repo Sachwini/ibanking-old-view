@@ -1,3 +1,6 @@
+import { useRecoilValue } from "recoil";
+import { baseUrl } from "services/BaseUrl";
+import { clientCofigData } from "state-provider/globalClientData";
 import {
   LoaderContainer,
   SpinnerContainer,
@@ -5,9 +8,11 @@ import {
 } from "styling/common/SpinnerStyling";
 
 export const Loader = () => {
+  const clientData = useRecoilValue(clientCofigData);
+
   return (
     <LoaderContainer>
-      <SpinnerContainer>
+      <SpinnerContainer logoUrl={`${baseUrl}/${clientData.logoUrl}`}>
         <Ctrl />
       </SpinnerContainer>
     </LoaderContainer>
