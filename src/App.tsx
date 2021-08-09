@@ -19,11 +19,7 @@ import {
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isUserLoggedIN } from "state-provider/globalUserData";
 import { get } from "services/AjaxService";
-import {
-  apiResponse,
-  apiResponseInDetail,
-  configDataType,
-} from "models/apiResponse";
+import { apiResponseInDetail, configDataType } from "models/apiResponse";
 import { clientCofigData } from "state-provider/globalClientData";
 
 function App() {
